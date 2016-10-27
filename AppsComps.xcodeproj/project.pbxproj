@@ -60,6 +60,9 @@
 		86B1758C9C5610D9C9B321A1 /* Pods-AppsComps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsComps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps.debug.xcconfig"; sourceTree = "<group>"; };
 		8BF090B46F7FA3D9C8950033 /* Pods-AppsCompsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A627336CBB06BDD140BBF67 /* Pods-AppsComps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsComps.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps.release.xcconfig"; sourceTree = "<group>"; };
+		9C0250651DC29FD200F74306 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		9C0250671DC29FE700F74306 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		9C0250691DC29FEF00F74306 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9C7956E61DC1604A0077F4AC /* AppsComps-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppsComps-Bridging-Header.h"; sourceTree = "<group>"; };
 		B6A48F2DD7504F98DFEE09ED /* Pods-AppsCompsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsUITests/Pods-AppsCompsUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +115,9 @@
 		51C4C5AAF78EA541C988F11E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C0250691DC29FEF00F74306 /* SystemConfiguration.framework */,
+				9C0250671DC29FE700F74306 /* StoreKit.framework */,
+				9C0250651DC29FD200F74306 /* AddressBook.framework */,
 				F0E9DD3C9D31D398E260330E /* Pods_AppsComps.framework */,
 				5D2CDD82948DB2CDE44D8F38 /* Pods_AppsCompsTests.framework */,
 				013711CEEF07BE733312C1F7 /* Pods_AppsCompsUITests.framework */,

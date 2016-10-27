@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         //navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         //viewController.delegate = self
-        return true
+        //return true
         
         /*
         let splitViewController = self.window!.rootViewController as! UISplitViewController
@@ -81,24 +81,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return false
     }
     
-    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
-                withError error: NSError!) {
+    // The sign-in flow has finished and was successful if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
             let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
             let givenName = user.profile.givenName
-            //idk
+            let familyName = user.profile.familyName
+            let email = user.profile.email
+            // ...
         } else {
             print("\(error.localizedDescription)")
         }
     }
-
-    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
-                withError error: NSError!) {
-        // Perform any operations when the user disconnects from app here.
-        // ...
+    
+    
+    
+    // Finished disconnecting |user| from the app successfully if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        //sign out user somehow
     }
 
 
