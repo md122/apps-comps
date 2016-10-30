@@ -16,6 +16,7 @@
 		8111C3511DBFBB6D002C8067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */; };
 		8111C35C1DBFBB6D002C8067 /* AppsCompsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C35B1DBFBB6D002C8067 /* AppsCompsTests.swift */; };
 		8111C3671DBFBB6D002C8067 /* AppsCompsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3661DBFBB6D002C8067 /* AppsCompsUITests.swift */; };
+		9C02506E1DC2B0DB00F74306 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02506D1DC2B0DB00F74306 /* LoginViewController.swift */; };
 		9C7956DD1DC114B20077F4AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */; };
 		9C7956DE1DC114B20077F4AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */; };
 		9C7956DF1DC114B20077F4AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */; };
@@ -63,6 +64,7 @@
 		9C0250651DC29FD200F74306 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		9C0250671DC29FE700F74306 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9C0250691DC29FEF00F74306 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9C02506D1DC2B0DB00F74306 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
 		9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9C7956E61DC1604A0077F4AC /* AppsComps-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppsComps-Bridging-Header.h"; sourceTree = "<group>"; };
 		B6A48F2DD7504F98DFEE09ED /* Pods-AppsCompsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsUITests/Pods-AppsCompsUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		8111C3431DBFBB6D002C8067 /* AppsComps */ = {
 			isa = PBXGroup;
 			children = (
+				9C02506D1DC2B0DB00F74306 /* LoginViewController.swift */,
 				9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */,
 				8111C3441DBFBB6D002C8067 /* AppDelegate.swift */,
 				8111C3461DBFBB6D002C8067 /* MasterViewController.swift */,
@@ -449,6 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C02506E1DC2B0DB00F74306 /* LoginViewController.swift in Sources */,
 				8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */,
 				8111C3471DBFBB6D002C8067 /* MasterViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
