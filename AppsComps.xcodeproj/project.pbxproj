@@ -18,6 +18,8 @@
 		8111C3511DBFBB6D002C8067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */; };
 		8111C35C1DBFBB6D002C8067 /* AppsCompsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C35B1DBFBB6D002C8067 /* AppsCompsTests.swift */; };
 		8111C3671DBFBB6D002C8067 /* AppsCompsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3661DBFBB6D002C8067 /* AppsCompsUITests.swift */; };
+		813BAF111DC93EBD00F01828 /* TeacherDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813BAF101DC93EBD00F01828 /* TeacherDashboardViewController.swift */; };
+		813BAF131DC9436100F01828 /* ClassroomDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813BAF121DC9436100F01828 /* ClassroomDataViewController.swift */; };
 		87ED06ED380F425EFCE63721 /* Pods_AppsCompsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */; };
 		AD099CD9771DFAB41874D8B8 /* Pods_AppsCompsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */; };
 /* End PBXBuildFile section */
@@ -60,6 +62,8 @@
 		8111C3621DBFBB6D002C8067 /* AppsCompsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppsCompsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111C3661DBFBB6D002C8067 /* AppsCompsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompsUITests.swift; sourceTree = "<group>"; };
 		8111C3681DBFBB6D002C8067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		813BAF101DC93EBD00F01828 /* TeacherDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherDashboardViewController.swift; sourceTree = "<group>"; };
+		813BAF121DC9436100F01828 /* ClassroomDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomDataViewController.swift; sourceTree = "<group>"; };
 		877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E7EA029543374792360F5C /* Pods_AppsComps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsComps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB97FA33B19926DADFBC507 /* Pods-AppsCompsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
+				813BAF101DC93EBD00F01828 /* TeacherDashboardViewController.swift */,
+				813BAF121DC9436100F01828 /* ClassroomDataViewController.swift */,
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
 				8111C3521DBFBB6D002C8067 /* Info.plist */,
@@ -340,7 +346,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		2C6F4D70AAC15403CEB45351 /* [CP] Check Pods Manifest.lock */ = {
@@ -355,7 +361,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		540DB1605821FB0F8ACD7BF1 /* [CP] Check Pods Manifest.lock */ = {
@@ -370,7 +376,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A8BAD15AD0C3F64A3D83E610 /* [CP] Copy Pods Resources */ = {
@@ -457,6 +463,8 @@
 			files = (
 				47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */,
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
+				813BAF111DC93EBD00F01828 /* TeacherDashboardViewController.swift in Sources */,
+				813BAF131DC9436100F01828 /* ClassroomDataViewController.swift in Sources */,
 				8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */,
 				8111C3471DBFBB6D002C8067 /* MasterViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
