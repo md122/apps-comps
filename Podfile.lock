@@ -108,5 +108,9 @@ COCOAPODS: 1.0.0
 
 PODFILE CHECKSUM: 1015751570adf90e2cd0b88ee636efb3cb00b7a1
 
+<<<<<<< HEAD
 COCOAPODS: 1.1.1
+>>>>>>> master
+=======
+COCOAPODS: 1.0.1
 >>>>>>> master

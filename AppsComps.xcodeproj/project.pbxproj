@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7BD90CAC75521679D5AA068E /* Pods_AppsCompsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2CDD82948DB2CDE44D8F38 /* Pods_AppsCompsTests.framework */; };
+		12E5B6C7AF1EC81893F3CBC0 /* Pods_AppsComps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7EA029543374792360F5C /* Pods_AppsComps.framework */; };
+		47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */; };
+		47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3021DC563AD002F4DC1 /* GameScene.swift */; };
 		8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3441DBFBB6D002C8067 /* AppDelegate.swift */; };
 		8111C3471DBFBB6D002C8067 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3461DBFBB6D002C8067 /* MasterViewController.swift */; };
 		8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3481DBFBB6D002C8067 /* DetailViewController.swift */; };
@@ -43,7 +46,12 @@
 
 /* Begin PBXFileReference section */
 		013711CEEF07BE733312C1F7 /* Pods_AppsCompsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D2CDD82948DB2CDE44D8F38 /* Pods_AppsCompsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		400F1B9383CC6CE0D915FDD9 /* Pods-AppsCompsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemScreenViewController.swift; sourceTree = "<group>"; };
+		47EBC3021DC563AD002F4DC1 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		6AF2770A3D16C00EA9DC73F3 /* Pods-AppsCompsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsUITests/Pods-AppsCompsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7712B49316818E4298CBF609 /* Pods-AppsComps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsComps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps.debug.xcconfig"; sourceTree = "<group>"; };
 		8111C3411DBFBB6D002C8067 /* AppsComps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppsComps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111C3441DBFBB6D002C8067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8111C3461DBFBB6D002C8067 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -155,9 +163,11 @@
 				9CC70E111DC70EE3004DA0CE /* LoginViewController.swift */,
 				9C7956DC1DC114B20077F4AC /* GoogleService-Info.plist */,
 				8111C3441DBFBB6D002C8067 /* AppDelegate.swift */,
+				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
 				8111C3461DBFBB6D002C8067 /* MasterViewController.swift */,
 				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
+				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
 				8111C3521DBFBB6D002C8067 /* Info.plist */,
@@ -338,6 +348,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		2605DB6F7A47BA992B9C9051 /* 📦 Check Pods Manifest.lock */ = {
@@ -368,6 +379,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3559777E8B067158B904FA4C /* 📦 Copy Pods Resources */ = {
@@ -453,6 +465,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CC70E121DC70EE3004DA0CE /* LoginViewController.swift in Sources */,
+				47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */,
+				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
 				8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */,
 				8111C3471DBFBB6D002C8067 /* MasterViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,

@@ -9,7 +9,11 @@
 import UIKit
 
 @UIApplicationMain
+<<<<<<< HEAD
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, GIDSignInDelegate {
+=======
+class AppDelegate: UIResponder, UIApplicationDelegate {
+>>>>>>> master
 
     var window: UIWindow?
 
