@@ -9,7 +9,11 @@
 import UIKit
 
 @UIApplicationMain
+<<<<<<< HEAD
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, GIDSignInDelegate {
+=======
 class AppDelegate: UIResponder, UIApplicationDelegate {
+>>>>>>> master
 
     var window: UIWindow?
 
@@ -21,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         //navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         //viewController.delegate = self
-        return true
+        //return true
         
         /*
         let splitViewController = self.window!.rootViewController as! UISplitViewController
@@ -30,6 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         splitViewController.delegate = self
         return true
          */
+        
+        // Initialize sign-in
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        GIDSignIn.sharedInstance().delegate = self
+        return true
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -53,6 +65,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(
+            url,
+            sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
+            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    }
 
     // MARK: - Split view
 
@@ -65,6 +84,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return false
     }
+    
+    // The sign-in flow has finished and was successful if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if (error == nil) {
+            // Perform any operations on signed in user here.
+            let userId = user.userID                  // For client-side use only!
+            let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+        } else {
+            print("\(error.localizedDescription)")
+        }
+    }
+    
+    
+    
+    // Finished disconnecting |user| from the app successfully if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        //sign out user somehow
+    }
+
 
 }
 
