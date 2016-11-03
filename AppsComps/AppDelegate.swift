@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        let connector = APIConnector()
+        connector.testRequest()
+        
         // Override point for customization after application launch.
         
         //let viewController = self.window!.rootViewController! as UIViewController
