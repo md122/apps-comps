@@ -11,12 +11,13 @@ import UIKit
 import SpriteKit
 
 class ProblemScreenViewController: UIViewController {
-
+    /* Why is this so important!!??? */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        // Congigure the view
-        let skView = view as! SKView
+        
+        let skView = SKView(frame: self.view.frame)
+        
         skView.showsFPS = true
         skView.showsNodeCount = true
         
@@ -24,14 +25,11 @@ class ProblemScreenViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         
         let scene = GameScene(size: skView.bounds.size)
-        
-        /* Set the scale model to scale to fit the window */
-        scene.scaleMode = .aspectFill
+        view.addSubview(skView)
         
         skView.presentScene(scene)
-
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -40,19 +38,16 @@ class ProblemScreenViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-//    override func prefersStatusBarHidden() -&gt; Bool {
-//        return true
-//    }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
