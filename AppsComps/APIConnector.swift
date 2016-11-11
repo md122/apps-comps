@@ -10,10 +10,13 @@ import Alamofire
 
 class APIConnector: NSObject  {
     
+    
+
+    
     func testRequest() {
         
         // This is some test code for getting a JSON response from server
-        /* Alamofire.request("https://httpbin.org/get").responseJSON { response in
+        Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/").responseJSON { response in
             //print(response.request)  // original URL request
             //print(response.response) // HTTP URL response
             //print(response.data)     // server data
@@ -27,9 +30,9 @@ class APIConnector: NSObject  {
                 print("JSON: \(JSON)")
             }
             
-        } */
+        }
         
-        
+        /*
         // Puts in a request for some data
         Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/hello").responseData { response in
             
@@ -47,6 +50,8 @@ class APIConnector: NSObject  {
                 print("________________________________")
             }
         }
+ 
+        */
     }
     
     
