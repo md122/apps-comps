@@ -1,0 +1,15 @@
+From Meg and Zoe:
+
+getNextProblem
+addProblemAttempt
+- start_time, end_time, answer, wasCorrect (bool)
+
+
+From Brynna and Wanchen:
+
+
+From Marco and Sam:
+checkUserAccount (checks if there is account with info)
+handleLoginAttempt (returns if login successful or not)
+createAccount
+handleCreateAccountAttempt (returns if createAccount was succesful or not)
