@@ -14,24 +14,35 @@ import UIKit
 
 class GameScene: SKScene {
     
-    var topBar = [SKShapeNode]()
-    var blockTouched:SKShapeNode? = nil
-    let block = SKShapeNode(rectOf: CGSize(width: 50, height: 10))
+    var topBar = [Block]()
+    var bottomBar = [Block]()
+    
+    var isSorted = false
+    var blockTouched:Block? = nil
+    
+    var numBlockInBank = Block(type:.number)
+    var varBlockInBank = Block(type: .variable)
+    var numBlockBankPosition = CGPoint(x:100, y:100)
+    var varBlockBankPosition = CGPoint(x:200, y:100)
     
     override func didMove(to view: SKView) {
-        /* Setup your scene here */
-        block.position = CGPoint(x:100, y:100)
-        topBar.append(block)
-        self.addChild(block)
+        //Add the original block in the number block bank and the variable block bank
+        numBlockInBank.position = numBlockBankPosition
+        self.addChild(numBlockInBank)
+        
+        varBlockInBank.position = varBlockBankPosition
+        self.addChild(varBlockInBank)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         
-        for block in topBar {
-            if block == self.atPoint(touchLocation) {
-                blockTouched = block
+        for child in self.children {
+            if let block = child as? Block {
+                if block == self.atPoint(touchLocation) {
+                    blockTouched = block
+                }
             }
         }
     }
@@ -63,14 +74,33 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
             let block = blockTouched!
-            //Need to make this so outside of the box to just large enough x and y
-            if (block.position.x > 200 && block.position.y > 200) {
-                let newBlock = SKShapeNode(rectOf: CGSize(width: 50, height: 10))
-                newBlock.position = CGPoint(x:100, y:100)
-                topBar.append(newBlock)
-                self.addChild(newBlock)
+            
+            //Are we dragging a block from the n
+            if (block == numBlockInBank) {
+                //Block has moved outside of block bank
+                if (abs(block.position.x - numBlockBankPosition.x) > CGFloat(block.getNumWidth()) || abs(block.position.y - numBlockBankPosition.y) > CGFloat(block.getHeight())) {
+                    let newBlock = Block(type: .number)
+                    newBlock.position = numBlockBankPosition
+                    numBlockInBank = newBlock
+                    self.addChild(newBlock)
+                }
+                else {
+                    block.position = numBlockBankPosition
+                }
             }
-        
+            
+            if (block == varBlockInBank) {
+                //Block has moved outside of block bank
+                if (abs(block.position.x - varBlockBankPosition.x) > CGFloat(block.getVarWidth()) || abs(block.position.y - varBlockBankPosition.y) > CGFloat(block.getHeight())) {
+                    let newBlock = Block(type: .variable)
+                    newBlock.position = varBlockBankPosition
+                    varBlockInBank = newBlock
+                    self.addChild(newBlock)
+                }
+                else {
+                    block.position = varBlockBankPosition
+                }
+            }
             blockTouched = nil
         }
     }
