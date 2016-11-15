@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -63,6 +63,7 @@
         <!--Create Account View Controller-->
         <scene sceneID="Rly-yH-O7r">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZdG-9o-uNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="0cv-3X-M3d" userLabel="Create Account View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ROJ-t2-DB2"/>
@@ -108,13 +109,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZdG-9o-uNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-308" y="-2716"/>
         </scene>
         <!--View Class View Controller-->
         <scene sceneID="Pcm-Vt-MEg">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UjF-Xf-acN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="xdG-3y-V3j" userLabel="View Class View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9QD-kP-mKu"/>
@@ -135,13 +136,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UjF-Xf-acN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2144" y="-1053"/>
         </scene>
         <!--Manage Class View Controller-->
         <scene sceneID="dtJ-fc-YD1">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X40-td-Ili" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="DdX-xL-hNp" userLabel="Manage Class View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FS8-8d-Aj5"/>
@@ -162,13 +163,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X40-td-Ili" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1404" y="-1053"/>
         </scene>
         <!--Teacher Dashboard View Controller-->
         <scene sceneID="WvK-t1-7wm">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fxb-yW-Hz2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="gcX-Bd-MQh" userLabel="Teacher Dashboard View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Q4e-Cm-tYg"/>
@@ -216,7 +217,6 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fxb-yW-Hz2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1090" y="-1910"/>
         </scene>
@@ -256,6 +256,7 @@
         <!--Student Dashboard View Controller-->
         <scene sceneID="R3N-x0-pHs">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W3W-MS-yvg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="bGh-iv-zue" userLabel="Student Dashboard View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HDZ-y8-Vo5"/>
@@ -278,14 +279,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W3W-MS-yvg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-313" y="-1906"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="xQe-rr-592"/>
+        <segue reference="xHW-Zp-i6H"/>
         <segue reference="fio-dN-9Ad"/>
-        <segue reference="i1Q-dT-e1x"/>
-        <segue reference="8Y8-jo-Qmh"/>
     </inferredMetricsTieBreakers>
 </document>
