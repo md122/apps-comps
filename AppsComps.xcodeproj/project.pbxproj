@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */; };
+		113B052B1DDBB3AF00D001DD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052A1DDBB3AF00D001DD /* Account.swift */; };
+		113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052C1DDBB3B500D001DD /* Teacher.swift */; };
+		113B052F1DDBB3BB00D001DD /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052E1DDBB3BB00D001DD /* Student.swift */; };
+		113B05311DDBB3C000D001DD /* ClassroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05301DDBB3C000D001DD /* ClassroomTableViewCell.swift */; };
+		113B05331DDBB3CC00D001DD /* ClassroomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */; };
+		113B05351DDBB3D400D001DD /* Classroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05341DDBB3D400D001DD /* Classroom.swift */; };
 		12E5B6C7AF1EC81893F3CBC0 /* Pods_AppsComps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7EA029543374792360F5C /* Pods_AppsComps.framework */; };
 		228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
 		22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */; };
@@ -14,7 +21,6 @@
 		47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3021DC563AD002F4DC1 /* GameScene.swift */; };
 		47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3081DD68E0B002F4DC1 /* Block.swift */; };
 		8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3441DBFBB6D002C8067 /* AppDelegate.swift */; };
-		8111C3471DBFBB6D002C8067 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3461DBFBB6D002C8067 /* MasterViewController.swift */; };
 		8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3481DBFBB6D002C8067 /* DetailViewController.swift */; };
 		8111C34C1DBFBB6D002C8067 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8111C34A1DBFBB6D002C8067 /* Main.storyboard */; };
 		8111C34E1DBFBB6D002C8067 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8111C34D1DBFBB6D002C8067 /* Assets.xcassets */; };
@@ -43,6 +49,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectorViewController.swift; sourceTree = "<group>"; };
+		113B052A1DDBB3AF00D001DD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		113B052C1DDBB3B500D001DD /* Teacher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
+		113B052E1DDBB3BB00D001DD /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		113B05301DDBB3C000D001DD /* ClassroomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableViewCell.swift; sourceTree = "<group>"; };
+		113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableViewController.swift; sourceTree = "<group>"; };
+		113B05341DDBB3D400D001DD /* Classroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classroom.swift; sourceTree = "<group>"; };
 		228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnector.swift; sourceTree = "<group>"; };
 		22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataDelegate.swift; sourceTree = "<group>"; };
 		280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +67,6 @@
 		7712B49316818E4298CBF609 /* Pods-AppsComps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsComps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps.debug.xcconfig"; sourceTree = "<group>"; };
 		8111C3411DBFBB6D002C8067 /* AppsComps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppsComps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111C3441DBFBB6D002C8067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8111C3461DBFBB6D002C8067 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		8111C3481DBFBB6D002C8067 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8111C34B1DBFBB6D002C8067 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8111C34D1DBFBB6D002C8067 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,11 +163,17 @@
 			children = (
 				8111C3441DBFBB6D002C8067 /* AppDelegate.swift */,
 				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
-				8111C3461DBFBB6D002C8067 /* MasterViewController.swift */,
 				228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */,
 				22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */,
+				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
+				113B052A1DDBB3AF00D001DD /* Account.swift */,
 				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
+				113B052C1DDBB3B500D001DD /* Teacher.swift */,
+				113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */,
+				113B05341DDBB3D400D001DD /* Classroom.swift */,
+				113B05301DDBB3C000D001DD /* ClassroomTableViewCell.swift */,
+				113B052E1DDBB3BB00D001DD /* Student.swift */,
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
@@ -349,7 +367,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		2C6F4D70AAC15403CEB45351 /* [CP] Check Pods Manifest.lock */ = {
@@ -364,7 +382,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		540DB1605821FB0F8ACD7BF1 /* [CP] Check Pods Manifest.lock */ = {
@@ -379,7 +397,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A8BAD15AD0C3F64A3D83E610 /* [CP] Copy Pods Resources */ = {
@@ -465,13 +483,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */,
+				113B05331DDBB3CC00D001DD /* ClassroomTableViewController.swift in Sources */,
 				22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */,
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
 				8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */,
+				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
+				113B05311DDBB3C000D001DD /* ClassroomTableViewCell.swift in Sources */,
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
-				8111C3471DBFBB6D002C8067 /* MasterViewController.swift in Sources */,
+				113B052B1DDBB3AF00D001DD /* Account.swift in Sources */,
+				113B052F1DDBB3BB00D001DD /* Student.swift in Sources */,
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
+				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
+				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
