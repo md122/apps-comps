@@ -13,7 +13,7 @@ class APIConnector: NSObject  {
     
 
     
-    func testRequest() {
+    func testRequest(callingDelegate: APIDataDelegate) {
         
         // This is some test code for getting a JSON response from server
         Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/").responseJSON { response in
@@ -28,6 +28,10 @@ class APIConnector: NSObject  {
                 print("________________________________")
                 print("Got some JSON")
                 print("JSON: \(JSON)")
+                
+                callingDelegate.handleStudentData?(data: JSON as! [NSArray])
+                
+                //callingDelegate.handleStudentData!(data: retrievedData)
             }
             
         }
