@@ -9,8 +9,27 @@
 import Foundation
 
 @objc protocol APIDataDelegate {
-    // protocol definition goes here
+    // test function
     @objc optional func handleStudentData(data: [NSArray]) ;
+    
+    // For the problem screen
+    @objc optional func handleNextProblem(data: [NSArray]) ;
+    @objc optional func handleAddProblemDataAttempt(data: Bool) ;
+    
+    // Methods for student class
+    @objc optional func handleStudentDashInfo(data: [NSArray]) ;
+    @objc optional func handleRemoveStudentFromClassAttempt(data: [NSArray]) ;
+    @objc optional func handleProblemHistory(data: [NSArray]) ;
+    @objc optional func handleCorrectIncorrectRatio(data: [NSArray]) ;
+    
+    // Methods for teacher class
+    @objc optional func handleTeacherDashInfo(data: [NSArray]) ;
+    @objc optional func handleAddClassroomAttempt(data: Bool) ;
+    @objc optional func handleRemoveClassroomAttempt(data: Bool) ;
+    
+    // Methods for login screen
+    @objc optional func handleLoginAttempt(data: Bool) ;
+    @objc optional func handleCreateAccountAttempt(data: [NSArray]) ;
     
     
 
