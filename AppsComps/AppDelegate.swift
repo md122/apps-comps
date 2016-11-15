@@ -9,16 +9,29 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate {
 
     var window: UIWindow?
 
+    func requestStudentData() {
+        let connector = APIConnector()
+        connector.testRequest(callingDelegate: self)
+    }
+    
+    
+    func handleStudentData(data: [NSArray]) {
+        print("Handling Student Data")
+        print(data)
+        for dataPoint in data{
+            //let dataP = dataPoint as! NSArray
+            print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let connector = APIConnector()
-        connector.testRequest()
         
+        requestStudentData()
         // Override point for customization after application launch.
         
         //let viewController = self.window!.rootViewController! as UIViewController

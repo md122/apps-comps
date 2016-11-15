@@ -1,0 +1,62 @@
+From Meg and Zoe:
+
+/requestNextProblem/<level>/<studentID>
+- returns the next problem data
+requestNextProblem(level: Integer, studentID: String)
+handleNextProblem(problemData: String)
+
+/addProblemAttempt/<start_time>/<end_time>/<answer>/<wasCorrect>
+- add problem history to database
+attemptAddProblemData(start_time: TypeTBD, end_time: TypeTBD, answer: String, wasCorrect: Bool)
+handleAddProblemDataAttempt(added: Bool)
+
+
+From Brynna and Wanchen:
+
+
+(Student)
+/requestStudentDashInfo/<studentID>
+- returns Classroom (name) Teacher (name) Level
+requestStudentDashInfo(studentID: String)
+handleStudentDashInfo(classroomData)
+
+/attemptRemoveStudentFromClass/<studentID>
+- return true if able, false if error (teacher and student can do)
+attemptRemoveStudentFromClass(studentID: String)
+handleRemoveStudentFromClassAttempt()
+
+/requestProblemHistory/<studentID>
+- (unclear what this does)
+requestProblemHistory(studentID: String))
+handleProblemHistory() 
+
+/requestCorrectIncorrectRatio/<studentID>
+requestCorrectIncorrectRatio(studentID: String))
+handleCorrectIncorrectRatio()
+
+
+(Teacher)
+
+/requestTeacherDashInfo/<teacherID>
+- returns teacher_name, Classrooms (names,  IDs) with students (ID, names, level)
+requestTeacherDashInfo()
+handleTeacherDashInfo()
+
+/attemptAddClassroom/<teacherID>
+attemptAddClassroom(teacherID)
+handleAddClassroomAttempt(teacherID)
+
+/attemptDeleteClassroom/<teacherID>
+attemptDeleteClassroom(teacherID)
+handleRemoveClassroomAttempt(teacherID)
+
+
+
+From Marco and Sam:
+/attemptLogin/<userID>
+attemptLogin (checks if there is account with info)
+handleLoginAttempt (returns if login successful or not)
+
+/attemptLogin/<userID>/<userName>/<accountType>
+attemptCreateAccount
+handleCreateAccountAttempt (returns if createAccount was succesful or not)
