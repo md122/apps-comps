@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate {
     
     func handleStudentData(data: [NSArray]) {
         print("Handling Student Data")
+        print(data)
         for dataPoint in data{
             //let dataP = dataPoint as! NSArray
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
