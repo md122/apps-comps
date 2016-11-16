@@ -30,6 +30,9 @@
 		818EC6561DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
 		818EC6571DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
 		818EC6581DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
+		818EC65C1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */; };
+		818EC65D1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */; };
+		818EC65E1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */; };
 		87ED06ED380F425EFCE63721 /* Pods_AppsCompsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */; };
 		AD099CD9771DFAB41874D8B8 /* Pods_AppsCompsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */; };
 /* End PBXBuildFile section */
@@ -81,8 +84,12 @@
 		8111C3621DBFBB6D002C8067 /* AppsCompsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppsCompsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111C3661DBFBB6D002C8067 /* AppsCompsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCompsUITests.swift; sourceTree = "<group>"; };
 		8111C3681DBFBB6D002C8067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
-		818EC65A1DDC115A00F4F2E6 /* AppsComps-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppsComps-Bridging-Header.h"; sourceTree = "<group>"; };
+		818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		818EC6601DDC15FA00F4F2E6 /* AppsCompsTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppsCompsTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		818EC6611DDC15FA00F4F2E6 /* AppsCompsUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppsCompsUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		818EC6661DDC162E00F4F2E6 /* AppsComps-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppsComps-Bridging-Header.h"; sourceTree = "<group>"; };
+		818EC6671DDC29C800F4F2E6 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E7EA029543374792360F5C /* Pods_AppsComps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsComps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB97FA33B19926DADFBC507 /* Pods-AppsCompsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +128,7 @@
 		5378CE6D0C42F688A5BEBC51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				818EC6671DDC29C800F4F2E6 /* AddressBook.framework */,
 				87E7EA029543374792360F5C /* Pods_AppsComps.framework */,
 				280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */,
 				877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */,
@@ -173,9 +181,9 @@
 				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
 				818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */,
 				113B052A1DDBB3AF00D001DD /* Account.swift */,
-				818EC65A1DDC115A00F4F2E6 /* AppsComps-Bridging-Header.h */,
 				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
+				818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */,
 				113B052C1DDBB3B500D001DD /* Teacher.swift */,
 				113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */,
 				113B05341DDBB3D400D001DD /* Classroom.swift */,
@@ -185,7 +193,10 @@
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
 				8111C3521DBFBB6D002C8067 /* Info.plist */,
+				818EC6661DDC162E00F4F2E6 /* AppsComps-Bridging-Header.h */,
 				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
+				818EC6601DDC15FA00F4F2E6 /* AppsCompsTests-Bridging-Header.h */,
+				818EC6611DDC15FA00F4F2E6 /* AppsCompsUITests-Bridging-Header.h */,
 			);
 			path = AppsComps;
 			sourceTree = "<group>";
@@ -495,6 +506,7 @@
 				47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */,
 				113B05331DDBB3CC00D001DD /* ClassroomTableViewController.swift in Sources */,
 				22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */,
+				818EC65C1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
 				8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */,
 				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
@@ -513,6 +525,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				818EC65D1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
 				8111C35C1DBFBB6D002C8067 /* AppsCompsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,6 +534,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				818EC65E1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
 				8111C3671DBFBB6D002C8067 /* AppsCompsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,11 +670,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AppsComps/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.carleton.AppsComps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppsComps/AppsComps-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -671,11 +688,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AppsComps/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.carleton.AppsComps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppsComps/AppsComps-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -685,10 +704,13 @@
 			baseConfigurationReference = 400F1B9383CC6CE0D915FDD9 /* Pods-AppsCompsTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AppsCompsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.carleton.AppsCompsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppsComps/AppsCompsTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppsComps.app/AppsComps";
 			};
@@ -699,10 +721,12 @@
 			baseConfigurationReference = BFB97FA33B19926DADFBC507 /* Pods-AppsCompsTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AppsCompsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.carleton.AppsCompsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppsComps/AppsCompsTests-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppsComps.app/AppsComps";
 			};
@@ -712,10 +736,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6AF2770A3D16C00EA9DC73F3 /* Pods-AppsCompsUITests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AppsCompsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.carleton.AppsCompsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppsComps/AppsCompsUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = AppsComps;
 			};
@@ -725,10 +752,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3A9E2D32ADCB3DD08AA140E /* Pods-AppsCompsUITests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AppsCompsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.carleton.AppsCompsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppsComps/AppsCompsUITests-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = AppsComps;
 			};

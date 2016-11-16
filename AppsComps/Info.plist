@@ -25,8 +25,15 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.674430839285-nu3fd5t9vfe8e7p3oqm77olhvd0091kb
-</string>
+				<string>com.googleusercontent.apps.674430839285-nu3fd5t9vfe8e7p3oqm77olhvd0091kb</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.carleton.AppsComps</string>
 			</array>
 		</dict>
 	</array>
