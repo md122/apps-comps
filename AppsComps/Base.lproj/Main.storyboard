@@ -48,11 +48,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-92-C9M">
+                                <frame key="frameInset" minX="500" minY="177" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign Out"/>
+                                <connections>
+                                    <action selector="didTapSignOutWithSender:" destination="qQB-40-xno" eventType="touchUpInside" id="B6g-LN-Gvy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="signInButton" destination="0Ka-Ag-mkx" id="10g-on-4Jq"/>
+                        <outlet property="signOutButton" destination="MAQ-92-C9M" id="5hh-g3-YzK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ou8-5Y-0wO" userLabel="First Responder" sceneMemberID="firstResponder"/>
