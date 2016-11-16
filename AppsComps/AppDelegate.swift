@@ -106,6 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             let userId = user.userID                  // For client-side use only!
             let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
+            print(userId)
+            print(idToken)
+            print(fullName)
         } else {
             print("\(error.localizedDescription)")
         }
