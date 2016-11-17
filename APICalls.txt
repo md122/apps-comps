@@ -43,11 +43,11 @@ requestTeacherDashInfo()
 handleTeacherDashInfo()
 
 /attemptAddClassroom/<teacherID>
-attemptAddClassroom(teacherID)
+attemptAddClassroom(teacherID: String, classroomName: String)
 handleAddClassroomAttempt(teacherID)
 
 /attemptDeleteClassroom/<teacherID>
-attemptDeleteClassroom(teacherID)
+attemptRemoveClassroom(teacherID)
 handleRemoveClassroomAttempt(teacherID)
 
 

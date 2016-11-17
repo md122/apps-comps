@@ -10,7 +10,7 @@
 import UIKit
 import SpriteKit
 
-class ProblemScreenViewController: UIViewController {
+class ProblemScreenViewController: UIViewController, APIDataDelegate {
     /* Why is this so important!!??? */
     
     override func viewDidLoad() {
@@ -28,6 +28,8 @@ class ProblemScreenViewController: UIViewController {
         view.addSubview(skView)
         
         skView.presentScene(scene)
+        
+        testAPIConnector()
     }
     
     override func didReceiveMemoryWarning() {
@@ -38,6 +40,31 @@ class ProblemScreenViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    
+    // test function that shows use of API
+    func testAPIConnector() {
+        let connector = APIConnector()
+        connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
+        
+        connector.attemptAddProblemData(callingDelegate: self, start_time: "10/12", end_time: "10/12", answer: "6", wasCorrect: false)
+    }
+    
+    // Function that gets called when next problem comes back
+    func handleNextProblem(data: [NSArray]) {
+        print("Incoming handleNextProblem data")
+        print(data)
+    }
+
+    
+    
+    // Function that gets called when student data comes back
+    func handleAddProblemDataAttempt(data: Bool) {
+        print("Incoming handleAddProblemDataAttempt data")
+        print(data)
+    }
+    
+    
     
     
     /*
