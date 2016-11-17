@@ -5,7 +5,7 @@ From Meg and Zoe:
 requestNextProblem(level: Integer, studentID: String)
 handleNextProblem(problemData: String)
 
-/addProblemAttempt/<start_time>/<end_time>/<answer>/<wasCorrect>
+/addProblemAttempt/<studentID>/<start_time>/<end_time>/<answer>/<wasCorrect>
 - add problem history to database
 attemptAddProblemData(start_time: TypeTBD, end_time: TypeTBD, answer: String, wasCorrect: Bool)
 handleAddProblemDataAttempt(added: Bool)
@@ -59,4 +59,4 @@ handleLoginAttempt (returns if login successful or not)
 
 /attemptLogin/<userID>/<userName>/<accountType>
 attemptCreateAccount
-handleCreateAccountAttempt (returns if createAccount was succesful or not)
+handleCreateAccountAttempt (returns if createAccount was successful or not)
