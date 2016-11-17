@@ -42,7 +42,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     
-    // test function that shows use of API
+    // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
         connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
