@@ -10,8 +10,63 @@ import Alamofire
 
 class APIConnector: NSObject  {
     
+    func requestNextProblem(callingDelegate: APIDataDelegate, level: Int, studentID: String) {
+        let dummyData: [NSArray] = [["Problem Data"], ["Problem Data"]]
+        callingDelegate.handleNextProblem?(data: dummyData)
+    }
     
-
+    func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
+        let dummyData = false
+        callingDelegate.handleAddProblemDataAttempt?(data: dummyData)
+    }
+    
+    func requestStudentDashInfo(callingDelegate: APIDataDelegate, studentID: String) {
+        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
+        callingDelegate.handleStudentDashInfo?(data: dummyData)
+    }
+    
+    func attemptRemoveStudentFromClass(callingDelegate: APIDataDelegate, studentID: String) {
+        let dummyData = false
+        callingDelegate.handleRemoveStudentFromClassAttempt?(data: dummyData)
+    }
+    
+    func requestProblemHistory(callingDelegate: APIDataDelegate, studentID: String) {
+        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
+        callingDelegate.handleProblemHistory?(data: dummyData)
+    }
+    
+    func requestCorrectIncorrectRatio(callingDelegate: APIDataDelegate, studentID: String) {
+        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
+        callingDelegate.handleCorrectIncorrectRatio?(data: dummyData)
+    }
+    
+    func requestTeacherDashInfo(callingDelegate: APIDataDelegate, teacherID: String) {
+        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
+        callingDelegate.handleTeacherDashInfo?(data: dummyData)
+    }
+    
+    // Attempts to add class room, returns null if not able, otherwise returns ID
+    func attemptAddClassroom(callingDelegate: APIDataDelegate, teacherID: String,classroomName: String) {
+        let dummyData = "FakeClassroomID"
+        callingDelegate.handleAddClassroomAttempt?(data: dummyData)
+    }
+    
+    func attemptRemoveClassroom(callingDelegate: APIDataDelegate, teacherID: String, classroomID: String) {
+        let dummyData = false
+        callingDelegate.handleRemoveClassroomAttempt?(data: dummyData)
+    }
+    
+    func attemptLogin(callingDelegate: APIDataDelegate, userID: String) {
+        let dummyData = false
+        callingDelegate.handleLoginAttempt?(data: dummyData)
+    }
+    
+    func attemptCreateAccount(callingDelegate: APIDataDelegate, userID: String, userName: String, accountType: String) {
+        let dummyData: [NSArray] = [[true], ["alsdkfjasdf9898"]]
+        callingDelegate.handleCreateAccountAttempt?(data: dummyData)
+    }
+    
+    
     
     func testRequest(callingDelegate: APIDataDelegate) {
         
