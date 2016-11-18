@@ -20,6 +20,11 @@ From Brynna and Wanchen:
 requestStudentDashInfo(studentID: String)
 handleStudentDashInfo(classroomData)
 
+/attemptAddStudentToClassroom/<studentID>
+- return true if able, false if error (teacher and student can do)
+attemptRemoveStudentFromClass(studentID: String)
+handleRemoveStudentFromClassAttempt()
+
 /attemptRemoveStudentFromClass/<studentID>
 - return true if able, false if error (teacher and student can do)
 attemptRemoveStudentFromClass(studentID: String)
@@ -30,7 +35,7 @@ handleRemoveStudentFromClassAttempt()
 requestProblemHistory(studentID: String))
 handleProblemHistory() 
 
-/requestCorrectIncorrectRatio/<studentID>
+/requestCorrectIncorrectRatio/<studentID>/<lastNProblems>
 requestCorrectIncorrectRatio(studentID: String))
 handleCorrectIncorrectRatio()
 
@@ -42,11 +47,11 @@ handleCorrectIncorrectRatio()
 requestTeacherDashInfo()
 handleTeacherDashInfo()
 
-/attemptAddClassroom/<teacherID>
+/attemptAddClassroom/<teacherID>/<classroomName>
 attemptAddClassroom(teacherID: String, classroomName: String)
 handleAddClassroomAttempt(teacherID)
 
-/attemptDeleteClassroom/<teacherID>
+/attemptDeleteClassroom/<teacherID>/<classroomID>
 attemptRemoveClassroom(teacherID)
 handleRemoveClassroomAttempt(teacherID)
 
@@ -57,6 +62,6 @@ From Marco and Sam:
 attemptLogin (checks if there is account with info)
 handleLoginAttempt (returns if login successful or not)
 
-/attemptLogin/<userID>/<userName>/<accountType>
+/createAccount/<userID>/<userName>/<accountType>
 attemptCreateAccount
 handleCreateAccountAttempt (returns if createAccount was succesful or not)

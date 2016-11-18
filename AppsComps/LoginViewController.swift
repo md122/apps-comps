@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
         // Do any additional setup after loading the view.
+        testAPIConnector()
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,20 +32,24 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, userID: "STUDENT1")
+        connector.attemptLogin(callingDelegate: self, userID: "User1")
+        connector.attemptLogin(callingDelegate: self, userID: "User27")
         
-        connector.attemptCreateAccount(callingDelegate: self, userID: "User1", userName: "James", accountType: "Student")
+        connector.attemptCreateAccount(callingDelegate: self, userID: "User1", userName: "James", accountType: "0")
     }
     
     // Function that gets called when student data comes back
     func handleLoginAttempt(data: Bool) {
-        print("Incoming handleAddProblemDataAttempt data")
+        print("\n\n\n\n\n")
+        print("Incoming handleLoginAttempt data")
         print(data)
     }
     
     // Function that gets called when next problem comes back
-    func handleCreateAccountAttempt(data: [NSArray]) {
-        print("Incoming handleNextProblem data")
+    func handleCreateAccountAttempt(data: Bool) {
+        print("-------------------------")
+        print()
+        print("Incoming handleCreateAccountAttempt data")
         print(data)
     }
     

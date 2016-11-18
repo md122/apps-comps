@@ -35,7 +35,8 @@ class Student: Account, APIDataDelegate {
     func testAPIConnector() {
         let connector = APIConnector()
         connector.requestStudentDashInfo(callingDelegate: self, studentID: "Student1")
-        connector.attemptRemoveStudentFromClass(callingDelegate: self, studentID: "Student1")
+        connector.attemptAddStudentToClassroom(callingDelegate: self, studentID: "Student1", classroomID: "5")
+        connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: "Student1", classroomID: "5")
         connector.requestProblemHistory(callingDelegate: self, studentID: "Student1")
         connector.requestCorrectIncorrectRatio(callingDelegate: self, studentID: "Student1")
     }
@@ -43,6 +44,12 @@ class Student: Account, APIDataDelegate {
     // Function that gets called when studentDashInfo gets back
     func handleStudentDashInfo(data: [NSArray]) {
         print("Incoming handleStudentDashInfo data")
+        print(data)
+    }
+    
+    // Function that gets called when attempt to remove student from class gets back
+    func handleAddStudentToClassAttempt(data: Bool) {
+        print("Incoming handleAddStudentToClassAttempt data")
         print(data)
     }
     

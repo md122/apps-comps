@@ -44,7 +44,7 @@ class Teacher: Account, APIDataDelegate {
         let connector = APIConnector()
         connector.requestTeacherDashInfo(callingDelegate: self, teacherID: "Teacher1")
         connector.attemptAddClassroom(callingDelegate: self, teacherID: "Teacher1", classroomName: "Cats Room")
-        connector.attemptRemoveClassroom(callingDelegate: self, teacherID: "Teacher1", classroomID: "Classroom1")
+        connector.attemptRemoveClassroom(callingDelegate: self, classroomID: "Classroom1")
     }
     
     // Function that gets called when teacher Dash Info gets back

@@ -18,6 +18,7 @@ import Foundation
     
     // Methods for student class
     @objc optional func handleStudentDashInfo(data: [NSArray]) ;
+    @objc optional func handleAddStudentToClassAttempt(data: Bool) ;
     @objc optional func handleRemoveStudentFromClassAttempt(data: Bool) ;
     @objc optional func handleProblemHistory(data: [NSArray]) ;
     @objc optional func handleCorrectIncorrectRatio(data: [NSArray]) ;
@@ -29,7 +30,7 @@ import Foundation
     
     // Methods for login screen
     @objc optional func handleLoginAttempt(data: Bool) ;
-    @objc optional func handleCreateAccountAttempt(data: [NSArray]) ;
+    @objc optional func handleCreateAccountAttempt(data: Bool) ;
     
     
 
