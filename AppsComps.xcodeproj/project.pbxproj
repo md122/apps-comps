@@ -174,29 +174,15 @@
 		8111C3431DBFBB6D002C8067 /* AppsComps */ = {
 			isa = PBXGroup;
 			children = (
+				8145A0311DDE1879009A9CC7 /* Login */,
+				8145A0301DDE17ED009A9CC7 /* Dashboards */,
+				8145A02F1DDE17D7009A9CC7 /* ProblemScreen */,
+				8145A02E1DDE17C0009A9CC7 /* API */,
 				8111C3441DBFBB6D002C8067 /* AppDelegate.swift */,
-				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
-				228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */,
-				22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */,
-				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
-				818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */,
-				113B052A1DDBB3AF00D001DD /* Account.swift */,
-				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
-				818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */,
-				113B052C1DDBB3B500D001DD /* Teacher.swift */,
-				113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */,
-				113B05341DDBB3D400D001DD /* Classroom.swift */,
-				113B05301DDBB3C000D001DD /* ClassroomTableViewCell.swift */,
-				113B052E1DDBB3BB00D001DD /* Student.swift */,
-				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
 				8111C3521DBFBB6D002C8067 /* Info.plist */,
-				818EC6661DDC162E00F4F2E6 /* AppsComps-Bridging-Header.h */,
-				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
-				818EC6601DDC15FA00F4F2E6 /* AppsCompsTests-Bridging-Header.h */,
-				818EC6611DDC15FA00F4F2E6 /* AppsCompsUITests-Bridging-Header.h */,
 			);
 			path = AppsComps;
 			sourceTree = "<group>";
@@ -217,6 +203,52 @@
 				8111C3681DBFBB6D002C8067 /* Info.plist */,
 			);
 			path = AppsCompsUITests;
+			sourceTree = "<group>";
+		};
+		8145A02E1DDE17C0009A9CC7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */,
+				228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		8145A02F1DDE17D7009A9CC7 /* ProblemScreen */ = {
+			isa = PBXGroup;
+			children = (
+				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
+				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
+				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
+			);
+			name = ProblemScreen;
+			sourceTree = "<group>";
+		};
+		8145A0301DDE17ED009A9CC7 /* Dashboards */ = {
+			isa = PBXGroup;
+			children = (
+				113B052A1DDBB3AF00D001DD /* Account.swift */,
+				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
+				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
+				113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */,
+				113B05301DDBB3C000D001DD /* ClassroomTableViewCell.swift */,
+				113B052E1DDBB3BB00D001DD /* Student.swift */,
+				113B05341DDBB3D400D001DD /* Classroom.swift */,
+				113B052C1DDBB3B500D001DD /* Teacher.swift */,
+			);
+			name = Dashboards;
+			sourceTree = "<group>";
+		};
+		8145A0311DDE1879009A9CC7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				818EC6661DDC162E00F4F2E6 /* AppsComps-Bridging-Header.h */,
+				818EC6601DDC15FA00F4F2E6 /* AppsCompsTests-Bridging-Header.h */,
+				818EC6611DDC15FA00F4F2E6 /* AppsCompsUITests-Bridging-Header.h */,
+				818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */,
+				818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

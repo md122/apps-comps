@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Teacher: Account {
+class Teacher: Account, APIDataDelegate {
     var classRoomIDs = [String]()
     
     //will call DB and fill classRooms with class ids
@@ -38,6 +38,31 @@ class Teacher: Account {
         //Find class ID in DB and delete them
         setClassrooms()
     }
+    
+    // this is an example of how to use the APIConnector
+    func testAPIConnector() {
+        let connector = APIConnector()
+        connector.requestTeacherDashInfo(callingDelegate: self, teacherID: "Teacher1")
+        connector.attemptAddClassroom(callingDelegate: self, teacherID: "Teacher1", classroomName: "Cats Room")
+        connector.attemptRemoveClassroom(callingDelegate: self, teacherID: "Teacher1", classroomID: "Classroom1")
+    }
+    
+    // Function that gets called when teacher Dash Info gets back
+    func handleTeacherDashInfo(data: [NSArray]) {
+        print(data)
+    }
+    
+    // Function that gets called when attempt to add classroom gets back
+    func handleAddClassroomAttempt(data: String) {
+        print(data)
+    }
+    
+    // Function that gets called when attempt to remove classroom gets back
+    func handleRemoveClassroomAttempt(data: Bool) {
+        print(data)
+    }
+    
+    
     
     
     
