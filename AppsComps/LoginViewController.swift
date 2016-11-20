@@ -40,12 +40,17 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     func handleLoginAttempt(data: Bool) {
         print("Incoming handleAddProblemDataAttempt data")
         print(data)
+        
+        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
+        //call Student class, initialize it, direct to problem selector
+        //call teacher class, init, direct to teacher dashboard
     }
     
     // Function that gets called when next problem comes back
     func handleCreateAccountAttempt(data: [NSArray]) {
         print("Incoming handleNextProblem data")
         print(data)
+        
     }
     
     
