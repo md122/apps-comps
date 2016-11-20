@@ -46,7 +46,7 @@ handleTeacherDashInfo()
 attemptAddClassroom(teacherID: String, classroomName: String)
 handleAddClassroomAttempt(teacherID)
 
-/attemptDeleteClassroom/<teacherID>
+/attemptRemoveClassroom/<teacherID>
 attemptRemoveClassroom(teacherID)
 handleRemoveClassroomAttempt(teacherID)
 

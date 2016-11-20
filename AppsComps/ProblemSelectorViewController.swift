@@ -6,6 +6,13 @@
 //  Copyright © 2016 appscomps. All rights reserved.
 //
 
+
+/* PLANS FOR NEXT TERM
+ -user should retrieve information from Teacher or Student class, not Account class.
+ //Actually it might need to be global
+ -create a UIButton class which takes in the level and accordingly becomes enable/disabled (green or grey). 
+ -level should also be taken from teacher/student class, or the global class
+*/
 import UIKit
 
 class ProblemSelectorViewController: UIViewController {
@@ -42,16 +49,6 @@ class ProblemSelectorViewController: UIViewController {
         level5.backgroundColor = UIColor.gray
         level6.backgroundColor = UIColor.gray
     
-    }
-    
-    //THESE DON'T WORK YET
-    @IBAction func buttonClicked(sender: AnyObject) { //Touch Up Inside action
-        level1.backgroundColor = UIColor.darkGray
-    }
-    
-    @IBAction func buttonReleased(sender: AnyObject) { //Touch Down action
-        level1.backgroundColor = UIColor.green
-        
     }
     
 }
