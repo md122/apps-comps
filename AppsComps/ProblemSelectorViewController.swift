@@ -11,8 +11,7 @@ import UIKit
 class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var greetingText: UILabel!
     @IBOutlet weak var levelText: UILabel!
-    //TODO: user should retrieve information from Teacher or Student class, not Account class.
-    //Actually it might need to be global
+    //TODO: user should retrieve information from Teacher or Student class
     let user = Account(idToken: "123", name: "Jan")
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 4
