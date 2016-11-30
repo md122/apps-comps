@@ -109,6 +109,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             print(userId)
             print(idToken)
             print(fullName)
+            let connector = APIConnector()
+            connector.attemptLogin(callingDelegate: self, userID: idToken!)
         } else {
             print("\(error.localizedDescription)")
         }
