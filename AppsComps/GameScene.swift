@@ -40,7 +40,7 @@ class GameScene: SKScene {
         
         for child in self.children {
             if let block = child as? Block {
-                if block == self.atPoint(touchLocation) {
+                if block == self.atPoint(touchLocation) || block.getLabel() == self.atPoint(touchLocation) {
                     blockTouched = block
                 }
             }

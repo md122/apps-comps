@@ -24,19 +24,10 @@ class Block: SKSpriteNode {
     var value: Double
     var label = SKLabelNode(fontNamed: "Arial")
     
-    //How do we get the blocks to be different sizes based on the type???
-    override init(texture: SKTexture!, color: UIColor, size: CGSize) {
-        self.type = .number
-        self.value = 0.0
-
-        super.init(texture: texture, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-    }
-    
-    convenience init(type: BlockType) {
-        //These values are overridden in the override init
-        
-        self.init(texture: nil, color: .white, size: CGSize(width: 1, height : 1))
+    init(type: BlockType) {
         self.type = type
+        self.value = 0.0
+        super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
         
         switch self.type {
         case .number:
@@ -74,5 +65,9 @@ class Block: SKSpriteNode {
     
     func getNumWidth() -> Int{
         return NUMBLOCKWIDTH
+    }
+    
+    func getLabel() ->SKLabelNode{
+        return self.label
     }
 }
