@@ -16,29 +16,36 @@ class Block: SKSpriteNode {
         case variable
     }
     
-    let BLOCKHEIGHT = 10
-    let VARBLOCKWIDTH = 50
-    let NUMBLOCKWIDTH = 20
+    let BLOCKHEIGHT = 10.0
+    let VARBLOCKWIDTH = 50.0
+    let NUMBLOCKWIDTH = 20.0
     
+    //Type is either number or variable
     var type: BlockType
     var value: Double
     var label = SKLabelNode(fontNamed: "Arial")
     
     init(type: BlockType) {
         self.type = type
-        self.value = 0.0
-        super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+        self.value = 1.0
         
         switch self.type {
         case .number:
+            super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
             self.color = .purple
+            label.text = String(value)
         case .variable:
+            super.init(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
             self.color = .green
+            label.text = "variable"
         }
         
-        //Add the information to the label and attach the label to this block
-        label.text = "YAY!!!"
-        label.fontSize = 8
+        
+        
+        
+        //Set the look of the label and attach the label to this block
+        label.fontSize = 6
+        label.fontColor = .black
         label.position = CGPoint(x:self.position.x, y:self.position.y)
         self.addChild(label)
     }
@@ -55,19 +62,38 @@ class Block: SKSpriteNode {
         return value
     }
     
-    func getHeight() -> Int{
+    func getHeight() -> Double{
         return BLOCKHEIGHT
     }
     
-    func getVarWidth() -> Int{
+    func getVarWidth() -> Double{
         return VARBLOCKWIDTH
     }
     
-    func getNumWidth() -> Int{
+    func getNumWidth() -> Double{
         return NUMBLOCKWIDTH
+    }
+    
+    func getWidth() -> Double{
+        switch self.type {
+        case .number:
+            return Double(NUMBLOCKWIDTH) * self.value
+        case .variable:
+            return Double(VARBLOCKWIDTH)
+        }
+    }
+    
+    func getTopRightX() -> Double{
+        return Double(self.position.x) + self.getWidth() / 2
+        
+    }
+    
+    func getTopRightY() -> Double{
+        return Double(self.position.y) + self.getHeight() / 2
     }
     
     func getLabel() ->SKLabelNode{
         return self.label
     }
+
 }
