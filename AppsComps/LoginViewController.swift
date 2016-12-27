@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate  {
+class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate {
 
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
@@ -16,7 +16,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+            print("signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        } else {
+            print ("not signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,7 +41,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         let connector = APIConnector()
         connector.attemptLogin(callingDelegate: self, idToken: "STUDENT1")
     }
+
     
+    
+
 
 
     /*

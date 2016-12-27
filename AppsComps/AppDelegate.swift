@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
         }
     }
+
+    
     
     // Function that gets called when student data comes back
     func handleLoginAttempt(data: NSDecimalNumber) {
@@ -41,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
     func handleCreateAccountAttempt(data: [NSArray]) {
         print(data)
     }
-    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -100,19 +101,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             annotation: options[UIApplicationOpenURLOptionsKey.annotation])
     }
     
-
-    // MARK: - Split view
-
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
-        guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
-        guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
-        if topAsDetailController.detailItem == nil {
-            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-            return true
-        }
-        return false
-    }
-    
     // Google sign-in methods from tutorial
     // The sign-in flow has finished and was successful if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
@@ -135,6 +123,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
     public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         //sign out user somehow
     }
+
+    // MARK: - Split view
+
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
+        guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
+        guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
+        if topAsDetailController.detailItem == nil {
+            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+            return true
+        }
+        return false
+    }
+
 
 
 }
