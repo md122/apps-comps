@@ -20,7 +20,7 @@ class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var levelText: UILabel!
     //TODO: user should retrieve information from Teacher or Student class, not Account class.
     //Actually it might need to be global
-    let user = Account(idToken: "123", name: "Jan")
+    //let user = Account(idToken: "123", name: "Jan")
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 4
     
@@ -34,7 +34,7 @@ class ProblemSelectorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        greetingText.text = "Hello " + (user?.getName())!
+        greetingText.text = "Hello " + Account.sharedInstance.name!
         levelText.text = "You are on level " + String(level)
         
         loadButtons()
