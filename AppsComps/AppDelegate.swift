@@ -27,6 +27,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
         }
     }
+    
+    // Function that gets called when student data comes back
+    func handleLoginAttempt(data: NSDecimalNumber) {
+        print(data)
+        
+        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
+        //call Student class, initialize it, direct to problem selector
+        //call teacher class, init, direct to teacher dashboard
+    }
+    
+    // Function that gets called when creating account
+    func handleCreateAccountAttempt(data: [NSArray]) {
+        print(data)
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -104,13 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         if (error == nil) {
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
+            let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            print(userId)
-            print(idToken)
-            print(fullName)
             let connector = APIConnector()
-            connector.attemptLogin(callingDelegate: self, userID: idToken!)
+            connector.attemptLogin(callingDelegate: self, idToken: userToken!)
+            //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
         } else {
             print("\(error.localizedDescription)")
         }

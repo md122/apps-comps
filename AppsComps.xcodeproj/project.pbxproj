@@ -27,6 +27,10 @@
 		8111C3511DBFBB6D002C8067 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */; };
 		8111C35C1DBFBB6D002C8067 /* AppsCompsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C35B1DBFBB6D002C8067 /* AppsCompsTests.swift */; };
 		8111C3671DBFBB6D002C8067 /* AppsCompsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3661DBFBB6D002C8067 /* AppsCompsUITests.swift */; };
+		815BD57F1DF06E3D00DA377F /* APIDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */; };
+		815BD5801DF06E3E00DA377F /* APIDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */; };
+		815BD5811DF06E4500DA377F /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
+		815BD5821DF06E4600DA377F /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
 		818EC6561DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
 		818EC6571DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
 		818EC6581DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
@@ -557,7 +561,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815BD57F1DF06E3D00DA377F /* APIDataDelegate.swift in Sources */,
 				818EC65D1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
+				815BD5811DF06E4500DA377F /* APIConnector.swift in Sources */,
 				8111C35C1DBFBB6D002C8067 /* AppsCompsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +572,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815BD5801DF06E3E00DA377F /* APIDataDelegate.swift in Sources */,
 				818EC65E1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
+				815BD5821DF06E4600DA377F /* APIConnector.swift in Sources */,
 				8111C3671DBFBB6D002C8067 /* AppsCompsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

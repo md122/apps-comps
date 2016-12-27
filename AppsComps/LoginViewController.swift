@@ -31,30 +31,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, userID: "STUDENT1")
-        
-        connector.attemptCreateAccount(callingDelegate: self, userID: "User1", userName: "James", accountType: "Student")
+        connector.attemptLogin(callingDelegate: self, idToken: "STUDENT1")
     }
     
-    // Function that gets called when student data comes back
-    func handleLoginAttempt(data: Bool) {
-        print("Incoming handleAddProblemDataAttempt data")
-        print(data)
-        
-        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
-        //call Student class, initialize it, direct to problem selector
-        //call teacher class, init, direct to teacher dashboard
-    }
-    
-    // Function that gets called when next problem comes back
-    func handleCreateAccountAttempt(data: [NSArray]) {
-        print("Incoming handleNextProblem data")
-        print(data)
-    }
-    
-    
-    
-    
+
 
     /*
     // MARK: - Navigation
