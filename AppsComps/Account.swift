@@ -9,24 +9,27 @@
 import UIKit
 
 class Account {
-    var idToken: String
-    var name: String
     
-    init?(idToken: String, name: String){
+    static let sharedInstance = Account()
+    private init() { }
+    var idToken: String?
+    var name: String?
+    
+    /*init?(idToken: String, name: String){
         self.idToken = idToken
         self.name = name
         if idToken.isEmpty || name.isEmpty {
             return nil
         }
     }
-    
+
     func getIdToken()->String {
         return idToken
     }
     
     func getName()->String{
         return name
-    }
+    }*/
 
     
 }

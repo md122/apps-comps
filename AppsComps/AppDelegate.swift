@@ -118,12 +118,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
             // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
+            //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
             let connector = APIConnector()
             connector.attemptLogin(callingDelegate: self, idToken: userToken!)
             //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
+            Account.sharedInstance.idToken = userToken!
+            Account.sharedInstance.name = fullName!
         } else {
             print("\(error.localizedDescription)")
         }
