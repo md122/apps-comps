@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate  {
+class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate {
 
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
@@ -16,7 +16,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+            print("signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        } else {
+            print ("not signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,10 +39,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, userID: "STUDENT1")
-        
-        connector.attemptCreateAccount(callingDelegate: self, userID: "User1", userName: "James", accountType: "Student")
+        connector.attemptLogin(callingDelegate: self, idToken: "STUDENT1")
     }
+
     
     // Function that gets called when student data comes back
     func handleLoginAttempt(data: Bool) {
@@ -53,9 +60,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         
     }
     
+
     
     
-    
+
+
 
     /*
     // MARK: - Navigation

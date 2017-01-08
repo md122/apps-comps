@@ -28,7 +28,7 @@ import Foundation
     @objc optional func handleRemoveClassroomAttempt(data: Bool) ;
     
     // Methods for login screen
-    @objc optional func handleLoginAttempt(data: Bool) ;
+    @objc optional func handleLoginAttempt(data: NSDecimalNumber) ;
     @objc optional func handleCreateAccountAttempt(data: [NSArray]) ;
     
     
