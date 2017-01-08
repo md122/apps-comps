@@ -56,14 +56,34 @@ class APIConnector: NSObject  {
         callingDelegate.handleRemoveClassroomAttempt?(data: dummyData)
     }
     
-    func attemptLogin(callingDelegate: APIDataDelegate, userID: String) {
-        let dummyData = false
-        callingDelegate.handleLoginAttempt?(data: dummyData)
+    func attemptLogin(callingDelegate: APIDataDelegate, idToken: String) {
+        Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/attemptLogin/" + idToken).responseJSON { response in
+            //print(response.request)  // original URL request
+            //print(response.response) // HTTP URL response
+            //print(response.data)     // server data
+            //print(response.result)   // result of response serialization
+            if let JSON = response.result.value {
+                //print("JSON: \(JSON)")
+                callingDelegate.handleLoginAttempt?(data: JSON as! NSDecimalNumber)
+                
+                //callingDelegate.handleStudentData!(data: retrievedData)
+            }
+            
+        }
+
     }
     
-    func attemptCreateAccount(callingDelegate: APIDataDelegate, userID: String, userName: String, accountType: String) {
-        let dummyData: [NSArray] = [[true], ["alsdkfjasdf9898"]]
-        callingDelegate.handleCreateAccountAttempt?(data: dummyData)
+    func attemptCreateAccount(callingDelegate: APIDataDelegate, idToken: String, accountType: String) {
+        Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/attemptCreateUser/" + idToken + "/" + accountType).responseJSON { response in
+            print(response.request)  // original URL request
+            print(response.response) // HTTP URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
+            if let JSON = response.result.value {
+                print("JSON: \(JSON)")
+                callingDelegate.handleCreateAccountAttempt?(data: JSON as! [NSArray])
+            }
+        }
     }
     
     

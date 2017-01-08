@@ -28,6 +28,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         }
     }
 
+    
+    
+    // Function that gets called when student data comes back
+    func handleLoginAttempt(data: NSDecimalNumber) {
+        print(data)
+        
+        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
+        //call Student class, initialize it, direct to problem selector
+        //call teacher class, init, direct to teacher dashboard
+    }
+    
+    // Function that gets called when creating account
+    func handleCreateAccountAttempt(data: [NSArray]) {
+        print(data)
+    }
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Override point for customization after application launch.
@@ -85,6 +101,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             annotation: options[UIApplicationOpenURLOptionsKey.annotation])
     }
     
+    // Google sign-in methods from tutorial
+    // The sign-in flow has finished and was successful if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if (error == nil) {
+            // Perform any operations on signed in user here.
+            //let userId = user.userID                  // For client-side use only!
+            let userToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            let connector = APIConnector()
+            connector.attemptLogin(callingDelegate: self, idToken: userToken!)
+            //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
+            Account.sharedInstance.idToken = userToken!
+            Account.sharedInstance.name = fullName!
+        } else {
+            print("\(error.localizedDescription)")
+        }
+    }
+    
+    // Finished disconnecting |user| from the app successfully if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        //sign out user somehow
+    }
 
     // MARK: - Split view
 
@@ -97,24 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         }
         return false
     }
-    
-    // Google sign-in methods from tutorial
-    // The sign-in flow has finished and was successful if |error| is |nil|.
-    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if (error == nil) {
-            // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
-            let fullName = user.profile.name
-        } else {
-            print("\(error.localizedDescription)")
-        }
-    }
-    
-    // Finished disconnecting |user| from the app successfully if |error| is |nil|.
-    public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        //sign out user somehow
-    }
+
 
 
 }
