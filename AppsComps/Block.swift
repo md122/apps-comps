@@ -22,7 +22,7 @@ class Block: SKSpriteNode {
     
     //Type is either number or variable
     var type: BlockType
-    var value: Double
+    var value: Double // Holds the value. I.e. in a 5x block, 5 is the value
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     
@@ -31,29 +31,25 @@ class Block: SKSpriteNode {
         self.value = 1.0
         
         switch self.type {
-        case .number:
-            super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-            self.color = .white
-            innerBlockColor = SKSpriteNode(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-            innerBlockColor.color = .purple
-            label.text = String(value)
-        case .variable:
-            super.init(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
-            self.color = .white
-            innerBlockColor = SKSpriteNode(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
-            innerBlockColor.color = .green
-            label.text = "variable"
+            case .number:
+                super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+                label.text = String(value)
+            case .variable:
+                super.init(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+                label.text = "x"
         }
-        innerBlockColor.xScale = 0.9
+        innerBlockColor.xScale = 0.9 // TO FIX: scale the border so that the border is constant width
         innerBlockColor.yScale = 0.9
         
+        // Add block color to be child of Block and set it to be 1 unit higher than its parent
         self.addChild(innerBlockColor)
         innerBlockColor.zPosition = 1
         
-        //Set the look of the label and attach the label to this block
+        //Set the look of the label and attach the label to this block 2 units higher than its parent
         label.fontSize = 6
         label.fontColor = .black
-        label.position = CGPoint(x:self.position.x, y:self.position.y)
         self.addChild(label)
         label.zPosition = 2
     }
