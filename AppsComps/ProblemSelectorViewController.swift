@@ -27,12 +27,12 @@ class ProblemSelectorViewController: UIViewController {
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 4
     
-    @IBOutlet weak var level1: UIButton!
-    @IBOutlet weak var level2: UIButton!
-    @IBOutlet weak var level3: UIButton!
-    @IBOutlet weak var level4: UIButton!
-    @IBOutlet weak var level5: UIButton!
-    @IBOutlet weak var level6: UIButton!
+    @IBOutlet weak var level1: Level!
+    @IBOutlet weak var level2: Level!
+    @IBOutlet weak var level3: Level!
+    @IBOutlet weak var level4: Level!
+    @IBOutlet weak var level5: Level!
+    @IBOutlet weak var level6: Level!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +45,13 @@ class ProblemSelectorViewController: UIViewController {
     
     func loadButtons(){
         //TODO: make buttons gray if level not reached
-        level1.backgroundColor = UIColor.green
-        level2.backgroundColor = UIColor.green
-        level3.backgroundColor = UIColor.green
-        level4.backgroundColor = UIColor.green
-        level5.backgroundColor = UIColor.gray
-        level6.backgroundColor = UIColor.gray
-    
+        level1.setLevel(lev: 1)
+        level2.setLevel(lev: 2)
+        level3.setLevel(lev: 3)
+        level4.setLevel(lev: 4)
+        level5.setLevel(lev: 5)
+        level6.setLevel(lev: 6)
+        level1.checkAccess(curLev: level)
     }
     
 }
