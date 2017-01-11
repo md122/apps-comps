@@ -30,6 +30,8 @@ class APIConnector: NSObject  {
         callingDelegate.handleStudentDashInfo?(data: dummyData)
     }
     
+    
+    
     func attemptAddStudentToClassroom(callingDelegate: APIDataDelegate, studentID: String, classroomID: String) {
         let url = baseURL + "attemptAddStudentToClassroom/" + studentID + "/" + classroomID
         Alamofire.request(url).responseData { response in
@@ -42,7 +44,7 @@ class APIConnector: NSObject  {
                 } else if (utf8Text == "ERROR: Student already in classroom") {
                     print("Need to figure out how to handle this")
                 }
-                callingDelegate.handleCreateAccountAttempt?(data: result)
+                callingDelegate.handleAddStudentToClassAttempt?(data: result)
             }
         }
     }
@@ -55,7 +57,7 @@ class APIConnector: NSObject  {
                 if (utf8Text == "True") {
                     result = true
                 }
-                callingDelegate.handleCreateAccountAttempt?(data: result)
+                callingDelegate.handleRemoveStudentFromClassAttempt?(data: result)
             }
         }
     }
@@ -89,7 +91,7 @@ class APIConnector: NSObject  {
                 if (utf8Text == "ERROR: Account id invalid") {
                     print("Need to figure out how to handle this")
                 }
-                callingDelegate.handleCreateAccountAttempt?(data: result)
+                callingDelegate.handleAddClassroomAttempt?(data: result)
             }
         }
     }
@@ -105,24 +107,15 @@ class APIConnector: NSObject  {
                 if (utf8Text == "ERROR: Account id invalid") {
                     print("Need to figure out how to handle this")
                 }
-                callingDelegate.handleCreateAccountAttempt?(data: result)
+                callingDelegate.handleRemoveClassroomAttempt?(data: result)
             }
         }
     }
     
-    // LOGIN SCREEN
+/*
     
     func attemptLogin(callingDelegate: APIDataDelegate, userID: String) {
-        let url = baseURL + "attemptLogin/" + userID
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
-                }
-                callingDelegate.handleLoginAttempt?(data: result)
-            }
-        }
+     
     }
     
     func attemptCreateAccount(callingDelegate: APIDataDelegate, userID: String, userName: String, accountType: String) {
@@ -137,6 +130,39 @@ class APIConnector: NSObject  {
                     print("Need to figure out how to handle this")
                 }
                 callingDelegate.handleCreateAccountAttempt?(data: result)
+        }
+     }
+*/
+    
+    // Have to figure out how to return and properly handle returned value
+    func attemptLogin(callingDelegate: APIDataDelegate, idToken: String) {
+        
+        let url = baseURL + "attemptLogin/" + idToken
+        Alamofire.request(url).responseJSON { response in
+            if let responseData = response.result.value{
+                /* var result = false
+                if (utf8Text == "True") {
+                    result = true
+                } */
+                callingDelegate.handleLoginAttempt?(data: responseData as! NSDecimalNumber)
+            }
+        }
+    }
+    
+    func attemptCreateAccount(callingDelegate: APIDataDelegate, idToken: String, accountType: String) {
+        let url = baseURL + "attemptCreateUser/" + idToken + "/" + accountType
+        Alamofire.request(url).responseJSON { response in
+            if let responseData = response.result.value{
+                /*
+                var result = false
+                if (utf8Text == "True") {
+                    result = true
+                }
+                if (utf8Text == "ERROR: Account already exists") {
+                    print("Need to figure out how to handle this")
+                }
+                */
+                callingDelegate.handleCreateAccountAttempt?(data: responseData as! [NSArray])
             }
         }
     }

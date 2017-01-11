@@ -53,7 +53,7 @@ class Teacher: Account, APIDataDelegate {
     }
     
     // Function that gets called when attempt to add classroom gets back
-    func handleAddClassroomAttempt(data: String) {
+    func handleAddClassroomAttempt(data: Bool) {
         print(data)
     }
     

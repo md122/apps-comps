@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate  {
+class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate {
 
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
@@ -16,8 +16,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
-        testAPIConnector()
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+            print("signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        } else {
+            print ("not signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,30 +39,29 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, userID: "User1")
-        connector.attemptLogin(callingDelegate: self, userID: "User27")
+        connector.attemptLogin(callingDelegate: self, idToken: "User1")
+        connector.attemptLogin(callingDelegate: self, idToken: "User27")
         
-        connector.attemptCreateAccount(callingDelegate: self, userID: "User1", userName: "James", accountType: "0")
+        connector.attemptCreateAccount(callingDelegate: self, idToken: "User1", accountType: "0")
     }
     
     // Function that gets called when student data comes back
-    func handleLoginAttempt(data: Bool) {
+    func handleLoginAttempt(data: NSDecimalNumber) {
         print("\n\n\n\n\n")
         print("Incoming handleLoginAttempt data")
         print(data)
     }
     
     // Function that gets called when next problem comes back
-    func handleCreateAccountAttempt(data: Bool) {
+    func handleCreateAccountAttempt(data: [NSArray]) {
         print("-------------------------")
         print()
         print("Incoming handleCreateAccountAttempt data")
         print(data)
     }
     
-    
-    
-    
+
+
 
     /*
     // MARK: - Navigation

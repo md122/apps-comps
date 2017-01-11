@@ -25,12 +25,12 @@ import Foundation
     
     // Methods for teacher class
     @objc optional func handleTeacherDashInfo(data: [NSArray]) ;
-    @objc optional func handleAddClassroomAttempt(data: String) ;
+    @objc optional func handleAddClassroomAttempt(data: Bool) ;
     @objc optional func handleRemoveClassroomAttempt(data: Bool) ;
     
     // Methods for login screen
-    @objc optional func handleLoginAttempt(data: Bool) ;
-    @objc optional func handleCreateAccountAttempt(data: Bool) ;
+    @objc optional func handleLoginAttempt(data: NSDecimalNumber) ;
+    @objc optional func handleCreateAccountAttempt(data: [NSArray]) ;
     
     
 
