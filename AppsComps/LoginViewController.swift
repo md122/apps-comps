@@ -13,18 +13,14 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signInSilently()
+        //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-            print("signed in")
-            //performSegue(withIdentifier: "your_segue_name", sender: self)
-        } else {
-            print ("not signed in")
-            //performSegue(withIdentifier: "your_segue_name", sender: self)
-        }
+
+ 
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,7 +38,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         connector.attemptLogin(callingDelegate: self, idToken: "STUDENT1")
     }
 
-    
+    func didAttemptSignIn() {
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+            print("signed in")
+            performSegue(withIdentifier: "loginToStudentDash", sender: self)
+        } else {
+            print ("not signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        }
+    }
     
 
 

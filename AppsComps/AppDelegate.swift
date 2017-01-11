@@ -114,6 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
             Account.sharedInstance.idToken = userToken!
             Account.sharedInstance.name = fullName!
+            // If the current view controller is loginviewcontroller call didAttemptSignIn to do
+            // segue logic
+            if let controller = self.window?.rootViewController as? LoginViewController {
+                controller.didAttemptSignIn()
+            }
         } else {
             print("\(error.localizedDescription)")
         }
