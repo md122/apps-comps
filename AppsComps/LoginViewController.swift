@@ -44,7 +44,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
 
     
     // Function that gets called when student data comes back
-    func handleLoginAttempt(data: Bool) {
+    func handleLoginAttempt(data: NSDecimalNumber) {
         print("Incoming handleAddProblemDataAttempt data")
         print(data)
         

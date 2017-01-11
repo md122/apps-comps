@@ -19,7 +19,6 @@ class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var greetingText: UILabel!
     @IBOutlet weak var levelText: UILabel!
     //TODO: user should retrieve information from Teacher or Student class
-    let user = Account(idToken: "123", name: "Jan")
 
     //TODO: user should retrieve information from Teacher or Student class, not Account class.
     //Actually it might need to be global
