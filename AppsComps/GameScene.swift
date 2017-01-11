@@ -13,7 +13,7 @@ import GameplayKit
 import UIKit
 
 class GameScene: SKScene {
-    
+    var currentBlockZ : CGFloat = 1.0
     var topBar = [Block]()
     var bottomBar = [Block]()
     let BARX = 100
@@ -28,6 +28,13 @@ class GameScene: SKScene {
     var numBlockBankPosition = CGPoint(x:100, y:100)
     var varBlockBankPosition = CGPoint(x:200, y:100)
     
+    override func addChild(_ node: SKNode) {
+        node.zPosition = CGFloat(currentBlockZ)
+        currentBlockZ += 3
+        super.addChild(node)
+    }
+    
+    
     //Called immediately after a scene is presented by a view
     override func didMove(to view: SKView) {
         //Add the original block in the number block bank and the variable block bank
@@ -38,14 +45,13 @@ class GameScene: SKScene {
         self.addChild(varBlockInBank)
         
         
-        
         //These blocks are temporary to figure out adding to bars
-        var topBarBlock = Block(type:.number)
+        let topBarBlock = Block(type:.number)
         topBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
         self.addChild(topBarBlock)
         topBar.append(topBarBlock)
         
-        var bottomBarBlock = Block(type:.variable)
+        let bottomBarBlock = Block(type:.variable)
         bottomBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(BOTTOMBARY))
         self.addChild(bottomBarBlock)
         bottomBar.append(bottomBarBlock)
@@ -55,10 +61,13 @@ class GameScene: SKScene {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         
+        
         for child in self.children {
             if let block = child as? Block {
-                if block == self.atPoint(touchLocation) || block.getLabel() == self.atPoint(touchLocation) {
+                if block == self.atPoint(touchLocation) || block.getLabel() == self.atPoint(touchLocation) || block.getBlockColorRectangle() == self.atPoint(touchLocation) {
                     blockTouched = block
+                    block.zPosition = currentBlockZ
+                    currentBlockZ += 3
                 }
             }
         }
@@ -188,6 +197,7 @@ class GameScene: SKScene {
                     block.position = varBlockBankPosition
                 }
             }
+            
             blockTouched = nil
         }
     }

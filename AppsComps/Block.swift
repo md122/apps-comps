@@ -24,6 +24,7 @@ class Block: SKSpriteNode {
     var type: BlockType
     var value: Double
     var label = SKLabelNode(fontNamed: "Arial")
+    var innerBlockColor = SKSpriteNode()
     
     init(type: BlockType) {
         self.type = type
@@ -32,22 +33,29 @@ class Block: SKSpriteNode {
         switch self.type {
         case .number:
             super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-            self.color = .purple
+            self.color = .white
+            innerBlockColor = SKSpriteNode(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+            innerBlockColor.color = .purple
             label.text = String(value)
         case .variable:
             super.init(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
-            self.color = .green
+            self.color = .white
+            innerBlockColor = SKSpriteNode(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+            innerBlockColor.color = .green
             label.text = "variable"
         }
+        innerBlockColor.xScale = 0.9
+        innerBlockColor.yScale = 0.9
         
-        
-        
+        self.addChild(innerBlockColor)
+        innerBlockColor.zPosition = 1
         
         //Set the look of the label and attach the label to this block
         label.fontSize = 6
         label.fontColor = .black
         label.position = CGPoint(x:self.position.x, y:self.position.y)
         self.addChild(label)
+        label.zPosition = 2
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,6 +102,10 @@ class Block: SKSpriteNode {
     
     func getLabel() ->SKLabelNode{
         return self.label
+    }
+    
+    func getBlockColorRectangle() ->SKSpriteNode{
+        return self.innerBlockColor
     }
 
 }
