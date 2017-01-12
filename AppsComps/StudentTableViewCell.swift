@@ -1,18 +1,15 @@
 //
-//  ClassroomTableViewCell.swift
-//  TeacherDashSingleView
+//  StudentTableViewCell.swift
+//  AppsComps
 //
-//  Created by Brynna Mering on 11/7/16.
-//  Copyright © 2016 appscomps. All rights reserved.
+//  Created by Brynna Mering on 1/12/17.
+//  Copyright © 2017 appscomps. All rights reserved.
 //
 
 import UIKit
 
-class ClassroomTableViewCell: UITableViewCell {
-    //MARK: Properties
+class StudentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var classroomNameLabel: UILabel!
-   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
