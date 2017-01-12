@@ -2,7 +2,7 @@
 //  ProblemSelectorViewController.swift
 //  TeacherDashSingleView
 //
-//  Created by appscomps on 11/9/16.
+//  Created by Wanchen Yao on 11/9/16.
 //  Copyright © 2016 appscomps. All rights reserved.
 //
 
@@ -18,11 +18,7 @@ import UIKit
 class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var greetingText: UILabel!
     @IBOutlet weak var levelText: UILabel!
-    //TODO: user should retrieve information from Teacher or Student class
 
-    //TODO: user should retrieve information from Teacher or Student class, not Account class.
-    //Actually it might need to be global
-    //let user = Account(idToken: "123", name: "Jan")
 
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 4
@@ -35,6 +31,7 @@ class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var level6: LevelButton!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         greetingText.text = "Hello " + Account.sharedInstance.name!
@@ -51,7 +48,7 @@ class ProblemSelectorViewController: UIViewController {
         level4.setLevel(lev: 4)
         level5.setLevel(lev: 5)
         level6.setLevel(lev: 6)
-        level1.checkAccess(curLev: level)
+
     }
     
 }

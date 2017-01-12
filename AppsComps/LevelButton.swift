@@ -21,8 +21,8 @@ class LevelButton: UIButton {
         
         super.init(coder: aDecoder)
         
+        setBGColor();
         // set other operations after super.init, if required
-        setBGColor()
         //self.addTarget(self, action: Selector(("onTap:")), for: .touchUpInside)
     }
     
@@ -43,11 +43,10 @@ class LevelButton: UIButton {
     
     func onTap(){
         self.backgroundColor = UIColor.darkGray
-        
     }
     
     func setLevel(lev: Int){
-        level = lev
+        self.level = lev
     }
     
     func checkAccess(curLev: Int){

@@ -17,6 +17,12 @@ class Teacher: Account, APIDataDelegate {
      getClassrooms
      Delete a classroom
      */
+    
+    func getHighestLevel()->String{
+        //always is highest level
+        return "6"
+    }
+    
     func createClassroom(classroomName: String){
         //Generate some pattern for a new classroomID: maybe lowercase of classroomName plus some number
         //tell the db connector to add a new classroom to the db with classroomID, classroomName, and self.IDToken
