@@ -20,7 +20,7 @@
 		47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */; };
 		47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3021DC563AD002F4DC1 /* GameScene.swift */; };
 		47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3081DD68E0B002F4DC1 /* Block.swift */; };
-		810F05681E26DB5900F1FD49 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810F05671E26DB5900F1FD49 /* Level.swift */; };
+		810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810F05671E26DB5900F1FD49 /* LevelButton.swift */; };
 		8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3441DBFBB6D002C8067 /* AppDelegate.swift */; };
 		8111C3491DBFBB6D002C8067 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111C3481DBFBB6D002C8067 /* DetailViewController.swift */; };
 		8111C34C1DBFBB6D002C8067 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8111C34A1DBFBB6D002C8067 /* Main.storyboard */; };
@@ -76,7 +76,7 @@
 		47EBC3081DD68E0B002F4DC1 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		6AF2770A3D16C00EA9DC73F3 /* Pods-AppsCompsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsUITests/Pods-AppsCompsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7712B49316818E4298CBF609 /* Pods-AppsComps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsComps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps.debug.xcconfig"; sourceTree = "<group>"; };
-		810F05671E26DB5900F1FD49 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		810F05671E26DB5900F1FD49 /* LevelButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelButton.swift; sourceTree = "<group>"; };
 		8111C3411DBFBB6D002C8067 /* AppsComps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppsComps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111C3441DBFBB6D002C8067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8111C3481DBFBB6D002C8067 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 			children = (
 				113B052A1DDBB3AF00D001DD /* Account.swift */,
 				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
-				810F05671E26DB5900F1FD49 /* Level.swift */,
+				810F05671E26DB5900F1FD49 /* LevelButton.swift */,
 				8111C3481DBFBB6D002C8067 /* DetailViewController.swift */,
 				113B05321DDBB3CC00D001DD /* ClassroomTableViewController.swift */,
 				113B05301DDBB3C000D001DD /* ClassroomTableViewCell.swift */,
@@ -556,7 +556,7 @@
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
 				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
-				810F05681E26DB5900F1FD49 /* Level.swift in Sources */,
+				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

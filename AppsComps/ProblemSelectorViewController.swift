@@ -27,12 +27,12 @@ class ProblemSelectorViewController: UIViewController {
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 4
     
-    @IBOutlet weak var level1: Level!
-    @IBOutlet weak var level2: Level!
-    @IBOutlet weak var level3: Level!
-    @IBOutlet weak var level4: Level!
-    @IBOutlet weak var level5: Level!
-    @IBOutlet weak var level6: Level!
+    @IBOutlet weak var level1: LevelButton!
+    @IBOutlet weak var level2: LevelButton!
+    @IBOutlet weak var level3: LevelButton!
+    @IBOutlet weak var level4: LevelButton!
+    @IBOutlet weak var level5: LevelButton!
+    @IBOutlet weak var level6: LevelButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
