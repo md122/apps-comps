@@ -54,6 +54,11 @@ class GameScene: SKScene {
         
         self.backgroundColor = .white
         
+        let garbage = SKSpriteNode(imageNamed: "garbage.png")
+        garbage.position = CGPoint(x: 500, y: 500)
+        garbage.size = CGSize(width: 100, height: 120)
+        self.addChild(garbage)
+        
         //Add the original block in the number block bank and the variable block bank
         numBlockInBank.position = NUMBLOCKBANKPOSITION
         self.addBlockChild(numBlockInBank)
@@ -62,7 +67,6 @@ class GameScene: SKScene {
         self.addBlockChild(varBlockInBank)
         
         //These blocks are temporary to figure out adding to bars
-        
         let topBarBlock = Block(type:.number)
         topBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
         self.addBlockChild(topBarBlock)
