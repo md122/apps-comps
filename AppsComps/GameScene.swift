@@ -49,8 +49,11 @@ class GameScene: SKScene {
     
     
     // Called immediately after a scene is loaded
-    // Sets
+    // Sets the layout of all components in the problem screen
     override func didMove(to view: SKView) {
+        
+        self.backgroundColor = .white
+        
         //Add the original block in the number block bank and the variable block bank
         numBlockInBank.position = NUMBLOCKBANKPOSITION
         self.addBlockChild(numBlockInBank)
@@ -59,6 +62,7 @@ class GameScene: SKScene {
         self.addBlockChild(varBlockInBank)
         
         //These blocks are temporary to figure out adding to bars
+        
         let topBarBlock = Block(type:.number)
         topBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
         self.addBlockChild(topBarBlock)

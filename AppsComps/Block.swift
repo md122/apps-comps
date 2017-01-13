@@ -16,9 +16,9 @@ class Block: SKSpriteNode {
         case variable
     }
     
-    let BLOCKHEIGHT = 10.0
-    let VARBLOCKWIDTH = 50.0
-    let NUMBLOCKWIDTH = 20.0
+    let BLOCKHEIGHT = 25.0
+    let VARBLOCKWIDTH = 60.0
+    let NUMBLOCKWIDTH = 40.0
     
     //Type is either number or variable
     var type: BlockType
@@ -32,16 +32,16 @@ class Block: SKSpriteNode {
         
         switch self.type {
             case .number:
-                super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+                super.init(texture: nil, color: .black, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
                 innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
                 label.text = String(value)
             case .variable:
-                super.init(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+                super.init(texture: nil, color: .black, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
                 innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
                 label.text = "x"
         }
-        innerBlockColor.xScale = 0.9 // TO FIX: scale the border so that the border is constant width
-        innerBlockColor.yScale = 0.9
+        innerBlockColor.xScale = CGFloat(1-(1/self.getWidth()))
+        innerBlockColor.yScale = CGFloat(1-(1/self.getHeight()))
         
         // Add block color to be child of Block and set it to be 1 unit higher than its parent
         self.addChild(innerBlockColor)
