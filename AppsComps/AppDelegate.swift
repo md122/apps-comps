@@ -8,6 +8,8 @@
 
 import UIKit
 
+var acc: Account?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignInDelegate {
 
@@ -30,14 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
 
     
     
-    // Function that gets called when student data comes back
+    
+    /*// Function that gets called when student data comes back
     func handleLoginAttempt(data: NSDecimalNumber) {
         print(data)
         
         //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
         //call Student class, initialize it, direct to problem selector
         //call teacher class, init, direct to teacher dashboard
-    }
+    }*/
     
     // Function that gets called when creating account
     func handleCreateAccountAttempt(data: [NSArray]) {
@@ -105,15 +108,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
     // The sign-in flow has finished and was successful if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
+            
+
+            
             // Perform any operations on signed in user here.
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            let connector = APIConnector()
-            connector.attemptLogin(callingDelegate: self, idToken: userToken!)
-            //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
             Account.sharedInstance.idToken = userToken!
             Account.sharedInstance.name = fullName!
+            // If the current view controller is loginviewcontroller call didAttemptSignIn to
+            // use google creds to login to app or create account
+            if let controller = self.window?.rootViewController as? LoginViewController {
+                controller.didAttemptSignIn()
+            }
         } else {
             print("\(error.localizedDescription)")
         }

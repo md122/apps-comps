@@ -14,6 +14,7 @@ class Account {
     private init() { }
     var idToken: String?
     var name: String?
+    //var type: String?
     
     /*init?(idToken: String, name: String){
         self.idToken = idToken
@@ -22,6 +23,8 @@ class Account {
             return nil
         }
     }
+     
+    
 
     func getIdToken()->String {
         return idToken
