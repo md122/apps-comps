@@ -96,6 +96,7 @@ class APIConnector: NSObject  {
         }
     }
     
+    // API call to attempt to remove a classroom
     func attemptRemoveClassroom(callingDelegate: APIDataDelegate, classroomID: String) {
         let url = baseURL + "attemptRemoveClassroom/" + classroomID
         Alamofire.request(url).responseData { response in
