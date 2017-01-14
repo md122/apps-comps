@@ -262,7 +262,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8111C36B1DBFBB6D002C8067 /* Build configuration list for PBXNativeTarget "AppsComps" */;
 			buildPhases = (
-				542B2B74F721D0D83B4878DF /* 📦 Check Pods Manifest.lock */,
+				542B2B74F721D0D83B4878DF /* [CP] Check Pods Manifest.lock */,
 				540DB1605821FB0F8ACD7BF1 /* [CP] Check Pods Manifest.lock */,
 				8111C33D1DBFBB6D002C8067 /* Sources */,
 				8111C33E1DBFBB6D002C8067 /* Frameworks */,
@@ -285,7 +285,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8111C36E1DBFBB6D002C8067 /* Build configuration list for PBXNativeTarget "AppsCompsTests" */;
 			buildPhases = (
-				B7A9720F7ACDA102C7C5750D /* 📦 Check Pods Manifest.lock */,
+				B7A9720F7ACDA102C7C5750D /* [CP] Check Pods Manifest.lock */,
 				2C6F4D70AAC15403CEB45351 /* [CP] Check Pods Manifest.lock */,
 				8111C3531DBFBB6D002C8067 /* Sources */,
 				8111C3541DBFBB6D002C8067 /* Frameworks */,
@@ -309,7 +309,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8111C3711DBFBB6D002C8067 /* Build configuration list for PBXNativeTarget "AppsCompsUITests" */;
 			buildPhases = (
-				4F1C22038530A38BCE2D699D /* 📦 Check Pods Manifest.lock */,
+				4F1C22038530A38BCE2D699D /* [CP] Check Pods Manifest.lock */,
 				113EEE4B3EB92102826A437B /* [CP] Check Pods Manifest.lock */,
 				8111C35E1DBFBB6D002C8067 /* Sources */,
 				8111C35F1DBFBB6D002C8067 /* Frameworks */,
@@ -495,19 +495,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4F1C22038530A38BCE2D699D /* 📦 Check Pods Manifest.lock */ = {
+		4F1C22038530A38BCE2D699D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		540DB1605821FB0F8ACD7BF1 /* [CP] Check Pods Manifest.lock */ = {
@@ -525,19 +525,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		542B2B74F721D0D83B4878DF /* 📦 Check Pods Manifest.lock */ = {
+		542B2B74F721D0D83B4878DF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A2918E4892C3E9F4207A1305 /* 📦 Copy Pods Resources */ = {
@@ -585,19 +585,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B7A9720F7ACDA102C7C5750D /* 📦 Check Pods Manifest.lock */ = {
+		B7A9720F7ACDA102C7C5750D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D4E55EACBFF7DA9C488C895A /* [CP] Embed Pods Frameworks */ = {

@@ -110,17 +110,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            //let connector = APIConnector()
-            //connector.attemptLogin(callingDelegate: self, idToken: userToken!)
-            //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
             Account.sharedInstance.idToken = userToken!
             Account.sharedInstance.name = fullName!
             // If the current view controller is loginviewcontroller call didAttemptSignIn to
             // use google creds to login to app or create account
             if let controller = self.window?.rootViewController as? LoginViewController {
-                //controller.didAttemptSignIn()
-                let connector = APIConnector()
-                connector.attemptLogin(callingDelegate: self, idToken: userToken!)
+                controller.didAttemptSignIn()
             }
         } else {
             print("\(error.localizedDescription)")

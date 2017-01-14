@@ -42,20 +42,36 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     // Function that gets called when student data comes back
     func handleLoginAttempt(data: NSDecimalNumber) {
         let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-            /*print("signed in")
+            print("signed in")
             if (data == 1) {
-                print ("dont have account")
+                // Structure of how to write pop up taken from http://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+                let createAccountAlert = UIAlertController(title: "Create Account", message: "You don't have an account with us. Create one now?", preferredStyle: UIAlertControllerStyle.alert)
+                createAccountAlert.addAction(UIAlertAction(title: "Create Teacher Account", style: .default, handler: { (action: UIAlertAction!) in
+                    connector.attemptCreateAccount(callingDelegate: self, idToken: Account.sharedInstance.idToken!, accountType: "teacher")
+                    connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+                }))
+                createAccountAlert.addAction(UIAlertAction(title: "Create Student Account", style: .default, handler: { (action: UIAlertAction!) in
+                    connector.attemptCreateAccount(callingDelegate: self, idToken: Account.sharedInstance.idToken!, accountType: "student")
+                    connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+                }))
+                createAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                    print("Handle Cancel Logic here")
+                }))
+                present(createAccountAlert, animated: true, completion: nil)
             }
             else if (data == 2) {
-                print ("has account")
+                performSegue(withIdentifier: "loginToStudentDash", sender: self)
+            }
+            else if (data == 3) {
+                print ("is teacher")
+                //performSegue(withIdentifier: "loginToTeacherDash", sender: self)
             }
             else {
                 print ("yikes")
-            }*/
+            }
             
-            performSegue(withIdentifier: "loginToStudentDash", sender: self)
+            
         } else {
             print ("not signed in")
             //performSegue(withIdentifier: "your_segue_name", sender: self)
@@ -67,28 +83,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     }
     
     
- /*   func didAttemptSignIn() {
+    func didAttemptSignIn() {
+        print ("pls")
         let connector = APIConnector()
         connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-            print("signed in")
-            if (loginresponse == "1") {
-                print ("dont have account")
-            }
-            else if (loginresponse == "2") {
-                print ("has account")
-            }
-            else {
-                print ("yikes")
-            }
-            
-            //performSegue(withIdentifier: "loginToStudentDash", sender: self)
-        } else {
-            print ("not signed in")
-            //performSegue(withIdentifier: "your_segue_name", sender: self)
-        }
     }
-    */
+    
 
 
 
