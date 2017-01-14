@@ -36,7 +36,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     
 
 
-    // Function that gets called when student data comes back
+    // Function that gets called when login data (1=no account, 2=student, or 3=teacher) comes back
     func handleLoginAttempt(data: NSDecimalNumber) {
         let connector = APIConnector()
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
@@ -74,6 +74,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     }
     
     
+    // Called from appdelegate after user is authenicated by google
     func didAttemptSignIn() {
         let connector = APIConnector()
         connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
