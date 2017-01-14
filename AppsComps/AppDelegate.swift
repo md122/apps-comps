@@ -8,6 +8,8 @@
 
 import UIKit
 
+var acc: Account?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignInDelegate {
 
@@ -106,6 +108,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
     // The sign-in flow has finished and was successful if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
+            
+
+            
             // Perform any operations on signed in user here.
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server

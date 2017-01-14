@@ -11,7 +11,7 @@ import UIKit
 class Account {
     
     static let sharedInstance = Account()
-    private init() { }
+    public init() { }
     var idToken: String?
     var name: String?
     //var type: String?

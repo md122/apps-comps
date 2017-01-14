@@ -19,8 +19,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().uiDelegate = self
         //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
+        
+        
 
- 
     }
     
 
@@ -33,11 +34,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().signOut()
     }
     
-    // this is an example of how to use the APIConnector
-    func testAPIConnector() {
-        let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, idToken: "STUDENT1")
-    }
+
 
     // Function that gets called when student data comes back
     func handleLoginAttempt(data: NSDecimalNumber) {
@@ -56,7 +53,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
                     connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
                 }))
                 createAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-                    print("Handle Cancel Logic here")
                 }))
                 present(createAccountAlert, animated: true, completion: nil)
             }
@@ -70,21 +66,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
             else {
                 print ("yikes")
             }
-            
-            
         } else {
             print ("not signed in")
             //performSegue(withIdentifier: "your_segue_name", sender: self)
         }
-        
-        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
-        //call Student class, initialize it, direct to problem selector
-        //call teacher class, init, direct to teacher dashboard
+
     }
     
     
     func didAttemptSignIn() {
-        print ("pls")
         let connector = APIConnector()
         connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
     }
