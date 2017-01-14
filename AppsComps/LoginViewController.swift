@@ -13,19 +13,17 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signInSilently()
+        //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-            print("signed in")
-            //performSegue(withIdentifier: "your_segue_name", sender: self)
-        } else {
-            print ("not signed in")
-            //performSegue(withIdentifier: "your_segue_name", sender: self)
-        }
+        
+        
+
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -36,13 +34,51 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().signOut()
     }
     
-    // this is an example of how to use the APIConnector
-    func testAPIConnector() {
-        let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, idToken: "STUDENT1")
-    }
 
+
+    // Function that gets called when login data (1=no account, 2=student, or 3=teacher) comes back
+    func handleLoginAttempt(data: NSDecimalNumber) {
+        let connector = APIConnector()
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+            print("signed in")
+            if (data == 1) {
+                // Structure of how to write pop up taken from http://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
+                let createAccountAlert = UIAlertController(title: "Create Account", message: "You don't have an account with us. Create one now?", preferredStyle: UIAlertControllerStyle.alert)
+                createAccountAlert.addAction(UIAlertAction(title: "Create Teacher Account", style: .default, handler: { (action: UIAlertAction!) in
+                    connector.attemptCreateAccount(callingDelegate: self, idToken: Account.sharedInstance.idToken!, accountType: "teacher")
+                    connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+                }))
+                createAccountAlert.addAction(UIAlertAction(title: "Create Student Account", style: .default, handler: { (action: UIAlertAction!) in
+                    connector.attemptCreateAccount(callingDelegate: self, idToken: Account.sharedInstance.idToken!, accountType: "student")
+                    connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+                }))
+                createAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                }))
+                present(createAccountAlert, animated: true, completion: nil)
+            }
+            else if (data == 2) {
+                performSegue(withIdentifier: "loginToStudentDash", sender: self)
+            }
+            else if (data == 3) {
+                print ("is teacher")
+                //performSegue(withIdentifier: "loginToTeacherDash", sender: self)
+            }
+            else {
+                print ("yikes")
+            }
+        } else {
+            print ("not signed in")
+            //performSegue(withIdentifier: "your_segue_name", sender: self)
+        }
+
+    }
     
+    
+    // Called from appdelegate after user is authenicated by google
+    func didAttemptSignIn() {
+        let connector = APIConnector()
+        connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+    }
     
 
 
