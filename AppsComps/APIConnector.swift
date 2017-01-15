@@ -73,6 +73,7 @@ class APIConnector: NSObject  {
 
     }
     
+    // possibly change 
     func attemptCreateAccount(callingDelegate: APIDataDelegate, idToken: String, accountType: String) {
         Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/attemptCreateUser/" + idToken + "/" + accountType).responseJSON { response in
             print(response.request)  // original URL request
@@ -81,7 +82,7 @@ class APIConnector: NSObject  {
             print(response.result)   // result of response serialization
             if let JSON = response.result.value {
                 print("JSON: \(JSON)")
-                callingDelegate.handleCreateAccountAttempt?(data: JSON as! [NSArray])
+                //callingDelegate.handleCreateAccountAttempt?(data: JSON as! [NSArray])
             }
         }
     }
