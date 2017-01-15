@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
 
     var window: UIWindow?
 
-    func requestStudentData() {
+    /*func requestStudentData() {
         let connector = APIConnector()
         connector.testRequest(callingDelegate: self)
     }
@@ -29,18 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
         }
     }
-
-    
-    
-    
-    /*// Function that gets called when student data comes back
-    func handleLoginAttempt(data: NSDecimalNumber) {
-        print(data)
-        
-        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
-        //call Student class, initialize it, direct to problem selector
-        //call teacher class, init, direct to teacher dashboard
-    }*/
+*/
     
     // Function that gets called when creating account (not currently used)
     /*func handleCreateAccountAttempt(data: [NSArray]) {
@@ -69,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().delegate = self
-        requestStudentData()
+        //requestStudentData()
         return true
     }
 
@@ -108,9 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
     // The sign-in flow has finished and was successful if |error| is |nil|.
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if (error == nil) {
-            
-
-            
             // Perform any operations on signed in user here.
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
