@@ -17,10 +17,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-            GIDSignIn.sharedInstance().signInSilently()
-            didAttemptSignIn()
-        }
+
         // Do any additional setup after loading the view.
     }
     
@@ -37,12 +34,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
 
 
     // Function that gets called when login data (1=no account, 2=student, or 3=teacher) comes back
-    func handleLoginAttempt(data: NSDecimalNumber) {
+    func handleLoginAttempt(data: String) {
         let connector = APIConnector()
 
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             print("signed in")
-            if (data == 1) {
+            if (data == "ERROR: Account does not exist") {
                 // Structure of how to write pop up taken from http://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
                 let createAccountAlert = UIAlertController(title: "Account Not Found", message: "You don't have an account with us. Create one now?", preferredStyle: UIAlertControllerStyle.alert)
                 createAccountAlert.addAction(UIAlertAction(title: "Create Student Account", style: .default, handler: { (action: UIAlertAction!) in
@@ -57,12 +54,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
                 }))
                 present(createAccountAlert, animated: true, completion: nil)
             }
-            else if (data == 2) {
+            else if (data == "Student") {
                 performSegue(withIdentifier: "loginToStudentDash", sender: self)
             }
-            else if (data == 3) {
+            else if (data == "Teacher") {
                 print ("is teacher")
-                //performSegue(withIdentifier: "loginToTeacherDash", sender: self)
+                performSegue(withIdentifier: "loginToTeacherDash", sender: self)
             }
             else {
                 print ("Error: Something is wrong with the server.")

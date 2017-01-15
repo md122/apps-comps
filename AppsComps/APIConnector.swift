@@ -139,18 +139,18 @@ class APIConnector: NSObject  {
     func attemptLogin(callingDelegate: APIDataDelegate, idToken: String) {
         
         let url = baseURL + "attemptLogin/" + idToken
-        Alamofire.request(url).responseJSON { response in
-            if let responseData = response.result.value{
+        Alamofire.request(url).responseData { response in
+            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
                 /* var result = false
                 if (utf8Text == "True") {
                     result = true
                 } */
-                callingDelegate.handleLoginAttempt?(data: responseData as! NSDecimalNumber)
+                callingDelegate.handleLoginAttempt?(data: utf8Text)
             }
         }
     }
     
-    // possibly change 
+    // possibly change as the return doesn't get used
     func attemptCreateAccount(callingDelegate: APIDataDelegate, idToken: String, accountType: String) {
         let url = baseURL + "attemptCreateUser/" + idToken + "/" + accountType
         Alamofire.request(url).responseJSON { response in
