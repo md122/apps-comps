@@ -150,6 +150,7 @@ class APIConnector: NSObject  {
         }
     }
     
+    // possibly change 
     func attemptCreateAccount(callingDelegate: APIDataDelegate, idToken: String, accountType: String) {
         let url = baseURL + "attemptCreateUser/" + idToken + "/" + accountType
         Alamofire.request(url).responseJSON { response in

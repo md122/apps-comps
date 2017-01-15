@@ -42,10 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         //call teacher class, init, direct to teacher dashboard
     }*/
     
-    // Function that gets called when creating account
-    func handleCreateAccountAttempt(data: [NSArray]) {
+    // Function that gets called when creating account (not currently used)
+    /*func handleCreateAccountAttempt(data: [NSArray]) {
         print(data)
-    }
+    }*/
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
