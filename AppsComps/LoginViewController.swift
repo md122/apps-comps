@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
-            print (GIDGoogleUser.profile.name)
+            GIDSignIn.sharedInstance().signOut()
         }
     }
     
