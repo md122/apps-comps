@@ -39,6 +39,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     // Function that gets called when login data (1=no account, 2=student, or 3=teacher) comes back
     func handleLoginAttempt(data: NSDecimalNumber) {
         let connector = APIConnector()
+
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             print("signed in")
             if (data == 1) {
