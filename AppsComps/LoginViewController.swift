@@ -16,9 +16,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GIDSignIn.sharedInstance().uiDelegate = self
-
         // Do any additional setup after loading the view.
+        GIDSignIn.sharedInstance().uiDelegate = self
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+            GIDSignIn.sharedInstance().signOut()
+        }
+        
     }
     
 
