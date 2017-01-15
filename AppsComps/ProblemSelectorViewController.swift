@@ -30,6 +30,12 @@ class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var level4: UIButton!
     @IBOutlet weak var level5: UIButton!
     @IBOutlet weak var level6: UIButton!
+    @IBOutlet weak var logout: UIButton!
+    
+    @IBAction func didTapSignOut(sender: AnyObject) {
+        GIDSignIn.sharedInstance().signOut()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
