@@ -24,7 +24,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Go to Teacher Dash"/>
                                 <connections>
-                                    <segue destination="YDz-i0-3fM" kind="show" id="yPu-kf-dkl"/>
+                                    <segue destination="YDz-i0-3fM" kind="show" identifier="loginToTeacherDash" id="yPu-kf-dkl"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Login Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6Q-C9-9in">
