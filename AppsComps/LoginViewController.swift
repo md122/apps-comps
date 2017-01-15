@@ -20,6 +20,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().uiDelegate = self
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
             GIDSignIn.sharedInstance().signOut()
+            
         }
         
     }
