@@ -22,11 +22,15 @@ class GameScene: SKScene {
     var topBar = [Block]()
     var bottomBar = [Block]()
     
+    let width:CGFloat
+    let height:CGFloat
+    let HEIGHTUNIT:CGFloat
+    
     // The starting coordinates
-    let BARX = 100
+    let BARX:CGFloat
     let TOPBARY = 300
     let BOTTOMBARY = 220
-    let NUMBLOCKBANKPOSITION = CGPoint(x:100, y:100)
+    let NUMBLOCKBANKPOSITION = CGPoint(x: 100, y:100)
     let VARBLOCKBANKPOSITION = CGPoint(x:200, y:100)
     
     // not implemented
@@ -39,14 +43,26 @@ class GameScene: SKScene {
     
     // The block in the bank
     var numBlockInBank = Block(type:.number)
-    var varBlockInBank = Block(type: .variable)
+    var varBlockInBank = Block(type:.variable)
+    
+    override init(size: CGSize) {
+        width = size.width
+        height = size.height
+        HEIGHTUNIT = height/16
+        BARX = 2*HEIGHTUNIT
+    
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func addBlockChild(_ node: SKNode) {
         node.zPosition = CGFloat(currentBlockZ)
         currentBlockZ += 3
         super.addChild(node)
     }
-    
     
     // Called immediately after a scene is loaded
     // Sets the layout of all components in the problem screen
@@ -68,12 +84,12 @@ class GameScene: SKScene {
         
         //These blocks are temporary to figure out adding to bars
         let topBarBlock = Block(type:.number)
-        topBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
+        topBarBlock.position = CGPoint(x:BARX, y:CGFloat(TOPBARY))
         self.addBlockChild(topBarBlock)
         topBar.append(topBarBlock)
         
         let bottomBarBlock = Block(type:.variable)
-        bottomBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(BOTTOMBARY))
+        bottomBarBlock.position = CGPoint(x:BARX, y:CGFloat(BOTTOMBARY))
         self.addBlockChild(bottomBarBlock)
         bottomBar.append(bottomBarBlock)
     }
