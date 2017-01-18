@@ -26,18 +26,18 @@ class Block: SKSpriteNode {
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     
-    init(type: BlockType) {
+    init(type: BlockType, size: CGSize) {
         self.type = type
         self.value = 1.0
         
         switch self.type {
             case .number:
-                super.init(texture: nil, color: .black, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+                super.init(texture: nil, color: .black, size: size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
                 label.text = String(value)
             case .variable:
                 super.init(texture: nil, color: .black, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
-                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
                 label.text = "x"
         }
         innerBlockColor.xScale = CGFloat(1-(1/self.getWidth()))

@@ -22,16 +22,21 @@ class GameScene: SKScene {
     var topBar = [Block]()
     var bottomBar = [Block]()
     
+    // The starting coordinates
     let width:CGFloat
     let height:CGFloat
     let HEIGHTUNIT:CGFloat
-    
-    // The starting coordinates
+    let WIDTHUNIT:CGFloat
     let BARX:CGFloat
-    let TOPBARY = 300
-    let BOTTOMBARY = 220
-    let NUMBLOCKBANKPOSITION = CGPoint(x: 100, y:100)
-    let VARBLOCKBANKPOSITION = CGPoint(x:200, y:100)
+    let TOPBARY:CGFloat
+    let BOTTOMBARY:CGFloat
+    let NUMBLOCKBANKPOSITION:CGPoint
+    let VARBLOCKBANKPOSITION:CGPoint
+    let BLOCKHEIGHT:CGFloat
+    let VARBLOCKWIDTH:CGFloat
+    let NUMBLOCKWIDTH:CGFloat
+    let NUMBLOCKSIZE:CGSize
+    let VARBLOCKSIZE:CGSize
     
     // not implemented
     var isSorted = false
@@ -42,14 +47,27 @@ class GameScene: SKScene {
     var blockTouched:Block? = nil
     
     // The block in the bank
-    var numBlockInBank = Block(type:.number)
-    var varBlockInBank = Block(type:.variable)
+    var numBlockInBank:Block
+    var varBlockInBank:Block
     
     override init(size: CGSize) {
         width = size.width
         height = size.height
         HEIGHTUNIT = height/16
+        WIDTHUNIT = width/16
         BARX = 2*HEIGHTUNIT
+        TOPBARY = 11*HEIGHTUNIT
+        BOTTOMBARY = 6*HEIGHTUNIT
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4, y: HEIGHTUNIT)
+        VARBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT)
+        BLOCKHEIGHT = 25
+        VARBLOCKWIDTH = 60
+        NUMBLOCKWIDTH = 40
+        NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
+        VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
+        
+        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
+        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
     
         super.init(size: size)
     }
@@ -83,12 +101,12 @@ class GameScene: SKScene {
         self.addBlockChild(varBlockInBank)
         
         //These blocks are temporary to figure out adding to bars
-        let topBarBlock = Block(type:.number)
+        let topBarBlock = Block(type:.number, size: NUMBLOCKSIZE)
         topBarBlock.position = CGPoint(x:BARX, y:CGFloat(TOPBARY))
         self.addBlockChild(topBarBlock)
         topBar.append(topBarBlock)
         
-        let bottomBarBlock = Block(type:.variable)
+        let bottomBarBlock = Block(type:.variable, size: VARBLOCKSIZE)
         bottomBarBlock.position = CGPoint(x:BARX, y:CGFloat(BOTTOMBARY))
         self.addBlockChild(bottomBarBlock)
         bottomBar.append(bottomBarBlock)
@@ -212,7 +230,7 @@ class GameScene: SKScene {
             if (block == numBlockInBank) {
                 //Block has moved outside of block bank
                 if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getNumWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                    let newBlock = Block(type: .number)
+                    let newBlock = Block(type: .number, size: NUMBLOCKSIZE)
                     newBlock.position = NUMBLOCKBANKPOSITION
                     numBlockInBank = newBlock
                     self.addBlockChild(newBlock)
@@ -227,7 +245,7 @@ class GameScene: SKScene {
             if (block == varBlockInBank) {
                 //Block has moved outside of block bank
                 if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getVarWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                    let newBlock = Block(type: .variable)
+                    let newBlock = Block(type: .variable, size: VARBLOCKSIZE)
                     newBlock.position = VARBLOCKBANKPOSITION
                     varBlockInBank = newBlock
                     self.addBlockChild(newBlock)
