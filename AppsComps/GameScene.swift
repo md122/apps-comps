@@ -23,9 +23,9 @@ class GameScene: SKScene {
     var bottomBar = [Block]()
     
     // The starting coordinates
-    let BARX = 100
-    let TOPBARY = 300
-    let BOTTOMBARY = 220
+    let BARX = 100.0
+    let TOPBARY = 300.0
+    let BOTTOMBARY = 220.0
     let NUMBLOCKBANKPOSITION = CGPoint(x:100, y:100)
     let VARBLOCKBANKPOSITION = CGPoint(x:200, y:100)
     
@@ -58,16 +58,16 @@ class GameScene: SKScene {
         varBlockInBank.position = VARBLOCKBANKPOSITION
         self.addBlockChild(varBlockInBank)
         
-        //These blocks are temporary to figure out adding to bars
-        let topBarBlock = Block(type:.number)
-        topBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
-        self.addBlockChild(topBarBlock)
-        topBar.append(topBarBlock)
+        //These are the rectangles that show where the bars start. It's a bit hacky to get the height from varBlockInBank but the height is stored in the block class
+        let topBarStarter = SKSpriteNode(texture: nil, color: .yellow, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
+        topBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(TOPBARY))
         
-        let bottomBarBlock = Block(type:.variable)
-        bottomBarBlock.position = CGPoint(x:CGFloat(BARX), y:CGFloat(BOTTOMBARY))
-        self.addBlockChild(bottomBarBlock)
-        bottomBar.append(bottomBarBlock)
+        self.addChild(topBarStarter)
+        
+        let bottomBarStarter = SKSpriteNode(texture: nil, color: .yellow, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
+        bottomBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(BOTTOMBARY))
+        
+        self.addChild(bottomBarStarter)
     }
     
     func blockIsTouched(touchLocation: CGPoint, child: SKNode) -> Bool {
@@ -129,10 +129,32 @@ class GameScene: SKScene {
         // We are going to align with the upper left corner
         let blockTopLeftX = Double(block.position.x) - block.getWidth() / 2
         
-        //Go through blocks in topbar from left to right. Once we find one that our block is close too we add it and shift the rest of the blocks over by its width
+        //Go through blocks in bar from left to right. Once we find one that our block is close too we add it and shift the rest of the blocks over by its width
         var added = false
-        var insertionIndex = 0
+        var insertionIndex = -1
         
+        //Check to see if it should be added at the beginning of the top bar
+        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < 3) && (abs(block.position.y - CGFloat(TOPBARY)) < 3) {
+            added = true
+            insertionIndex = 0
+            //Snap the bar into position at the start of the bar
+            block.position = CGPoint(x:(CGFloat(Double(BARX) + block.getWidth() / 2)), y:CGFloat((TOPBARY)))
+        }
+        
+        //Check to see if it should be added at the beginning of the bottom bar
+        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < 3) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < 3) {
+            added = true
+            insertionIndex = 0
+            //Snap the bar into position at the start of the bar
+            block.position = CGPoint(x:CGFloat((Double(BARX) + block.getWidth() / 2)), y:(CGFloat(BOTTOMBARY)))
+        }
+        
+        //If nothing in our bar, we don't want to loop through the elements in the bar
+        if (bar.count == 0) {
+            return insertionIndex
+        }
+        
+        //Don't need to check insertion index 0, because those cases are found above
         for i in 0...(bar.count - 1) {
             let blocki = bar[i]
             //We have added a block before this block and need to shift this block over
@@ -158,25 +180,134 @@ class GameScene: SKScene {
         
         return -1
     }
+
+    //Searches in a bar and finds the index of the block passed in. Returns that index of -1 if the block is not in the bar.
+    func findIndexOfBlock(bar: [Block], block: Block) -> Int {
+        if (bar.count == 0) {
+            return -1
+        }
+        for i in 0...(bar.count - 1) {
+            let blocki = bar[i]
+            if (blocki == block) {
+                return i
+            }
+            
+        }
+        return -1
+    }
+    
+    //Shifts all of the blocks after the given index left by a shift amount
+    func shiftBlocksLeft(bar: [Block], width: Double, index: Int) {
+        //This if statement is a bit squishy. Not sure exactly what it does, but don't want to loop with bad inputs
+        if (bar.count - 1 >= index + 1) {
+            for i in (index + 1)...(bar.count - 1) {
+                bar[i].position = CGPoint(x:((bar[i].position.x) - CGFloat(width)), y:(bar[i].position.y))
+            }
+        }
+    }
+    
+    func getEndOfBar(bar: [Block]) -> Double {
+        var endOfBar = BARX
+        for i in 0...(bar.count - 1) {
+            endOfBar += bar[i].getWidth()
+        }
+        return endOfBar
+    }
     
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
             
-            //????
-            //Check to see if the block is in a list? If it is remove it and move everyone over. Or is this too much work???
-            //????
-            
             let block = blockTouched!
             
-
-            // Are you dragging a block to a top bar? To a bottom bar? If so, insert it into bar and shift over the other blocks
-            if abs(Double(TOPBARY) - Double(block.position.y)) < 3 {
+            //This following code is new and kind of icky...
+            let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
+            let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
+            
+            
+            //The block is in the top bar
+            if (indexInTopBar > -1) {
+                //If we move the block outside of the bar, by moving it too high, too left, or too right
+                print("Bar width")
+                print(getEndOfBar(bar: topBar))
+                if (   (Double(block.position.y) > Double(TOPBARY) + block.getHeight())   ||
+                       (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
+                    ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < BARX - block.getWidth() / 2)                                                   ||
+                    (abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: topBar)))) {
+                    shiftBlocksLeft(bar: topBar, width:block.getWidth(), index:indexInTopBar)
+                    topBar.remove(at: indexInTopBar)
+                }
+                
+                //if the y value didn't change enough, put the bar back in its spot
+                //The spot it goes back into has the y-value of the bar height
+                //And an x value of the previous block x location + half of the previous block width + half of this block width
+                // I have no idea why I need the temps... but it doesn't work without them...
+                else {
+                    //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
+                    var xPosition : CGFloat = 0.0
+                    //If not the first block in the bar
+                    if (indexInTopBar != 0) {
+                        //The middle x position of the previous block in the bar
+                        let temp = topBar[indexInTopBar - 1].position.x
+                        xPosition += temp
+                        //Half the width of the previous block in the bar
+                        let temp2 = CGFloat(topBar[indexInTopBar - 1].getWidth() / 2)
+                        xPosition += temp2
+                        //Half the width of the block being added
+                        xPosition += CGFloat(block.getWidth() / 2)
+                    }
+                    //First block in the bar
+                    else {
+                        xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
+                    }
+                    
+                    block.position = CGPoint(x:xPosition, y:CGFloat(TOPBARY))
+                }
+            }
+            //If it's not already in the top bar, are you dragging it to the top bar?
+            else if abs(Double(TOPBARY) - Double(block.position.y)) < 3 {
                 let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
                 if insertionIndex > -1 {
                     topBar.insert(block, at:insertionIndex)
                 }
-            } else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 3 {
+            }
+            
+            //The block is in the bottom bar
+            if (indexInBottomBar > -1) {
+                if (   (Double(block.position.y) > Double(BOTTOMBARY) + block.getHeight())   ||
+                    (Double(block.position.y) < Double(BOTTOMBARY) - block.getHeight())   ||
+                    ((abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < BARX - block.getWidth() / 2)                                                   ||
+                        (abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: bottomBar)))) {
+                    shiftBlocksLeft(bar: bottomBar, width:block.getWidth(), index:indexInBottomBar)
+                    bottomBar.remove(at: indexInBottomBar)
+                }
+                //if the y value didn't change enough, put the bar back in its spot
+                //The spot it goes back into has the y-value of the bar height
+                //And an x value of the previous block x location + half of the previous block width + half of this block width
+                // I have no idea why I need the temps... but it doesn't work without them...
+                else {
+                    //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
+                    var xPosition : CGFloat = 0.0
+                    //If not the first block in the bar
+                    if (indexInBottomBar != 0) {
+                        //The starting position of the previous block in the bar
+                        let temp = bottomBar[indexInBottomBar - 1].position.x
+                        xPosition += temp
+                        //Half the width of the previous block in the bar
+                        let temp2 = CGFloat(bottomBar[indexInBottomBar - 1].getWidth() / 2)
+                        xPosition += temp2
+                        //Half the width of the current block being added
+                        xPosition += CGFloat(block.getWidth() / 2)
+                    }
+                    else {
+                        xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
+                    }
+                    
+                    block.position = CGPoint(x:xPosition, y:CGFloat(BOTTOMBARY))
+                }
+            }
+            //If it's not already in the bottom bar, are you dragging it to the bottom bar?
+            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 3 {
                 let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
                 if insertionIndex > -1 {
                     bottomBar.insert(block, at:insertionIndex)
