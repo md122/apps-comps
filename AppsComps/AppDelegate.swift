@@ -8,12 +8,14 @@
 
 import UIKit
 
+var acc: Account?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
 
-    func requestStudentData() {
+    /*func requestStudentData() {
         let connector = APIConnector()
         connector.testRequest(callingDelegate: self)
     }
@@ -27,22 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
         }
     }
-
+*/
     
-    
-    // Function that gets called when student data comes back
-    func handleLoginAttempt(data: NSDecimalNumber) {
+    // Function that gets called when creating account (not currently used)
+    /*func handleCreateAccountAttempt(data: [NSArray]) {
         print(data)
-        
-        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
-        //call Student class, initialize it, direct to problem selector
-        //call teacher class, init, direct to teacher dashboard
-    }
-    
-    // Function that gets called when creating account
-    func handleCreateAccountAttempt(data: [NSArray]) {
-        print(data)
-    }
+    }*/
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -66,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().delegate = self
-        requestStudentData()
+        //requestStudentData()
         return true
     }
 
@@ -109,11 +101,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            let connector = APIConnector()
-            connector.attemptLogin(callingDelegate: self, idToken: userToken!)
-            //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
             Account.sharedInstance.idToken = userToken!
             Account.sharedInstance.name = fullName!
+            // If the current view controller is loginviewcontroller call didAttemptSignIn to
+            // use google creds to login to app or create account
+            if let controller = self.window?.rootViewController as? LoginViewController {
+                controller.didAttemptSignIn()
+            }
         } else {
             print("\(error.localizedDescription)")
         }

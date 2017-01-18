@@ -16,9 +16,8 @@ class Block: SKSpriteNode {
         case variable
     }
     
-    let BLOCKHEIGHT = 10.0
-    let VARBLOCKWIDTH = 50.0
-    let NUMBLOCKWIDTH = 20.0
+    let BLOCKHEIGHT:CGFloat
+    let BLOCKWIDTH:CGFloat
     
     //Type is either number or variable
     var type: BlockType
@@ -26,22 +25,25 @@ class Block: SKSpriteNode {
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     
-    init(type: BlockType) {
+    init(type: BlockType, size: CGSize) {
         self.type = type
         self.value = 1.0
         
+        BLOCKHEIGHT = size.height
+        BLOCKWIDTH = size.width
+        
         switch self.type {
             case .number:
-                super.init(texture: nil, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
+                super.init(texture: nil, color: .black, size: size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
                 label.text = String(value)
             case .variable:
-                super.init(texture: nil, color: .white, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
-                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+                super.init(texture: nil, color: .black, size:size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
                 label.text = "x"
         }
-        innerBlockColor.xScale = 0.9 // TO FIX: scale the border so that the border is constant width
-        innerBlockColor.yScale = 0.9
+        innerBlockColor.xScale = CGFloat(1-(1/self.getWidth()))
+        innerBlockColor.yScale = CGFloat(1-(1/self.getHeight()))
         
         // Add block color to be child of Block and set it to be 1 unit higher than its parent
         self.addChild(innerBlockColor)
@@ -67,33 +69,19 @@ class Block: SKSpriteNode {
     }
     
     func getHeight() -> Double{
-        return BLOCKHEIGHT
-    }
-    
-    func getVarWidth() -> Double{
-        return VARBLOCKWIDTH
-    }
-    
-    func getNumWidth() -> Double{
-        return NUMBLOCKWIDTH
+        return Double(BLOCKHEIGHT)
     }
     
     func getWidth() -> Double{
-        switch self.type {
-        case .number:
-            return Double(NUMBLOCKWIDTH) * self.value
-        case .variable:
-            return Double(VARBLOCKWIDTH)
-        }
+        return Double(BLOCKWIDTH)
     }
     
     func getTopRightX() -> Double{
         return Double(self.position.x) + self.getWidth() / 2
-        
     }
     
     func getTopRightY() -> Double{
-        return Double(self.position.y) + self.getHeight() / 2
+        return Double(self.position.y) + Double(self.getHeight()) / 2
     }
     
     func getLabel() ->SKLabelNode{
