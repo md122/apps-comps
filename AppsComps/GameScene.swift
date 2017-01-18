@@ -229,7 +229,7 @@ class GameScene: SKScene {
             // If not, put the block back where it came from
             if (block == numBlockInBank) {
                 //Block has moved outside of block bank
-                if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getNumWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
+                if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
                     let newBlock = Block(type: .number, size: NUMBLOCKSIZE)
                     newBlock.position = NUMBLOCKBANKPOSITION
                     numBlockInBank = newBlock
@@ -244,7 +244,7 @@ class GameScene: SKScene {
             // If not, put the block back where it came from
             if (block == varBlockInBank) {
                 //Block has moved outside of block bank
-                if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getVarWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
+                if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
                     let newBlock = Block(type: .variable, size: VARBLOCKSIZE)
                     newBlock.position = VARBLOCKBANKPOSITION
                     varBlockInBank = newBlock

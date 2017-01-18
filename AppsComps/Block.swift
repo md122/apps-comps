@@ -16,9 +16,8 @@ class Block: SKSpriteNode {
         case variable
     }
     
-    let BLOCKHEIGHT = 25.0
-    let VARBLOCKWIDTH = 60.0
-    let NUMBLOCKWIDTH = 40.0
+    let BLOCKHEIGHT:CGFloat
+    let BLOCKWIDTH:CGFloat
     
     //Type is either number or variable
     var type: BlockType
@@ -30,13 +29,16 @@ class Block: SKSpriteNode {
         self.type = type
         self.value = 1.0
         
+        BLOCKHEIGHT = size.height
+        BLOCKWIDTH = size.width
+        
         switch self.type {
             case .number:
                 super.init(texture: nil, color: .black, size: size)
                 innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
                 label.text = String(value)
             case .variable:
-                super.init(texture: nil, color: .black, size: CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT))
+                super.init(texture: nil, color: .black, size:size)
                 innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
                 label.text = "x"
         }
@@ -67,33 +69,19 @@ class Block: SKSpriteNode {
     }
     
     func getHeight() -> Double{
-        return BLOCKHEIGHT
-    }
-    
-    func getVarWidth() -> Double{
-        return VARBLOCKWIDTH
-    }
-    
-    func getNumWidth() -> Double{
-        return NUMBLOCKWIDTH
+        return Double(BLOCKHEIGHT)
     }
     
     func getWidth() -> Double{
-        switch self.type {
-        case .number:
-            return Double(NUMBLOCKWIDTH) * self.value
-        case .variable:
-            return Double(VARBLOCKWIDTH)
-        }
+        return Double(BLOCKWIDTH)
     }
     
     func getTopRightX() -> Double{
         return Double(self.position.x) + self.getWidth() / 2
-        
     }
     
     func getTopRightY() -> Double{
-        return Double(self.position.y) + self.getHeight() / 2
+        return Double(self.position.y) + Double(self.getHeight()) / 2
     }
     
     func getLabel() ->SKLabelNode{
