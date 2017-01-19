@@ -18,17 +18,12 @@ import UIKit
 class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var greetingText: UILabel!
     @IBOutlet weak var levelText: UILabel!
+    @IBOutlet weak var levelContainerView: UIView!
 
 
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 4
     
-    @IBOutlet weak var level1: LevelButton!
-    @IBOutlet weak var level2: LevelButton!
-    @IBOutlet weak var level3: LevelButton!
-    @IBOutlet weak var level4: LevelButton!
-    @IBOutlet weak var level5: LevelButton!
-    @IBOutlet weak var level6: LevelButton!
     
     override func viewDidLoad() {
         
@@ -37,18 +32,18 @@ class ProblemSelectorViewController: UIViewController {
         greetingText.text = "Hello " + Account.sharedInstance.name!
         levelText.text = "You are on level " + String(level)
         
-        loadButtons()
+        //loadButtons()
     }
     
-    func loadButtons(){
-        //TODO: make buttons gray if level not reached
-        level1.setLevel(lev: 1)
-        level2.setLevel(lev: 2)
-        level3.setLevel(lev: 3)
-        level4.setLevel(lev: 4)
-        level5.setLevel(lev: 5)
-        level6.setLevel(lev: 6)
-
-    }
+//    func loadButtons(){
+//        //TODO: make buttons gray if level not reached
+//        level1.setLevel(lev: 1)
+//        level2.setLevel(lev: 2)
+//        level3.setLevel(lev: 3)
+//        level4.setLevel(lev: 4)
+//        level5.setLevel(lev: 5)
+//        level6.setLevel(lev: 6)
+//
+//    }
     
 }
