@@ -21,6 +21,7 @@ class GameScene: SKScene {
     
     var topBar = [Block]()
     var bottomBar = [Block]()
+    var garbage: SKSpriteNode
     
     // The starting coordinates
     let width:CGFloat
@@ -69,6 +70,9 @@ class GameScene: SKScene {
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
     
+        //MEG!!! Not sure where we want to store and initialize this garbage can. But we need to make it before we call the super init. But can't change it before the superinit, so how I made it now works, but not sure if it's good.
+        garbage = SKSpriteNode(imageNamed: "garbage.png")
+        
         super.init(size: size)
     }
     
@@ -88,7 +92,6 @@ class GameScene: SKScene {
         
         self.backgroundColor = .white
         
-        let garbage = SKSpriteNode(imageNamed: "garbage.png")
         garbage.position = CGPoint(x: 500, y: 500)
         garbage.size = CGSize(width: 100, height: 120)
         self.addChild(garbage)
@@ -110,6 +113,38 @@ class GameScene: SKScene {
         bottomBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(BOTTOMBARY))
         
         self.addChild(bottomBarStarter)
+        
+        
+        
+        
+        //Pinchy stuff
+        //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+        self.view?.addGestureRecognizer(pinchGesture)
+
+        
+    }
+    
+    //Got this from the stack overflow post...
+    func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
+        //We don't need to do anything when the pinch begins
+        if sender.state == .began {
+            
+        }
+        
+        else if sender.state == .changed {
+            //We need to scale the block that is under the first touch... not the garbage
+            //Try and get the location of first pinch to print here...!!!
+            let pinchScale = sender.scale
+            
+            if blockTouched != nil {
+                //We need to not just scale, but change the old scale by the new scaling amount...
+                blockTouched?.xScale = pinchScale
+            }
+        }
+        else if sender.state == .ended {
+            sender.scale = 1.0
+        }
     }
     
     func blockIsTouched(touchLocation: CGPoint, child: SKNode) -> Bool {
@@ -133,6 +168,14 @@ class GameScene: SKScene {
                 }
             }
         }
+    }
+    
+    //If the middle of the block is over the garbage can reutrns true, else returns false
+    func blockOverGarbageCan(block: Block) -> Bool {
+        if garbage.contains(block.position) {
+            return true
+        }
+        return false
     }
     
     // Called when you are moving your finger
@@ -164,6 +207,14 @@ class GameScene: SKScene {
             //Not to far up
             blockY = min(blockY, size.height - block.frame.height/2)
             block.position = CGPoint(x:blockX, y:blockY)
+            
+            //If we are close to the garbage can grow the garbage can in size a bit
+            if (blockOverGarbageCan(block: block)) {
+                garbage.setScale(1.2)
+            }
+            else {
+                garbage.setScale(1.0)
+            }
         }
     }
     
@@ -248,6 +299,7 @@ class GameScene: SKScene {
         }
     }
     
+    //Returns the x coordinate for the end of the last block in the bar passed in
     func getEndOfBar(bar: [Block]) -> Double {
         var endOfBar = Double(BARX)
         for i in 0...(bar.count - 1) {
@@ -255,6 +307,7 @@ class GameScene: SKScene {
         }
         return endOfBar
     }
+
     
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -270,8 +323,6 @@ class GameScene: SKScene {
             //The block is in the top bar
             if (indexInTopBar > -1) {
                 //If we move the block outside of the bar, by moving it too high, too left, or too right
-                print("Bar width")
-                print(getEndOfBar(bar: topBar))
                 if (   (Double(block.position.y) > Double(TOPBARY) + block.getHeight())   ||
                        (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
                     ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
@@ -354,6 +405,12 @@ class GameScene: SKScene {
                 if insertionIndex > -1 {
                     bottomBar.insert(block, at:insertionIndex)
                 }
+            }
+            
+            //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
+            if (blockOverGarbageCan(block: block)) {
+                block.removeFromParent()
+                garbage.setScale(1.0)
             }
             
             // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank. 
