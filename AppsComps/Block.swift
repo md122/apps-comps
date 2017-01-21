@@ -42,15 +42,15 @@ class Block: SKSpriteNode {
                 innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
                 label.text = "x"
         }
-        innerBlockColor.xScale = CGFloat(1-(1/self.getWidth()))
-        innerBlockColor.yScale = CGFloat(1-(1/self.getHeight()))
+        innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))
+        innerBlockColor.yScale = CGFloat(1-1.5*(1/self.getHeight()))
         
         // Add block color to be child of Block and set it to be 1 unit higher than its parent
         self.addChild(innerBlockColor)
         innerBlockColor.zPosition = 1
         
         //Set the look of the label and attach the label to this block 2 units higher than its parent
-        label.fontSize = 6
+        label.fontSize = 20
         label.fontColor = .black
         self.addChild(label)
         label.zPosition = 2

@@ -17,11 +17,11 @@ class GameScene: SKScene {
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
     // Value incremented every time a block is touched
-    var currentBlockZ : CGFloat = 1.0
+    var currentBlockZ:CGFloat
     
     var topBar = [Block]()
     var bottomBar = [Block]()
-    var garbage: SKSpriteNode
+    var garbage:SKSpriteNode
     
     // The starting coordinates
     let width:CGFloat
@@ -38,6 +38,8 @@ class GameScene: SKScene {
     let NUMBLOCKWIDTH:CGFloat
     let NUMBLOCKSIZE:CGSize
     let VARBLOCKSIZE:CGSize
+    let GARBAGEPOSITION:CGPoint
+    let GARBAGESIZE:CGSize
     
     // not implemented
     var isSorted = false
@@ -59,18 +61,21 @@ class GameScene: SKScene {
         BARX = 2*HEIGHTUNIT
         TOPBARY = 11*HEIGHTUNIT
         BOTTOMBARY = 6*HEIGHTUNIT
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4, y: HEIGHTUNIT)
-        VARBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT)
-        BLOCKHEIGHT = 25
-        VARBLOCKWIDTH = 60
-        NUMBLOCKWIDTH = 40
+        BLOCKHEIGHT = 2*HEIGHTUNIT
+        VARBLOCKWIDTH = 1.5*WIDTHUNIT
+        NUMBLOCKWIDTH = 1*WIDTHUNIT
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
+        GARBAGESIZE = CGSize(width: 1.5*WIDTHUNIT, height: 1.2*1.5*WIDTHUNIT)
         
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
+        
+        
+        currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
-    
-        //MEG!!! Not sure where we want to store and initialize this garbage can. But we need to make it before we call the super init. But can't change it before the superinit, so how I made it now works, but not sure if it's good.
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         
         super.init(size: size)
@@ -92,8 +97,8 @@ class GameScene: SKScene {
         
         self.backgroundColor = .white
         
-        garbage.position = CGPoint(x: 500, y: 500)
-        garbage.size = CGSize(width: 100, height: 120)
+        garbage.position = GARBAGEPOSITION
+        garbage.size = GARBAGESIZE
         self.addChild(garbage)
         
         //Add the original block in the number block bank and the variable block bank
