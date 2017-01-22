@@ -10,12 +10,18 @@ import UIKit
 
 
 class LevelButtonViewController: UICollectionViewController {
-    //Code referenced from https://www.youtube.com/watch?v=UH3HoPar_xg
+    /*Code referenced from https://www.youtube.com/watch?v=UH3HoPar_xg
+      Got tips about labeling the cell from http://stackoverflow.com/questions/31735228/how-to-make-a-simple-collection-view-with-swift
+     */
+    
+
+    var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6"]
+    var levels = [1,2,3,4,5,6]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "levelCell")
+        self.collectionView?.register(LevelButtonCollectionCell.self, forCellWithReuseIdentifier: "levelCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,41 +36,16 @@ class LevelButtonViewController: UICollectionViewController {
         return 6
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as UICollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
         
+        //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
+        
+        cell.levelButton?.setTitle(self.levelLabels[indexPath.row], for: .normal)
+        cell.levelButton?.setTitleColor(UIColor.white, for: .normal)
+        cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
         cell.backgroundColor = UIColor.darkGray
+        cell.layer.cornerRadius = 20
         
         return cell
     }
 }
-//
-///*Code referenced from https://www.raywenderlich.com/136159/uicollectionview-tutorial-getting-started
-// */
-//extension LevelButtonViewController : UICollectionViewDelegateFlowLayout {
-//    
-//    //1
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        //2
-//        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-//        let availableWidth = view.frame.width - paddingSpace
-//        let widthPerItem = availableWidth / itemsPerRow
-//        
-//        return CGSize(width: widthPerItem, height: widthPerItem)
-//    }
-//    
-//    //3
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-//    
-//    // 4
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInsets.left
-//    }
-//}
