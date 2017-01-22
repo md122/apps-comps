@@ -15,13 +15,12 @@ class LevelButtonViewController: UICollectionViewController {
      */
     
 
-    var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6"]
-    var levels = [1,2,3,4,5,6]
+    var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
+    var levels = [1,2,3,4]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView?.register(LevelButtonCollectionCell.self, forCellWithReuseIdentifier: "levelCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,7 +32,7 @@ class LevelButtonViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 4
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
