@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="41p-Lj-2fO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="J8k-bU-PI4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k67-Ge-mtw">
@@ -24,7 +25,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Go to Teacher Dash"/>
                                 <connections>
-                                    <segue destination="AKD-zf-Mmq" kind="show" identifier="loginToTeacherDash" id="cm8-Vp-Aye"/>
+                                    <segue destination="AKD-zf-Mmq" kind="show" identifier="loginToTeacherDash" id="2cD-gP-gQa"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Login Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6Q-C9-9in">
@@ -77,7 +78,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fwp-Sz-l2Q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ayL-yk-Lo9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Problem Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFm-K1-9BK">
@@ -110,7 +111,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0eD-eZ-imV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JDx-YS-U4u">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hry-WM-ARa" userLabel="Selector View">
@@ -267,7 +268,7 @@
         <scene sceneID="TGh-kI-Fkr">
             <objects>
                 <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -279,41 +280,12 @@
             </objects>
             <point key="canvasLocation" x="-1167" y="-845"/>
         </scene>
-        <!--Detail-->
-        <scene sceneID="08j-o4-hS2">
-            <objects>
-                <viewController title="Detail" id="1rp-C1-Ayo" customClass="TeacherDashboardDetailViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="U6w-5O-cp0"/>
-                        <viewControllerLayoutGuide type="bottom" id="KBf-uC-wZC"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uS1-Tb-MFh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7nl-1a-rX2">
-                                <frame key="frameInset" minX="-1" height="701.5" maxX="3.5" maxY="15"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="MEl-8u-sh3" kind="embed" id="qCL-aD-QWU"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Students" id="t0L-hh-aOM"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oBM-ds-qE9" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="568" y="195"/>
-        </scene>
         <!--Student Collection View Controller-->
         <scene sceneID="D7W-CY-NE6">
             <objects>
                 <collectionViewController id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
-                        <rect key="frame" x="0.0" y="0.0" width="372.5" height="701.5"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5Bg-cB-sBO">
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4r7-Np-QbH">
@@ -324,15 +296,14 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="KWR-nM-MX4" customClass="StudentCollectionViewCell" customModule="AppsComps" customModuleProvider="target">
-                                <rect key="frame" x="89" y="0.0" width="194" height="166"/>
+                                <rect key="frame" x="0.0" y="0.0" width="194" height="166"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="194" height="166"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HI!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy9-pF-ZRV">
-                                            <frame key="frameInset" minX="49" minY="63" width="42" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="HI!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy9-pF-ZRV">
+                                            <frame key="frameInset" minX="8" minY="63" width="164" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -340,8 +311,13 @@
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.049691020330000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Wy9-pF-ZRV" secondAttribute="trailing" constant="95" id="FJn-Af-PbV"/>
+                                    <constraint firstItem="Wy9-pF-ZRV" firstAttribute="leading" secondItem="KWR-nM-MX4" secondAttribute="leadingMargin" constant="41" id="b6e-sV-cYI"/>
+                                    <constraint firstItem="Wy9-pF-ZRV" firstAttribute="top" secondItem="KWR-nM-MX4" secondAttribute="topMargin" constant="55" id="ui4-Uq-eLA"/>
+                                </constraints>
                                 <connections>
-                                    <outlet property="nameLabel" destination="Wy9-pF-ZRV" id="DK1-Kw-Yql"/>
+                                    <outlet property="studentNameLabel" destination="Wy9-pF-ZRV" id="Iwk-Og-c7K"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -350,13 +326,14 @@
                             <outlet property="delegate" destination="MEl-8u-sh3" id="LZI-Ua-Xqa"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="UXq-py-S0U"/>
                     <connections>
                         <outlet property="StudentCollection" destination="5Bg-cB-sBO" id="O59-Ce-2HP"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdd-RI-Hlb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1390" y="195"/>
+            <point key="canvasLocation" x="681.4453125" y="194.53125"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="wMz-tc-QHY">
@@ -377,19 +354,19 @@
             <objects>
                 <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="wXA-27-oqq" customClass="lassroomTableMasterViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c0R-9A-zW8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableCell" textLabel="jHp-LT-Csy" style="IBUITableViewCellStyleDefault" id="uIs-oa-IF1">
-                                <rect key="frame" x="0.0" y="86" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uIs-oa-IF1" id="Nxg-sc-gKn">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jHp-LT-Csy">
-                                            <frame key="frameInset" minX="15" width="345" height="43"/>
+                                            <frame key="frameInset" minX="15" width="290" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -421,12 +398,12 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="1rp-C1-Ayo" kind="relationship" relationship="rootViewController" id="iKR-4t-QPy"/>
+                        <segue destination="MEl-8u-sh3" kind="relationship" relationship="rootViewController" id="4DE-uW-akC"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6VI-hL-vlM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -435,6 +412,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="YgB-Zf-Z4Z"/>
+        <segue reference="yOY-Ld-586"/>
     </inferredMetricsTieBreakers>
 </document>
