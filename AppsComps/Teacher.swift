@@ -17,6 +17,14 @@ class Teacher: Account, APIDataDelegate {
      getClassrooms
      Delete a classroom
      */
+    
+    override init?(idToken: String, name: String){
+        super.init(idToken: idToken, name: name)
+        if idToken.isEmpty || name.isEmpty {
+            return nil
+        }
+    }
+    
     func createClassroom(classroomName: String){
         //Generate some pattern for a new classroomID: maybe lowercase of classroomName plus some number
         //tell the db connector to add a new classroom to the db with classroomID, classroomName, and self.IDToken
