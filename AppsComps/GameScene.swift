@@ -74,7 +74,7 @@ class GameScene: SKScene {
         NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
-        
+       
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
@@ -131,6 +131,13 @@ class GameScene: SKScene {
             self.levelCircles.append(level)
             self.addChild(level)
         }
+        
+        var problemText = SKLabelNode(fontNamed: "Arial")
+        problemText.position = CGPoint(x: 5*WIDTHUNIT, y: 15*HEIGHTUNIT)
+        problemText.text = "Here is a problem"
+        problemText.fontSize = 12
+        problemText.fontColor = .black
+        self.addChild(problemText)
         
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
