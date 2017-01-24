@@ -26,7 +26,7 @@ class Teacher: Account, APIDataDelegate {
     }
     
     override func getType()->String{
-        return "student"
+        return "teacher"
     }
     
     func createClassroom(classroomName: String){
