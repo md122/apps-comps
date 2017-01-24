@@ -4,7 +4,7 @@
 //
 //  Created by appscomps on 11/6/16.
 //  Copyright © 2016 appscomps. All rights reserved.
-//
+// A super class of teacher and student, to hold account information
 
 import UIKit
 
@@ -24,11 +24,11 @@ class Account {
         }
     }
     
-    /*
-    func getType() -> String {
-        
+    // Implemented by student and teacher subclass
+    func getType()->String {
+        return "account"
     }
-    */
+    
     func getIdToken()->String {
         return idToken
     }

@@ -18,6 +18,10 @@ class Student: Account, APIDataDelegate {
             return nil
         }
     }
+    
+    override func getType()->String{
+        return "student"
+    }
  
  
     func getClassRoomID()->String{

@@ -25,6 +25,10 @@ class Teacher: Account, APIDataDelegate {
         }
     }
     
+    override func getType()->String{
+        return "student"
+    }
+    
     func createClassroom(classroomName: String){
         //Generate some pattern for a new classroomID: maybe lowercase of classroomName plus some number
         //tell the db connector to add a new classroom to the db with classroomID, classroomName, and self.IDToken
