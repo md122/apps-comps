@@ -5,6 +5,7 @@
 //  Created by appscomps on 11/6/16.
 //  Copyright © 2016 appscomps. All rights reserved.
 // A super class of teacher and student, to hold account information
+// THIS SHOULD BE MADE SO THAT YOU CAN'T INSTANTIATE IT
 
 import UIKit
 
