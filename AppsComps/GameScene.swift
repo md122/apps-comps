@@ -21,6 +21,7 @@ class GameScene: SKScene {
     
     var topBar = [Block]()
     var bottomBar = [Block]()
+    var levelCircles = [SKShapeNode]()
     var garbage:SKSpriteNode
     
     // The starting coordinates
@@ -40,6 +41,7 @@ class GameScene: SKScene {
     let VARBLOCKSIZE:CGSize
     let GARBAGEPOSITION:CGPoint
     let GARBAGESIZE:CGSize
+    let LEVELCIRCLERADIUS:CGFloat
     
     // not implemented
     var isSorted = false
@@ -67,11 +69,11 @@ class GameScene: SKScene {
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
         GARBAGESIZE = CGSize(width: 1.5*WIDTHUNIT, height: 1.2*1.5*WIDTHUNIT)
+        LEVELCIRCLERADIUS = 0.3*WIDTHUNIT
         
         NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
-        
         
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
@@ -119,8 +121,16 @@ class GameScene: SKScene {
         
         self.addChild(bottomBarStarter)
         
-        
-        
+        //Add the level circles
+        for i in 0 ..< 3 {
+            var level = SKShapeNode(circleOfRadius: self.LEVELCIRCLERADIUS)
+            level.strokeColor = SKColor.black
+            level.glowWidth = 1.0
+            level.fillColor =  SKColor.white
+            level.position = CGPoint(x: 14*WIDTHUNIT+2*CGFloat(i)*LEVELCIRCLERADIUS, y: 15*HEIGHTUNIT)
+            self.levelCircles.append(level)
+            self.addChild(level)
+        }
         
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
