@@ -62,17 +62,17 @@ class GameScene: SKScene {
         WIDTHUNIT = width/16
         BARX = 2*HEIGHTUNIT
         TOPBARY = 10.5*HEIGHTUNIT
-        BOTTOMBARY = 6.5*HEIGHTUNIT
-        BLOCKHEIGHT = 2*HEIGHTUNIT
+        BOTTOMBARY = 8*HEIGHTUNIT
+        BLOCKHEIGHT = 1*HEIGHTUNIT
         VARBLOCKWIDTH = 1.5*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
-        GARBAGESIZE = CGSize(width: 1.5*WIDTHUNIT, height: 1.2*1.5*WIDTHUNIT)
+        GARBAGESIZE = CGSize(width: 2.25*WIDTHUNIT, height: 1.2*2.25*WIDTHUNIT)
         LEVELCIRCLERADIUS = 0.3*WIDTHUNIT
         
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
-        VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 2.5*HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
        
         currentBlockZ = 1.0
@@ -132,6 +132,7 @@ class GameScene: SKScene {
             self.addChild(level)
         }
         
+        // This should be a UILabel
         let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
         let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
         problemRect.position = CGPoint(x: 7*WIDTHUNIT, y: 14*HEIGHTUNIT)
@@ -145,18 +146,47 @@ class GameScene: SKScene {
         problemText.fontColor = .black
         self.addChild(problemText)
         
-        let variableRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 11*HEIGHTUNIT)
+        // This should be a UITextField or a UITextView
+        let variableRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
         let variableRect = SKShapeNode(rectOf: variableRectSize, cornerRadius: HEIGHTUNIT)
-        variableRect.position = CGPoint(x: 14*WIDTHUNIT, y: 8*HEIGHTUNIT)
+        variableRect.position = CGPoint(x: 14*WIDTHUNIT, y: 11*HEIGHTUNIT)
         variableRect.strokeColor = .black
         variableRect.glowWidth = 0.5
         self.addChild(variableRect)
         let variableText = SKLabelNode(fontNamed: "Arial")
-        variableText.position = CGPoint(x: variableRect.position.x, y: variableRect.position.y - problemText.frame.height / 2.0)
+        variableText.position = CGPoint(x: variableRect.position.x, y: variableRect.position.y - variableText.frame.height / 2.0)
         variableText.text = "variables"
         variableText.fontSize = 15*min(variableRectSize.width / variableText.frame.width, variableRectSize.height / variableText.frame.height)
         variableText.fontColor = .black
         self.addChild(variableText)
+        
+        // This should be a UILabelView
+        let messageRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
+        let messageRect = SKShapeNode(rectOf: messageRectSize, cornerRadius: HEIGHTUNIT)
+        messageRect.position = CGPoint(x: 14*WIDTHUNIT, y:5*HEIGHTUNIT)
+        messageRect.strokeColor = .black
+        messageRect.glowWidth = 0.5
+        self.addChild(messageRect)
+        let messageText = SKLabelNode(fontNamed: "Arial")
+        messageText.position = CGPoint(x: messageRect.position.x, y: messageRect.position.y - messageText.frame.height / 2.0)
+        messageText.text = "Message"
+        messageText.fontSize = 15*min(messageRectSize.width / messageText.frame.width, messageRectSize.height / messageText.frame.height)
+        messageText.fontColor = .black
+        self.addChild(messageText)
+        
+        // This should be a button
+        let submitRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 1*HEIGHTUNIT)
+        let submitRect = SKShapeNode(rectOf: submitRectSize, cornerRadius: HEIGHTUNIT)
+        submitRect.position = CGPoint(x: 14*WIDTHUNIT, y:1.5*HEIGHTUNIT)
+        submitRect.strokeColor = .black
+        submitRect.glowWidth = 0.5
+        self.addChild(submitRect)
+        let submitText = SKLabelNode(fontNamed: "Arial")
+        submitText.position = CGPoint(x: submitRect.position.x, y: submitRect.position.y - submitText.frame.height / 2.0)
+        submitText.text = "Submit"
+        submitText.fontSize = 15*min(submitRectSize.width / submitText.frame.width, submitRectSize.height / submitText.frame.height)
+        submitText.fontColor = .black
+        self.addChild(submitText)
         
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
