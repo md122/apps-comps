@@ -17,10 +17,12 @@ class GameScene: SKScene {
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
     // Value incremented every time a block is touched
-    var currentBlockZ : CGFloat = 1.0
+    var currentBlockZ:CGFloat
     
     var topBar = [Block]()
     var bottomBar = [Block]()
+    var levelCircles = [SKShapeNode]()
+    var garbage:SKSpriteNode
     
     // The starting coordinates
     let width:CGFloat
@@ -37,6 +39,10 @@ class GameScene: SKScene {
     let NUMBLOCKWIDTH:CGFloat
     let NUMBLOCKSIZE:CGSize
     let VARBLOCKSIZE:CGSize
+    let GARBAGEPOSITION:CGPoint
+    let GARBAGESIZE:CGSize
+    let LEVELCIRCLERADIUS:CGFloat
+    let SNAPDISTANCE:Int
     
     // not implemented
     var isSorted = false
@@ -56,19 +62,27 @@ class GameScene: SKScene {
         HEIGHTUNIT = height/16
         WIDTHUNIT = width/16
         BARX = 2*HEIGHTUNIT
-        TOPBARY = 11*HEIGHTUNIT
-        BOTTOMBARY = 6*HEIGHTUNIT
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4, y: HEIGHTUNIT)
-        VARBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*3, y: HEIGHTUNIT)
-        BLOCKHEIGHT = 25
-        VARBLOCKWIDTH = 60
-        NUMBLOCKWIDTH = 40
+        TOPBARY = 10.5*HEIGHTUNIT
+        BOTTOMBARY = 8*HEIGHTUNIT
+        BLOCKHEIGHT = 1*HEIGHTUNIT
+        VARBLOCKWIDTH = 1.5*WIDTHUNIT
+        NUMBLOCKWIDTH = 1*WIDTHUNIT
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
+        GARBAGESIZE = CGSize(width: 2.25*WIDTHUNIT, height: 1.2*2.25*WIDTHUNIT)
+        LEVELCIRCLERADIUS = 0.3*WIDTHUNIT
         
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 2.5*HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
+       
+        currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
-    
+        garbage = SKSpriteNode(imageNamed: "garbage.png")
+        
+        SNAPDISTANCE = 10
+        
         super.init(size: size)
     }
     
@@ -88,9 +102,8 @@ class GameScene: SKScene {
         
         self.backgroundColor = .white
         
-        let garbage = SKSpriteNode(imageNamed: "garbage.png")
-        garbage.position = CGPoint(x: 500, y: 500)
-        garbage.size = CGSize(width: 100, height: 120)
+        garbage.position = GARBAGEPOSITION
+        garbage.size = GARBAGESIZE
         self.addChild(garbage)
         
         //Add the original block in the number block bank and the variable block bank
@@ -110,6 +123,108 @@ class GameScene: SKScene {
         bottomBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(BOTTOMBARY))
         
         self.addChild(bottomBarStarter)
+        
+        //Add the level circles
+        for i in 0 ..< 3 {
+            let level = SKShapeNode(circleOfRadius: self.LEVELCIRCLERADIUS)
+            level.strokeColor = .black
+            level.glowWidth = 1.0
+            level.fillColor =  .white
+            level.position = CGPoint(x: 14*WIDTHUNIT+2*CGFloat(i)*LEVELCIRCLERADIUS, y: 15*HEIGHTUNIT)
+            self.levelCircles.append(level)
+            self.addChild(level)
+        }
+        let levelText = SKLabelNode(fontNamed: "Arial")
+        levelText.position = CGPoint(x: 14.5*WIDTHUNIT, y: 14.25*HEIGHTUNIT)
+        levelText.text = "Level: "
+        levelText.fontSize = 15
+        levelText.fontColor = .black
+        self.addChild(levelText)
+        
+        // This should be a UILabel
+        let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
+        let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
+        problemRect.position = CGPoint(x: 7*WIDTHUNIT, y: 14*HEIGHTUNIT)
+        problemRect.strokeColor = .black
+        problemRect.glowWidth = 0.5
+        self.addChild(problemRect)
+        let problemText = SKLabelNode(fontNamed: "Arial")
+        problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
+        problemText.text = "Here is a problem"
+        problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
+        problemText.fontColor = .black
+        self.addChild(problemText)
+        
+        // This should be a UITextField or a UITextView
+        let variableRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
+        let variableRect = SKShapeNode(rectOf: variableRectSize, cornerRadius: HEIGHTUNIT)
+        variableRect.position = CGPoint(x: 14*WIDTHUNIT, y: 11*HEIGHTUNIT)
+        variableRect.strokeColor = .black
+        variableRect.glowWidth = 0.5
+        self.addChild(variableRect)
+        let variableText = SKLabelNode(fontNamed: "Arial")
+        variableText.position = CGPoint(x: variableRect.position.x, y: variableRect.position.y - variableText.frame.height / 2.0)
+        variableText.text = "variables"
+        variableText.fontSize = 15*min(variableRectSize.width / variableText.frame.width, variableRectSize.height / variableText.frame.height)
+        variableText.fontColor = .black
+        self.addChild(variableText)
+        
+        // This should be a UILabelView
+        let messageRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
+        let messageRect = SKShapeNode(rectOf: messageRectSize, cornerRadius: HEIGHTUNIT)
+        messageRect.position = CGPoint(x: 14*WIDTHUNIT, y:5*HEIGHTUNIT)
+        messageRect.strokeColor = .black
+        messageRect.glowWidth = 0.5
+        self.addChild(messageRect)
+        let messageText = SKLabelNode(fontNamed: "Arial")
+        messageText.position = CGPoint(x: messageRect.position.x, y: messageRect.position.y - messageText.frame.height / 2.0)
+        messageText.text = "Message"
+        messageText.fontSize = 15*min(messageRectSize.width / messageText.frame.width, messageRectSize.height / messageText.frame.height)
+        messageText.fontColor = .black
+        self.addChild(messageText)
+        
+        // This should be a button
+        let submitRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 1*HEIGHTUNIT)
+        let submitRect = SKShapeNode(rectOf: submitRectSize, cornerRadius: HEIGHTUNIT)
+        submitRect.position = CGPoint(x: 14*WIDTHUNIT, y:1.5*HEIGHTUNIT)
+        submitRect.strokeColor = .black
+        submitRect.glowWidth = 0.5
+        self.addChild(submitRect)
+        let submitText = SKLabelNode(fontNamed: "Arial")
+        submitText.position = CGPoint(x: submitRect.position.x, y: submitRect.position.y - submitText.frame.height / 2.0)
+        submitText.text = "Submit"
+        submitText.fontSize = 15*min(submitRectSize.width / submitText.frame.width, submitRectSize.height / submitText.frame.height)
+        submitText.fontColor = .black
+        self.addChild(submitText)
+        
+        //Pinchy stuff
+        //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+        self.view?.addGestureRecognizer(pinchGesture)
+
+        
+    }
+    
+    //Got this from the stack overflow post...
+    func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
+        //We don't need to do anything when the pinch begins
+        if sender.state == .began {
+            
+        }
+        
+        else if sender.state == .changed {
+            //We need to scale the block that is under the first touch... not the garbage
+            //Try and get the location of first pinch to print here...!!!
+            let pinchScale = sender.scale
+            
+            if blockTouched != nil {
+                //We need to not just scale, but change the old scale by the new scaling amount...
+                blockTouched?.xScale = pinchScale
+            }
+        }
+        else if sender.state == .ended {
+            sender.scale = 1.0
+        }
     }
     
     func blockIsTouched(touchLocation: CGPoint, child: SKNode) -> Bool {
@@ -133,6 +248,14 @@ class GameScene: SKScene {
                 }
             }
         }
+    }
+    
+    //If the middle of the block is over the garbage can reutrns true, else returns false
+    func blockOverGarbageCan(block: Block) -> Bool {
+        if garbage.contains(block.position) {
+            return true
+        }
+        return false
     }
     
     // Called when you are moving your finger
@@ -164,6 +287,14 @@ class GameScene: SKScene {
             //Not to far up
             blockY = min(blockY, size.height - block.frame.height/2)
             block.position = CGPoint(x:blockX, y:blockY)
+            
+            //If we are close to the garbage can grow the garbage can in size a bit
+            if (blockOverGarbageCan(block: block)) {
+                garbage.setScale(1.2)
+            }
+            else {
+                garbage.setScale(1.0)
+            }
         }
     }
     
@@ -176,7 +307,7 @@ class GameScene: SKScene {
         var insertionIndex = -1
         
         //Check to see if it should be added at the beginning of the top bar
-        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < 3) && (abs(block.position.y - CGFloat(TOPBARY)) < 3) {
+        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < 10) && (abs(block.position.y - CGFloat(TOPBARY)) < 10) {
             added = true
             insertionIndex = 0
             //Snap the bar into position at the start of the bar
@@ -184,7 +315,7 @@ class GameScene: SKScene {
         }
         
         //Check to see if it should be added at the beginning of the bottom bar
-        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < 3) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < 3) {
+        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < 10) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < 10) {
             added = true
             insertionIndex = 0
             //Snap the bar into position at the start of the bar
@@ -206,7 +337,7 @@ class GameScene: SKScene {
                 //Case where we haven't added the block yet
             else {
                 //If the block we are dragging is close enough to a block already in a bar add it
-                if abs(blocki.getTopRightX() - blockTopLeftX) < 3 {
+                if abs(blocki.getTopRightX() - blockTopLeftX) < 10 {
                     block.position = CGPoint(x:(blocki.getTopRightX() + block.getWidth() / 2), y:(blocki.getTopRightY() - block.getHeight() / 2))
                     added = true
                     //Insert this block after the block it lines up with
@@ -248,6 +379,7 @@ class GameScene: SKScene {
         }
     }
     
+    //Returns the x coordinate for the end of the last block in the bar passed in
     func getEndOfBar(bar: [Block]) -> Double {
         var endOfBar = Double(BARX)
         for i in 0...(bar.count - 1) {
@@ -255,6 +387,7 @@ class GameScene: SKScene {
         }
         return endOfBar
     }
+
     
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -270,8 +403,6 @@ class GameScene: SKScene {
             //The block is in the top bar
             if (indexInTopBar > -1) {
                 //If we move the block outside of the bar, by moving it too high, too left, or too right
-                print("Bar width")
-                print(getEndOfBar(bar: topBar))
                 if (   (Double(block.position.y) > Double(TOPBARY) + block.getHeight())   ||
                        (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
                     ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
@@ -307,7 +438,7 @@ class GameScene: SKScene {
                 }
             }
             //If it's not already in the top bar, are you dragging it to the top bar?
-            else if abs(Double(TOPBARY) - Double(block.position.y)) < 3 {
+            else if abs(Double(TOPBARY) - Double(block.position.y)) < 10 {
                 let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
                 if insertionIndex > -1 {
                     topBar.insert(block, at:insertionIndex)
@@ -349,11 +480,17 @@ class GameScene: SKScene {
                 }
             }
             //If it's not already in the bottom bar, are you dragging it to the bottom bar?
-            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 3 {
+            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 10 {
                 let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
                 if insertionIndex > -1 {
                     bottomBar.insert(block, at:insertionIndex)
                 }
+            }
+            
+            //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
+            if (blockOverGarbageCan(block: block)) {
+                block.removeFromParent()
+                garbage.setScale(1.0)
             }
             
             // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank. 
