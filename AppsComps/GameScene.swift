@@ -42,6 +42,7 @@ class GameScene: SKScene {
     let GARBAGEPOSITION:CGPoint
     let GARBAGESIZE:CGSize
     let LEVELCIRCLERADIUS:CGFloat
+    let SNAPDISTANCE:Int
     
     // not implemented
     var isSorted = false
@@ -79,6 +80,8 @@ class GameScene: SKScene {
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
         garbage = SKSpriteNode(imageNamed: "garbage.png")
+        
+        SNAPDISTANCE = 10
         
         super.init(size: size)
     }
@@ -304,7 +307,7 @@ class GameScene: SKScene {
         var insertionIndex = -1
         
         //Check to see if it should be added at the beginning of the top bar
-        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < 3) && (abs(block.position.y - CGFloat(TOPBARY)) < 3) {
+        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < 10) && (abs(block.position.y - CGFloat(TOPBARY)) < 10) {
             added = true
             insertionIndex = 0
             //Snap the bar into position at the start of the bar
@@ -312,7 +315,7 @@ class GameScene: SKScene {
         }
         
         //Check to see if it should be added at the beginning of the bottom bar
-        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < 3) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < 3) {
+        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < 10) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < 10) {
             added = true
             insertionIndex = 0
             //Snap the bar into position at the start of the bar
@@ -334,7 +337,7 @@ class GameScene: SKScene {
                 //Case where we haven't added the block yet
             else {
                 //If the block we are dragging is close enough to a block already in a bar add it
-                if abs(blocki.getTopRightX() - blockTopLeftX) < 3 {
+                if abs(blocki.getTopRightX() - blockTopLeftX) < 10 {
                     block.position = CGPoint(x:(blocki.getTopRightX() + block.getWidth() / 2), y:(blocki.getTopRightY() - block.getHeight() / 2))
                     added = true
                     //Insert this block after the block it lines up with
@@ -435,7 +438,7 @@ class GameScene: SKScene {
                 }
             }
             //If it's not already in the top bar, are you dragging it to the top bar?
-            else if abs(Double(TOPBARY) - Double(block.position.y)) < 3 {
+            else if abs(Double(TOPBARY) - Double(block.position.y)) < 10 {
                 let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
                 if insertionIndex > -1 {
                     topBar.insert(block, at:insertionIndex)
@@ -477,7 +480,7 @@ class GameScene: SKScene {
                 }
             }
             //If it's not already in the bottom bar, are you dragging it to the bottom bar?
-            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 3 {
+            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 10 {
                 let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
                 if insertionIndex > -1 {
                     bottomBar.insert(block, at:insertionIndex)
