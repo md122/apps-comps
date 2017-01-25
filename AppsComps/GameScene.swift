@@ -131,6 +131,12 @@ class GameScene: SKScene {
             self.levelCircles.append(level)
             self.addChild(level)
         }
+        let levelText = SKLabelNode(fontNamed: "Arial")
+        levelText.position = CGPoint(x: 14.5*WIDTHUNIT, y: 14.25*HEIGHTUNIT)
+        levelText.text = "Level: "
+        levelText.fontSize = 15
+        levelText.fontColor = .black
+        self.addChild(levelText)
         
         // This should be a UILabel
         let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
