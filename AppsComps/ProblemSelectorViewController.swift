@@ -34,7 +34,7 @@ class ProblemSelectorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        greetingText.text = "Hello " + Account.sharedInstance.name!
+        greetingText.text = "Hello " + currentUser!.getName()
         levelText.text = "You are on level " + String(level)
         
         loadButtons()

@@ -8,11 +8,11 @@
 
 import UIKit
 
-var acc: Account?
-
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate {
 
+
+    
     var window: UIWindow?
 
     /*func requestStudentData() {
@@ -54,11 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         return true
          */
         
-        var configureError: NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
+        //var configureError: NSError?
+        /*GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().delegate = self
-        //requestStudentData()
+        */
         return true
     }
 
@@ -85,39 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    // From tutorial, handles url received at the end of authenticiation process
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return GIDSignIn.sharedInstance().handle(
-            url,
-            sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
-            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
-    }
     
-    // Google sign-in methods from tutorial
-    // The sign-in flow has finished and was successful if |error| is |nil|.
-    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if (error == nil) {
-            // Perform any operations on signed in user here.
-            //let userId = user.userID                  // For client-side use only!
-            let userToken = user.authentication.idToken // Safe to send to the server
-            let fullName = user.profile.name
-            Account.sharedInstance.idToken = userToken!
-            Account.sharedInstance.name = fullName!
-            // If the current view controller is loginviewcontroller call didAttemptSignIn to
-            // use google creds to login to app or create account
-            if let controller = self.window?.rootViewController as? LoginViewController {
-                controller.didAttemptSignIn()
-            }
-        } else {
-            print("\(error.localizedDescription)")
-        }
-    }
-    
-    // Finished disconnecting |user| from the app successfully if |error| is |nil|.
-    public func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        
-    }
-
     // MARK: - Split view
 
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
