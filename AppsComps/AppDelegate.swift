@@ -8,10 +8,13 @@
 
 import UIKit
 
+var currentUser: Account?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate {
 
 
+    
     
     var window: UIWindow?
 

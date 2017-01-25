@@ -14,7 +14,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     @IBOutlet weak var signOutButton: UIButton!
     var name: String?
     var idToken: String?
-    var currentUser: Account?
     
     
     override func viewDidLoad() {
@@ -22,8 +21,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
         signInButton.style = GIDSignInButtonStyle.wide
         //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
