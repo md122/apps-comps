@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
         }
     }
-*/
+     */
     
     // Function that gets called when creating account (not currently used)
     /*func handleCreateAccountAttempt(data: [NSArray]) {
@@ -38,31 +38,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // Override point for customization after application launch.
-        
-        //let viewController = self.window!.rootViewController! as UIViewController
-        //let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        //navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
-        //viewController.delegate = self
-        //return true
-        
-        /*
-        let splitViewController = self.window!.rootViewController as! UISplitViewController
-        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
-        splitViewController.delegate = self
-        return true
-         */
+//        let splitViewController = self.window!.rootViewController as! UISplitViewController
+//        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
+//        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+//        splitViewController.delegate = self
         
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().delegate = self
         //requestStudentData()
-        //let splitViewController = self.window!.rootViewController as! UISplitViewController
-        //let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-       // navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-       // splitViewController.delegate = self
+
         return true
     }
 
