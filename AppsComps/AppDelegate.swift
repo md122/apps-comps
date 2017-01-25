@@ -8,7 +8,7 @@
 
 import UIKit
 
-var acc: Account?
+var currentUser: Account?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, APIDataDelegate, GIDSignInDelegate {
@@ -86,12 +86,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            Account.sharedInstance.idToken = userToken!
-            Account.sharedInstance.name = fullName!
+            
             // If the current view controller is loginviewcontroller call didAttemptSignIn to
             // use google creds to login to app or create account
             if let controller = self.window?.rootViewController as? LoginViewController {
-                controller.didAttemptSignIn()
+                controller.didAttemptSignIn(idToken: userToken!, name: fullName!)
             }
         } else {
             print("\(error.localizedDescription)")

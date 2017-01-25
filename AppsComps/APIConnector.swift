@@ -113,28 +113,7 @@ class APIConnector: NSObject  {
         }
     }
     
-/*
-    
-    func attemptLogin(callingDelegate: APIDataDelegate, userID: String) {
-     
-    }
-    
-    func attemptCreateAccount(callingDelegate: APIDataDelegate, userID: String, userName: String, accountType: String) {
-        let url = baseURL + "attemptCreateUser/" + userID + "/" + userName + "/" + accountType
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
-                }
-                if (utf8Text == "ERROR: Account already exists") {
-                    print("Need to figure out how to handle this")
-                }
-                callingDelegate.handleCreateAccountAttempt?(data: result)
-        }
-     }
-*/
-    
+
     // Have to figure out how to return and properly handle returned value
     func attemptLogin(callingDelegate: APIDataDelegate, idToken: String) {
         
@@ -183,27 +162,6 @@ class APIConnector: NSObject  {
             }
             
         }
-        
-        /*
-        // Puts in a request for some non-JSON data
-        Alamofire.request("http://cmc307-05.mathcs.carleton.edu:5000/hello").responseData { response in
-            
-            print("______Response Info___________")
-            debugPrint("All Response Info: \(response)")
-            print("_____End Response Info_________")
-            
-            // Creates a response handler that will fire whenever the data gets back
-            // It is asynchronous, meaning it will run whenever it comes back
-            if let data = response.result.value, let utf8Text = String(data: data, encoding: .utf8) {
-                print("________________________________")
-                print("Got some data from our API")
-                print("Data: \(utf8Text)")
-                print("End Data")
-                print("________________________________")
-            }
-        }
- 
-        */
     }
     
     

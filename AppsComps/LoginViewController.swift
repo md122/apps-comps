@@ -12,6 +12,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
 
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
+    var name: String?
+    var idToken: String?
     
     
     override func viewDidLoad() {
@@ -43,22 +45,24 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
                 // Structure of how to write pop up taken from http://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
                 let createAccountAlert = UIAlertController(title: "Account Not Found", message: "You don't have an account with us. Create one now?", preferredStyle: UIAlertControllerStyle.alert)
                 createAccountAlert.addAction(UIAlertAction(title: "Create Student Account", style: .default, handler: { (action: UIAlertAction!) in
-                    connector.attemptCreateAccount(callingDelegate: self, idToken: Account.sharedInstance.idToken!, accountType: "student")
-                    connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+                    connector.attemptCreateAccount(callingDelegate: self, idToken: self.idToken! , accountType: "student")
+                    connector.attemptLogin(callingDelegate: self,  idToken: self.idToken!)
                 }))
                 createAccountAlert.addAction(UIAlertAction(title: "Create Teacher Account", style: .default, handler: { (action: UIAlertAction!) in
-                    connector.attemptCreateAccount(callingDelegate: self, idToken: Account.sharedInstance.idToken!, accountType: "teacher")
-                    connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+                    connector.attemptCreateAccount(callingDelegate: self, idToken: self.idToken!, accountType: "teacher")
+                    connector.attemptLogin(callingDelegate: self, idToken: self.idToken!)
                 }))
                 createAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
                 }))
                 present(createAccountAlert, animated: true, completion: nil)
             }
             else if (data == "Student") {
+                currentUser = Student(idToken: self.idToken!, name: name!)
                 performSegue(withIdentifier: "loginToStudentDash", sender: self)
             }
             else if (data == "Teacher") {
                 print ("is teacher")
+                currentUser = Teacher(idToken: self.idToken!, name: name!)
                 performSegue(withIdentifier: "loginToTeacherDash", sender: self)
             }
             else {
@@ -72,9 +76,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     
     
     // Called from appdelegate after user is authenticated by google
-    func didAttemptSignIn() {
+    func didAttemptSignIn(idToken: String, name: String ) {
         let connector = APIConnector()
-        connector.attemptLogin(callingDelegate: self, idToken: Account.sharedInstance.idToken!)
+        self.name = name
+        self.idToken = idToken
+        connector.attemptLogin(callingDelegate: self, idToken: idToken)
     }
     
 

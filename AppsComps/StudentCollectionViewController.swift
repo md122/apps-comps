@@ -16,11 +16,10 @@ class StudentCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        loadSampleStudents(studentList: ["Tiff", "Josh", "Melissa", "Jenner", "Ray", "Sarah"])
-        
+        loadSampleStudents(studentList: ["Tiff Mering", "Josh Mering", "Jenner Mering", "Ray Mering", "Sarah Mering", "Mason Mering", "Sadie Mering", "John Mering", "Ellen Mering", "Karl Mering", "Kimm Mering", "Andrew Mering", "Nicole Sachse", "Rich Sachse", "Alex Sachse", "Jacob Sachse", "Maddie Sachse", "Willy Sachse", "Kate Feinberg", "Jack Feinberg", "Hanna Feinberg", "Melissa Haas", "Eric Haas", "Noah Haas", "Claire Haas", "Alex Tomala", "Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,7 +53,16 @@ class StudentCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
         
         let student = self.students[indexPath.row]
-        cell.backgroundColor = UIColor.red
+        if student.range(of: "Mering") != nil{
+            cell.backgroundColor = UIColor.red
+        } else if student.range(of: "Sachse") != nil{
+            cell.backgroundColor = UIColor.blue
+        } else if student.range(of: "Feinberg") != nil{
+            cell.backgroundColor = UIColor.green
+        } else {
+            cell.backgroundColor = UIColor.yellow
+        }
+        
         cell.studentNameLabel.text = student
     
         return cell
