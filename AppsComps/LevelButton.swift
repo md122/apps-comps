@@ -49,6 +49,10 @@ class LevelButton: UIButton {
         self.level = lev
     }
     
+    func getLevel() -> Int {
+        return level
+    }
+    
     func checkAccess(curLev: Int){
         if (level >= curLev){
             locked = false

@@ -31,19 +31,9 @@ class ProblemSelectorViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         greetingText.text = "Hello " + Account.sharedInstance.name!
         levelText.text = "You are on level " + String(level)
-        
-        //loadButtons()
+
     }
     
-//    func loadButtons(){
-//        //TODO: make buttons gray if level not reached
-//        level1.setLevel(lev: 1)
-//        level2.setLevel(lev: 2)
-//        level3.setLevel(lev: 3)
-//        level4.setLevel(lev: 4)
-//        level5.setLevel(lev: 5)
-//        level6.setLevel(lev: 6)
-//
-//    }
+
     
 }
