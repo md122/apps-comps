@@ -123,19 +123,25 @@ class GameScene: SKScene {
         
         //Add the level circles
         for i in 0 ..< 3 {
-            var level = SKShapeNode(circleOfRadius: self.LEVELCIRCLERADIUS)
-            level.strokeColor = SKColor.black
+            let level = SKShapeNode(circleOfRadius: self.LEVELCIRCLERADIUS)
+            level.strokeColor = .black
             level.glowWidth = 1.0
-            level.fillColor =  SKColor.white
+            level.fillColor =  .white
             level.position = CGPoint(x: 14*WIDTHUNIT+2*CGFloat(i)*LEVELCIRCLERADIUS, y: 15*HEIGHTUNIT)
             self.levelCircles.append(level)
             self.addChild(level)
         }
         
-        var problemText = SKLabelNode(fontNamed: "Arial")
-        problemText.position = CGPoint(x: 5*WIDTHUNIT, y: 15*HEIGHTUNIT)
+        let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
+        let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
+        problemRect.position = CGPoint(x: 6*WIDTHUNIT, y: 14*HEIGHTUNIT)
+        problemRect.strokeColor = .black
+        problemRect.glowWidth = 0.5
+        self.addChild(problemRect)
+        let problemText = SKLabelNode(fontNamed: "Arial")
+        problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
         problemText.text = "Here is a problem"
-        problemText.fontSize = 12
+        problemText.fontSize = min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
         problemText.fontColor = .black
         self.addChild(problemText)
         
