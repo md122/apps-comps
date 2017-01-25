@@ -16,9 +16,6 @@
 		1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */; };
 		1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */; };
 		1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */; };
-		1186F5A51E36C8F3004AE62F /* AllProblemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A41E36C8F3004AE62F /* AllProblemsTableViewController.swift */; };
-		1186F5A71E36C953004AE62F /* ProblemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A61E36C953004AE62F /* ProblemCollectionViewCell.swift */; };
-		1186F5A91E36CA3A004AE62F /* LevelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A81E36CA3A004AE62F /* LevelTableViewCell.swift */; };
 		12E5B6C7AF1EC81893F3CBC0 /* Pods_AppsComps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7EA029543374792360F5C /* Pods_AppsComps.framework */; };
 		228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
 		22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */; };
@@ -72,9 +69,6 @@
 		1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewController.swift; sourceTree = "<group>"; };
 		1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableMasterViewController.swift; sourceTree = "<group>"; };
 		1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewCell.swift; sourceTree = "<group>"; };
-		1186F5A41E36C8F3004AE62F /* AllProblemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllProblemsTableViewController.swift; sourceTree = "<group>"; };
-		1186F5A61E36C953004AE62F /* ProblemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemCollectionViewCell.swift; sourceTree = "<group>"; };
-		1186F5A81E36CA3A004AE62F /* LevelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTableViewCell.swift; sourceTree = "<group>"; };
 		228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnector.swift; sourceTree = "<group>"; };
 		22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataDelegate.swift; sourceTree = "<group>"; };
 		280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,9 +242,6 @@
 				1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */,
 				1186F59C1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift */,
 				113B052C1DDBB3B500D001DD /* Teacher.swift */,
-				1186F5A81E36CA3A004AE62F /* LevelTableViewCell.swift */,
-				1186F5A41E36C8F3004AE62F /* AllProblemsTableViewController.swift */,
-				1186F5A61E36C953004AE62F /* ProblemCollectionViewCell.swift */,
 			);
 			name = Dashboards;
 			sourceTree = "<group>";
@@ -682,7 +673,6 @@
 				1186F59D1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift in Sources */,
 				47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */,
 				22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */,
-				1186F5A51E36C8F3004AE62F /* AllProblemsTableViewController.swift in Sources */,
 				818EC65C1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
 				1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */,
@@ -690,11 +680,9 @@
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
 				1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */,
 				113B052B1DDBB3AF00D001DD /* Account.swift in Sources */,
-				1186F5A91E36CA3A004AE62F /* LevelTableViewCell.swift in Sources */,
 				113B052F1DDBB3BB00D001DD /* Student.swift in Sources */,
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
-				1186F5A71E36C953004AE62F /* ProblemCollectionViewCell.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
 				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
