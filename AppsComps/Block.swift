@@ -16,40 +16,44 @@ class Block: SKSpriteNode {
         case variable
     }
     
-    let BLOCKHEIGHT = 10
-    let VARBLOCKWIDTH = 50
-    let NUMBLOCKWIDTH = 20
+    let BLOCKHEIGHT:CGFloat
+    let BLOCKWIDTH:CGFloat
     
+    //Type is either number or variable
     var type: BlockType
-    var value: Double
+    var value: Double // Holds the value. I.e. in a 5x block, 5 is the value
     var label = SKLabelNode(fontNamed: "Arial")
+    var innerBlockColor = SKSpriteNode()
     
-    //How do we get the blocks to be different sizes based on the type???
-    override init(texture: SKTexture!, color: UIColor, size: CGSize) {
-        self.type = .number
-        self.value = 0.0
-
-        super.init(texture: texture, color: .white, size: CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT))
-    }
-    
-    convenience init(type: BlockType) {
-        //These values are overridden in the override init
-        
-        self.init(texture: nil, color: .white, size: CGSize(width: 1, height : 1))
+    init(type: BlockType, size: CGSize) {
         self.type = type
+        self.value = 1.0
+        
+        BLOCKHEIGHT = size.height
+        BLOCKWIDTH = size.width
         
         switch self.type {
-        case .number:
-            self.color = .purple
-        case .variable:
-            self.color = .green
+            case .number:
+                super.init(texture: nil, color: .black, size: size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
+                label.text = String(value)
+            case .variable:
+                super.init(texture: nil, color: .black, size:size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
+                label.text = "x"
         }
+        innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))
+        innerBlockColor.yScale = CGFloat(1-1.5*(1/self.getHeight()))
         
-        //Add the information to the label and attach the label to this block
-        label.text = "YAY!!!"
-        label.fontSize = 8
-        label.position = CGPoint(x:self.position.x, y:self.position.y)
+        // Add block color to be child of Block and set it to be 1 unit higher than its parent
+        self.addChild(innerBlockColor)
+        innerBlockColor.zPosition = 1
+        
+        //Set the look of the label and attach the label to this block 2 units higher than its parent
+        label.fontSize = 20
+        label.fontColor = .black
         self.addChild(label)
+        label.zPosition = 2
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,15 +68,28 @@ class Block: SKSpriteNode {
         return value
     }
     
-    func getHeight() -> Int{
-        return BLOCKHEIGHT
+    func getHeight() -> Double{
+        return Double(BLOCKHEIGHT)
     }
     
-    func getVarWidth() -> Int{
-        return VARBLOCKWIDTH
+    func getWidth() -> Double{
+        return Double(BLOCKWIDTH)
     }
     
-    func getNumWidth() -> Int{
-        return NUMBLOCKWIDTH
+    func getTopRightX() -> Double{
+        return Double(self.position.x) + self.getWidth() / 2
     }
+    
+    func getTopRightY() -> Double{
+        return Double(self.position.y) + Double(self.getHeight()) / 2
+    }
+    
+    func getLabel() ->SKLabelNode{
+        return self.label
+    }
+    
+    func getBlockColorRectangle() ->SKSpriteNode{
+        return self.innerBlockColor
+    }
+
 }

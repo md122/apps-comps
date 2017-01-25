@@ -8,12 +8,14 @@
 
 import UIKit
 
+var currentUser: Account?
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, APIDataDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
 
-    func requestStudentData() {
+    /*func requestStudentData() {
         let connector = APIConnector()
         connector.testRequest(callingDelegate: self)
     }
@@ -27,46 +29,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
         }
     }
-
+     */
     
-    
-    // Function that gets called when student data comes back
-    func handleLoginAttempt(data: NSDecimalNumber) {
+    // Function that gets called when creating account (not currently used)
+    /*func handleCreateAccountAttempt(data: [NSArray]) {
         print(data)
-        
-        //QUESTION FROM WANCHEN: IS THIS WHERE YOU CALL THE USER TYPE?
-        //call Student class, initialize it, direct to problem selector
-        //call teacher class, init, direct to teacher dashboard
-    }
-    
-    // Function that gets called when creating account
-    func handleCreateAccountAttempt(data: [NSArray]) {
-        print(data)
-    }
+    }*/
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        // Override point for customization after application launch.
-        
-        //let viewController = self.window!.rootViewController! as UIViewController
-        //let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        //navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
-        //viewController.delegate = self
-        //return true
-        
-        /*
-        let splitViewController = self.window!.rootViewController as! UISplitViewController
-        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
-        splitViewController.delegate = self
-        return true
-         */
         
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().delegate = self
-        requestStudentData()
+        //requestStudentData()
+
         return true
     }
 
@@ -109,11 +86,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
             //let userId = user.userID                  // For client-side use only!
             let userToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            let connector = APIConnector()
-            connector.attemptLogin(callingDelegate: self, idToken: userToken!)
-            //connector.attemptCreateAccount(callingDelegate: self, idToken: userToken!, accountType: "student")
-            Account.sharedInstance.idToken = userToken!
-            Account.sharedInstance.name = fullName!
+            
+            // If the current view controller is loginviewcontroller call didAttemptSignIn to
+            // use google creds to login to app or create account
+            if let controller = self.window?.rootViewController as? LoginViewController {
+                controller.didAttemptSignIn(idToken: userToken!, name: fullName!)
+            }
         } else {
             print("\(error.localizedDescription)")
         }
@@ -128,15 +106,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate, GIDSignI
 
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
-        guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
+        guard let topAsDetailController = secondaryAsNavController.topViewController as? TeacherDashboardDetailViewController else { return false }
         if topAsDetailController.detailItem == nil {
             // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
             return true
         }
         return false
     }
-
-
 
 }
 

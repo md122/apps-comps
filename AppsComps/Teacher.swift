@@ -18,9 +18,22 @@ class Teacher: Account, APIDataDelegate {
      Delete a classroom
      */
     
+
     func getHighestLevel()->String{
         //always is highest level
         return "6"
+    }
+    
+    override init?(idToken: String, name: String){
+        super.init(idToken: idToken, name: name)
+        if idToken.isEmpty || name.isEmpty {
+            return nil
+        }
+    }
+    
+    override func getType()->String{
+        return "teacher"
+
     }
     
     func createClassroom(classroomName: String){
@@ -50,7 +63,7 @@ class Teacher: Account, APIDataDelegate {
         let connector = APIConnector()
         connector.requestTeacherDashInfo(callingDelegate: self, teacherID: "Teacher1")
         connector.attemptAddClassroom(callingDelegate: self, teacherID: "Teacher1", classroomName: "Cats Room")
-        connector.attemptRemoveClassroom(callingDelegate: self, teacherID: "Teacher1", classroomID: "Classroom1")
+        connector.attemptRemoveClassroom(callingDelegate: self, classroomID: "Classroom1")
     }
     
     // Function that gets called when teacher Dash Info gets back
@@ -59,7 +72,7 @@ class Teacher: Account, APIDataDelegate {
     }
     
     // Function that gets called when attempt to add classroom gets back
-    func handleAddClassroomAttempt(data: String) {
+    func handleAddClassroomAttempt(data: Bool) {
         print(data)
     }
     
@@ -67,8 +80,6 @@ class Teacher: Account, APIDataDelegate {
     func handleRemoveClassroomAttempt(data: Bool) {
         print(data)
     }
-    
-    
     
     
     
