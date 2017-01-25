@@ -61,8 +61,8 @@ class GameScene: SKScene {
         HEIGHTUNIT = height/16
         WIDTHUNIT = width/16
         BARX = 2*HEIGHTUNIT
-        TOPBARY = 11*HEIGHTUNIT
-        BOTTOMBARY = 6*HEIGHTUNIT
+        TOPBARY = 10.5*HEIGHTUNIT
+        BOTTOMBARY = 6.5*HEIGHTUNIT
         BLOCKHEIGHT = 2*HEIGHTUNIT
         VARBLOCKWIDTH = 1.5*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
@@ -134,16 +134,29 @@ class GameScene: SKScene {
         
         let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
         let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
-        problemRect.position = CGPoint(x: 6*WIDTHUNIT, y: 14*HEIGHTUNIT)
+        problemRect.position = CGPoint(x: 7*WIDTHUNIT, y: 14*HEIGHTUNIT)
         problemRect.strokeColor = .black
         problemRect.glowWidth = 0.5
         self.addChild(problemRect)
         let problemText = SKLabelNode(fontNamed: "Arial")
         problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
         problemText.text = "Here is a problem"
-        problemText.fontSize = min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
+        problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
         problemText.fontColor = .black
         self.addChild(problemText)
+        
+        let variableRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 11*HEIGHTUNIT)
+        let variableRect = SKShapeNode(rectOf: variableRectSize, cornerRadius: HEIGHTUNIT)
+        variableRect.position = CGPoint(x: 14*WIDTHUNIT, y: 8*HEIGHTUNIT)
+        variableRect.strokeColor = .black
+        variableRect.glowWidth = 0.5
+        self.addChild(variableRect)
+        let variableText = SKLabelNode(fontNamed: "Arial")
+        variableText.position = CGPoint(x: variableRect.position.x, y: variableRect.position.y - problemText.frame.height / 2.0)
+        variableText.text = "variables"
+        variableText.fontSize = 15*min(variableRectSize.width / variableText.frame.width, variableRectSize.height / variableText.frame.height)
+        variableText.fontColor = .black
+        self.addChild(variableText)
         
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
