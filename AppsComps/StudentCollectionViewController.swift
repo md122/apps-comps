@@ -16,7 +16,7 @@ class StudentCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        //self.navigationItem.leftBarButtonItem = self.editButtonItem
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         loadSampleStudents(studentList: ["Tiff Mering", "Josh Mering", "Jenner Mering", "Ray Mering", "Sarah Mering", "Mason Mering", "Sadie Mering", "John Mering", "Ellen Mering", "Karl Mering", "Kimm Mering", "Andrew Mering", "Nicole Sachse", "Rich Sachse", "Alex Sachse", "Jacob Sachse", "Maddie Sachse", "Willy Sachse", "Kate Feinberg", "Jack Feinberg", "Hanna Feinberg", "Melissa Haas", "Eric Haas", "Noah Haas", "Claire Haas", "Alex Tomala", "Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
@@ -26,6 +26,15 @@ class StudentCollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
     }
 
+    @IBAction func logoutClicked(_ sender: AnyObject) {
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+            GIDSignIn.sharedInstance().signOut()
+        }
+        
+        currentUser = nil
+        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

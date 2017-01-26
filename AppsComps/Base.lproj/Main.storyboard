@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="41p-Lj-2fO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="J8k-bU-PI4">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k67-Ge-mtw">
@@ -41,7 +41,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Go to Student Dash"/>
                                 <connections>
-                                    <segue destination="7gr-Yh-NVx" kind="show" identifier="loginToStudentDash" id="H4c-N7-SKD"/>
+                                    <segue destination="bob-Z2-ijt" kind="show" identifier="loginToStudentDash" id="fKu-gq-v19"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ka-Ag-mkx" customClass="GIDSignInButton">
@@ -69,6 +69,22 @@
             </objects>
             <point key="canvasLocation" x="-1090.4296875" y="-2716.40625"/>
         </scene>
+        <!--Main Navigation Controller-->
+        <scene sceneID="0HH-g7-L8Q">
+            <objects>
+                <navigationController id="bob-Z2-ijt" customClass="MainNavigationController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7gr-Yh-NVx" kind="relationship" relationship="rootViewController" id="50h-do-3yE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cro-h7-FQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-239" y="-2717"/>
+        </scene>
         <!--Problem Screen View Controller-->
         <scene sceneID="uku-uC-YUg">
             <objects>
@@ -78,7 +94,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fwp-Sz-l2Q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ayL-yk-Lo9">
-                        <rect key="frame" x="0.0" y="0.0" width="984" height="590"/>
+                        <rect key="frame" x="0.0" y="0.0" width="335" height="590"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Problem Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFm-K1-9BK">
@@ -100,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5P-sI-riT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="-2716"/>
+            <point key="canvasLocation" x="2106" y="-2718"/>
         </scene>
         <!--Problem Selector View Controller-->
         <scene sceneID="ul1-bv-saK">
@@ -111,7 +127,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0eD-eZ-imV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JDx-YS-U4u">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u1H-Z3-vnB" userLabel="Menu View">
@@ -162,6 +178,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="B4W-dQ-NDF"/>
                     <connections>
                         <outlet property="greetingText" destination="Sgz-5w-fvX" id="ZhO-JA-F6W"/>
                         <outlet property="levelContainerView" destination="e39-bF-GlZ" id="Hni-D1-Fgh"/>
@@ -170,13 +187,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SzC-YN-mXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="66" y="-2716"/>
+            <point key="canvasLocation" x="615" y="-2717"/>
         </scene>
         <!--Master-->
         <scene sceneID="TGh-kI-Fkr">
             <objects>
                 <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -192,8 +209,8 @@
         <scene sceneID="D7W-CY-NE6">
             <objects>
                 <collectionViewController id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5Bg-cB-sBO">
-                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4r7-Np-QbH">
@@ -234,7 +251,19 @@
                             <outlet property="delegate" destination="MEl-8u-sh3" id="LZI-Ua-Xqa"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="UXq-py-S0U"/>
+                    <navigationItem key="navigationItem" id="UXq-py-S0U">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Qqs-Kb-gjW">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="logoutClicked:" destination="MEl-8u-sh3" id="wl1-8z-w55"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Go to Problems" id="sXC-kq-SKn">
+                            <connections>
+                                <segue destination="7gr-Yh-NVx" kind="show" id="YMb-pw-gum"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="StudentCollection" destination="5Bg-cB-sBO" id="O59-Ce-2HP"/>
                     </connections>
@@ -262,19 +291,19 @@
             <objects>
                 <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="wXA-27-oqq" customClass="ClassroomTableMasterViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c0R-9A-zW8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableCell" textLabel="jHp-LT-Csy" style="IBUITableViewCellStyleDefault" id="uIs-oa-IF1">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uIs-oa-IF1" id="Nxg-sc-gKn">
-                                    <frame key="frameInset" width="320" height="43"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jHp-LT-Csy">
-                                            <frame key="frameInset" minX="15" width="290" height="43"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -290,11 +319,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="blank" id="Rjb-Zc-Tnx">
-                                <rect key="frame" x="0.0" y="130" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="130" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rjb-Zc-Tnx" id="BdB-GL-a5y">
-
-                                    <frame key="frameInset" width="320" height="43"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -315,7 +343,7 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -331,8 +359,8 @@
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
-                        <rect key="frame" x="0.0" y="0.0" width="984" height="590"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
+                        <rect key="frame" x="0.0" y="0.0" width="335" height="590"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Su9-fR-Opt">
@@ -343,7 +371,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="levelCell" reuseIdentifier="levelCell" id="eRi-Ij-eSM" customClass="LevelButtonCollectionCell" customModule="AppsComps" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                <rect key="frame" x="43" y="0.0" width="250" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
@@ -370,10 +398,11 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKX-HQ-ee9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="372.65625" y="-1825"/>
+            <point key="canvasLocation" x="1394" y="-2718"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JK0-DE-BlL"/>
+        <segue reference="YMb-pw-gum"/>
+        <segue reference="yOY-Ld-586"/>
     </inferredMetricsTieBreakers>
 </document>
