@@ -23,7 +23,7 @@ class ProblemSelectorViewController: UIViewController {
     @IBOutlet weak var studentLogoutButton: UIBarButtonItem!
 
     //TODO: level should also be taken from teacher/student class, or the global class
-    let level = 4
+    let level = 2
     
     override func viewDidLoad() {
         

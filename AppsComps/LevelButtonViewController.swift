@@ -9,12 +9,10 @@
 import UIKit
 
 
-class LevelButtonViewController: UICollectionViewController {
+class LevelButtonViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     /*Code referenced from https://www.youtube.com/watch?v=UH3HoPar_xg
       Got tips about labeling the cell from http://stackoverflow.com/questions/31735228/how-to-make-a-simple-collection-view-with-swift
      */
-    
-
     var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var levels = [1,2,3,4]
     
@@ -34,6 +32,17 @@ class LevelButtonViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
+    
+    /*Referenced from http://stackoverflow.com/questions/40019875/set-collectionview-size-sizeforitematindexpath-function-is-not-working-swift 
+     This method should control the size and layout of the cells
+     
+     Check here for FlowLayout tut: https://developer.apple.com/library/content/documentation/WindowsViews/Conceptual/CollectionViewPGforIOS/UsingtheFlowLayout/UsingtheFlowLayout.html
+     https://developer.apple.com/reference/coregraphics/cgsize
+     */
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        // your code here
+//    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
         
@@ -42,8 +51,8 @@ class LevelButtonViewController: UICollectionViewController {
         cell.levelButton?.setTitle(self.levelLabels[indexPath.row], for: .normal)
         cell.levelButton?.setTitleColor(UIColor.white, for: .normal)
         cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
-        cell.backgroundColor = UIColor.darkGray
-        cell.layer.cornerRadius = 20
+        cell.levelButton?.checkAccess(curLev: 2)
+        cell.layer.cornerRadius = 50
         
         return cell
     }

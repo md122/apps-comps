@@ -9,42 +9,17 @@
 import UIKit
 
 class LevelButton: UIButton {
-    var level: Int
-    var tapped: Bool
-    var locked: Bool
+    var level: Int = 0
+    var tapped: Bool = false
+    var locked: Bool = true
     
     required init?(coder aDecoder: NSCoder) {
-        // set myValue before super.init is called
-        self.level = 0
-        self.tapped = false
-        self.locked = true
         
         super.init(coder: aDecoder)
-        
-        
-        setBGColor();
-        self.addTarget(self, action:#selector(self.onTap), for: .touchUpInside)
+
         
     }
 
-    func setBGColor(){
-        if (locked){
-            self.backgroundColor = UIColor.gray
-        } else{
-            self.backgroundColor = UIColor.green
-        }
-    }
-    
-
-    
-    func onTap(){
-        if (locked){
-            self.isUserInteractionEnabled = false
-        }
-        else{
-            self.backgroundColor = UIColor.darkGray
-        }
-    }
     
     func setLevel(lev: Int){
         self.level = lev
@@ -55,10 +30,13 @@ class LevelButton: UIButton {
     }
     
     func checkAccess(curLev: Int){
-        if (level >= curLev){
+        if (level <= curLev){
             locked = false
+            self.backgroundColor = UIColor.blue
         } else {
             locked = true
+            self.backgroundColor = UIColor.gray
+            self.isUserInteractionEnabled = false
         }
     }
 
