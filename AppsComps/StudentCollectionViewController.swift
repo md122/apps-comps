@@ -16,25 +16,57 @@ class StudentCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        // Brynna had this next line of code but it interferes with the Logout Button
+        //self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         loadSampleStudents(studentList: ["Tiff Mering", "Josh Mering", "Jenner Mering", "Ray Mering", "Sarah Mering", "Mason Mering", "Sadie Mering", "John Mering", "Ellen Mering", "Karl Mering", "Kimm Mering", "Andrew Mering", "Nicole Sachse", "Rich Sachse", "Alex Sachse", "Jacob Sachse", "Maddie Sachse", "Willy Sachse", "Kate Feinberg", "Jack Feinberg", "Hanna Feinberg", "Melissa Haas", "Eric Haas", "Noah Haas", "Claire Haas", "Alex Tomala", "Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    
+    /*  SPLIT VIEW NAVIGATION THINGS  */
+    
+    // When this view will appear bring back the primary view controller
+    override func viewWillAppear(_ animated: Bool) {
+        // Tests getting the split view controller
+        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+        splitViewController?.presentsWithGesture = true
+    }
 
-    /*
-    // MARK: - Navigation
-
+    // Note there is a similar logout in Student, changes to one should also go in the other
+    @IBAction func logoutClicked(_ sender: AnyObject) {
+        let createAccountAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // Log out option
+        createAccountAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
+            if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+                GIDSignIn.sharedInstance().signOut()
+            }
+            currentUser = nil
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+        }))
+        // cancel option
+        createAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        present(createAccountAlert, animated: true, completion: nil)
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        if(segue.identifier == "FromTeacherToProblemSelector") {
+            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
+            splitViewController?.presentsWithGesture = false
+        }
+        
     }
-    */
+ 
 
     // MARK: UICollectionViewDataSource
 

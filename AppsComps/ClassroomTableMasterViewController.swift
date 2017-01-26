@@ -44,17 +44,18 @@ class ClassroomTableMasterViewController: UITableViewController {
 
     // MARK: - Segues
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let classroom = classrooms[indexPath.row]
-                let controller = (segue.destination as! UINavigationController).topViewController as! TeacherDashboardDetailViewController
-                controller.detailItem = classroom
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetail" {
+//            if let indexPath = self.tableView.indexPathForSelectedRow {
+//                let classroom = classrooms[indexPath.row]
+//                let controller = (segue.destination as! UINavigationController).topViewController as! TeacherDashboardDetailViewController
+//                //controller.detailItem = classroom
+//                //controller.detailItem = "Hi!"
+//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+//                controller.navigationItem.leftItemsSupplementBackButton = true
+//            }
+//        }
+//    }
 
     // MARK: - Table View
 
