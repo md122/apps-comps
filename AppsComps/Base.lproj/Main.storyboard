@@ -260,7 +260,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Go to Problems" id="sXC-kq-SKn">
                             <connections>
-                                <segue destination="7gr-Yh-NVx" kind="show" id="YMb-pw-gum"/>
+                                <segue destination="7gr-Yh-NVx" kind="show" identifier="FromTeacherToProblemSelector" id="YMb-pw-gum"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
