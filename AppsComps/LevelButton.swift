@@ -21,18 +21,12 @@ class LevelButton: UIButton {
         
         super.init(coder: aDecoder)
         
+        
         setBGColor();
-        // set other operations after super.init, if required
-        //self.addTarget(self, action: Selector(("onTap:")), for: .touchUpInside)
+        self.addTarget(self, action:#selector(self.onTap), for: .touchUpInside)
+        
     }
-    
-//    func customInit(coder aDecoder: NSCoder, curLevel: Int) {
-//        // set myValue before super.init is called
-//        
-//        this.init(coder: aDecoder)
-//        
-//    }
-    
+
     func setBGColor(){
         if (locked){
             self.backgroundColor = UIColor.gray
@@ -41,8 +35,15 @@ class LevelButton: UIButton {
         }
     }
     
+
+    
     func onTap(){
-        self.backgroundColor = UIColor.darkGray
+        if (locked){
+            self.isUserInteractionEnabled = false
+        }
+        else{
+            self.backgroundColor = UIColor.darkGray
+        }
     }
     
     func setLevel(lev: Int){
