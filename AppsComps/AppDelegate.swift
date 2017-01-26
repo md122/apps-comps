@@ -11,7 +11,7 @@ import UIKit
 var currentUser: Account?
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     
@@ -57,12 +57,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, APIDataDelegate {
         return true
          */
         
-        //var configureError: NSError?
-        /*GGLContext.sharedInstance().configureWithError(&configureError)
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        GIDSignIn.sharedInstance().delegate = self
-        */
+        //GIDSignIn.sharedInstance().delegate = self
         return true
+    }
+
+    // From google tutorial, handles url received at the end of authenticiation process
+    func application(_ application: UIApplication,
+                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: sourceApplication,
+                                                 annotation: annotation)
     }
 
     

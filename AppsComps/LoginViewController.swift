@@ -84,13 +84,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
 
     }
     
-    // From tutorial, handles url received at the end of authenticiation process
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return GIDSignIn.sharedInstance().handle(
-            url,
-            sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
-            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    // From google tutorial, handles url received at the end of authenticiation process
+    func application(_ application: UIApplication,
+                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: sourceApplication,
+                                                 annotation: annotation)
     }
+
+
     
     // Google sign-in methods from tutorial
     // The sign-in flow has finished and was successful if |error| is |nil|.
