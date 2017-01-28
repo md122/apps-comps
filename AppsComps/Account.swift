@@ -17,6 +17,7 @@ class Account {
     var name: String
     //var type: String?
     
+
     init?(idToken: String, name: String){
         self.idToken = idToken
         self.name = name
@@ -38,7 +39,7 @@ class Account {
         return name
     }
 
-    
+
 }
 
 

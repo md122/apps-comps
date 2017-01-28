@@ -78,6 +78,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     }
     
     
+    // Function that gets called when next problem comes back
+    func handleCreateAccountAttempt(data: [NSArray]) {
+        print("Incoming handleNextProblem data")
+        print(data)
+        
+    }
+    
+
+
     // Called from appdelegate after user is authenticated by google
     func didAttemptSignIn(idToken: String, name: String ) {
         let connector = APIConnector()

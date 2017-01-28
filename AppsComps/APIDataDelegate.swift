@@ -31,8 +31,4 @@ import Foundation
     // Methods for login screen
     @objc optional func handleLoginAttempt(data: String) ;
     @objc optional func handleCreateAccountAttempt(data: [NSArray]) ;
-    
-    
-
-    
 }

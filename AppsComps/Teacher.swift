@@ -18,6 +18,12 @@ class Teacher: Account, APIDataDelegate {
      Delete a classroom
      */
     
+
+    func getHighestLevel()->String{
+        //always is highest level
+        return "6"
+    }
+    
     override init?(idToken: String, name: String){
         super.init(idToken: idToken, name: name)
         if idToken.isEmpty || name.isEmpty {
@@ -27,6 +33,7 @@ class Teacher: Account, APIDataDelegate {
     
     override func getType()->String{
         return "teacher"
+
     }
     
     func createClassroom(classroomName: String){
@@ -73,8 +80,6 @@ class Teacher: Account, APIDataDelegate {
     func handleRemoveClassroomAttempt(data: Bool) {
         print(data)
     }
-    
-    
     
     
     
