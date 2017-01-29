@@ -15,6 +15,7 @@ class APIConnector: NSObject  {
     
     // PROBLEM SCREEN
     func requestNextProblem(callingDelegate: APIDataDelegate, level: Int, studentID: String) {
+        let url = baseURL + "attemptGetNextProblem/" + studentID
         let dummyData: [NSArray] = [["Problem Data"], ["Problem Data"]]
         callingDelegate.handleNextProblem?(data: dummyData)
     }
