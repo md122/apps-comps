@@ -135,31 +135,36 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Period 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdd-kg-KrR">
-                                        <frame key="frameInset" minX="8" minY="15" width="150" height="21"/>
+                                        <frame key="frameInset" minX="8" minY="15" width="150" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fP1-bK-pgh">
                                         <frame key="frameInset" minX="8" minY="36" width="150" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Leave Classroom"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hello!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgz-5w-fvX">
-                                        <frame key="frameInset" minX="227" minY="8" width="954" height="35"/>
+                                        <frame key="frameInset" minX="227" minY="8" width="731" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You are on level 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yj-1w-CuW">
-                                        <frame key="frameInset" minX="413" minY="27" width="601" height="58"/>
+                                        <frame key="frameInset" minX="621" minY="22" width="167" height="58"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eff-wA-2hI">
+                                        <frame key="frameInset" minX="426" minY="-3" width="187" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.61064428559999995" blue="0.71442666659999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -175,9 +180,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="B4W-dQ-NDF"/>
                     <connections>
+                        <outlet property="classroomText" destination="Pdd-kg-KrR" id="Z7K-yD-m9u"/>
                         <outlet property="greetingText" destination="Sgz-5w-fvX" id="ZhO-JA-F6W"/>
+                        <outlet property="headerView" destination="u1H-Z3-vnB" id="b1L-Kg-SaD"/>
+                        <outlet property="leaveButton" destination="fP1-bK-pgh" id="8tn-L4-dTa"/>
                         <outlet property="levelContainerView" destination="e39-bF-GlZ" id="Hni-D1-Fgh"/>
                         <outlet property="levelText" destination="4yj-1w-CuW" id="2M7-E3-G3k"/>
+                        <outlet property="logoView" destination="eff-wA-2hI" id="drZ-N2-qiT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SzC-YN-mXs" userLabel="First Responder" sceneMemberID="firstResponder"/>

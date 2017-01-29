@@ -41,27 +41,23 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
      https://developer.apple.com/reference/coregraphics/cgsize
      */
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screen: CGRect = UIScreen.main.bounds
         let width: CGFloat = screen.width
-        let height: CGFloat = screen.height
-        let heightUnit: CGFloat = height/100
-        let widthUnit: CGFloat = width/100
+        //let height: CGFloat = screen.height
+        let unit: CGFloat = width/100
         
-        let size = CGSize(width: widthUnit*30, height: heightUnit*60)
+        let size = CGSize(width: unit*20, height: unit*20)
         return size
     }
     
+    //Setting the padding between the level cells. Currently set up so that 4 buttons are vertically centered.
     func collectionView(_ collectionView: UICollectionView,
                                  layout collectionViewLayout: UICollectionViewLayout,
                                  insetForSectionAt section: Int) -> UIEdgeInsets{
-        return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+        let height: CGFloat = screen.height
+        let hUnit: CGFloat = height/100
+        return UIEdgeInsets(top: hUnit*20, left: 5, bottom: hUnit*20, right: 5)
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          let layout = UICollectionViewFlowLayout()
@@ -76,7 +72,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
         cell.levelButton?.checkAccess(curLev: 2)
         cell.levelButton?.frame.size = cell.frame.size
-        cell.layer.cornerRadius = 50
+        cell.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
         
         return cell
     }
