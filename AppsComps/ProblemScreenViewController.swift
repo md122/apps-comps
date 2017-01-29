@@ -10,11 +10,16 @@
 import UIKit
 import SpriteKit
 
+
+
+
 class ProblemScreenViewController: UIViewController, APIDataDelegate {
     /* Why is this so important!!??? */
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         
         let skView = SKView(frame: self.view.frame)
         
@@ -29,8 +34,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         
         skView.presentScene(scene)
         
-        testAPIConnector()
+        
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -41,20 +48,18 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         return true
     }
     
+
+    
     
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
+        //connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
         
         connector.attemptAddProblemData(callingDelegate: self, start_time: "10/12", end_time: "10/12", answer: "6", wasCorrect: false)
     }
     
-    // Function that gets called when next problem comes back
-    func handleNextProblem(data: [NSArray]) {
-        print("Incoming handleNextProblem data")
-        print(data)
-    }
+
 
     
     

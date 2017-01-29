@@ -12,7 +12,16 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class GameScene: SKScene {
+
+var probText: String?
+
+class GameScene: SKScene, APIDataDelegate {
+    
+
+
+    
+
+    
     
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
@@ -83,6 +92,11 @@ class GameScene: SKScene {
         
         SNAPDISTANCE = 20.0
         
+        
+        
+
+        
+        
         super.init(size: size)
     }
     
@@ -141,6 +155,12 @@ class GameScene: SKScene {
         levelText.fontColor = .black
         self.addChild(levelText)
         
+        
+        let connector = APIConnector()
+        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
+        print(probText)
+
+        
         // This should be a UILabel
         let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
         let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
@@ -150,7 +170,7 @@ class GameScene: SKScene {
         self.addChild(problemRect)
         let problemText = SKLabelNode(fontNamed: "Arial")
         problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
-        problemText.text = "Here is a problem"
+        problemText.text = probText
         problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
         problemText.fontColor = .black
         self.addChild(problemText)
@@ -203,6 +223,14 @@ class GameScene: SKScene {
         self.view?.addGestureRecognizer(pinchGesture)
 
     }
+    
+    
+    // Function that gets called when next problem comes back
+    func handleNextProblem(data: String) {
+        //print("Incoming handleNextProblem data")
+        probText = data
+    }
+    
     
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {

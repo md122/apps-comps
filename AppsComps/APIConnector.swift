@@ -14,9 +14,17 @@ class APIConnector: NSObject  {
     
     
     // PROBLEM SCREEN
-    func requestNextProblem(callingDelegate: APIDataDelegate, level: Int, studentID: String) {
-        let dummyData: [NSArray] = [["Problem Data"], ["Problem Data"]]
-        callingDelegate.handleNextProblem?(data: dummyData)
+    func requestNextProblem(callingDelegate: APIDataDelegate, studentID: String) {
+        let url = baseURL + "attemptGetNextProblem/" + studentID
+        Alamofire.request(url).responseData { response in
+            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
+                /* var result = false
+                 if (utf8Text == "True") {
+                 result = true
+                 } */
+                callingDelegate.handleNextProblem?(data: utf8Text)
+            }
+        }
     }
     
     func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
