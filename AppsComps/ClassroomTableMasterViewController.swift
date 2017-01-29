@@ -10,7 +10,7 @@ import UIKit
 
 class ClassroomTableMasterViewController: UITableViewController {
 
-    var detailViewController: TeacherDashboardDetailViewController? = nil
+    var detailViewController: StudentCollectionViewController? = nil
     var classrooms = [String]()
 
 
@@ -22,7 +22,7 @@ class ClassroomTableMasterViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? TeacherDashboardDetailViewController
+            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
         loadSampleClassrooms(classroomList: ["Onion", "Vinegar", "Nettles", "Nyan Cat"])
     }
@@ -44,18 +44,18 @@ class ClassroomTableMasterViewController: UITableViewController {
 
     // MARK: - Segues
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow {
-//                let classroom = classrooms[indexPath.row]
-//                let controller = (segue.destination as! UINavigationController).topViewController as! TeacherDashboardDetailViewController
-//                //controller.detailItem = classroom
-//                //controller.detailItem = "Hi!"
-//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let classroom = classrooms[indexPath.row]
+                let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
+                //controller.detailItem = classroom
+                //controller.detailItem = "Hi!"
+                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
+    }
 
     // MARK: - Table View
 
