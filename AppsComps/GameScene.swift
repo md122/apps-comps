@@ -42,7 +42,7 @@ class GameScene: SKScene {
     let GARBAGEPOSITION:CGPoint
     let GARBAGESIZE:CGSize
     let LEVELCIRCLERADIUS:CGFloat
-    let SNAPDISTANCE:Int
+    let SNAPDISTANCE:Double
     
     // not implemented
     var isSorted = false
@@ -81,7 +81,7 @@ class GameScene: SKScene {
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         
-        SNAPDISTANCE = 10
+        SNAPDISTANCE = 20.0
         
         super.init(size: size)
     }
@@ -114,12 +114,12 @@ class GameScene: SKScene {
         self.addBlockChild(varBlockInBank)
         
         //These are the rectangles that show where the bars start. It's a bit hacky to get the height from varBlockInBank but the height is stored in the block class
-        let topBarStarter = SKSpriteNode(texture: nil, color: .yellow, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
+        let topBarStarter = SKSpriteNode(texture: nil, color: .blue, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
         topBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(TOPBARY))
         
         self.addChild(topBarStarter)
         
-        let bottomBarStarter = SKSpriteNode(texture: nil, color: .yellow, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
+        let bottomBarStarter = SKSpriteNode(texture: nil, color: .blue, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
         bottomBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(BOTTOMBARY))
         
         self.addChild(bottomBarStarter)
@@ -202,28 +202,50 @@ class GameScene: SKScene {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         self.view?.addGestureRecognizer(pinchGesture)
 
-        
     }
     
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
-        //We don't need to do anything when the pinch begins
         if sender.state == .began {
-            
+            if blockTouched != nil {
+                //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
+                sender.scale = (blockTouched?.xScale)!
+            }
         }
         
         else if sender.state == .changed {
-            //We need to scale the block that is under the first touch... not the garbage
-            //Try and get the location of first pinch to print here...!!!
             let pinchScale = sender.scale
             
+            //If the pinch starts with a touch on a block
             if blockTouched != nil {
-                //We need to not just scale, but change the old scale by the new scaling amount...
-                blockTouched?.xScale = pinchScale
+                //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
+                let indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
+                let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
+                //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
+                let differenceInBarSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
+                if indexInTopBar > -1 {
+                    shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
+                }
+                if indexInBottomBar > -1 {
+                    shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
+                }
+                
+                //If not scaling to off the page!!!!! ZOE DO THIS NEXT
+                //If changing a variable block, scale all of the variable blocks???
+                    blockTouched?.xScale = pinchScale
+                
+                    //Move the block over so it's only increasing to the right
+                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                
+                    //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
+                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
             }
         }
+            
         else if sender.state == .ended {
-            sender.scale = 1.0
+            //We don't want you to still be selectin the block after the pinch has ended
+            blockTouched?.color = .black
+            blockTouched = nil
         }
     }
     
@@ -243,6 +265,7 @@ class GameScene: SKScene {
             if let block = child as? Block {
                 if blockIsTouched(touchLocation: touchLocation, child: block) {
                     blockTouched = block
+                    blockTouched?.color = .red
                     block.zPosition = currentBlockZ
                     currentBlockZ += 3
                 }
@@ -252,7 +275,7 @@ class GameScene: SKScene {
     
     //If the middle of the block is over the garbage can reutrns true, else returns false
     func blockOverGarbageCan(block: Block) -> Bool {
-        if garbage.contains(block.position) {
+        if garbage.intersects(block) {
             return true
         }
         return false
@@ -262,10 +285,6 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         //Check if a block is currently being touched
         if blockTouched != nil {
-            
-            //????
-            //This is where to put stretching the blocks
-            //????
             
             let block = blockTouched!
             let touch = touches.first
@@ -300,14 +319,14 @@ class GameScene: SKScene {
     
     func tryToInsertBlockInBar(bar: [Block], block: Block) -> Int {
         // We are going to align with the upper left corner
-        let blockTopLeftX = Double(block.position.x) - block.getWidth() / 2
+        let blockTopLeftX = block.getTopLeftX()
         
         //Go through blocks in bar from left to right. Once we find one that our block is close too we add it and shift the rest of the blocks over by its width
         var added = false
         var insertionIndex = -1
         
         //Check to see if it should be added at the beginning of the top bar
-        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < 10) && (abs(block.position.y - CGFloat(TOPBARY)) < 10) {
+        if (bar == topBar) && (abs(blockTopLeftX - Double(BARX)) < SNAPDISTANCE) && (abs(block.position.y - CGFloat(TOPBARY)) < CGFloat(SNAPDISTANCE)) {
             added = true
             insertionIndex = 0
             //Snap the bar into position at the start of the bar
@@ -315,7 +334,7 @@ class GameScene: SKScene {
         }
         
         //Check to see if it should be added at the beginning of the bottom bar
-        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < 10) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < 10) {
+        if (bar == bottomBar) && (abs(blockTopLeftX - Double(BARX)) < SNAPDISTANCE) && (abs(block.position.y - CGFloat(BOTTOMBARY)) < CGFloat(SNAPDISTANCE)) {
             added = true
             insertionIndex = 0
             //Snap the bar into position at the start of the bar
@@ -337,7 +356,7 @@ class GameScene: SKScene {
                 //Case where we haven't added the block yet
             else {
                 //If the block we are dragging is close enough to a block already in a bar add it
-                if abs(blocki.getTopRightX() - blockTopLeftX) < 10 {
+                if abs(blocki.getTopRightX() - blockTopLeftX) < SNAPDISTANCE {
                     block.position = CGPoint(x:(blocki.getTopRightX() + block.getWidth() / 2), y:(blocki.getTopRightY() - block.getHeight() / 2))
                     added = true
                     //Insert this block after the block it lines up with
@@ -369,12 +388,13 @@ class GameScene: SKScene {
         return -1
     }
     
-    //Shifts all of the blocks after the given index left by a shift amount
-    func shiftBlocksLeft(bar: [Block], width: Double, index: Int) {
+    //This used to be called shiftBarsLeft
+    //Now if you put in a negative width it will shift the blocks after the index left, if you put in a positive width it will shift all blocks after the indexright
+    func shiftBlocks(bar: [Block], width: Double, index: Int) {
         //This if statement is a bit squishy. Not sure exactly what it does, but don't want to loop with bad inputs
         if (bar.count - 1 >= index + 1) {
             for i in (index + 1)...(bar.count - 1) {
-                bar[i].position = CGPoint(x:((bar[i].position.x) - CGFloat(width)), y:(bar[i].position.y))
+                bar[i].position = CGPoint(x:((bar[i].position.x) + CGFloat(width)), y:(bar[i].position.y))
             }
         }
     }
@@ -387,7 +407,6 @@ class GameScene: SKScene {
         }
         return endOfBar
     }
-
     
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -407,7 +426,7 @@ class GameScene: SKScene {
                        (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
                     ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
                     (abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: topBar)))) {
-                    shiftBlocksLeft(bar: topBar, width:block.getWidth(), index:indexInTopBar)
+                    shiftBlocks(bar: topBar, width:-1*block.getWidth(), index:indexInTopBar)
                     topBar.remove(at: indexInTopBar)
                 }
                 
@@ -438,7 +457,7 @@ class GameScene: SKScene {
                 }
             }
             //If it's not already in the top bar, are you dragging it to the top bar?
-            else if abs(Double(TOPBARY) - Double(block.position.y)) < 10 {
+            else if abs(Double(TOPBARY) - Double(block.position.y)) < SNAPDISTANCE {
                 let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
                 if insertionIndex > -1 {
                     topBar.insert(block, at:insertionIndex)
@@ -451,7 +470,7 @@ class GameScene: SKScene {
                     (Double(block.position.y) < Double(BOTTOMBARY) - block.getHeight())   ||
                     ((abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
                         (abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: bottomBar)))) {
-                    shiftBlocksLeft(bar: bottomBar, width:block.getWidth(), index:indexInBottomBar)
+                    shiftBlocks(bar: bottomBar, width:-1*block.getWidth(), index:indexInBottomBar)
                     bottomBar.remove(at: indexInBottomBar)
                 }
                 //if the y value didn't change enough, put the bar back in its spot
@@ -480,7 +499,7 @@ class GameScene: SKScene {
                 }
             }
             //If it's not already in the bottom bar, are you dragging it to the bottom bar?
-            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < 10 {
+            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < SNAPDISTANCE {
                 let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
                 if insertionIndex > -1 {
                     bottomBar.insert(block, at:insertionIndex)
@@ -522,7 +541,8 @@ class GameScene: SKScene {
                     block.position = VARBLOCKBANKPOSITION
                 }
             }
-            
+            //Set the color to the not selected color
+            blockTouched?.color = .black
             blockTouched = nil
         }
     }

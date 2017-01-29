@@ -72,16 +72,30 @@ class Block: SKSpriteNode {
         return Double(BLOCKHEIGHT)
     }
     
-    func getWidth() -> Double{
+    func getOriginalWidth() -> Double{
         return Double(BLOCKWIDTH)
     }
     
+    //Changing width by scale factor so width returns the width of the bar after it's scaled
+    func getWidth() -> Double{
+        return Double(BLOCKWIDTH) * Double(self.xScale)
+    }
+    
     func getTopRightX() -> Double{
-        return Double(self.position.x) + self.getWidth() / 2
+        return Double(self.position.x) + (self.getWidth()) / 2
     }
     
     func getTopRightY() -> Double{
-        return Double(self.position.y) + Double(self.getHeight()) / 2
+        return (Double(self.position.y) + Double(self.getHeight()) / 2)
+    }
+    
+    func getTopLeftX() -> Double{
+        return Double(self.position.x) - Double(self.getWidth()) / 2
+    }
+    
+    //I don't think this is currently used...
+    func getTopLeftY() -> Double{
+        return Double(self.position.y) - Double(self.getHeight()) / 2
     }
     
     func getLabel() ->SKLabelNode{
