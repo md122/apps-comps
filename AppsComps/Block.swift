@@ -25,7 +25,7 @@ class Block: SKSpriteNode {
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     
-    init(type: BlockType, size: CGSize) {
+    init(type: BlockType, size: CGSize, xScale: CGFloat) {
         self.type = type
         self.value = 1.0
         
@@ -42,6 +42,7 @@ class Block: SKSpriteNode {
                 innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
                 label.text = "x"
         }
+        self.xScale = xScale
         innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))
         innerBlockColor.yScale = CGFloat(1-1.5*(1/self.getHeight()))
         
@@ -52,6 +53,7 @@ class Block: SKSpriteNode {
         //Set the look of the label and attach the label to this block 2 units higher than its parent
         label.fontSize = 20
         label.fontColor = .black
+        label.xScale = 1 / xScale
         self.addChild(label)
         label.zPosition = 2
     }
@@ -104,6 +106,11 @@ class Block: SKSpriteNode {
     
     func getBlockColorRectangle() ->SKSpriteNode{
         return self.innerBlockColor
+    }
+    
+    func getType() -> String{
+        //Not sure what this describing thing is, but it works
+        return String(describing: self.type)
     }
 
 }

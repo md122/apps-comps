@@ -36,6 +36,7 @@ class GameScene: SKScene {
     let VARBLOCKBANKPOSITION:CGPoint
     let BLOCKHEIGHT:CGFloat
     let VARBLOCKWIDTH:CGFloat
+    var VARBLOCKSCALE:CGFloat
     let NUMBLOCKWIDTH:CGFloat
     let NUMBLOCKSIZE:CGSize
     let VARBLOCKSIZE:CGSize
@@ -67,6 +68,7 @@ class GameScene: SKScene {
         BLOCKHEIGHT = 1*HEIGHTUNIT
         VARBLOCKWIDTH = 1.5*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
+        VARBLOCKSCALE = 1
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
         GARBAGESIZE = CGSize(width: 2.25*WIDTHUNIT, height: 1.2*2.25*WIDTHUNIT)
@@ -77,8 +79,8 @@ class GameScene: SKScene {
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
        
         currentBlockZ = 1.0
-        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
-        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
+        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, xScale: 1)
+        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE, xScale: VARBLOCKSCALE)
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         
         SNAPDISTANCE = 20.0
@@ -219,8 +221,8 @@ class GameScene: SKScene {
             //If the pinch starts with a touch on a block
             if blockTouched != nil {
                 //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
-                let indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
-                let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
+                var indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
+                var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
                 //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
                 let differenceInBarSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
                 if indexInTopBar > -1 {
@@ -230,8 +232,10 @@ class GameScene: SKScene {
                     shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
                 }
                 
-                //If not scaling to off the page!!!!! ZOE DO THIS NEXT
-                //If changing a variable block, scale all of the variable blocks???
+                //Check to make sure that after the stretching the block will not go off the screen
+                if (CGFloat((blockTouched?.getTopRightX())! + differenceInBarSize) < width) {
+                //Currently you can scale and the last block goes off the page!!!!
+                
                     blockTouched?.xScale = pinchScale
                 
                     //Move the block over so it's only increasing to the right
@@ -239,11 +243,41 @@ class GameScene: SKScene {
                 
                     //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
                     blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                    
+                    //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
+                    if blockTouched?.getType() == "variable" {
+                        VARBLOCKSCALE = pinchScale
+                        //go through each of the game scene children that are blocks
+                        for case let child as Block in self.children {
+                            //If the block is a variable (and not the one we are currently moving) we need to stretch it also
+                            if child.getType() == "variable" && child != blockTouched {
+                                child.xScale = pinchScale
+                                
+                                //Move the block over so it's only increasing to the right
+                                child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
+                                
+                                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
+                                child.getLabel().xScale = 1/(child.xScale)
+                                
+                                //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
+                                indexInTopBar = findIndexOfBlock(bar: topBar, block:child)
+                                indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:child)
+                                //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
+                                if indexInTopBar > -1 {
+                                    shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
+                                }
+                                if indexInBottomBar > -1 {
+                                    shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
             
         else if sender.state == .ended {
-            //We don't want you to still be selectin the block after the pinch has ended
+            //We don't want you to still be selecting the block after the pinch has ended
             blockTouched?.color = .black
             blockTouched = nil
         }
@@ -414,7 +448,6 @@ class GameScene: SKScene {
             
             let block = blockTouched!
             
-            //This following code is new and kind of icky...
             let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
             let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
             
@@ -517,7 +550,7 @@ class GameScene: SKScene {
             if (block == numBlockInBank) {
                 //Block has moved outside of block bank
                 if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                    let newBlock = Block(type: .number, size: NUMBLOCKSIZE)
+                    let newBlock = Block(type: .number, size: NUMBLOCKSIZE, xScale: 1)
                     newBlock.position = NUMBLOCKBANKPOSITION
                     numBlockInBank = newBlock
                     self.addBlockChild(newBlock)
@@ -532,7 +565,7 @@ class GameScene: SKScene {
             if (block == varBlockInBank) {
                 //Block has moved outside of block bank
                 if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                    let newBlock = Block(type: .variable, size: VARBLOCKSIZE)
+                    let newBlock = Block(type: .variable, size: VARBLOCKSIZE, xScale: VARBLOCKSCALE)
                     newBlock.position = VARBLOCKBANKPOSITION
                     varBlockInBank = newBlock
                     self.addBlockChild(newBlock)
