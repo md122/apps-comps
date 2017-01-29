@@ -15,10 +15,11 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
      */
     var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var levels = [1,2,3,4]
+    let screen: CGRect = UIScreen.main.bounds
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView!.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,11 +40,33 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
      Check here for FlowLayout tut: https://developer.apple.com/library/content/documentation/WindowsViews/Conceptual/CollectionViewPGforIOS/UsingtheFlowLayout/UsingtheFlowLayout.html
      https://developer.apple.com/reference/coregraphics/cgsize
      */
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        // your code here
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screen: CGRect = UIScreen.main.bounds
+        let width: CGFloat = screen.width
+        let height: CGFloat = screen.height
+        let heightUnit: CGFloat = height/100
+        let widthUnit: CGFloat = width/100
+        
+        let size = CGSize(width: widthUnit*30, height: heightUnit*60)
+        return size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                                 layout collectionViewLayout: UICollectionViewLayout,
+                                 insetForSectionAt section: Int) -> UIEdgeInsets{
+        return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+         let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
         
         //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
@@ -52,6 +75,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         cell.levelButton?.setTitleColor(UIColor.white, for: .normal)
         cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
         cell.levelButton?.checkAccess(curLev: 2)
+        cell.levelButton?.frame.size = cell.frame.size
         cell.layer.cornerRadius = 50
         
         return cell

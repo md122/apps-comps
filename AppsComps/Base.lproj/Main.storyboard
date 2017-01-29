@@ -94,7 +94,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fwp-Sz-l2Q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ayL-yk-Lo9">
-                        <rect key="frame" x="0.0" y="0.0" width="985" height="569"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="563"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Problem Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFm-K1-9BK">
@@ -130,15 +130,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e39-bF-GlZ">
-                                <frame key="frameInset" minX="19" height="569" maxX="20" maxY="34"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="fSl-Vx-zgN" kind="embed" id="mxx-Iw-UIW"/>
-                                </connections>
-                            </containerView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u1H-Z3-vnB" userLabel="Menu View">
-                                <frame key="frameInset" minY="72" width="1419" height="85"/>
+                                <frame key="frameInset" minY="72" width="1419" height="125"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Period 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdd-kg-KrR">
@@ -170,6 +163,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.61064428559999995" blue="0.71442666659999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e39-bF-GlZ">
+                                <frame key="frameInset" minY="205" height="563"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                <connections>
+                                    <segue destination="fSl-Vx-zgN" kind="embed" id="mxx-Iw-UIW"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -182,7 +182,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SzC-YN-mXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="597.65625" y="-2717.1875"/>
+            <point key="canvasLocation" x="597.65625" y="-2717.96875"/>
         </scene>
         <!--Master-->
         <scene sceneID="TGh-kI-Fkr">
@@ -350,7 +350,7 @@
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
-                        <rect key="frame" x="0.0" y="0.0" width="985" height="569"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="563"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Su9-fR-Opt">
