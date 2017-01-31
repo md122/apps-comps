@@ -251,6 +251,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 
                     //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
                     blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                    blockTouched?.getBlockColorRectangle().xScale = CGFloat(1-1.5*(1/(blockTouched?.getWidth())!))
             }
         }
             
