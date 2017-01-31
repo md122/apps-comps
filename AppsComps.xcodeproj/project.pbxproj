@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00CF8B331E3E51D4005B7653 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CF8B321E3E51D3005B7653 /* ButtonNode.swift */; };
 		113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */; };
 		113B052B1DDBB3AF00D001DD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052A1DDBB3AF00D001DD /* Account.swift */; };
 		113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052C1DDBB3B500D001DD /* Teacher.swift */; };
@@ -63,7 +64,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		00CF8B431E3E96EB005B7653 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		00CF8B321E3E51D3005B7653 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
+		00CF8B3A1E3E96EA005B7653 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		00CF8B3C1E3E96EA005B7653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectorViewController.swift; sourceTree = "<group>"; };
 		113B052A1DDBB3AF00D001DD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		113B052C1DDBB3B500D001DD /* Teacher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
@@ -139,6 +156,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00CF8B391E3E96EA005B7653 /* NumberKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				00CF8B3A1E3E96EA005B7653 /* KeyboardViewController.swift */,
+				00CF8B3C1E3E96EA005B7653 /* Info.plist */,
+			);
+			path = NumberKeyboard;
+			sourceTree = "<group>";
+		};
 		5378CE6D0C42F688A5BEBC51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +195,7 @@
 				8111C3431DBFBB6D002C8067 /* AppsComps */,
 				8111C35A1DBFBB6D002C8067 /* AppsCompsTests */,
 				8111C3651DBFBB6D002C8067 /* AppsCompsUITests */,
+				00CF8B391E3E96EA005B7653 /* NumberKeyboard */,
 				8111C3421DBFBB6D002C8067 /* Products */,
 				7B165DA12861596C16BEB29A /* Pods */,
 				5378CE6D0C42F688A5BEBC51 /* Frameworks */,
@@ -232,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
+				00CF8B321E3E51D3005B7653 /* ButtonNode.swift */,
 				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
 				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
 			);
@@ -286,6 +314,7 @@
 				A8BAD15AD0C3F64A3D83E610 /* [CP] Copy Pods Resources */,
 				B310D4BB7C8B93B5D148E7D5 /* 📦 Embed Pods Frameworks */,
 				0A804789D7B55384BD54B834 /* 📦 Copy Pods Resources */,
+				00CF8B431E3E96EB005B7653 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -349,7 +378,7 @@
 		8111C3391DBFBB6D002C8067 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = appscomps;
 				TargetAttributes = {
@@ -523,7 +552,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		540DB1605821FB0F8ACD7BF1 /* [CP] Check Pods Manifest.lock */ = {
@@ -553,7 +582,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A2918E4892C3E9F4207A1305 /* 📦 Copy Pods Resources */ = {
@@ -613,7 +642,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D4E55EACBFF7DA9C488C895A /* [CP] Embed Pods Frameworks */ = {
@@ -703,6 +732,7 @@
 				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
 				817491D81E343FC00057B5F3 /* LevelButtonCollectionCell.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
+				00CF8B331E3E51D4005B7653 /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,6 +887,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7712B49316818E4298CBF609 /* Pods-AppsComps.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = F32NER3Q9Y;
@@ -875,6 +906,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F8EAA6D1DB6389D34FE25275 /* Pods-AppsComps.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = F32NER3Q9Y;
