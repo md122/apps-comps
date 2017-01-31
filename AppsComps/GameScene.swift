@@ -79,8 +79,8 @@ class GameScene: SKScene {
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
        
         currentBlockZ = 1.0
-        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, xScale: 1)
-        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE, xScale: VARBLOCKSCALE)
+        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
+        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         
         SNAPDISTANCE = 20.0
@@ -209,17 +209,22 @@ class GameScene: SKScene {
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         if sender.state == .began {
+            //We want to snap the block back into the correct bar(or put it back in it's position in the block bank or remove it from the bar before the stretching starts
             if blockTouched != nil {
+                snapBlockIntoPlace(block: blockTouched!)
                 //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
-                sender.scale = (blockTouched?.xScale)!
+                //Need if because the block might have snapped into the garbage can
+                if blockTouched != nil {
+                    sender.scale = (blockTouched?.xScale)!
+                }
             }
         }
         
         else if sender.state == .changed {
             let pinchScale = sender.scale
             
-            //If the pinch starts with a touch on a block
-            if blockTouched != nil {
+            //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
+            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank {
                 //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                 var indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
                 var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
@@ -232,43 +237,38 @@ class GameScene: SKScene {
                     shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
                 }
                 
-                //Check to make sure that after the stretching the block will not go off the screen
-                if (CGFloat((blockTouched?.getTopRightX())! + differenceInBarSize) < width) {
-                //Currently you can scale and the last block goes off the page!!!!
+                blockTouched?.xScale = pinchScale
                 
-                    blockTouched?.xScale = pinchScale
+                //Move the block over so it's only increasing to the right
+                blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 
-                    //Move the block over so it's only increasing to the right
-                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
-                
-                    //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
-                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
+                blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
                     
-                    //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
-                    if blockTouched?.getType() == "variable" {
-                        VARBLOCKSCALE = pinchScale
-                        //go through each of the game scene children that are blocks
-                        for case let child as Block in self.children {
-                            //If the block is a variable (and not the one we are currently moving) we need to stretch it also
-                            if child.getType() == "variable" && child != blockTouched {
-                                child.xScale = pinchScale
+                //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
+                if blockTouched?.getType() == "variable" {
+                    VARBLOCKSCALE = pinchScale
+                    //go through each of the game scene children that are blocks
+                    for case let child as Block in self.children {
+                        //If the block is a variable (and not the one we are currently moving or the one in the bank) we need to stretch it also
+                        if child.getType() == "variable" && child != blockTouched && child != varBlockInBank {
+                            child.xScale = pinchScale
                                 
-                                //Move the block over so it's only increasing to the right
-                                child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
+                            //Move the block over so it's only increasing to the right
+                            child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
                                 
-                                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
-                                child.getLabel().xScale = 1/(child.xScale)
+                            //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
+                            child.getLabel().xScale = 1/(child.xScale)
                                 
-                                //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
-                                indexInTopBar = findIndexOfBlock(bar: topBar, block:child)
-                                indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:child)
-                                //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
-                                if indexInTopBar > -1 {
-                                    shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
-                                }
-                                if indexInBottomBar > -1 {
-                                    shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
-                                }
+                            //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
+                            indexInTopBar = findIndexOfBlock(bar: topBar, block:child)
+                            indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:child)
+                            //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
+                            if indexInTopBar > -1 {
+                                shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
+                            }
+                            if indexInBottomBar > -1 {
+                                shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
                             }
                         }
                     }
@@ -277,8 +277,12 @@ class GameScene: SKScene {
         }
             
         else if sender.state == .ended {
+            //ZOE NEEDS TO LEARN ABOT OPTIONALS!!!!
+            //This check is because the block might have been moved into the trash during the snapback done before stretching and it not exist
+            if blockTouched != nil {
+                blockTouched?.color = .black
+            }
             //We don't want you to still be selecting the block after the pinch has ended
-            blockTouched?.color = .black
             blockTouched = nil
         }
     }
@@ -319,11 +323,15 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         //Check if a block is currently being touched
         if blockTouched != nil {
-            
+            //We set the scale when we move the block so the block in the variable block in the bank has a scale of 1
+            if blockTouched!.getType() == "variable" {
+                blockTouched!.xScale = VARBLOCKSCALE
+                blockTouched!.getLabel().xScale = 1/VARBLOCKSCALE
+            }
             let block = blockTouched!
             let touch = touches.first
             let touchLocation = touch!.location(in: self)
-            let previousLocation = touch!.previousLocation(in: self) // Is this necessary??
+            let previousLocation = touch!.previousLocation(in: self)
             
             // new x and y coordinates for the block
             var blockX = block.position.x + (touchLocation.x - previousLocation.x)
@@ -442,140 +450,148 @@ class GameScene: SKScene {
         return endOfBar
     }
     
+    //At the end of a touch or when the pinch action starts put the block back into place and update stuff based on where it goes
+    //Might make block touched nil, because it might snap the block into the garbage can
+    func snapBlockIntoPlace(block: Block) {
+        let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
+        let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
+        
+        //The block is in the top bar
+        if (indexInTopBar > -1) {
+            //If we move the block outside of the bar, by moving it too high, too left, or too right
+            if (   (Double(block.position.y) > Double(TOPBARY) + block.getHeight())   ||
+                (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
+                ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
+                    (abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: topBar)))) {
+                shiftBlocks(bar: topBar, width:-1*block.getWidth(), index:indexInTopBar)
+                topBar.remove(at: indexInTopBar)
+            }
+                
+            //if the y value didn't change enough, put the bar back in its spot
+            //The spot it goes back into has the y-value of the bar height
+            //And an x value of the previous block x location + half of the previous block width + half of this block width
+            // I have no idea why I need the temps... but it doesn't work without them...
+            else {
+                //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
+                var xPosition : CGFloat = 0.0
+                //If not the first block in the bar
+                if (indexInTopBar != 0) {
+                    //The middle x position of the previous block in the bar
+                    let temp = topBar[indexInTopBar - 1].position.x
+                    xPosition += temp
+                    //Half the width of the previous block in the bar
+                    let temp2 = CGFloat(topBar[indexInTopBar - 1].getWidth() / 2)
+                    xPosition += temp2
+                    //Half the width of the block being added
+                    xPosition += CGFloat(block.getWidth() / 2)
+                }
+                //First block in the bar
+                else {
+                    xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
+                }
+                
+                block.position = CGPoint(x:xPosition, y:CGFloat(TOPBARY))
+            }
+        }
+        //If it's not already in the top bar, are you dragging it to the top bar?
+        else if abs(Double(TOPBARY) - Double(block.position.y)) < SNAPDISTANCE {
+            let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
+            if insertionIndex > -1 {
+                topBar.insert(block, at:insertionIndex)
+            }
+        }
+        
+        //The block is in the bottom bar
+        if (indexInBottomBar > -1) {
+            if (   (Double(block.position.y) > Double(BOTTOMBARY) + block.getHeight())   ||
+                (Double(block.position.y) < Double(BOTTOMBARY) - block.getHeight())   ||
+                ((abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
+                    (abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: bottomBar)))) {
+                shiftBlocks(bar: bottomBar, width:-1*block.getWidth(), index:indexInBottomBar)
+                bottomBar.remove(at: indexInBottomBar)
+            }
+                //if the y value didn't change enough, put the bar back in its spot
+                //The spot it goes back into has the y-value of the bar height
+                //And an x value of the previous block x location + half of the previous block width + half of this block width
+                // I have no idea why I need the temps... but it doesn't work without them...
+            else {
+                //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
+                var xPosition : CGFloat = 0.0
+                //If not the first block in the bar
+                if (indexInBottomBar != 0) {
+                    //The starting position of the previous block in the bar
+                    let temp = bottomBar[indexInBottomBar - 1].position.x
+                    xPosition += temp
+                    //Half the width of the previous block in the bar
+                    let temp2 = CGFloat(bottomBar[indexInBottomBar - 1].getWidth() / 2)
+                    xPosition += temp2
+                    //Half the width of the current block being added
+                    xPosition += CGFloat(block.getWidth() / 2)
+                }
+                else {
+                    xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
+                }
+                
+                block.position = CGPoint(x:xPosition, y:CGFloat(BOTTOMBARY))
+            }
+        }
+        //If it's not already in the bottom bar, are you dragging it to the bottom bar?
+        else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < SNAPDISTANCE {
+            let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
+            if insertionIndex > -1 {
+                bottomBar.insert(block, at:insertionIndex)
+            }
+        }
+        
+        // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank.
+        // If not, put the block back where it came from
+        if (block == numBlockInBank) {
+            //Block has moved outside of block bank
+            if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
+                let newBlock = Block(type: .number, size: NUMBLOCKSIZE)
+                newBlock.position = NUMBLOCKBANKPOSITION
+                numBlockInBank = newBlock
+                self.addBlockChild(newBlock)
+            }
+            else {
+                block.position = NUMBLOCKBANKPOSITION
+            }
+        
+        }
+        
+        // Are you dragging a block from the variable bank? If you moved it "far enough", repopulate the varBlockBank.
+        // If not, put the block back where it came from
+        if (block == varBlockInBank) {
+            //Block has moved outside of block bank
+            if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
+                let newBlock = Block(type: .variable, size: VARBLOCKSIZE)
+                newBlock.position = VARBLOCKBANKPOSITION
+                varBlockInBank = newBlock
+                self.addBlockChild(newBlock)
+            }
+            else {
+                //When we snap a block back into the var block bank we set the scale back to 1
+                block.xScale = 1
+                block.getLabel().xScale = 1
+                block.position = VARBLOCKBANKPOSITION
+            }
+        }
+        //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
+        if (blockOverGarbageCan(block: block)) {
+            block.removeFromParent()
+            blockTouched = nil
+            garbage.setScale(1.0)
+        }
+    }
+    
+    
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
-            
             let block = blockTouched!
-            
-            let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
-            let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
-            
-            
-            //The block is in the top bar
-            if (indexInTopBar > -1) {
-                //If we move the block outside of the bar, by moving it too high, too left, or too right
-                if (   (Double(block.position.y) > Double(TOPBARY) + block.getHeight())   ||
-                       (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
-                    ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
-                    (abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: topBar)))) {
-                    shiftBlocks(bar: topBar, width:-1*block.getWidth(), index:indexInTopBar)
-                    topBar.remove(at: indexInTopBar)
-                }
-                
-                //if the y value didn't change enough, put the bar back in its spot
-                //The spot it goes back into has the y-value of the bar height
-                //And an x value of the previous block x location + half of the previous block width + half of this block width
-                // I have no idea why I need the temps... but it doesn't work without them...
-                else {
-                    //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
-                    var xPosition : CGFloat = 0.0
-                    //If not the first block in the bar
-                    if (indexInTopBar != 0) {
-                        //The middle x position of the previous block in the bar
-                        let temp = topBar[indexInTopBar - 1].position.x
-                        xPosition += temp
-                        //Half the width of the previous block in the bar
-                        let temp2 = CGFloat(topBar[indexInTopBar - 1].getWidth() / 2)
-                        xPosition += temp2
-                        //Half the width of the block being added
-                        xPosition += CGFloat(block.getWidth() / 2)
-                    }
-                    //First block in the bar
-                    else {
-                        xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
-                    }
-                    
-                    block.position = CGPoint(x:xPosition, y:CGFloat(TOPBARY))
-                }
-            }
-            //If it's not already in the top bar, are you dragging it to the top bar?
-            else if abs(Double(TOPBARY) - Double(block.position.y)) < SNAPDISTANCE {
-                let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
-                if insertionIndex > -1 {
-                    topBar.insert(block, at:insertionIndex)
-                }
-            }
-            
-            //The block is in the bottom bar
-            if (indexInBottomBar > -1) {
-                if (   (Double(block.position.y) > Double(BOTTOMBARY) + block.getHeight())   ||
-                    (Double(block.position.y) < Double(BOTTOMBARY) - block.getHeight())   ||
-                    ((abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
-                        (abs(Double(BOTTOMBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: bottomBar)))) {
-                    shiftBlocks(bar: bottomBar, width:-1*block.getWidth(), index:indexInBottomBar)
-                    bottomBar.remove(at: indexInBottomBar)
-                }
-                //if the y value didn't change enough, put the bar back in its spot
-                //The spot it goes back into has the y-value of the bar height
-                //And an x value of the previous block x location + half of the previous block width + half of this block width
-                // I have no idea why I need the temps... but it doesn't work without them...
-                else {
-                    //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
-                    var xPosition : CGFloat = 0.0
-                    //If not the first block in the bar
-                    if (indexInBottomBar != 0) {
-                        //The starting position of the previous block in the bar
-                        let temp = bottomBar[indexInBottomBar - 1].position.x
-                        xPosition += temp
-                        //Half the width of the previous block in the bar
-                        let temp2 = CGFloat(bottomBar[indexInBottomBar - 1].getWidth() / 2)
-                        xPosition += temp2
-                        //Half the width of the current block being added
-                        xPosition += CGFloat(block.getWidth() / 2)
-                    }
-                    else {
-                        xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
-                    }
-                    
-                    block.position = CGPoint(x:xPosition, y:CGFloat(BOTTOMBARY))
-                }
-            }
-            //If it's not already in the bottom bar, are you dragging it to the bottom bar?
-            else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < SNAPDISTANCE {
-                let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
-                if insertionIndex > -1 {
-                    bottomBar.insert(block, at:insertionIndex)
-                }
-            }
-            
-            //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
-            if (blockOverGarbageCan(block: block)) {
-                block.removeFromParent()
-                garbage.setScale(1.0)
-            }
-            
-            // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank. 
-            // If not, put the block back where it came from
-            if (block == numBlockInBank) {
-                //Block has moved outside of block bank
-                if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                    let newBlock = Block(type: .number, size: NUMBLOCKSIZE, xScale: 1)
-                    newBlock.position = NUMBLOCKBANKPOSITION
-                    numBlockInBank = newBlock
-                    self.addBlockChild(newBlock)
-                }
-                else {
-                    block.position = NUMBLOCKBANKPOSITION
-                }
-            }
-            
-            // Are you dragging a block from the variable bank? If you moved it "far enough", repopulate the varBlockBank.
-            // If not, put the block back where it came from
-            if (block == varBlockInBank) {
-                //Block has moved outside of block bank
-                if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                    let newBlock = Block(type: .variable, size: VARBLOCKSIZE, xScale: VARBLOCKSCALE)
-                    newBlock.position = VARBLOCKBANKPOSITION
-                    varBlockInBank = newBlock
-                    self.addBlockChild(newBlock)
-                }
-                else {
-                    block.position = VARBLOCKBANKPOSITION
-                }
-            }
             //Set the color to the not selected color
-            blockTouched?.color = .black
+            block.color = .black
+            snapBlockIntoPlace(block: block)
             blockTouched = nil
         }
     }

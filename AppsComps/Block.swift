@@ -25,7 +25,7 @@ class Block: SKSpriteNode {
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     
-    init(type: BlockType, size: CGSize, xScale: CGFloat) {
+    init(type: BlockType, size: CGSize) {
         self.type = type
         self.value = 1.0
         
