@@ -15,27 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
 
-    /*func requestStudentData() {
-        let connector = APIConnector()
-        connector.testRequest(callingDelegate: self)
-    }
-    
-    
-    func handleStudentData(data: [NSArray]) {
-        print("Handling Student Data")
-        print(data)
-        for dataPoint in data{
-            //let dataP = dataPoint as! NSArray
-            print("\(dataPoint[0])'s favortie color is \(dataPoint[1])")
-        }
-    }
-     */
-    
-    // Function that gets called when creating account (not currently used)
-    /*func handleCreateAccountAttempt(data: [NSArray]) {
-        print(data)
-    }*/
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         var configureError: NSError?
