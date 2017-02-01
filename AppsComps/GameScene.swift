@@ -53,6 +53,8 @@ class GameScene: SKScene, APIDataDelegate {
     let LEVELCIRCLERADIUS:CGFloat
     let SNAPDISTANCE:Double
     
+    let problemText:SKLabelNode
+    
     // not implemented
     var isSorted = false
     
@@ -90,9 +92,10 @@ class GameScene: SKScene, APIDataDelegate {
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         
+        
         SNAPDISTANCE = 20.0
         
-        
+        problemText = SKLabelNode(fontNamed: "Arial")
         
 
         
@@ -109,6 +112,16 @@ class GameScene: SKScene, APIDataDelegate {
         currentBlockZ += 3
         super.addChild(node)
     }
+    
+    
+    // Function that gets called when next problem comes back
+    func handleNextProblem(data: String) {
+        //print("Incoming handleNextProblem data")
+        print (data)
+        //problemText.text = data
+        problemText.text = "hi"
+    }
+    
     
     // Called immediately after a scene is loaded
     // Sets the layout of all components in the problem screen
@@ -156,9 +169,8 @@ class GameScene: SKScene, APIDataDelegate {
         self.addChild(levelText)
         
         
-        let connector = APIConnector()
-        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
-        print(probText)
+        
+
 
         
         // This should be a UILabel
@@ -168,9 +180,14 @@ class GameScene: SKScene, APIDataDelegate {
         problemRect.strokeColor = .black
         problemRect.glowWidth = 0.5
         self.addChild(problemRect)
-        let problemText = SKLabelNode(fontNamed: "Arial")
+        
+        
+        
+        
+        problemText.text = "Hi"
+        let connector = APIConnector()
+        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
         problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
-        problemText.text = probText
         problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
         problemText.fontColor = .black
         self.addChild(problemText)
@@ -225,12 +242,7 @@ class GameScene: SKScene, APIDataDelegate {
     }
     
     
-    // Function that gets called when next problem comes back
-    func handleNextProblem(data: String) {
-        //print("Incoming handleNextProblem data")
-        probText = data
-    }
-    
+
     
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
