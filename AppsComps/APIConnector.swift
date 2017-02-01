@@ -76,8 +76,21 @@ class APIConnector: NSObject  {
     // TEACHER ACOUNT
     
     func requestTeacherDashInfo(callingDelegate: APIDataDelegate, teacherID: String) {
-        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
-        callingDelegate.handleTeacherDashInfo?(data: dummyData)
+        let url = baseURL + "requestTeacherDashInfo/" + teacherID
+        Alamofire.request(url).responseJSON { response in
+            if let responseData = response.result.value{
+                callingDelegate.handleTeacherDashInfoRequest!(data: responseData as! [NSArray])
+            }
+        }
+    }
+    
+    func requestClassroomData(callingDelegate: APIDataDelegate, classroomID: String) {
+        let url = baseURL + "requestClassroomData/" + classroomID
+        Alamofire.request(url).responseJSON { response in
+            if let responseData = response.result.value{
+                callingDelegate.handleClassroomDataRequest!(data: responseData as! [NSArray])
+            }
+        }
     }
     
     // Attempts to add class room, returns null if not able, otherwise returns ID
@@ -85,14 +98,9 @@ class APIConnector: NSObject  {
         let url = baseURL + "attemptAddClassroom/" + teacherID + "/" + classroomName
         Alamofire.request(url).responseData { response in
             if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
+                if let result = Int(utf8Text) {
+                    callingDelegate.handleAddClassroomAttempt?(data: result)
                 }
-                if (utf8Text == "ERROR: Account id invalid") {
-                    print("Need to figure out how to handle this")
-                }
-                callingDelegate.handleAddClassroomAttempt?(data: result)
             }
         }
     }
@@ -114,7 +122,7 @@ class APIConnector: NSObject  {
         }
     }
     
-
+    
     // Have to figure out how to return and properly handle returned value
     func attemptLogin(callingDelegate: APIDataDelegate, idToken: String) {
         
@@ -122,9 +130,9 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseData { response in
             if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
                 /* var result = false
-                if (utf8Text == "True") {
-                    result = true
-                } */
+                 if (utf8Text == "True") {
+                 result = true
+                 } */
                 callingDelegate.handleLoginAttempt?(data: utf8Text)
             }
         }
@@ -136,14 +144,14 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let responseData = response.result.value{
                 /*
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
-                }
-                if (utf8Text == "ERROR: Account already exists") {
-                    print("Need to figure out how to handle this")
-                }
-                */
+                 var result = false
+                 if (utf8Text == "True") {
+                 result = true
+                 }
+                 if (utf8Text == "ERROR: Account already exists") {
+                 print("Need to figure out how to handle this")
+                 }
+                 */
                 callingDelegate.handleCreateAccountAttempt?(data: responseData as! [NSArray])
             }
         }

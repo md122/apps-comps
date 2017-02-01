@@ -24,8 +24,9 @@ import Foundation
     @objc optional func handleCorrectIncorrectRatio(data: [NSArray]) ;
     
     // Methods for teacher class
-    @objc optional func handleTeacherDashInfo(data: [NSArray]) ;
-    @objc optional func handleAddClassroomAttempt(data: Bool) ;
+    @objc optional func handleTeacherDashInfoRequest(data: [NSArray]) ;
+    @objc optional func handleClassroomDataRequest(data: [NSArray]) ;
+    @objc optional func handleAddClassroomAttempt(data: Int) ;
     @objc optional func handleRemoveClassroomAttempt(data: Bool) ;
     
     // Methods for login screen

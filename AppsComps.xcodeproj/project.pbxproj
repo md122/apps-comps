@@ -384,7 +384,7 @@
 				TargetAttributes = {
 					8111C3401DBFBB6D002C8067 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = F32NER3Q9Y;
+						DevelopmentTeam = 5FP4F58LF3;
 						LastSwiftMigration = 0800;
 					};
 					8111C3561DBFBB6D002C8067 = {
@@ -890,7 +890,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = F32NER3Q9Y;
+				DEVELOPMENT_TEAM = 5FP4F58LF3;
 				INFOPLIST_FILE = AppsComps/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -909,7 +909,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = F32NER3Q9Y;
+				DEVELOPMENT_TEAM = 5FP4F58LF3;
 				INFOPLIST_FILE = AppsComps/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

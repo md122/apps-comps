@@ -66,7 +66,7 @@ class ProblemSelectorViewController: UIViewController {
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
         if let navController = self.navigationController, navController.viewControllers.count < 2 {
-            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
             leftButton.tintColor = .red
             self.navigationItem.leftBarButtonItem = leftButton
         }
@@ -76,7 +76,7 @@ class ProblemSelectorViewController: UIViewController {
     // Note there is a similar logout in Teacher, changes to one should also go in the other
     // At some point Sam should figure out how to just merge the two, because this is sloppy
     @IBAction func logoutClicked(_ sender: AnyObject) {
-        let createAccountAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        let createAccountAlert = UIAlertController(title: "", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
         
         // Log out option
         createAccountAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in

@@ -67,12 +67,12 @@ class Teacher: Account, APIDataDelegate {
     }
     
     // Function that gets called when teacher Dash Info gets back
-    func handleTeacherDashInfo(data: [NSArray]) {
+    func handleTeacherDashInfoRequest(data: [NSArray]) {
         print(data)
     }
     
     // Function that gets called when attempt to add classroom gets back
-    func handleAddClassroomAttempt(data: Bool) {
+    func handleAddClassroomAttempt(data: Int) {
         print(data)
     }
     
