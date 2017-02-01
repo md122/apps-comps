@@ -24,13 +24,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
         signInButton.style = GIDSignInButtonStyle.wide
-        //GIDSignIn.sharedInstance().signInSilently()
+        GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
-            GIDSignIn.sharedInstance().signOut()
-            //print("here")
-            //print(GIDSignIn.sharedInstance().currentUser.authentication.idToken)
-        }
     }
     
 
@@ -115,16 +110,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         
     }
 
-    
-    
-/*    // Called from appdelegate after user is authenticated by google
-    func didAttemptSignIn(idToken: String, name: String ) {
-        let connector = APIConnector()
-        self.name = name
-        self.idToken = idToken
-        connector.attemptLogin(callingDelegate: self, idToken: idToken)
-    }
-  */  
 
 
 
