@@ -67,11 +67,12 @@ class Teacher: Account, APIDataDelegate {
         connector.attemptRemoveClassroom(callingDelegate: self, classroomID: "Classroom1")
     }
     
-    // Function that gets called when teacher Dash Info gets back
+    // Given a teacher ID, returns a list of classroom data, with name and classID
     func handleTeacherDashInfoRequest(data: [NSArray]) {
         print(data)
     }
     
+    // Given a classroom ID, returns a list of student data, with name and studentID
     func handleClassroomDataRequest(data: [NSArray]) {
         print(data)
     }
