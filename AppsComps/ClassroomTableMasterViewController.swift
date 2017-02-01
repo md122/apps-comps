@@ -12,7 +12,7 @@ class ClassroomTableMasterViewController: UITableViewController {
 
     @IBOutlet var rightBarButton: UIBarButtonItem!
     @IBOutlet var leftBarButton: UIBarButtonItem!
-    @IBOutlet var classroomTableView: UITableView!
+    //@IBOutlet var tableView: UITableView!
     var detailViewController: StudentCollectionViewController? = nil
     var classrooms = [String]()
     
@@ -34,14 +34,15 @@ class ClassroomTableMasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
-        classroomTableView.allowsMultipleSelectionDuringEditing = true
+        tableView.allowsMultipleSelectionDuringEditing = true
         loadSampleClassrooms(classroomList: ["Onion", "Vinegar", "Nettles", "Nyan Cat"])
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
         
         if tableView.isEditing == false{
-            tableView.setEditing(!tableView.isEditing, animated: true)
+            //tableView.setEditing(!tableView.isEditing, animated: true)
+            self.isEditing = true
             sender.title = "Done"
             let trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteClassroomList(_:)))
             self.navigationItem.rightBarButtonItem = trashButton
