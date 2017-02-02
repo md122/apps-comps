@@ -12,13 +12,8 @@ class ClassroomTableMasterViewController: UITableViewController {
 
     @IBOutlet var rightBarButton: UIBarButtonItem!
     @IBOutlet var leftBarButton: UIBarButtonItem!
-    //@IBOutlet var tableView: UITableView!
     var detailViewController: StudentCollectionViewController? = nil
     var classrooms = [String]()
-    
-    var editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(enterEditMode(_:)))
-   // var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-    var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(endEditMode(_:)))
     
 
 
@@ -28,8 +23,6 @@ class ClassroomTableMasterViewController: UITableViewController {
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
-        self.leftBarButton = editButton
-        //self.rightBarButton = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
@@ -54,9 +47,6 @@ class ClassroomTableMasterViewController: UITableViewController {
             self.navigationItem.rightBarButtonItem = addButton
         
         }
-        
-        
-        
         
         
     }
@@ -88,58 +78,42 @@ class ClassroomTableMasterViewController: UITableViewController {
         present(createClassroomAlert, animated: true, completion: nil)
     }
     
-    func enterEditMode(_ sender: UIBarButtonItem) {
-        self.isEditing = true
-        //self.rightBarButton = trashButton
-        self.leftBarButton = doneButton
-        
-    }
-    
-    func endEditMode(_ sender: Any) {
-        self.isEditing = false
-        self.navigationItem.rightBarButtonItem = editButton
-        //self.navigationItem.leftBarButtonItem = addButton
-        
-    }
-    
     func deleteClassroomList(_ sender: UIBarButtonItem) {
-        
-        
         if var selection = tableView.indexPathsForSelectedRows
         {
             if selection.count > 0
             {
-               
                 for indexPath in selection
                 {
-                    //contents.removeAtIndex(indexPath.row)
                     classrooms.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    //tableView.deleteRows(at: [indexPath], with: .fade)
                 }
-                
-                tableView.deleteRows(at: selection, with: .automatic)
-                
+                 tableView.deleteRows(at: selection, with: .automatic)
+                //tableView.deleteRows(at: selection, with: .automatic)
             }
         }
         self.isEditing = false
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+        self.navigationItem.rightBarButtonItem = addButton
+        self.leftBarButton.title = "Edit"
         
     }
 
 
     // MARK: - Segues
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let classroom = classrooms[indexPath.row]
-                let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
-                //controller.detailItem = classroom
-                //controller.detailItem = "Hi!"
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetail" {
+//            if let indexPath = self.tableView.indexPathForSelectedRow {
+//                let classroom = classrooms[indexPath.row]
+//                let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
+//                //controller.detailItem = classroom
+//                //controller.detailItem = "Hi!"
+//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+//                controller.navigationItem.leftItemsSupplementBackButton = true
+//            }
+//        }
+//    }
 
     // MARK: - Table View
 
@@ -163,16 +137,16 @@ class ClassroomTableMasterViewController: UITableViewController {
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-        //cell.editingAccessoryType = UITableViewCellAccessoryType.checkmark
-        if editingStyle == .delete {
-            classrooms.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            
-        }
-    }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
+//        //cell.editingAccessoryType = UITableViewCellAccessoryType.checkmark
+//        if editingStyle == .delete {
+//            classrooms.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        } else if editingStyle == .insert {
+//            
+//        }
+//    }
     func loadSampleClassrooms(classroomList: [String]) {
         
         classrooms = classroomList

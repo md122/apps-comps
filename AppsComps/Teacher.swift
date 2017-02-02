@@ -36,16 +36,14 @@ class Teacher: Account, APIDataDelegate {
 
     }
     
-    func createClassroom(classroomName: String){
-        //Generate some pattern for a new classroomID: maybe lowercase of classroomName plus some number
-        //tell the db connector to add a new classroom to the db with classroomID, classroomName, and self.IDToken
-        
-        setClassrooms()
-    }
-    
     func setClassrooms(){
         //Will be a DB thing where we get list of all classroom ids under teacher id
         classRoomIDs = ["1","2","3"]
+    }
+    
+    func addClassroom(className: String) {
+        let connector = APIConnector()
+        connector.attemptAddClassroom(callingDelegate: self, teacherID: self.getIdToken(), classroomName: className)
     }
     
     
