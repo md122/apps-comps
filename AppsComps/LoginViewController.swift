@@ -24,8 +24,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
         signInButton.style = GIDSignInButtonStyle.wide
-        GIDSignIn.sharedInstance().signInSilently()
+        //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+            GIDSignIn.sharedInstance().signOut()
+        }
     }
     
 
