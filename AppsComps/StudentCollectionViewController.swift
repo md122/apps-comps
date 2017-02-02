@@ -13,6 +13,10 @@ class StudentCollectionViewController: UICollectionViewController {
     
     @IBOutlet var StudentCollection: UICollectionView!
     var students = [String]()
+    var level1Students = [String]()
+    var level2Students = [String]()
+    var level3Students = [String]()
+    var level4Students = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +26,19 @@ class StudentCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         loadSampleStudents(studentList: ["Tiff Mering", "Josh Mering", "Jenner Mering", "Ray Mering", "Sarah Mering", "Mason Mering", "Sadie Mering", "John Mering", "Ellen Mering", "Karl Mering", "Kimm Mering", "Andrew Mering", "Nicole Sachse", "Rich Sachse", "Alex Sachse", "Jacob Sachse", "Maddie Sachse", "Willy Sachse", "Kate Feinberg", "Jack Feinberg", "Hanna Feinberg", "Melissa Haas", "Eric Haas", "Noah Haas", "Claire Haas", "Alex Tomala", "Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
+        for student in students {
+            if student.range(of: "Mering") != nil{
+                level1Students.append(student)
+            } else if student.range(of: "Sachse") != nil{
+                level2Students.append(student)
+            } else if student.range(of: "Feinberg") != nil{
+                level3Students.append(student)
+            } else {
+                level4Students.append(student)
+            }
+        }
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,13 +89,23 @@ class StudentCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 4
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        // #warning Incomplete implementation, return the number of items
-        return self.students.count
+        if section == 0 {
+            return self.level1Students.count
+        } else if section == 1 {
+            return self.level2Students.count
+        } else if section == 2 {
+            return self.level3Students.count
+        } else if section == 3 {
+            return self.level4Students.count
+        } else {
+            return 0
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
