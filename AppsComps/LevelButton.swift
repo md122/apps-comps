@@ -29,7 +29,7 @@ class LevelButton: UIButton {
         return level
     }
     
-    func checkAccess(curLev: Int){
+    func checkAccess(curLev: Int)->Bool{
         if (level <= curLev){
             locked = false
             self.backgroundColor = UIColor.blue
@@ -38,6 +38,7 @@ class LevelButton: UIButton {
             self.backgroundColor = UIColor.gray
             self.isUserInteractionEnabled = false
         }
+        return locked
     }
 
 }

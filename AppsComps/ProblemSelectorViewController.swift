@@ -15,7 +15,7 @@
 */
 import UIKit
 
-class ProblemSelectorViewController: UIViewController {
+class ProblemSelectorViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var greetingText: UILabel!
     @IBOutlet weak var levelText: UILabel!
     @IBOutlet weak var leaveButton: UIButton!
@@ -34,7 +34,7 @@ class ProblemSelectorViewController: UIViewController {
         
         // Creates a fake user for testing purposes
         if(currentUser == nil) {
-            currentUser = Student(idToken: "fakeID", name: "Wanchen Orange")
+            currentUser = Student(idToken: "fakeID", name: "W")
         }
         
         super.viewDidLoad()
@@ -48,14 +48,23 @@ class ProblemSelectorViewController: UIViewController {
         headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: screen.width, height: headerView.frame.height)
         classroomText.frame = CGRect(x: widthUnit*5, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
         classroomText.textAlignment = NSTextAlignment.left
-        leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height, width: widthUnit*95, height: heightUnit*50)
-        leaveButton.contentHorizontalAlignment = .left
-        greetingText.frame = CGRect(x: 0, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
+                greetingText.frame = CGRect(x: 0, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
         greetingText.textAlignment = NSTextAlignment.right
         levelText.frame = CGRect(x: 0, y: heightUnit*25 + greetingText.frame.height, width: widthUnit*95, height: heightUnit*50)
         levelText.textAlignment = NSTextAlignment.right
         greetingText.text = "Hello " + currentUser!.getName()
-        levelText.text = "You are on level " + String(level)
+        levelText.text = "You are on level " + currentUser!.getHighestLevel()
+        
+        //JOIN/LEAVE CLASSROOM
+        if let studentUser = currentUser as? Student {
+            leaveButton.setTitle("Join Classroom", for: .normal)
+            leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height, width: widthUnit*95, height: heightUnit*50)
+            leaveButton.contentHorizontalAlignment = .left
+            if (studentUser.getClassRoomID() == "") {
+                leaveButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
+            }
+            
+        }
         
         //Temporary logo
         //Check here for how to resize image: http://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
@@ -91,4 +100,29 @@ class ProblemSelectorViewController: UIViewController {
         }))
         present(createAccountAlert, animated: true, completion: nil)
     }
+    
+    
+    @IBAction func joinClassroom(_ sender: AnyObject) {
+        let joinClassAlert = UIAlertController(title: "Enter Classroom ID", message: "", preferredStyle: .alert)
+        
+        joinClassAlert.addTextField(configurationHandler: nil)
+
+        // Join option
+        let joinAction = UIAlertAction(title: "Join", style: .default, handler: {
+            alert -> Void in
+            
+            let idTextField = joinClassAlert.textFields![0].text
+            
+            let connector = APIConnector()
+            connector.attemptAddStudentToClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: idTextField!)
+            self.classroomText.text = idTextField
+        })
+        joinClassAlert.addAction(joinAction)
+        
+        // cancel option
+        joinClassAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        present(joinClassAlert, animated: true, completion: nil)
+    }
+
 }

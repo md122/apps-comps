@@ -11,13 +11,13 @@ import UIKit
 
 class Student: Account, APIDataDelegate {
     
-    
-
     override init?(idToken: String, name: String){
         super.init(idToken: idToken, name: name)
+        
         if idToken.isEmpty || name.isEmpty {
             return nil
         }
+        
     }
     
     override func getType()->String{
@@ -27,10 +27,10 @@ class Student: Account, APIDataDelegate {
 
     func getClassRoomID()->String{
         //code that asks the database connector for the classroom id associated with the account id of this student
-        return "Classroom 1"
+        return ""
     }
     
-    func getHighestLevel()->String{
+    override func getHighestLevel()->String{
         //code that asks the database connector to send back the number of the highest level this student has unlocked (not the highest level passed, the highest level they are allowed to access)
         return "4"
     }

@@ -19,9 +19,9 @@ class Teacher: Account, APIDataDelegate {
      */
     
 
-    func getHighestLevel()->String{
+    override func getHighestLevel()->String{
         //always is highest level
-        return "6"
+        return "4"
     }
     
     override init?(idToken: String, name: String){
