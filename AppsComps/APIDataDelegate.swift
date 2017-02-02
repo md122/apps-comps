@@ -5,6 +5,8 @@
 //  Created by Sam Neubauer on 11/12/16.
 //  Copyright © 2016 appscomps. All rights reserved.
 //
+// Errors will be returned to the handlers in different formats based off
+
 
 import Foundation
 

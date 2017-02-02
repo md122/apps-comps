@@ -17,6 +17,7 @@ From Brynna and Wanchen:
 (Student)
 /requestStudentDashInfo/<studentID>
 - returns Classroom (name) Teacher (name) Level
+[["classroomName", "classroomID"], levelNum, progress]
 requestStudentDashInfo(studentID: String)
 handleStudentDashInfo(classroomData)
 
@@ -43,7 +44,8 @@ handleCorrectIncorrectRatio()
 (Teacher)
 
 /requestTeacherDashInfo/<teacherID>
-- returns teacher_name, Classrooms (names,  IDs) with students (ID, names, level)
+- returns Classrooms (names,  IDs)
+[[classroomName, classroomID]]
 requestTeacherDashInfo()
 handleTeacherDashInfo()
 
