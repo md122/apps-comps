@@ -17,6 +17,8 @@ class StudentCollectionViewController: UICollectionViewController {
     var level2Students = [String]()
     var level3Students = [String]()
     var level4Students = [String]()
+    var studentsByLevel = [Int: [String]]()
+    var levelSectionTitles = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,9 @@ class StudentCollectionViewController: UICollectionViewController {
             } else {
                 level4Students.append(student)
             }
+            studentsByLevel = [1 : level1Students, 2 : level2Students, 3 : level3Students, 4 : level4Students]
+            levelSectionTitles = [Int](studentsByLevel.keys)
+            
         }
         
         
@@ -89,39 +94,50 @@ class StudentCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 4
+        return levelSectionTitles.count
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        sectionTitle = [animalSectionTitles objectAtIndex:section]
+//        NSArray *sectionAnimals = [animals objectForKey:sectionTitle];
 //        // #warning Incomplete implementation, return the number of items
-        if section == 0 {
-            return self.level1Students.count
-        } else if section == 1 {
-            return self.level2Students.count
-        } else if section == 2 {
-            return self.level3Students.count
-        } else if section == 3 {
-            return self.level4Students.count
-        } else {
-            return 0
-        }
+//        if section == 0 {
+//            return self.level1Students.count
+//        } else if section == 1 {
+//            return self.level2Students.count
+//        } else if section == 2 {
+//            return self.level3Students.count
+//        } else if section == 3 {
+//            return self.level4Students.count
+//        } else {
+//            return 0
+//        }
+        
+        var sectionTitle = levelSectionTitles[section]
+        var sectionStudents = studentsByLevel[sectionTitle]
+        return sectionStudents!.count
+        //NSArray *sectionAnimals = [animals objectForKey:sectionTitle];
+        //return [sectionAnimals count];
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
+        collectionView.reloadSections([0])
         
-        let student = self.students[indexPath.row]
-        if student.range(of: "Mering") != nil{
-            cell.backgroundColor = UIColor.red
-        } else if student.range(of: "Sachse") != nil{
-            cell.backgroundColor = UIColor.blue
-        } else if student.range(of: "Feinberg") != nil{
-            cell.backgroundColor = UIColor.green
-        } else {
-            cell.backgroundColor = UIColor.yellow
-        }
-        
+//        let student = self.students[indexPath.row]
+//        if student.range(of: "Mering") != nil{
+//            cell.backgroundColor = UIColor.red
+//        } else if student.range(of: "Sachse") != nil{
+//            cell.backgroundColor = UIColor.blue
+//        } else if student.range(of: "Feinberg") != nil{
+//            cell.backgroundColor = UIColor.green
+//        } else {
+//            cell.backgroundColor = UIColor.yellow
+//        }
+        let sectionTitle = levelSectionTitles[indexPath.section]
+        let sectionStudents = studentsByLevel[sectionTitle]!
+        let student = sectionStudents[indexPath.row]
         cell.studentNameLabel.text = student
     
         return cell
