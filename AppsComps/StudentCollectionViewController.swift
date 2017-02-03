@@ -160,8 +160,10 @@ class StudentCollectionViewController: UICollectionViewController {
 //        }
         
         if indexPath.section == 0{
-            let header = collectionView.dequeueReusableCell(withReuseIdentifier: "Header", for: indexPath) as! UICollectionReusableView
-            return header as! UICollectionViewCell
+            //let header = collectionView.dequeueReusableCell(withReuseIdentifier: "Header", for: indexPath) as! UICollectionReusableView
+            //return header as! UICollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "header", for: indexPath) 
+            return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
             let sectionTitle = levelNumbers[indexPath.section-1]
