@@ -18,7 +18,7 @@ class StudentCollectionViewController: UICollectionViewController {
     var level3Students = [String]()
     var level4Students = [String]()
     var studentsByLevel = [Int: [String]]()
-    var levelSectionTitles = [Int]()
+    var levelNumbers = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +39,17 @@ class StudentCollectionViewController: UICollectionViewController {
                 level4Students.append(student)
             }
             studentsByLevel = [1 : level1Students, 2 : level2Students, 3 : level3Students, 4 : level4Students]
-            levelSectionTitles = [Int](studentsByLevel.keys)
+            //levelNumbers = [Int](studentsByLevel.keys)
+            levelNumbers = [1,2,3,4]
+            print(levelNumbers)
             
         }
+        //let toolbar = UIToolbar()
+        //toolbar.frame = RectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
+//        toolbar.sizeToFit()
+//        //toolbar.setItems(toolbarButtons, animated: true)
+//        toolbar.backgroundColor = UIColor.red
+//        self.view.addSubview(toolbar)
         
         
     }
@@ -58,6 +66,12 @@ class StudentCollectionViewController: UICollectionViewController {
         // Tests getting the split view controller
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
         splitViewController?.presentsWithGesture = true
+//        let toolbar = UIToolbar()
+//        
+//        self.view.addSubview(toolbar)
+        
+        // instantiate spacer, middleItem
+       // toolbar.items = @[spacer, middleItem, spacer];
     }
 
     // Note there is a similar logout in Student, changes to one should also go in the other
@@ -94,7 +108,8 @@ class StudentCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return levelSectionTitles.count
+        let numSections = levelNumbers.count + 1
+        return numSections
     }
 
 
@@ -114,16 +129,24 @@ class StudentCollectionViewController: UICollectionViewController {
 //            return 0
 //        }
         
-        var sectionTitle = levelSectionTitles[section]
-        var sectionStudents = studentsByLevel[sectionTitle]
-        return sectionStudents!.count
+        
+        if section == 0{
+            print(section)
+            return 1
+        } else {
+            print(section)
+            let sectionTitle = levelNumbers[section-1]
+            let sectionStudents = studentsByLevel[sectionTitle]
+            return sectionStudents!.count
+        }
+        
         //NSArray *sectionAnimals = [animals objectForKey:sectionTitle];
         //return [sectionAnimals count];
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
-        collectionView.reloadSections([0])
+        
+        //collectionView.reloadSections([0])
         
 //        let student = self.students[indexPath.row]
 //        if student.range(of: "Mering") != nil{
@@ -135,12 +158,20 @@ class StudentCollectionViewController: UICollectionViewController {
 //        } else {
 //            cell.backgroundColor = UIColor.yellow
 //        }
-        let sectionTitle = levelSectionTitles[indexPath.section]
-        let sectionStudents = studentsByLevel[sectionTitle]!
-        let student = sectionStudents[indexPath.row]
-        cell.studentNameLabel.text = student
-    
-        return cell
+        
+        if indexPath.section == 0{
+            let header = collectionView.dequeueReusableCell(withReuseIdentifier: "Header", for: indexPath) as! UICollectionReusableView
+            return header as! UICollectionViewCell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
+            let sectionTitle = levelNumbers[indexPath.section-1]
+            let sectionStudents = studentsByLevel[sectionTitle]!
+            let student = sectionStudents[indexPath.row]
+            cell.studentNameLabel.text = student
+            
+            return cell
+        }
+        
     }
     
     func loadSampleStudents(studentList: [String]) {
