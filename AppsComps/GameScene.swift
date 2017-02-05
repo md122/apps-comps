@@ -33,7 +33,9 @@ class GameScene: SKScene, UITextFieldDelegate {
     let TOPBARY:CGFloat
     let BOTTOMBARY:CGFloat
     let NUMBLOCKBANKPOSITION:CGPoint
+    let SUBNUMBLOCKBANKPOSITION:CGPoint
     let VARBLOCKBANKPOSITION:CGPoint
+    let SUBVARBLOCKBANKPOSITION:CGPoint
     let BLOCKHEIGHT:CGFloat
     let VARBLOCKWIDTH:CGFloat
     var VARBLOCKSCALE:CGFloat
@@ -56,6 +58,8 @@ class GameScene: SKScene, UITextFieldDelegate {
     // The block in the bank
     var numBlockInBank:Block
     var varBlockInBank:Block
+    var subNumBlockInBank:Block
+    var subVarBlockInBank:Block
     
     override init(size: CGSize) {
         width = size.width
@@ -76,11 +80,16 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 2.5*HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        SUBNUMBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
        
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
+        subNumBlockInBank = Block(type:.subNumber, size: NUMBLOCKSIZE)
+        subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE)
+        
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         
         SNAPDISTANCE = 20.0
@@ -111,9 +120,12 @@ class GameScene: SKScene, UITextFieldDelegate {
         //Add the original block in the number block bank and the variable block bank
         numBlockInBank.position = NUMBLOCKBANKPOSITION
         self.addBlockChild(numBlockInBank)
-        
         varBlockInBank.position = VARBLOCKBANKPOSITION
         self.addBlockChild(varBlockInBank)
+        subNumBlockInBank.position = SUBNUMBLOCKBANKPOSITION
+        self.addBlockChild(subNumBlockInBank)
+        subVarBlockInBank.position = SUBVARBLOCKBANKPOSITION
+        self.addBlockChild(subVarBlockInBank)
         
         //These are the rectangles that show where the bars start. It's a bit hacky to get the height from varBlockInBank but the height is stored in the block class
         let topBarStarter = SKSpriteNode(texture: nil, color: .blue, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
@@ -223,7 +235,12 @@ class GameScene: SKScene, UITextFieldDelegate {
         if sender.state == .began {
             //We want to snap the block back into the correct bar(or put it back in it's position in the block bank or remove it from the bar before the stretching starts
             if blockTouched != nil {
-                snapBlockIntoPlace(block: blockTouched!)
+                if blockTouched?.getType() == "number" || blockTouched?.getType() == "variable" {
+                    snapPositiveBlockIntoPlace(block: blockTouched!)
+                }
+                else {
+                    snapNegativeBlockIntoPlace(block: blockTouched!)
+                }
                 //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
                 //Need if because the block might have snapped into the garbage can
                 if blockTouched != nil {
@@ -236,7 +253,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             let pinchScale = sender.scale
             
             //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
-            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank {
+            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank {
                 //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                 var indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
                 var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
@@ -251,27 +268,38 @@ class GameScene: SKScene, UITextFieldDelegate {
                 
                 blockTouched?.xScale = pinchScale
                 
-                //Move the block over so it's only increasing to the right
-                blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                //Make the block only increase to the right for positive numbers and only increase to the left for negative
+                if (blockTouched?.getType() == "variable" || blockTouched?.getType() == "number") {
+                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                }
+                    //The subtractions stretch to the left
+                else {
+                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                }
                 
                 //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
                 blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
                     
                 //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
-                if blockTouched?.getType() == "variable" {
+                if blockTouched?.getType() == "variable" || blockTouched?.getType() == "subVariable" {
                     VARBLOCKSCALE = pinchScale
                     //go through each of the game scene children that are blocks
                     for case let child as Block in self.children {
                         //If the block is a variable (and not the one we are currently moving or the one in the bank) we need to stretch it also
-                        if child.getType() == "variable" && child != blockTouched && child != varBlockInBank {
+                        if (child.getType() == "variable" || child.getType() == "subVariable") && child != blockTouched && child != varBlockInBank && child != subVarBlockInBank {
                             child.xScale = pinchScale
-                                
-                            //Move the block over so it's only increasing to the right
-                            child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
-                                
+                            
+                            //Move the block over so it's only increasing to the right for addition and to the left for subtraction
+                            if (child.getType() == "variable") {
+                                child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
+                            }
+                            else {
+                                child.position = CGPoint(x:((child.position.x) - (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
+                            }
+                            
                             //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
                             child.getLabel().xScale = 1/(child.xScale)
-                                
+                            
                             //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                             indexInTopBar = findIndexOfBlock(bar: topBar, block:child)
                             indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:child)
@@ -323,7 +351,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
     
-    //If the middle of the block is over the garbage can reutrns true, else returns false
+    //If the block is over the garbage can reutrns true, else returns false
     func blockOverGarbageCan(block: Block) -> Bool {
         if garbage.intersects(block) {
             return true
@@ -336,7 +364,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         //Check if a block is currently being touched
         if blockTouched != nil {
             //We set the scale when we move the block so the block in the variable block in the bank has a scale of 1
-            if blockTouched!.getType() == "variable" {
+            if blockTouched!.getType() == "variable" || blockTouched!.getType() == "subVariable"{
                 blockTouched!.xScale = VARBLOCKSCALE
                 blockTouched!.getLabel().xScale = 1/VARBLOCKSCALE
             }
@@ -464,7 +492,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     //At the end of a touch or when the pinch action starts put the block back into place and update stuff based on where it goes
     //Might make block touched nil, because it might snap the block into the garbage can
-    func snapBlockIntoPlace(block: Block) {
+    func snapPositiveBlockIntoPlace(block: Block) {
         let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
         let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
         
@@ -595,6 +623,47 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
+    //
+    func snapNegativeBlockIntoPlace(block: Block) {
+        // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank.
+        // If not, put the block back where it came from
+        if (block == subNumBlockInBank) {
+            //Block has moved outside of block bank
+            if (abs(block.position.x - SUBNUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - SUBNUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
+                let newBlock = Block(type: .subNumber, size: NUMBLOCKSIZE)
+                newBlock.position = SUBNUMBLOCKBANKPOSITION
+                subNumBlockInBank = newBlock
+                self.addBlockChild(newBlock)
+            }
+            else {
+                block.position = SUBNUMBLOCKBANKPOSITION
+            }
+        }
+        
+        // Are you dragging a block from the variable bank? If you moved it "far enough", repopulate the varBlockBank.
+        // If not, put the block back where it came from
+        if (block == subVarBlockInBank) {
+            //Block has moved outside of block bank
+            if (abs(block.position.x - SUBVARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - SUBVARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
+                let newBlock = Block(type: .subVariable, size: VARBLOCKSIZE)
+                newBlock.position = SUBVARBLOCKBANKPOSITION
+                subVarBlockInBank = newBlock
+                self.addBlockChild(newBlock)
+            }
+            else {
+                //When we snap a block back into the var block bank we set the scale back to 1
+                block.xScale = 1
+                block.getLabel().xScale = 1
+                block.position = SUBVARBLOCKBANKPOSITION
+            }
+        }
+        //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
+        if (blockOverGarbageCan(block: block)) {
+            block.removeFromParent()
+            blockTouched = nil
+            garbage.setScale(1.0)
+        }
+    }
     
     
     // Called when you lift up your finger
@@ -603,7 +672,12 @@ class GameScene: SKScene, UITextFieldDelegate {
             let block = blockTouched!
             //Set the color to the not selected color
             block.color = .black
-            snapBlockIntoPlace(block: block)
+            if block.getType() == "number" || block.getType() == "variable" {
+                snapPositiveBlockIntoPlace(block: block)
+            }
+            else {
+                snapNegativeBlockIntoPlace(block: block)
+            }
             blockTouched = nil
         }
     }

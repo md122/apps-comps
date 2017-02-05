@@ -14,6 +14,8 @@ class Block: SKSpriteNode {
     enum BlockType {
         case number
         case variable
+        case subNumber
+        case subVariable
     }
     
     let BLOCKHEIGHT:CGFloat
@@ -33,14 +35,52 @@ class Block: SKSpriteNode {
         BLOCKWIDTH = size.width
         
         switch self.type {
-            case .number:
-                super.init(texture: nil, color: .black, size: size)
-                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
-                label.text = String(value)
-            case .variable:
-                super.init(texture: nil, color: .black, size:size)
-                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
-                label.text = "x"
+        case .number:
+            super.init(texture: nil, color: .black, size: size)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
+            label.text = String(value)
+            label.fontSize = 20
+        case .variable:
+            super.init(texture: nil, color: .black, size:size)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
+            label.text = "x"
+            label.fontSize = 20
+        case .subNumber:
+            super.init(texture: nil, color: .black, size:size)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: size)
+            label.text = String(-1 * value)
+            self.alpha = 0.35
+            label.alpha = 1 / 0.35
+            label.position = CGPoint(x: self.getWidth() / 6, y: -1 * self.getHeight() / 4)
+            //Add the line for the subtraction block
+            let line_path:CGMutablePath = CGMutablePath()
+            line_path.move(to: CGPoint(x:self.getTopLeftX(), y:self.getTopLeftY() - self.getHeight()))
+            line_path.addLine(to: CGPoint(x:self.getTopRightX(), y:self.getTopRightY()))
+            let shape = SKShapeNode()
+            shape.path = line_path
+            shape.strokeColor = .red
+            shape.lineWidth = 2
+            shape.alpha = 1 / 0.35
+            self.addChild(shape)
+            label.fontSize = 15
+        case .subVariable:
+            super.init(texture: nil, color: .black, size:size)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: size)
+            label.text = "-x"
+            self.alpha = 0.35
+            label.alpha = 1 / 0.35
+            label.position = CGPoint(x: self.getWidth() / 4, y: -1 * self.getHeight() / 4)
+            //Add the line for the subtraction block
+            let line_path:CGMutablePath = CGMutablePath()
+            line_path.move(to: CGPoint(x:self.getTopLeftX(), y:self.getTopLeftY() - self.getHeight()))
+            line_path.addLine(to: CGPoint(x:self.getTopRightX(), y:self.getTopRightY()))
+            let shape = SKShapeNode()
+            shape.path = line_path
+            shape.strokeColor = .red
+            shape.lineWidth = 2
+            shape.alpha = 1 / 0.35
+            self.addChild(shape)
+            label.fontSize = 15
         }
         self.xScale = xScale
         innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))
@@ -51,8 +91,8 @@ class Block: SKSpriteNode {
         innerBlockColor.zPosition = 1
         
         //Set the look of the label and attach the label to this block 2 units higher than its parent
-        label.fontSize = 20
         label.fontColor = .black
+        //?????
         label.xScale = 1 / xScale
         self.addChild(label)
         label.zPosition = 2
@@ -95,9 +135,8 @@ class Block: SKSpriteNode {
         return Double(self.position.x) - Double(self.getWidth()) / 2
     }
     
-    //I don't think this is currently used...
     func getTopLeftY() -> Double{
-        return Double(self.position.y) - Double(self.getHeight()) / 2
+        return Double(self.position.y) + Double(self.getHeight()) / 2
     }
     
     func getLabel() ->SKLabelNode{
