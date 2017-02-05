@@ -379,6 +379,7 @@
                                         <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIO-12-0JW" customClass="LevelButton" customModule="AppsComps" customModuleProvider="target">
                                             <frame key="frameInset" width="250" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                             <state key="normal" title="Level">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
