@@ -12,7 +12,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, UITextFieldDelegate {
     
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
@@ -185,19 +185,28 @@ class GameScene: SKScene {
         messageText.fontColor = .black
         self.addChild(messageText)
         
-        // This should be a button
-        let submitRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 1*HEIGHTUNIT)
-        let submitRect = SKShapeNode(rectOf: submitRectSize, cornerRadius: HEIGHTUNIT)
-        submitRect.position = CGPoint(x: 14*WIDTHUNIT, y:1.5*HEIGHTUNIT)
-        submitRect.strokeColor = .black
-        submitRect.glowWidth = 0.5
-        self.addChild(submitRect)
-        let submitText = SKLabelNode(fontNamed: "Arial")
-        submitText.position = CGPoint(x: submitRect.position.x, y: submitRect.position.y - submitText.frame.height / 2.0)
-        submitText.text = "Submit"
-        submitText.fontSize = 15*min(submitRectSize.width / submitText.frame.width, submitRectSize.height / submitText.frame.height)
-        submitText.fontColor = .black
-        self.addChild(submitText)
+        let textFieldRect = CGRect(x: 13*WIDTHUNIT, y: 14*HEIGHTUNIT,
+                               width: 2*WIDTHUNIT, height: 1*HEIGHTUNIT)
+        let answerTextField = UITextField(frame: textFieldRect)
+        answerTextField.delegate = self
+        answerTextField.borderStyle = UITextBorderStyle.roundedRect
+        answerTextField.textColor = .black
+        answerTextField.placeholder = "Your answer"
+        answerTextField.backgroundColor = .lightGray
+        answerTextField.autocorrectionType = UITextAutocorrectionType.yes
+        self.view?.addSubview(answerTextField)
+        let submitButton = ButtonNode(texture: nil, color: .yellow, size: CGSize(width: 2*WIDTHUNIT, height: 0.75*HEIGHTUNIT))
+        submitButton.position = CGPoint(x: 14*WIDTHUNIT, y: 0.5*HEIGHTUNIT)
+        let submitLabel = SKLabelNode(fontNamed: "GillSans-Bold")
+        self.addChild(submitButton)
+        submitLabel.position = CGPoint(x: submitButton.position.x, y: submitButton.position.y - submitLabel.frame.height / 2.0)
+        submitLabel.text = "Submit!"
+        submitLabel.fontSize = 12
+        submitLabel.fontColor = .black
+        self.addChild(submitLabel)
+        submitButton.action = { (button) in
+            //do things when submit button is pressed
+        }
         
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
@@ -205,6 +214,9 @@ class GameScene: SKScene {
         self.view?.addGestureRecognizer(pinchGesture)
 
     }
+    
+    
+    
     
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
