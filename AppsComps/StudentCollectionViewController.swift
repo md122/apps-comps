@@ -18,6 +18,10 @@ class StudentCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         // Brynna had this next line of code but it interferes with the Logout Button
         //self.navigationItem.leftBarButtonItem = self.editButtonItem
+        if(currentUser == nil) {
+            currentUser = Teacher(idToken: "23", name: "Meg Crenshaw")
+            (currentUser as! Teacher).testAPIConnector()
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

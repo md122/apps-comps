@@ -61,18 +61,24 @@ class Teacher: Account, APIDataDelegate {
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.requestTeacherDashInfo(callingDelegate: self, teacherID: "Teacher1")
+        connector.requestTeacherDashInfo(callingDelegate: self, teacherID: self.getIdToken())
+        connector.requestClassroomData(callingDelegate: self, classroomID: "5")
         connector.attemptAddClassroom(callingDelegate: self, teacherID: "Teacher1", classroomName: "Cats Room")
         connector.attemptRemoveClassroom(callingDelegate: self, classroomID: "Classroom1")
     }
     
-    // Function that gets called when teacher Dash Info gets back
-    func handleTeacherDashInfo(data: [NSArray]) {
+    // Given a teacher ID, returns a list of classroom data, with name and classID
+    func handleTeacherDashInfoRequest(data: [NSArray]) {
+        print(data)
+    }
+    
+    // Given a classroom ID, returns a list of student data, with name and studentID
+    func handleClassroomDataRequest(data: [NSArray]) {
         print(data)
     }
     
     // Function that gets called when attempt to add classroom gets back
-    func handleAddClassroomAttempt(data: Bool) {
+    func handleAddClassroomAttempt(data: Int) {
         print(data)
     }
     
@@ -80,7 +86,4 @@ class Teacher: Account, APIDataDelegate {
     func handleRemoveClassroomAttempt(data: Bool) {
         print(data)
     }
-    
-    
-    
 }
