@@ -26,10 +26,12 @@ class Block: SKSpriteNode {
     var value: Double // Holds the value. I.e. in a 5x block, 5 is the value
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
+    var subtractionBlock: Block?
     
     init(type: BlockType, size: CGSize) {
         self.type = type
         self.value = 1.0
+        subtractionBlock = nil
         
         BLOCKHEIGHT = size.height
         BLOCKWIDTH = size.width
@@ -49,8 +51,8 @@ class Block: SKSpriteNode {
             super.init(texture: nil, color: .black, size:size)
             innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: size)
             label.text = String(-1 * value)
-            self.alpha = 0.35
-            label.alpha = 1 / 0.35
+            self.alpha = 0.40
+            label.alpha = 1 / 0.40
             label.position = CGPoint(x: self.getWidth() / 6, y: -1 * self.getHeight() / 4)
             //Add the line for the subtraction block
             let line_path:CGMutablePath = CGMutablePath()
@@ -60,15 +62,15 @@ class Block: SKSpriteNode {
             shape.path = line_path
             shape.strokeColor = .red
             shape.lineWidth = 2
-            shape.alpha = 1 / 0.35
+            shape.alpha = 1 / 0.40
             self.addChild(shape)
             label.fontSize = 15
         case .subVariable:
             super.init(texture: nil, color: .black, size:size)
             innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: size)
             label.text = "-x"
-            self.alpha = 0.35
-            label.alpha = 1 / 0.35
+            self.alpha = 0.40
+            label.alpha = 1 / 0.40
             label.position = CGPoint(x: self.getWidth() / 4, y: -1 * self.getHeight() / 4)
             //Add the line for the subtraction block
             let line_path:CGMutablePath = CGMutablePath()
@@ -78,7 +80,7 @@ class Block: SKSpriteNode {
             shape.path = line_path
             shape.strokeColor = .red
             shape.lineWidth = 2
-            shape.alpha = 1 / 0.35
+            shape.alpha = 1 / 0.40
             self.addChild(shape)
             label.fontSize = 15
         }
@@ -150,6 +152,24 @@ class Block: SKSpriteNode {
     func getType() -> String{
         //Not sure what this describing thing is, but it works
         return String(describing: self.type)
+    }
+    
+    func setSubtractionBlock(block: Block) {
+        self.subtractionBlock = block
+        block.position = CGPoint(x:((self.getWidth() / 2) - (block.getWidth()) / 2) / Double(self.xScale), y:0)
+        block.xScale = block.xScale / self.xScale
+        block.zPosition = 3
+        block.removeFromParent()
+        self.addChild(block)
+    }
+    
+    func removeSubtractionBlock() {
+        subtractionBlock?.removeFromParent()
+        self.subtractionBlock = nil
+    }
+    
+    func getSubtractionBlock() -> Block? {
+        return self.subtractionBlock
     }
 
 }

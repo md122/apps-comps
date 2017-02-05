@@ -69,7 +69,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         BARX = 2*HEIGHTUNIT
         TOPBARY = 10.5*HEIGHTUNIT
         BOTTOMBARY = 8*HEIGHTUNIT
-        BLOCKHEIGHT = 1*HEIGHTUNIT
+        BLOCKHEIGHT = 1.5*HEIGHTUNIT
         VARBLOCKWIDTH = 1.5*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
         VARBLOCKSCALE = 1
@@ -103,7 +103,7 @@ class GameScene: SKScene, UITextFieldDelegate {
 
     func addBlockChild(_ node: SKNode) {
         node.zPosition = CGFloat(currentBlockZ)
-        currentBlockZ += 3
+        currentBlockZ += 6
         super.addChild(node)
     }
     
@@ -317,7 +317,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
             
         else if sender.state == .ended {
-            //ZOE NEEDS TO LEARN ABOT OPTIONALS!!!!
             //This check is because the block might have been moved into the trash during the snapback done before stretching and it not exist
             if blockTouched != nil {
                 blockTouched?.color = .black
@@ -327,11 +326,18 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
     
-    func blockIsTouched(touchLocation: CGPoint, child: SKNode) -> Bool {
+    //Block is touched first checks if it's child is touched, and then checks to see if it is touched
+    func blockIsTouched(touchLocation: CGPoint, child: SKNode?) -> String {
         if let block = child as? Block {
-            return (block == self.atPoint(touchLocation) || block.getLabel() == self.atPoint(touchLocation) || block.getBlockColorRectangle() == self.atPoint(touchLocation))
+            //Need to implement the logic of seeing if the child has been touched
+            if blockIsTouched(touchLocation: touchLocation, child: block.getSubtractionBlock()) == "thisBlock" {
+                return "subtractionBlock"
+            }
+            else if (block == self.atPoint(touchLocation) || block.getLabel() == self.atPoint(touchLocation) || block.getBlockColorRectangle() == self.atPoint(touchLocation)) {
+                return "thisBlock"
+            }
         }
-        return false
+        return "no"
     }
     
     // Called when you touch the screen
@@ -341,11 +347,25 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         for child in self.children {
             if let block = child as? Block {
-                if blockIsTouched(touchLocation: touchLocation, child: block) {
+                if blockIsTouched(touchLocation: touchLocation, child: block) == "thisBlock"{
                     blockTouched = block
                     blockTouched?.color = .red
                     block.zPosition = currentBlockZ
-                    currentBlockZ += 3
+                    currentBlockZ += 6
+                }
+                else if blockIsTouched(touchLocation: touchLocation, child: block) == "subtractionBlock"{
+                    //If we touch the subtraction block, we bring it back in to the normal game scene and make it the block touched
+                    blockTouched = block.getSubtractionBlock()
+                    block.removeSubtractionBlock()
+                    //Now the subtraction block is in game scene, so get fix the scaling from when it was with parent
+                    blockTouched?.xScale = (blockTouched?.xScale)! * block.xScale
+                    //Set the subtraction block position so it doesn't jump when it goes back on the game scene
+                    let theXScale = block.position.x + (CGFloat(block.getWidth()) - CGFloat((blockTouched?.getWidth())!)) / 2
+                    blockTouched?.position = CGPoint(x:theXScale, y:block.position.y)
+                    self.addChild(blockTouched!)
+                    blockTouched?.color = .red
+                    blockTouched?.zPosition = currentBlockZ
+                    currentBlockZ += 6
                 }
             }
         }
@@ -625,6 +645,21 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     //
     func snapNegativeBlockIntoPlace(block: Block) {
+        
+        //If on top of a positive block, snap it on top of that block.
+        for case let child as Block in self.children {
+            if (child.getType() == "number" && blockTouched?.getType() == "subNumber") || (child.getType() == "variable" && blockTouched?.getType() == "subVariable")  {
+                //We can only add one child, and we can't snap to blocks in the block banks
+                if (abs(child.getTopRightY() - blockTouched!.getTopRightY()) < SNAPDISTANCE) && (abs(child.getTopRightX() - blockTouched!.getTopRightX()) < SNAPDISTANCE) && child.getSubtractionBlock() == nil && child != numBlockInBank && child != varBlockInBank{
+                    //Set the position relative to the parent
+                    blockTouched!.position = CGPoint(x: 0, y: 0)
+                    //Send the subtraction block to be the child of the current block
+                    child.setSubtractionBlock(block: blockTouched!)
+                }
+            }
+        }
+        
+        
         // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank.
         // If not, put the block back where it came from
         if (block == subNumBlockInBank) {
