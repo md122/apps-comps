@@ -111,9 +111,8 @@ class ClassroomTableMasterViewController: UITableViewController {
                 //let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
                 //controller.detailItem = classroom
                 //controller.detailItem = "Hi!"
-                detailViewController?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-                detailViewController?.navigationItem.leftItemsSupplementBackButton = true
-                detailViewController?.loadSampleStudents(studentList: ["Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
+//                detailViewController?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+//                detailViewController?.navigationItem.leftItemsSupplementBackButton = true
                 
             }
         }

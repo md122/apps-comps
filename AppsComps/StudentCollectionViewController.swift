@@ -9,24 +9,21 @@
 import UIKit
 
 
-class StudentCollectionViewController: UICollectionViewController {
+class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    @IBOutlet var StudentCollection: UICollectionView!
-    @IBOutlet var graphSegment: UISegmentedControl!
-    var students = [String]()
-    @IBAction func graphSegmentChanged(_ sender: AnyObject) {
-        print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
-        loadSampleStudents(studentList: ["Joan Baez", "Bob Dylan", "Billy Joel"])
-        StudentCollection.reloadSections([1,2])
-    }
+    var students = [NSArray]()
+    
+    
     
    
-    var level1Students = [String]()
-    var level2Students = [String]()
-    var level3Students = [String]()
-    var level4Students = [String]()
-    var studentsByLevel = [Int: [String]]()
-    var levelNumbers = [Int]()
+    var level1Students = [NSArray]()
+    var level2Students = [NSArray]()
+    var level3Students = [NSArray]()
+    var level4Students = [NSArray]()
+    var studentsByLevel : [[NSArray]]? = nil
+    var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
+    
+    var cellMode = true;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,53 +32,28 @@ class StudentCollectionViewController: UICollectionViewController {
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        loadSampleStudents(studentList: ["Tiff Mering", "Josh Mering", "Jenner Mering", "Ray Mering", "Sarah Mering", "Mason Mering", "Sadie Mering", "John Mering", "Ellen Mering", "Karl Mering", "Kimm Mering", "Andrew Mering", "Nicole Sachse", "Rich Sachse", "Alex Sachse", "Jacob Sachse", "Maddie Sachse", "Willy Sachse", "Kate Feinberg", "Jack Feinberg", "Hanna Feinberg", "Melissa Haas", "Eric Haas", "Noah Haas", "Claire Haas", "Alex Tomala", "Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
         
-        for student in students {
-            if student.range(of: "Mering") != nil{
-                level1Students.append(student)
-            } else if student.range(of: "Sachse") != nil{
-                level2Students.append(student)
-            } else if student.range(of: "Feinberg") != nil{
-                level3Students.append(student)
-            } else {
-                level4Students.append(student)
-            }
-            studentsByLevel = [1 : level1Students, 2 : level2Students, 3 : level3Students, 4 : level4Students]
-            //levelNumbers = [Int](studentsByLevel.keys)
-            levelNumbers = [1,2,3,4]
-            print(levelNumbers)
-            
-        }        
+        getStudentData(studentList: [["Tiff Mering", "1", "000"], ["Tiff Mering", "1", "000"], ["Tiff Mering", "2", "000"], ["Tiff Mering", "3", "000"], ["Tiff Mering", "4", "000"], ["Tiff Mering", "4", "000"]])
         
     }
-        //let toolbar = UIToolbar()
-        //toolbar.frame = RectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
-//        toolbar.sizeToFit()
-//        //toolbar.setItems(toolbarButtons, animated: true)
-//        toolbar.backgroundColor = UIColor.red
-//        self.view.addSubview(toolbar)
-        //setLevels()
     
-    
-//    func setLevels(){
-//        for student in students {
-//            if student.range(of: "Mering") != nil{
-//                level1Students.append(student)
-//            } else if student.range(of: "Sachse") != nil{
-//                level2Students.append(student)
-//            } else if student.range(of: "Feinberg") != nil{
-//                level3Students.append(student)
-//            } else {
-//                level4Students.append(student)
-//            }
-//            studentsByLevel = [1 : level1Students, 2 : level2Students, 3 : level3Students, 4 : level4Students]
-//            //levelNumbers = [Int](studentsByLevel.keys)
-//            levelNumbers = [1,2,3,4]
-//            print(levelNumbers)
-//            
-//    }
+    @IBAction func graphSegmentChanged(_ sender: AnyObject) {
+        print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
+        if sender.selectedSegmentIndex == 0 {
+            self.cellMode = true
+        } else {
+            self.cellMode = false
+        }
+        self.collectionView?.reloadData()
+    }
 
+
+    func loadStudentCollection() {
+        
+        
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -142,71 +114,69 @@ class StudentCollectionViewController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        sectionTitle = [animalSectionTitles objectAtIndex:section]
-//        NSArray *sectionAnimals = [animals objectForKey:sectionTitle];
-//        // #warning Incomplete implementation, return the number of items
-//        if section == 0 {
-//            return self.level1Students.count
-//        } else if section == 1 {
-//            return self.level2Students.count
-//        } else if section == 2 {
-//            return self.level3Students.count
-//        } else if section == 3 {
-//            return self.level4Students.count
-//        } else {
-//            return 0
-//        }
-        
         
         if section == 0{
-            print(section)
             return 1
         } else {
-            print(section)
-            let sectionTitle = levelNumbers[section-1]
-            let sectionStudents = studentsByLevel[sectionTitle]
-            return sectionStudents!.count
+            if cellMode {
+                let sectionStudents = studentsByLevel?[section-1]
+                return sectionStudents!.count
+            } else {
+                return 1
+            }
         }
-        
-        //NSArray *sectionAnimals = [animals objectForKey:sectionTitle];
-        //return [sectionAnimals count];
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        //collectionView.reloadSections([0])
-        
-//        let student = self.students[indexPath.row]
-//        if student.range(of: "Mering") != nil{
-//            cell.backgroundColor = UIColor.red
-//        } else if student.range(of: "Sachse") != nil{
-//            cell.backgroundColor = UIColor.blue
-//        } else if student.range(of: "Feinberg") != nil{
-//            cell.backgroundColor = UIColor.green
-//        } else {
-//            cell.backgroundColor = UIColor.yellow
-//        }
-        
         if indexPath.section == 0{
-            //let header = collectionView.dequeueReusableCell(withReuseIdentifier: "Header", for: indexPath) as! UICollectionReusableView
-            //return header as! UICollectionViewCell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "header", for: indexPath) 
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
-            let sectionTitle = levelNumbers[indexPath.section-1]
-            let sectionStudents = studentsByLevel[sectionTitle]!
-            let student = sectionStudents[indexPath.row]
-            cell.studentNameLabel.text = student
-            
-            return cell
+            if cellMode {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
+                //let sectionTitle = levelNumbers[indexPath.section-1]
+                let sectionStudents = studentsByLevel?[indexPath.section-1]
+                let student = sectionStudents?[indexPath.row]
+                cell.studentNameLabel.text = (student?[0] as! String)
+                return cell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphCell", for: indexPath)
+                
+                return cell
+            }
         }
-        
     }
     
-    func loadSampleStudents(studentList: [String]) {
-        
+    func collectionView(_ collectionView: UICollectionView,
+                                 layout collectionViewLayout: UICollectionViewLayout,
+                                 sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 1000.0, height: 100.0)
+    }
+    
+    func getStudentData(studentList: [NSArray]) {
+        ///This is where we will requestClassroomInfo
         students = studentList
+        
+        level1Students.removeAll()
+        level2Students.removeAll()
+        level3Students.removeAll()
+        level4Students.removeAll()
+        
+        for student in students {
+            if student[1] as! String == "1"{
+                level1Students.append(student)
+            } else if student[1] as! String == "2"{
+                level2Students.append(student)
+            } else if student[1] as! String == "3"{
+                level3Students.append(student)
+            } else if student[1] as! String == "4"{
+                level4Students.append(student)
+            } else {
+                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+            }
+        }
+        studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
     }
     
 
