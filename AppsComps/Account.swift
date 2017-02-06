@@ -38,6 +38,10 @@ class Account {
     func getName()->String{
         return name
     }
+    
+    func getHighestLevel() ->String {
+        return ""
+    }
 
 
 }
