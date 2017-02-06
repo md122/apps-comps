@@ -227,9 +227,6 @@ class GameScene: SKScene, UITextFieldDelegate {
 
     }
     
-    
-    
-    
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         if sender.state == .began {
@@ -237,9 +234,6 @@ class GameScene: SKScene, UITextFieldDelegate {
             if blockTouched != nil {
                 if blockTouched?.getType() == "number" || blockTouched?.getType() == "variable" {
                     snapPositiveBlockIntoPlace(block: blockTouched!)
-                }
-                else {
-                    snapNegativeBlockIntoPlace(block: blockTouched!)
                 }
                 //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
                 //Need if because the block might have snapped into the garbage can
@@ -251,6 +245,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         else if sender.state == .changed {
             let pinchScale = sender.scale
+            print(blockTouched)
             
             //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
             if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank {
@@ -268,24 +263,29 @@ class GameScene: SKScene, UITextFieldDelegate {
                 
                 blockTouched?.xScale = pinchScale
                 
+                //Add it to the parent and remove it again so it moves smoothly!!!!!!!
+                if (blockTouched?.getParentBlock() != nil) {
+                    blockTouched?.getParentBlock()?.setSubtractionBlock(block: blockTouched)
+                    removeNegativeBlockFromPositive(positiveBlock: (blockTouched?.getParentBlock())!)
+                }
+                
                 //Make the block only increase to the right for positive numbers and only increase to the left for negative
                 if (blockTouched?.getType() == "variable" || blockTouched?.getType() == "number") {
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 }
-                    //The subtractions stretch to the left
+                //The subtractions stretch to the left
                 else {
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 }
                 
                 //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
                 blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
-                    
                 //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
                 if blockTouched?.getType() == "variable" || blockTouched?.getType() == "subVariable" {
                     VARBLOCKSCALE = pinchScale
                     //go through each of the game scene children that are blocks
                     for case let child as Block in self.children {
-                        //If the block is a variable (and not the one we are currently moving or the one in the bank) we need to stretch it also
+                        //If the block is a variable (and not the one we are currently moving or the one in the bank we need to stretch it also
                         if (child.getType() == "variable" || child.getType() == "subVariable") && child != blockTouched && child != varBlockInBank && child != subVarBlockInBank {
                             child.xScale = pinchScale
                             
@@ -340,6 +340,20 @@ class GameScene: SKScene, UITextFieldDelegate {
         return "no"
     }
     
+    func removeNegativeBlockFromPositive(positiveBlock: Block) {
+        blockTouched = positiveBlock.getSubtractionBlock()
+        positiveBlock.removeSubtractionBlock()
+        //Now the subtraction block is in game scene, so get fix the scaling from when it was with parent
+        blockTouched?.xScale = (blockTouched?.xScale)! * positiveBlock.xScale
+        //Set the subtraction block position so it doesn't jump when it goes back on the game scene
+        let theXScale = positiveBlock.position.x + (CGFloat(positiveBlock.getWidth()) - CGFloat((blockTouched?.getWidth())!)) / 2
+        blockTouched?.position = CGPoint(x:theXScale, y:positiveBlock.position.y)
+        self.addChild(blockTouched!)
+        blockTouched?.color = .red
+        blockTouched?.zPosition = currentBlockZ
+        currentBlockZ += 6
+    }
+    
     // Called when you touch the screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
@@ -355,17 +369,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 }
                 else if blockIsTouched(touchLocation: touchLocation, child: block) == "subtractionBlock"{
                     //If we touch the subtraction block, we bring it back in to the normal game scene and make it the block touched
-                    blockTouched = block.getSubtractionBlock()
-                    block.removeSubtractionBlock()
-                    //Now the subtraction block is in game scene, so get fix the scaling from when it was with parent
-                    blockTouched?.xScale = (blockTouched?.xScale)! * block.xScale
-                    //Set the subtraction block position so it doesn't jump when it goes back on the game scene
-                    let theXScale = block.position.x + (CGFloat(block.getWidth()) - CGFloat((blockTouched?.getWidth())!)) / 2
-                    blockTouched?.position = CGPoint(x:theXScale, y:block.position.y)
-                    self.addChild(blockTouched!)
-                    blockTouched?.color = .red
-                    blockTouched?.zPosition = currentBlockZ
-                    currentBlockZ += 6
+                    removeNegativeBlockFromPositive(positiveBlock: block)
                 }
             }
         }
@@ -388,6 +392,15 @@ class GameScene: SKScene, UITextFieldDelegate {
                 blockTouched!.xScale = VARBLOCKSCALE
                 blockTouched!.getLabel().xScale = 1/VARBLOCKSCALE
             }
+            let parent = blockTouched!.getParentBlock()
+            //If we move a subtraction block away from it's parent, make it not a child anymore
+            if (blockTouched!.getType() == "subVariable") && (parent != nil) {
+                if abs((blockTouched?.getTopRightX())! - (parent?.getTopRightX())!) < SNAPDISTANCE && abs((blockTouched?.getTopRightY())! - (parent?.getTopRightY())!) < SNAPDISTANCE {
+                    blockTouched!.clearParentBlock()
+                }
+            }
+            
+            
             let block = blockTouched!
             let touch = touches.first
             let touchLocation = touch!.location(in: self)
@@ -652,13 +665,13 @@ class GameScene: SKScene, UITextFieldDelegate {
                 //We can only add one child, and we can't snap to blocks in the block banks
                 if (abs(child.getTopRightY() - blockTouched!.getTopRightY()) < SNAPDISTANCE) && (abs(child.getTopRightX() - blockTouched!.getTopRightX()) < SNAPDISTANCE) && child.getSubtractionBlock() == nil && child != numBlockInBank && child != varBlockInBank{
                     //Set the position relative to the parent
-                    blockTouched!.position = CGPoint(x: 0, y: 0)
                     //Send the subtraction block to be the child of the current block
                     child.setSubtractionBlock(block: blockTouched!)
+                    //Keep track of the subtraction block's parent
+                    blockTouched!.setParentBlock(block: child)
                 }
             }
         }
-        
         
         // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank.
         // If not, put the block back where it came from

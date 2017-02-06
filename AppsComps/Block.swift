@@ -27,11 +27,13 @@ class Block: SKSpriteNode {
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     var subtractionBlock: Block?
+    var parentBlock: Block?
     
     init(type: BlockType, size: CGSize) {
         self.type = type
         self.value = 1.0
         subtractionBlock = nil
+        parentBlock = nil
         
         BLOCKHEIGHT = size.height
         BLOCKWIDTH = size.width
@@ -154,22 +156,36 @@ class Block: SKSpriteNode {
         return String(describing: self.type)
     }
     
-    func setSubtractionBlock(block: Block) {
+    func setSubtractionBlock(block: Block?) {
+        print("adding a child")
         self.subtractionBlock = block
-        block.position = CGPoint(x:((self.getWidth() / 2) - (block.getWidth()) / 2) / Double(self.xScale), y:0)
-        block.xScale = block.xScale / self.xScale
-        block.zPosition = 3
-        block.removeFromParent()
-        self.addChild(block)
+        block?.position = CGPoint(x:((self.getWidth() / 2) - (block?.getWidth())! / 2) / Double(self.xScale), y:0)
+        block?.xScale = (block?.xScale)! / self.xScale
+        block?.zPosition = 3
+        block?.removeFromParent()
+        self.addChild((block)!)
     }
     
     func removeSubtractionBlock() {
         subtractionBlock?.removeFromParent()
         self.subtractionBlock = nil
+        
     }
     
     func getSubtractionBlock() -> Block? {
         return self.subtractionBlock
+    }
+    
+    func getParentBlock() -> Block? {
+        return self.parentBlock
+    }
+    
+    func setParentBlock(block: Block?) {
+        self.parentBlock = block
+    }
+    
+    func clearParentBlock() {
+        self.parentBlock = nil
     }
 
 }
