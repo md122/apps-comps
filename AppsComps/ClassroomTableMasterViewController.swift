@@ -28,7 +28,7 @@ class ClassroomTableMasterViewController: UITableViewController {
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
         tableView.allowsMultipleSelectionDuringEditing = true
-        loadSampleClassrooms(classroomList: ["Onion", "Vinegar", "Nettles", "Nyan Cat"])
+        loadSampleClassrooms(classroomList: ["Onion Classroom", "Vinegar Classroom", "Nettles Classroom", "Nyan Cat Classroom"])
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
@@ -102,18 +102,22 @@ class ClassroomTableMasterViewController: UITableViewController {
 
     // MARK: - Segues
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow {
-//                let classroom = classrooms[indexPath.row]
-//                let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
-//                //controller.detailItem = classroom
-//                //controller.detailItem = "Hi!"
-//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Cats")
+        
+        if segue.identifier == "showDetail" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let classroom = classrooms[indexPath.row]
+                //let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
+                //controller.detailItem = classroom
+                //controller.detailItem = "Hi!"
+                detailViewController?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+                detailViewController?.navigationItem.leftItemsSupplementBackButton = true
+                detailViewController?.loadSampleStudents(studentList: ["Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
+                
+            }
+        }
+    }
 
     // MARK: - Table View
 

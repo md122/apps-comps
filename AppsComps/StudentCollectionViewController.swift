@@ -12,7 +12,15 @@ import UIKit
 class StudentCollectionViewController: UICollectionViewController {
     
     @IBOutlet var StudentCollection: UICollectionView!
+    @IBOutlet var graphSegment: UISegmentedControl!
     var students = [String]()
+    @IBAction func graphSegmentChanged(_ sender: AnyObject) {
+        print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
+        loadSampleStudents(studentList: ["Joan Baez", "Bob Dylan", "Billy Joel"])
+        StudentCollection.reloadSections([1,2])
+    }
+    
+   
     var level1Students = [String]()
     var level2Students = [String]()
     var level3Students = [String]()
@@ -28,6 +36,7 @@ class StudentCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         loadSampleStudents(studentList: ["Tiff Mering", "Josh Mering", "Jenner Mering", "Ray Mering", "Sarah Mering", "Mason Mering", "Sadie Mering", "John Mering", "Ellen Mering", "Karl Mering", "Kimm Mering", "Andrew Mering", "Nicole Sachse", "Rich Sachse", "Alex Sachse", "Jacob Sachse", "Maddie Sachse", "Willy Sachse", "Kate Feinberg", "Jack Feinberg", "Hanna Feinberg", "Melissa Haas", "Eric Haas", "Noah Haas", "Claire Haas", "Alex Tomala", "Christopher Omen",  "Danielle Omen", "Ty Hall", "Corrine Avenius", "Rick Avenius", "Lizzy Avenius", "April Durrett"])
+        
         for student in students {
             if student.range(of: "Mering") != nil{
                 level1Students.append(student)
@@ -43,17 +52,36 @@ class StudentCollectionViewController: UICollectionViewController {
             levelNumbers = [1,2,3,4]
             print(levelNumbers)
             
-        }
+        }        
+        
+    }
         //let toolbar = UIToolbar()
         //toolbar.frame = RectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
 //        toolbar.sizeToFit()
 //        //toolbar.setItems(toolbarButtons, animated: true)
 //        toolbar.backgroundColor = UIColor.red
 //        self.view.addSubview(toolbar)
-        
-        
-    }
+        //setLevels()
     
+    
+//    func setLevels(){
+//        for student in students {
+//            if student.range(of: "Mering") != nil{
+//                level1Students.append(student)
+//            } else if student.range(of: "Sachse") != nil{
+//                level2Students.append(student)
+//            } else if student.range(of: "Feinberg") != nil{
+//                level3Students.append(student)
+//            } else {
+//                level4Students.append(student)
+//            }
+//            studentsByLevel = [1 : level1Students, 2 : level2Students, 3 : level3Students, 4 : level4Students]
+//            //levelNumbers = [Int](studentsByLevel.keys)
+//            levelNumbers = [1,2,3,4]
+//            print(levelNumbers)
+//            
+//    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
