@@ -9,13 +9,10 @@
 import UIKit
 
 
-class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
     
     var students = [NSArray]()
     
-    
-    
-   
     var level1Students = [NSArray]()
     var level2Students = [NSArray]()
     var level3Students = [NSArray]()
@@ -33,11 +30,23 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
+        
+        
         getStudentData(studentList: [["Tiff Mering", "1", "000"], ["Tiff Mering", "1", "000"], ["Tiff Mering", "2", "000"], ["Tiff Mering", "3", "000"], ["Tiff Mering", "4", "000"], ["Tiff Mering", "4", "000"]])
         
     }
     
     @IBAction func graphSegmentChanged(_ sender: AnyObject) {
+        print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
+        if sender.selectedSegmentIndex == 0 {
+            self.cellMode = true
+        } else {
+            self.cellMode = false
+        }
+        self.collectionView?.reloadData()
+    }
+    
+    func modeSegmentChanged(_ sender: AnyObject) {
         print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
         if sender.selectedSegmentIndex == 0 {
             self.cellMode = true
@@ -66,14 +75,21 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         // Tests getting the split view controller
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
         splitViewController?.presentsWithGesture = true
-//        let toolbar = UIToolbar()
-//        
-//        self.view.addSubview(toolbar)
-        
-        // instantiate spacer, middleItem
-       // toolbar.items = @[spacer, middleItem, spacer];
+
+        let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+        cellModeSegment.selectedSegmentIndex = 0
+        //cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .touchUpInside)
+        cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
+        let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
+// 
+        segmentBarItem.target = self
+//        segmentBarItem.action = #selector(modeSegmentChanged)
+        toolbarItems = [segmentBarItem]
+        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+        self.navigationController!.setToolbarHidden(false, animated: false)
     }
 
+    
     // Note there is a similar logout in Student, changes to one should also go in the other
     @IBAction func logoutClicked(_ sender: AnyObject) {
         let createAccountAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
@@ -151,7 +167,27 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     func collectionView(_ collectionView: UICollectionView,
                                  layout collectionViewLayout: UICollectionViewLayout,
                                  sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 1000.0, height: 100.0)
+        if indexPath.section == 0{
+          return CGSize(width: 200.0, height: 100.0)
+        } else{
+            if cellMode == true {
+                return CGSize(width: 100.0, height: 100.0)
+            } else {
+                if indexPath.section == 1 {
+                    return CGSize(width: 200.0, height: 100.0)
+                } else if indexPath.section == 2 {
+                    return CGSize(width: 100.0, height: 100.0)
+                } else if indexPath.section == 3 {
+                    return CGSize(width: 100.0, height: 100.0)
+                } else if indexPath.section == 4 {
+                    return CGSize(width: 300.0, height: 100.0)
+                } else {
+                    print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+                    return CGSize(width: 100.0, height: 100.0)
+                }
+            }
+        }
+        
     }
     
     func getStudentData(studentList: [NSArray]) {
@@ -178,6 +214,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         }
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
     }
+    
     
 
     // MARK: UICollectionViewDelegate
