@@ -39,16 +39,18 @@ class ClassroomTableMasterViewController: UITableViewController {
             sender.title = "Done"
             let trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteClassroomList(_:)))
             self.navigationItem.rightBarButtonItem = trashButton
+            let indexPath = IndexPath(row: self.classrooms.count, section: 0)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
         } else {
             //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = false
             sender.title = "Edit"
             let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
             self.navigationItem.rightBarButtonItem = addButton
+            let indexPath = IndexPath(row: self.classrooms.count, section: 0)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
         
         }
-        
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
@@ -81,6 +83,7 @@ class ClassroomTableMasterViewController: UITableViewController {
     func deleteClassroomList(_ sender: UIBarButtonItem) {
         if var selection = tableView.indexPathsForSelectedRows
         {
+            selection.sort(by: {$0.row > $1.row})
             if selection.count > 0
             {
                 for indexPath in selection
@@ -88,14 +91,18 @@ class ClassroomTableMasterViewController: UITableViewController {
                     classrooms.remove(at: indexPath.row)
                     //tableView.deleteRows(at: [indexPath], with: .fade)
                 }
-                 tableView.deleteRows(at: selection, with: .automatic)
+                tableView.deleteRows(at: selection, with: .automatic)
                 //tableView.deleteRows(at: selection, with: .automatic)
             }
         }
+        
+        // Old code that after deleting moves out of 
+        /*
         self.isEditing = false
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         self.leftBarButton.title = "Edit"
+        */
         
     }
 
@@ -122,20 +129,34 @@ class ClassroomTableMasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.classrooms.count
+        return self.classrooms.count + (self.isEditing ? 1 : 0)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
 
-        let classroom = self.classrooms[indexPath.row]
-        cell.textLabel?.text = classroom
+        if(indexPath.row >= classrooms.count && self.isEditing){
+            cell.textLabel?.text = "Add Classroom";
+            let button = UIButton(type: UIButtonType.contactAdd)
+            button.addTarget(self, action: #selector(insertNewObject), for: .touchUpInside)
+            cell.accessoryView = button;
+        }else{
+            let classroom = self.classrooms[indexPath.row]
+            cell.textLabel?.text = classroom
+        }
+        
         return cell
     }
 
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(indexPath.row >= classrooms.count) {
+            return false
+        }
         return true
     }
+ 
+    
 
 //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 //        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
