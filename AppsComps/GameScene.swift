@@ -232,54 +232,66 @@ class GameScene: SKScene, UITextFieldDelegate {
         if sender.state == .began {
             //We want to snap the block back into the correct bar(or put it back in it's position in the block bank or remove it from the bar before the stretching starts
             if blockTouched != nil {
+                //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
+                sender.scale = (blockTouched?.xScale)!
                 if blockTouched?.getType() == "number" || blockTouched?.getType() == "variable" {
                     snapPositiveBlockIntoPlace(block: blockTouched!)
                 }
-                //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
-                //Need if because the block might have snapped into the garbage can
-                if blockTouched != nil {
-                    sender.scale = (blockTouched?.xScale)!
+                else {
+                    snapNegativeBlockIntoPlace(block: blockTouched!)
                 }
             }
         }
         
         else if sender.state == .changed {
             let pinchScale = sender.scale
-            print(blockTouched)
-            
             //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
             if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank {
                 //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                 var indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
                 var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
                 //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
-                let differenceInBarSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
+
+                var differenceInBarSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
+                //This will be changed for the negative blocks attached to a parent block, so they move over the right amount
                 if indexInTopBar > -1 {
                     shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
                 }
                 if indexInBottomBar > -1 {
                     shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
                 }
-                
-                blockTouched?.xScale = pinchScale
-                
-                //Add it to the parent and remove it again so it moves smoothly!!!!!!!
-                if (blockTouched?.getParentBlock() != nil) {
-                    blockTouched?.getParentBlock()?.setSubtractionBlock(block: blockTouched)
-                    removeNegativeBlockFromPositive(positiveBlock: (blockTouched?.getParentBlock())!)
+                //If we are dealing with a subtraction block that is currently the child of a positive block don't scoot it over, but do mess with the scale factor because it is in it's parent world
+                if let parent = blockTouched?.parent as? Block {
+                    let scale1 = Double((blockTouched?.xScale)!)
+                    let scale2 = Double((blockTouched?.parent?.xScale)!)
+                    let previousBlockSize = scale1 * scale2 * Double((blockTouched?.getOriginalWidth())!)
+                    let currentBlockSize = (Double(pinchScale)) * blockTouched!.getOriginalWidth()
+                    differenceInBarSize = currentBlockSize - previousBlockSize
+                    
+                    //Scale the subtraction number, but not the subtraction variable because that will get scaled with it's parent
+                    if blockTouched?.getType() == "subNumber" {
+                        blockTouched?.xScale = (pinchScale / (blockTouched?.parent?.xScale)!)
+                        //!!!
+                        blockTouched?.getLabel().xScale = (1/(blockTouched?.xScale)!) / (blockTouched?.parent?.xScale)!
+                        blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - ((CGFloat(differenceInBarSize) / (blockTouched?.parent?.xScale)!)) / 2), y:(blockTouched?.position.y)!)
+                    }
                 }
-                
                 //Make the block only increase to the right for positive numbers and only increase to the left for negative
-                if (blockTouched?.getType() == "variable" || blockTouched?.getType() == "number") {
-                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                else if (blockTouched?.getType() == "variable" || blockTouched?.getType() == "number") {
+                    blockTouched?.xScale = pinchScale
+                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + ((CGFloat(differenceInBarSize)) / 2)), y:(blockTouched?.position.y)!)
+                    //If this block has a child, make sure that child's label is scaled to 1
+                    if blockTouched?.getSubtractionBlock() != nil {
+                        blockTouched?.getSubtractionBlock()?.getLabel().xScale = pinchScale / ((blockTouched?.parent?.xScale)!)
+                    }
                 }
                 //The subtractions stretch to the left
-                else {
+                else if blockTouched?.getType() == "subNumber" || blockTouched?.getType() == "subVariable" {
+                    blockTouched?.xScale = pinchScale
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 }
-                
-                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
                 blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                
                 //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
                 if blockTouched?.getType() == "variable" || blockTouched?.getType() == "subVariable" {
                     VARBLOCKSCALE = pinchScale
@@ -392,14 +404,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                 blockTouched!.xScale = VARBLOCKSCALE
                 blockTouched!.getLabel().xScale = 1/VARBLOCKSCALE
             }
-            let parent = blockTouched!.getParentBlock()
-            //If we move a subtraction block away from it's parent, make it not a child anymore
-            if (blockTouched!.getType() == "subVariable") && (parent != nil) {
-                if abs((blockTouched?.getTopRightX())! - (parent?.getTopRightX())!) < SNAPDISTANCE && abs((blockTouched?.getTopRightY())! - (parent?.getTopRightY())!) < SNAPDISTANCE {
-                    blockTouched!.clearParentBlock()
-                }
-            }
-            
             
             let block = blockTouched!
             let touch = touches.first
@@ -664,11 +668,8 @@ class GameScene: SKScene, UITextFieldDelegate {
             if (child.getType() == "number" && blockTouched?.getType() == "subNumber") || (child.getType() == "variable" && blockTouched?.getType() == "subVariable")  {
                 //We can only add one child, and we can't snap to blocks in the block banks
                 if (abs(child.getTopRightY() - blockTouched!.getTopRightY()) < SNAPDISTANCE) && (abs(child.getTopRightX() - blockTouched!.getTopRightX()) < SNAPDISTANCE) && child.getSubtractionBlock() == nil && child != numBlockInBank && child != varBlockInBank{
-                    //Set the position relative to the parent
                     //Send the subtraction block to be the child of the current block
                     child.setSubtractionBlock(block: blockTouched!)
-                    //Keep track of the subtraction block's parent
-                    blockTouched!.setParentBlock(block: child)
                 }
             }
         }

@@ -33,7 +33,6 @@ class Block: SKSpriteNode {
         self.type = type
         self.value = 1.0
         subtractionBlock = nil
-        parentBlock = nil
         
         BLOCKHEIGHT = size.height
         BLOCKWIDTH = size.width
@@ -174,18 +173,6 @@ class Block: SKSpriteNode {
     
     func getSubtractionBlock() -> Block? {
         return self.subtractionBlock
-    }
-    
-    func getParentBlock() -> Block? {
-        return self.parentBlock
-    }
-    
-    func setParentBlock(block: Block?) {
-        self.parentBlock = block
-    }
-    
-    func clearParentBlock() {
-        self.parentBlock = nil
     }
 
 }
