@@ -27,9 +27,23 @@ class APIConnector: NSObject  {
         }
     }
     
-    func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
+    /*func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
         let dummyData = false
         callingDelegate.handleAddProblemDataAttempt?(data: dummyData)
+    }*/
+    
+    func attemptSubmitAnswer(callingDelegate: APIDataDelegate, studentID: String, studentAnswer: String) {
+        let url = baseURL + "attemptSubmitAnswer/" + studentID + "/" + studentAnswer
+        Alamofire.request(url).responseData { response in
+            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
+                /* var result = false
+                 if (utf8Text == "True") {
+                 result = true
+                 } */
+                callingDelegate.handleSubmitAnswer?(data: utf8Text)
+            }
+        }
+        
     }
     
     // STUDENT ACCOUNT

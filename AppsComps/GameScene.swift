@@ -185,8 +185,7 @@ class GameScene: SKScene, APIDataDelegate {
         
         
         problemText.text = "Hi"
-        let connector = APIConnector()
-        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
+
         problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
         problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
         problemText.fontColor = .black

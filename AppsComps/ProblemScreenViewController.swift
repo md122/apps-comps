@@ -20,6 +20,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         super.viewDidLoad()
         
 
+        testAPIConnector()
         
         let skView = SKView(frame: self.view.frame)
         
@@ -53,23 +54,32 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
+        print ("here")
         let connector = APIConnector()
         //connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
+        connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: "3")
         
-        connector.attemptAddProblemData(callingDelegate: self, start_time: "10/12", end_time: "10/12", answer: "6", wasCorrect: false)
     }
     
 
 
     
     
-    // Function that gets called when student data comes back
-    func handleAddProblemDataAttempt(data: Bool) {
-        print("Incoming handleAddProblemDataAttempt data")
-        print(data)
+    // Function that gets called when problem answer comes back
+    /*func handleSubmitAnswer(data: String) {
+        if (data == "correct") {
+            
+        }
+        else {
+            
+        }
+    }*/
+    
+    // Function that gets called when next problem comes back
+    func handleNextProblem(data: String) {
+        print (data)
+        
     }
-    
-    
     
     
     /*
