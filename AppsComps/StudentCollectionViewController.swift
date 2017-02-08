@@ -19,8 +19,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var level4Students = [NSArray]()
     var studentsByLevel : [[NSArray]]? = nil
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
+    let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
     
-    var cellMode = true;
+    var cellMode = Bool()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+        collectionView?.allowsMultipleSelection = true
+        
+        if cellMode == nil {
+            cellModeSegment.selectedSegmentIndex = 0
+            cellMode = false
+        } else if cellMode == false {
+            cellModeSegment.selectedSegmentIndex = 0
+        }  else if cellMode == true {
+            cellModeSegment.selectedSegmentIndex = 1
+        }
         
         
         
@@ -36,19 +47,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
     }
     
-    @IBAction func graphSegmentChanged(_ sender: AnyObject) {
-        print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
-        if sender.selectedSegmentIndex == 0 {
-            self.cellMode = true
-        } else {
-            self.cellMode = false
-        }
-        self.collectionView?.reloadData()
-    }
-    
     func modeSegmentChanged(_ sender: AnyObject) {
-        print("HHRKLJSDBGJKSDHBVKJHGDSBGJKSD")
-        if sender.selectedSegmentIndex == 0 {
+        if sender.selectedSegmentIndex == 1 {
             self.cellMode = true
         } else {
             self.cellMode = false
@@ -76,17 +76,17 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
         splitViewController?.presentsWithGesture = true
 
-        let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
-        cellModeSegment.selectedSegmentIndex = 0
+//        let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+//        cellModeSegment.selectedSegmentIndex = 0
         //cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .touchUpInside)
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
-// 
+       // let deleteStudentsButton = UISwitch()
         segmentBarItem.target = self
 //        segmentBarItem.action = #selector(modeSegmentChanged)
         toolbarItems = [segmentBarItem]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        self.navigationController!.setToolbarHidden(false, animated: false)
+        self.navigationController?.setToolbarHidden(false, animated: false)
     }
 
     
@@ -187,7 +187,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
                 }
             }
         }
-        
     }
     
     func getStudentData(studentList: [NSArray]) {
@@ -215,23 +214,30 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
     }
     
+//    func prepare(for segue: UIStoryboardSegue, sender: ClassroomTableMasterViewController) {
+//        
+//        if segue.identifier == "showDetail" {
+//            //if
+//        }
+//    }
+    
     
 
     // MARK: UICollectionViewDelegate
 
-    /*
+    
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
+ 
 
-    /*
+    
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
+    
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

@@ -28,7 +28,7 @@ class ClassroomTableMasterViewController: UITableViewController {
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
         tableView.allowsMultipleSelectionDuringEditing = true
-        loadSampleClassrooms(classroomList: ["Onion Classroom", "Vinegar Classroom", "Nettles Classroom", "Nyan Cat Classroom"])
+        loadSampleClassrooms(classroomList: ["First Hour", "Second Hour", "Third Hour", "Fourth Hour"])
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
@@ -81,6 +81,7 @@ class ClassroomTableMasterViewController: UITableViewController {
     func deleteClassroomList(_ sender: UIBarButtonItem) {
         if var selection = tableView.indexPathsForSelectedRows
         {
+            selection.sort(by: {$0.row > $1.row})
             if selection.count > 0
             {
                 for indexPath in selection
@@ -103,7 +104,6 @@ class ClassroomTableMasterViewController: UITableViewController {
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Cats")
         
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
