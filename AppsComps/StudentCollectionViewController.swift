@@ -56,10 +56,12 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         self.collectionView?.reloadData()
     }
 
-
-    func loadStudentCollection() {
-        
-        
+    func loadStudentCollection(classroomID: String) {
+        if classroomID == "test" {
+            getStudentData(studentList: [["Student Name", "1", "000"], ["Student Name", "1", "000"], ["Student Name", "2", "000"], ["Student Name", "3", "000"], ["Student Name", "4", "000"], ["Student Name", "4", "000"]])
+            
+        }
+        self.collectionView?.reloadData()
         
     }
     

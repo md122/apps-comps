@@ -97,26 +97,32 @@ class ClassroomTableMasterViewController: UITableViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         self.leftBarButton.title = "Edit"
-        
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            didSelectRowAt indexPath: IndexPath){
+        if self.isEditing == false {
+            detailViewController?.loadStudentCollection(classroomID: "test")
+        }
     }
 
 
     // MARK: - Segues
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let classroom = classrooms[indexPath.row]
-                //let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
-                //controller.detailItem = classroom
-                //controller.detailItem = "Hi!"
-//                detailViewController?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//                detailViewController?.navigationItem.leftItemsSupplementBackButton = true
-                
-            }
-        }
-    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//        if segue.identifier == "showDetail" {
+//            if let indexPath = self.tableView.indexPathForSelectedRow {
+//                let classroom = classrooms[indexPath.row]
+//                //let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
+//                //controller.detailItem = classroom
+//                //controller.detailItem = "Hi!"
+////                detailViewController?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+////                detailViewController?.navigationItem.leftItemsSupplementBackButton = true
+//                
+//            }
+//        }
+//    }
 
     // MARK: - Table View
 
