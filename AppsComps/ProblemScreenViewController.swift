@@ -14,26 +14,25 @@ import SpriteKit
 
 
 class ProblemScreenViewController: UIViewController, APIDataDelegate {
-    /* Why is this so important!!??? */
+
+    @IBOutlet weak var gameView: SKView!
+    @IBOutlet weak var problemLabel: UILabel!
+    @IBOutlet weak var submitTextField: UITextField!
+    @IBOutlet weak var submitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        testAPIConnector()
+        setProblemText()
         
-        let skView = SKView(frame: self.view.frame)
-        
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        gameView.showsFPS = true
+        gameView.showsNodeCount = true
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = true
+        gameView.ignoresSiblingOrder = true
         
-        let scene = GameScene(size: skView.bounds.size)
-        view.addSubview(skView)
-        
-        skView.presentScene(scene)
+        let scene = GameScene(size: gameView.bounds.size)
+        gameView.presentScene(scene)
         
         
     }
@@ -61,6 +60,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         
     }
     
+    func setProblemText() {
+        let connector = APIConnector()
+        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
+    }
+    
 
 
     
@@ -77,7 +81,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     // Function that gets called when next problem comes back
     func handleNextProblem(data: String) {
-        print (data)
+        problemLabel.text = data
         
     }
     
