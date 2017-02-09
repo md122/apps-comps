@@ -11,23 +11,23 @@ import UIKit
 import SpriteKit
 
 class ProblemScreenViewController: UIViewController, APIDataDelegate {
-    /* Why is this so important!!??? */
+
+    @IBOutlet weak var gameView: SKView!
+    @IBOutlet weak var problemLabel: UILabel!
+    @IBOutlet weak var submitTextField: UITextField!
+    @IBOutlet weak var submitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let skView = SKView(frame: self.view.frame)
-        
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        gameView.showsFPS = true
+        gameView.showsNodeCount = true
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = true
+        gameView.ignoresSiblingOrder = true
         
-        let scene = GameScene(size: skView.bounds.size)
-        view.addSubview(skView)
-        
-        skView.presentScene(scene)
+        let scene = GameScene(size: gameView.bounds.size)
+        gameView.presentScene(scene)
         
         testAPIConnector()
     }
