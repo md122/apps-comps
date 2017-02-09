@@ -56,18 +56,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
     }
     
-    // this is an example of how to use the APIConnector
-    func testAPIConnector() {
-        print ("here")
-        let connector = APIConnector()
-        //connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
-        connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: "3")
-        
-    }
+
+    
     
     func setProblemText() {
         let connector = APIConnector()
         connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
+        
     }
     
 
@@ -77,12 +72,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     // Function that gets called when problem answer comes back
     func handleSubmitAnswer(data: String) {
         if (data == "correct") {
-            print("yes")
             submitTextField.text = ""
             setProblemText()
         }
         else {
-            print("no")
             let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
             wrongAnswerAlert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (action: UIAlertAction!) in
                 self.submitTextField.text = ""
@@ -101,6 +94,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     // Function that gets called when next problem comes back
     func handleNextProblem(data: String) {
         problemLabel.text = data
+
     }
     
     
