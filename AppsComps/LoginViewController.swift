@@ -8,8 +8,8 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate {
-
+class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegate, GIDSignInDelegate {
+    
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
     var name: String?
@@ -18,15 +18,20 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
         signInButton.style = GIDSignInButtonStyle.wide
+        //GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             GIDSignIn.sharedInstance().signOut()
         }
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -36,12 +41,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         GIDSignIn.sharedInstance().signOut()
     }
     
-
-
+    
+    
     // Function that gets called when login data (1=no account, 2=student, or 3=teacher) comes back
     func handleLoginAttempt(data: String) {
         let connector = APIConnector()
-
+        
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             print("signed in")
             if (data == "ERROR: Account does not exist") {
@@ -74,7 +79,31 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         } else {
             print ("not signed in")
         }
-
+        
+    }
+    
+    // From google tutorial, handles url received at the end of authenticiation process
+    func application(_ application: UIApplication,
+                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: sourceApplication,
+                                                 annotation: annotation)
+    }
+    
+    // Google sign-in methods from tutorial
+    // The sign-in flow has finished and was successful if |error| is |nil|.
+    public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if (error == nil) {
+            // Perform any operations on signed in user here.
+            //let userId = user.userID                  // For client-side use only!
+            self.idToken = user.authentication.idToken // Safe to send to the server
+            self.name = user.profile.name
+            let connector = APIConnector()
+            connector.attemptLogin(callingDelegate: self, idToken: idToken!)
+            
+        } else {
+            print("\(error.localizedDescription)")
+        }
     }
     
     
@@ -84,9 +113,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         print(data)
         
     }
-    
-
-
+        
+        
+        
     // Called from appdelegate after user is authenticated by google
     func didAttemptSignIn(idToken: String, name: String ) {
         let connector = APIConnector()
@@ -94,18 +123,16 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         self.idToken = idToken
         connector.attemptLogin(callingDelegate: self, idToken: idToken)
     }
-    
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+        
+        
+        /*
+         // MARK: - Navigation
+         
+         // In a storyboard-based application, you will often want to do a little preparation before navigation
+         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         // Get the new view controller using segue.destinationViewController.
+         // Pass the selected object to the new view controller.
+         }
+         */
+        
 }
