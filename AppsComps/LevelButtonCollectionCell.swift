@@ -10,14 +10,20 @@ import UIKit
 
 class LevelButtonCollectionCell: UICollectionViewCell {
     @IBOutlet weak var levelButton: LevelButton?
+    @IBOutlet weak var levelView: UIImageView!
+
     
     override init(frame: CGRect) {
+        
         super.init(frame: frame)
+
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 
+        super.init(coder: aDecoder)
+
+    }
+    
     
 }
