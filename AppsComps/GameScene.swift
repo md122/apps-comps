@@ -23,6 +23,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var bottomBar = [Block]()
     var levelCircles = [SKShapeNode]()
     var garbage:SKSpriteNode
+    var hammer:SKSpriteNode
     
     // The starting coordinates
     let width:CGFloat
@@ -43,6 +44,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     let NUMBLOCKSIZE:CGSize
     let VARBLOCKSIZE:CGSize
     let GARBAGEPOSITION:CGPoint
+    let HAMMERPOSITION:CGPoint
     let GARBAGESIZE:CGSize
     let LEVELCIRCLERADIUS:CGFloat
     let SNAPDISTANCE:Double
@@ -83,6 +85,8 @@ class GameScene: SKScene, UITextFieldDelegate {
         SUBNUMBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
+        HAMMERPOSITION = CGPoint(x: 0.25*WIDTHUNIT+2*GARBAGESIZE.width, y: HEIGHTUNIT)
+
        
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
@@ -91,6 +95,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE)
         
         garbage = SKSpriteNode(imageNamed: "garbage.png")
+        hammer = Hammer()
         
         SNAPDISTANCE = 20.0
         
@@ -110,12 +115,14 @@ class GameScene: SKScene, UITextFieldDelegate {
     // Called immediately after a scene is loaded
     // Sets the layout of all components in the problem screen
     override func didMove(to view: SKView) {
-        
         self.backgroundColor = .white
         
         garbage.position = GARBAGEPOSITION
+        hammer.position = HAMMERPOSITION
         garbage.size = GARBAGESIZE
+        hammer.size = CGSize(width:GARBAGESIZE.width / 2, height: GARBAGESIZE.height / 2)
         self.addChild(garbage)
+        self.addChild(hammer)
         
         //Add the original block in the number block bank and the variable block bank
         numBlockInBank.position = NUMBLOCKBANKPOSITION
@@ -246,7 +253,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         else if sender.state == .changed {
             let pinchScale = sender.scale
             //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
-            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank {
+            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != hammer {
                 //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                 var indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
                 var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
@@ -660,7 +667,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
-    //
+    //Hammer goes here too because it's not a positive block
     func snapNegativeBlockIntoPlace(block: Block) {
         
         //If on top of a positive block, snap it on top of that block.
@@ -708,7 +715,12 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
         //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
         if (blockOverGarbageCan(block: block)) {
-            block.removeFromParent()
+            if blockTouched == hammer {
+                hammer.position = HAMMERPOSITION
+            }
+            else {
+                block.removeFromParent()
+            }
             blockTouched = nil
             garbage.setScale(1.0)
         }
@@ -718,15 +730,42 @@ class GameScene: SKScene, UITextFieldDelegate {
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
+            print("the touch ended")
             let block = blockTouched!
             //Set the color to the not selected color
             block.color = .black
             if block.getType() == "number" || block.getType() == "variable" {
                 snapPositiveBlockIntoPlace(block: block)
             }
+            if block.getType() == "hammer" {
+                snapNegativeBlockIntoPlace(block: block)
+                for case let child as Block in self.children {
+                    if child.getSubtractionBlock() != nil && (child.getSubtractionBlock()!.getValue() <= child.getValue()) {
+                        //VORTEX!!!
+                        //let fieldNode = SKFieldNode.radialGravityField()
+                        //fieldNode.categoryBitMask = 0x1 << 0
+                        //fieldNode.strength = 2.8
+                        
+                       
+                        //child.physicsBody?.fieldBitMask = 0x1 << 0
+                        
+                        //fieldNode.run(SKAction.sequence([SKAction.strength(to: 0, duration: 2.0), SKAction.removeFromParent()]))
+                        //print(fieldNode)
+                        //hammer.addChild(fieldNode)
+                        //Remove in a super cool black hole way!!!!
+                        child.removeFromParent()
+                        //SHIT OVER THE BLOCKS AFTER IT IN A BAR!!!
+                        hammer.position = HAMMERPOSITION
+                    }
+                }
+
+            }
             else {
                 snapNegativeBlockIntoPlace(block: block)
             }
+            
+            
+            
             blockTouched = nil
         }
     }

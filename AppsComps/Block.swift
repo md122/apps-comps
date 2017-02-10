@@ -16,6 +16,7 @@ class Block: SKSpriteNode {
         case variable
         case subNumber
         case subVariable
+        case hammer
     }
     
     let BLOCKHEIGHT:CGFloat
@@ -28,6 +29,15 @@ class Block: SKSpriteNode {
     var innerBlockColor = SKSpriteNode()
     var subtractionBlock: Block?
     var parentBlock: Block?
+    
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        BLOCKHEIGHT = 1
+        BLOCKWIDTH = 1
+        self.type = .hammer
+        self.value = 1
+        super.init(texture: texture, color: color, size: size)
+        
+    }
     
     init(type: BlockType, size: CGSize) {
         self.type = type
@@ -84,7 +94,15 @@ class Block: SKSpriteNode {
             shape.alpha = 1 / 0.40
             self.addChild(shape)
             label.fontSize = 15
+        //This should never get called
+        case .hammer:
+            self.type = .hammer
+            self.value = 1.0
+            subtractionBlock = nil
+            super.init(texture: nil, color: .black, size:size)
+            print("hammer")
         }
+        
         self.xScale = xScale
         innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))
         innerBlockColor.yScale = CGFloat(1-1.5*(1/self.getHeight()))
@@ -95,7 +113,6 @@ class Block: SKSpriteNode {
         
         //Set the look of the label and attach the label to this block 2 units higher than its parent
         label.fontColor = .black
-        //?????
         label.xScale = 1 / xScale
         self.addChild(label)
         label.zPosition = 2
