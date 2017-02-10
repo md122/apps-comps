@@ -17,19 +17,28 @@ From Brynna and Wanchen:
 (Student)
 /requestStudentDashInfo/<studentID>
 - returns Classroom (name) Teacher (name) Level
-[["classroomName", "classroomID"], levelNum, progress]
 requestStudentDashInfo(studentID: String)
 handleStudentDashInfo(classroomData)
+If student ID invalid, go back to login
+If no classroom/teacher return empty values array
+Else {classroomName, teacherName}
 
-/attemptAddStudentToClassroom/<studentID>
-- return true if able, false if error (teacher and student can do)
+/attemptAddStudentToClassroom/<studentID>/<classroomID>
+- return classroom (only student can do this)
 attemptRemoveStudentFromClass(studentID: String)
 handleRemoveStudentFromClassAttempt()
+If student ID invalid, go back to login
+If classroomID invalid, notify user
+If already in classroom, notify user
+Else {classroomName, teacherName}
 
 /attemptRemoveStudentFromClass/<studentID>
-- return true if able, false if error (teacher and student can do)
+- remove student from any class they are apart of
 attemptRemoveStudentFromClass(studentID: String)
 handleRemoveStudentFromClassAttempt()
+If student ID invalid, go back to login
+(CHECK) If classroomID invalid, notify user
+ELSE {}
 
 /requestProblemHistory/<studentID>
 - (unclear what this does)
@@ -44,22 +53,25 @@ handleCorrectIncorrectRatio()
 (Teacher)
 
 /requestTeacherDashInfo/<teacherID>
-- returns Classrooms (names,  IDs)
-[[classroomName, classroomID]]
+- returns teacher_name, Classrooms (names,  IDs) with students (ID, names, level)
 requestTeacherDashInfo()
 handleTeacherDashInfo()
+If teacherID invalid, return to home screen
+If no classrooms, return {} ask if teacher would like to make a classroom
 
 /attemptAddClassroom/<teacherID>/<classroomName>
 attemptAddClassroom(teacherID: String, classroomName: String)
 handleAddClassroomAttempt(teacherID)
+If teacherID invalid return to homescreen
+If teahcer already has classroom with that name, ask to choose a different name
+Else return {classroomID}
 
-<<<<<<< HEAD
-/attemptDeleteClassroom/<teacherID>/<classroomID>
-=======
-/attemptRemoveClassroom/<teacherID>
->>>>>>> ccd47980b4163b367f63dbf0820eba8423b42a46
+/attemptRemoveClassroom/<teacherID>/<classroomID>
 attemptRemoveClassroom(teacherID)
 handleRemoveClassroomAttempt(teacherID)
+If teacherID invalid return to homescreen
+If no classroom return no error and {}
+If removed classroom return {}
 
 
 

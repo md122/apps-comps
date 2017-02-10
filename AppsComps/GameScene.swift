@@ -14,6 +14,8 @@ import UIKit
 
 class GameScene: SKScene, UITextFieldDelegate {
     
+    // SKCamera
+    
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
     // Value incremented every time a block is touched
@@ -46,7 +48,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     let GARBAGEPOSITION:CGPoint
     let HAMMERPOSITION:CGPoint
     let GARBAGESIZE:CGSize
-    let LEVELCIRCLERADIUS:CGFloat
     let SNAPDISTANCE:Double
     
     // not implemented
@@ -68,19 +69,18 @@ class GameScene: SKScene, UITextFieldDelegate {
         height = size.height
         HEIGHTUNIT = height/16
         WIDTHUNIT = width/16
-        BARX = 2*HEIGHTUNIT
-        TOPBARY = 10.5*HEIGHTUNIT
-        BOTTOMBARY = 8*HEIGHTUNIT
-        BLOCKHEIGHT = 1.5*HEIGHTUNIT
+        BARX = 1.5*WIDTHUNIT
+        TOPBARY = 13*HEIGHTUNIT
+        BOTTOMBARY = 10*HEIGHTUNIT
+        BLOCKHEIGHT = 2*HEIGHTUNIT
         VARBLOCKWIDTH = 1.5*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
         VARBLOCKSCALE = 1
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
-        GARBAGESIZE = CGSize(width: 2.25*WIDTHUNIT, height: 1.2*2.25*WIDTHUNIT)
-        LEVELCIRCLERADIUS = 0.3*WIDTHUNIT
+        GARBAGESIZE = CGSize(width: 2.5*WIDTHUNIT, height: 1.2*2.5*WIDTHUNIT)
         
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 2.5*HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         SUBNUMBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
@@ -144,88 +144,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         bottomBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(BOTTOMBARY))
         
         self.addChild(bottomBarStarter)
-        
-        //Add the level circles
-        for i in 0 ..< 3 {
-            let level = SKShapeNode(circleOfRadius: self.LEVELCIRCLERADIUS)
-            level.strokeColor = .black
-            level.glowWidth = 1.0
-            level.fillColor =  .white
-            level.position = CGPoint(x: 14*WIDTHUNIT+2*CGFloat(i)*LEVELCIRCLERADIUS, y: 15*HEIGHTUNIT)
-            self.levelCircles.append(level)
-            self.addChild(level)
-        }
-        let levelText = SKLabelNode(fontNamed: "Arial")
-        levelText.position = CGPoint(x: 14.5*WIDTHUNIT, y: 14.25*HEIGHTUNIT)
-        levelText.text = "Level: "
-        levelText.fontSize = 15
-        levelText.fontColor = .black
-        self.addChild(levelText)
-        
-        // This should be a UILabel
-        let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
-        let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
-        problemRect.position = CGPoint(x: 7*WIDTHUNIT, y: 14*HEIGHTUNIT)
-        problemRect.strokeColor = .black
-        problemRect.glowWidth = 0.5
-        self.addChild(problemRect)
-        let problemText = SKLabelNode(fontNamed: "Arial")
-        problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
-        problemText.text = "Here is a problem"
-        problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
-        problemText.fontColor = .black
-        self.addChild(problemText)
-        
-        // This should be a UITextField or a UITextView
-        let variableRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
-        let variableRect = SKShapeNode(rectOf: variableRectSize, cornerRadius: HEIGHTUNIT)
-        variableRect.position = CGPoint(x: 14*WIDTHUNIT, y: 11*HEIGHTUNIT)
-        variableRect.strokeColor = .black
-        variableRect.glowWidth = 0.5
-        self.addChild(variableRect)
-        let variableText = SKLabelNode(fontNamed: "Arial")
-        variableText.position = CGPoint(x: variableRect.position.x, y: variableRect.position.y - variableText.frame.height / 2.0)
-        variableText.text = "variables"
-        variableText.fontSize = 15*min(variableRectSize.width / variableText.frame.width, variableRectSize.height / variableText.frame.height)
-        variableText.fontColor = .black
-        self.addChild(variableText)
-        
-        // This should be a UILabelView
-        let messageRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
-        let messageRect = SKShapeNode(rectOf: messageRectSize, cornerRadius: HEIGHTUNIT)
-        messageRect.position = CGPoint(x: 14*WIDTHUNIT, y:5*HEIGHTUNIT)
-        messageRect.strokeColor = .black
-        messageRect.glowWidth = 0.5
-        self.addChild(messageRect)
-        let messageText = SKLabelNode(fontNamed: "Arial")
-        messageText.position = CGPoint(x: messageRect.position.x, y: messageRect.position.y - messageText.frame.height / 2.0)
-        messageText.text = "Message"
-        messageText.fontSize = 15*min(messageRectSize.width / messageText.frame.width, messageRectSize.height / messageText.frame.height)
-        messageText.fontColor = .black
-        self.addChild(messageText)
-        
-        let textFieldRect = CGRect(x: 13*WIDTHUNIT, y: 14*HEIGHTUNIT,
-                               width: 2*WIDTHUNIT, height: 1*HEIGHTUNIT)
-        let answerTextField = UITextField(frame: textFieldRect)
-        answerTextField.delegate = self
-        answerTextField.borderStyle = UITextBorderStyle.roundedRect
-        answerTextField.textColor = .black
-        answerTextField.placeholder = "Your answer"
-        answerTextField.backgroundColor = .lightGray
-        answerTextField.autocorrectionType = UITextAutocorrectionType.yes
-        self.view?.addSubview(answerTextField)
-        let submitButton = ButtonNode(texture: nil, color: .yellow, size: CGSize(width: 2*WIDTHUNIT, height: 0.75*HEIGHTUNIT))
-        submitButton.position = CGPoint(x: 14*WIDTHUNIT, y: 0.5*HEIGHTUNIT)
-        let submitLabel = SKLabelNode(fontNamed: "GillSans-Bold")
-        self.addChild(submitButton)
-        submitLabel.position = CGPoint(x: submitButton.position.x, y: submitButton.position.y - submitLabel.frame.height / 2.0)
-        submitLabel.text = "Submit!"
-        submitLabel.fontSize = 12
-        submitLabel.fontColor = .black
-        self.addChild(submitLabel)
-        submitButton.action = { (button) in
-            //do things when submit button is pressed
-        }
         
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
@@ -298,7 +216,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 }
                 blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
-                
+
                 //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
                 if blockTouched?.getType() == "variable" || blockTouched?.getType() == "subVariable" {
                     VARBLOCKSCALE = pinchScale
@@ -332,6 +250,13 @@ class GameScene: SKScene, UITextFieldDelegate {
                         }
                     }
                 }
+                //From fixing a merge conflict...!!!
+                //Move the block over so it's only increasing to the right
+                //blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                
+                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
+                //blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                //blockTouched?.getBlockColorRectangle().xScale = CGFloat(1-1.5*(1/(blockTouched?.getWidth())!))
             }
         }
             
