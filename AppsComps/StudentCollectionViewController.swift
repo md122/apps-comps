@@ -19,7 +19,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var level4Students = [NSArray]()
     var studentsByLevel : [[NSArray]]? = nil
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
-    let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+    var cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
     
     var cellMode = Bool()
 
@@ -30,14 +30,14 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         // self.clearsSelectionOnViewWillAppear = false
         collectionView?.allowsMultipleSelection = true
         
-        if cellMode == nil {
-            cellModeSegment.selectedSegmentIndex = 0
-            cellMode = false
-        } else if cellMode == false {
-            cellModeSegment.selectedSegmentIndex = 0
-        }  else if cellMode == true {
-            cellModeSegment.selectedSegmentIndex = 1
-        }
+//        if cellMode == nil {
+//            cellModeSegment.selectedSegmentIndex = 0
+//            cellMode = false
+//        } else if cellMode == false {
+//            cellModeSegment.selectedSegmentIndex = 0
+//        }  else if cellMode == true {
+//            cellModeSegment.selectedSegmentIndex = 1
+//        }
         
         
         
@@ -79,6 +79,15 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 //        let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
 //        cellModeSegment.selectedSegmentIndex = 0
         //cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .touchUpInside)
+        cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+        if cellMode == nil {
+            cellModeSegment.selectedSegmentIndex = 0
+            cellMode = false
+        } else if cellMode == false {
+            cellModeSegment.selectedSegmentIndex = 0
+        }  else if cellMode == true {
+            cellModeSegment.selectedSegmentIndex = 1
+        }
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
        // let deleteStudentsButton = UISwitch()
