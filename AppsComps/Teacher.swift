@@ -68,22 +68,22 @@ class Teacher: Account, APIDataDelegate {
     }
     
     // Given a teacher ID, returns a list of classroom data, with name and classID
-    func handleTeacherDashInfoRequest(data: [NSArray]) {
+    func handleTeacherDashInfoRequest(data: NSDictionary) {
         print(data)
     }
     
     // Given a classroom ID, returns a list of student data, with name and studentID
-    func handleClassroomDataRequest(data: [NSArray]) {
+    func handleClassroomDataRequest(data: NSDictionary) {
         print(data)
     }
     
     // Function that gets called when attempt to add classroom gets back
-    func handleAddClassroomAttempt(data: Int) {
+    func handleAddClassroomAttempt(data: NSDictionary) {
         print(data)
     }
     
     // Function that gets called when attempt to remove classroom gets back
-    func handleRemoveClassroomAttempt(data: Bool) {
+    func handleRemoveClassroomAttempt(data: NSDictionary) {
         print(data)
     }
 }

@@ -29,6 +29,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             GIDSignIn.sharedInstance().signOut()
         }
+        
+        let connect = APIConnector()
+        //connect.attemptAddClassroom(callingDelegate: self, teacherID: "23", classroomName: "CatsRoom")
+        connect.requestClassroomData(callingDelegate: self, classroomID: "42")
     }
     
     
@@ -44,12 +48,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     
     
     // Function that gets called when login data (1=no account, 2=student, or 3=teacher) comes back
-    func handleLoginAttempt(data: String) {
+    func handleLoginAttempt(data: NSDictionary) {
         let connector = APIConnector()
         
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             print("signed in")
-            if (data == "ERROR: Account does not exist") {
+            if (data["error"] as! String == "ERROR: Account does not exist") {
                 // Structure of how to write pop up taken from http://stackoverflow.com/questions/25511945/swift-alert-view-ios8-with-ok-and-cancel-button-which-button-tapped
                 let createAccountAlert = UIAlertController(title: "Account Not Found", message: "You don't have an account with us. Create one now?", preferredStyle: UIAlertControllerStyle.alert)
                 createAccountAlert.addAction(UIAlertAction(title: "Create Student Account", style: .default, handler: { (action: UIAlertAction!) in
@@ -64,11 +68,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
                 }))
                 present(createAccountAlert, animated: true, completion: nil)
             }
-            else if (data == "Student") {
+            else if (data["data"] as! String == "Student") {
                 currentUser = Student(idToken: self.idToken!, name: name!)
                 performSegue(withIdentifier: "loginToStudentDash", sender: self)
             }
-            else if (data == "Teacher") {
+            else if (data["data"] as! String == "Teacher") {
                 print ("is teacher")
                 currentUser = Teacher(idToken: self.idToken!, name: name!)
                 performSegue(withIdentifier: "loginToTeacherDash", sender: self)
@@ -108,7 +112,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     
     
     // Function that gets called when next problem comes back
-    func handleCreateAccountAttempt(data: [NSArray]) {
+    func handleCreateAccountAttempt(data: NSDictionary) {
         print("Incoming handleNextProblem data")
         print(data)
         
