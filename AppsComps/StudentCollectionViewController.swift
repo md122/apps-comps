@@ -25,8 +25,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Brynna had this next line of code but it interferes with the Logout Button
-        //self.navigationItem.leftBarButtonItem = self.editButtonItem
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -144,11 +142,48 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             }
         }
     }
+    
+//    www.raywenderlich.com/136161/uicollectionview-tutorial-reusable-views-selection-reordering
+    override func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
+
+        
+            switch kind {
+                
+            case UICollectionElementKindSectionHeader:
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sectionHeader", for: indexPath) as! SectionHeaderCollectionReusableView
+                if indexPath.section == 0{
+                    headerView.headerLabel1.text = "Classroom Name"
+                    headerView.headerLabel2.text = "Classroom Code"
+                } else if indexPath.section == 1{
+                    headerView.headerLabel1.text = "Level 1"
+                    headerView.headerLabel2.text = ""
+                } else if indexPath.section == 2{
+                    headerView.headerLabel1.text = "Level 2"
+                    headerView.headerLabel2.text = ""
+                } else if indexPath.section == 3{
+                    headerView.headerLabel1.text = "Level 3"
+                    headerView.headerLabel2.text = ""
+                } else if indexPath.section == 4{
+                    headerView.headerLabel1.text = "Level 4"
+                    headerView.headerLabel2.text = ""
+                } else {
+                    headerView.headerLabel1.text = "ERROR"
+                    headerView.headerLabel2.text = "ERROR"
+                }
+                return headerView
+            default:
+                assert(false, "Unexpected element kind")
+            }
+        
+    }
+    
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.section == 0{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "header", for: indexPath) 
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "empty", for: indexPath) 
             return cell
         } else {
             if cellMode {
@@ -170,7 +205,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
                                  layout collectionViewLayout: UICollectionViewLayout,
                                  sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0{
-          return CGSize(width: 200.0, height: 100.0)
+          return CGSize(width: 10.0, height: 1.0)
         } else{
             if cellMode == true {
                 return CGSize(width: 100.0, height: 100.0)
@@ -216,14 +251,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
     }
     
-//    func prepare(for segue: UIStoryboardSegue, sender: ClassroomTableMasterViewController) {
-//        
-//        if segue.identifier == "showDetail" {
-//            //if
-//        }
-//    }
-    
-    
+
 
     // MARK: UICollectionViewDelegate
 
@@ -239,6 +267,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
+
     
 
     /*
