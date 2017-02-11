@@ -73,8 +73,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     
     // Function that gets called when problem answer comes back
-    func handleSubmitAnswer(data: String) {
-        if (data == "correct") {
+    func handleSubmitAnswer(data: NSDictionary) {
+        if (data["data"] as! String == "correct") {
             let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
             rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
                 self.submitTextField.text = ""
@@ -114,8 +114,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     // Function that gets called when next problem comes back
-    func handleNextProblem(data: String) {
-        problemLabel.text = data
+    func handleNextProblem(data: NSDictionary) {
+        problemLabel.text = data["data"] as? String
 
     }
     

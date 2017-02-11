@@ -159,7 +159,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         present(leaveClassAlert, animated: true, completion: nil)    }
     
     //RETURNS A BOOL THEN A LIST: 1) name of teacher 2) name of classroom
-    func handleAddStudentToClassAttempt(data: Bool) {
+    func handleAddStudentToClassAttempt(data: NSDictionary) {
         print("Incoming handleAddStudentToClassAttempt data")
         print(data)
         //CHANGE JOIN CLASSROOM TO LEAVE
@@ -173,7 +173,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
     }
     
     // Function that gets called when attempt to remove student from class gets back
-    func handleRemoveStudentFromClassAttempt(data: Bool) {
+    func handleRemoveStudentFromClassAttempt(data: NSDictionary) {
         print("Incoming handleRemoveStudentFromClassAttempt data")
         print(data)
         //CHANGE LEAVE CLASSROOM TO JOIN
