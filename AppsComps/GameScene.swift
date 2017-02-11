@@ -186,7 +186,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                     shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
                 }
                 //If we are dealing with a subtraction block that is currently the child of a positive block don't scoot it over, but do mess with the scale factor because it is in it's parent world
-                if let parent = blockTouched?.parent as? Block {
+                if (blockTouched?.parent as? Block) != nil {
                     let scale1 = Double((blockTouched?.xScale)!)
                     let scale2 = Double((blockTouched?.parent?.xScale)!)
                     let previousBlockSize = scale1 * scale2 * Double((blockTouched?.getOriginalWidth())!)
@@ -196,9 +196,11 @@ class GameScene: SKScene, UITextFieldDelegate {
                     //Scale the subtraction number, but not the subtraction variable because that will get scaled with it's parent
                     if blockTouched?.getType() == "subNumber" {
                         blockTouched?.xScale = (pinchScale / (blockTouched?.parent?.xScale)!)
-                        //!!!
-                        blockTouched?.getLabel().xScale = (1/(blockTouched?.xScale)!) / (blockTouched?.parent?.xScale)!
+                        blockTouched?.getLabel().xScale = (1 / pinchScale)
                         blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - ((CGFloat(differenceInBarSize) / (blockTouched?.parent?.xScale)!)) / 2), y:(blockTouched?.position.y)!)
+                    }
+                    else if blockTouched?.getType() == "subVariable" {
+                            blockTouched?.getLabel().xScale = (1 / pinchScale)
                     }
                 }
                 //Make the block only increase to the right for positive numbers and only increase to the left for negative
@@ -209,13 +211,17 @@ class GameScene: SKScene, UITextFieldDelegate {
                     if blockTouched?.getSubtractionBlock() != nil {
                         blockTouched?.getSubtractionBlock()?.getLabel().xScale = pinchScale / ((blockTouched?.parent?.xScale)!)
                     }
+                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                    if blockTouched?.getSubtractionBlock() != nil && blockTouched?.getType() == "number" {
+                        blockTouched?.getSubtractionBlock()?.getLabel().xScale = (1 / pinchScale) / (blockTouched?.getSubtractionBlock()?.xScale)!
+                    }
                 }
                 //The subtractions stretch to the left
                 else if blockTouched?.getType() == "subNumber" || blockTouched?.getType() == "subVariable" {
                     blockTouched?.xScale = pinchScale
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
                 }
-                blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
 
                 //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
                 if blockTouched?.getType() == "variable" || blockTouched?.getType() == "subVariable" {
@@ -234,9 +240,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                                 child.position = CGPoint(x:((child.position.x) - (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
                             }
                             
-                            //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
-                            child.getLabel().xScale = 1/(child.xScale)
-                            
                             //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                             indexInTopBar = findIndexOfBlock(bar: topBar, block:child)
                             indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:child)
@@ -246,6 +249,10 @@ class GameScene: SKScene, UITextFieldDelegate {
                             }
                             if indexInBottomBar > -1 {
                                 shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
+                            }
+                            child.getLabel().xScale = 1 / (child.xScale)
+                            if child.getSubtractionBlock() != nil {
+                                child.getSubtractionBlock()?.getLabel().xScale = 1 / pinchScale
                             }
                         }
                     }
@@ -602,6 +609,9 @@ class GameScene: SKScene, UITextFieldDelegate {
                 if (abs(child.getTopRightY() - blockTouched!.getTopRightY()) < SNAPDISTANCE) && (abs(child.getTopRightX() - blockTouched!.getTopRightX()) < SNAPDISTANCE) && child.getSubtractionBlock() == nil && child != numBlockInBank && child != varBlockInBank{
                     //Send the subtraction block to be the child of the current block
                     child.setSubtractionBlock(block: blockTouched!)
+                    //Aparently the zposition of the child doesn't matter it's all about the parent
+                    child.zPosition = currentBlockZ
+                    currentBlockZ += 6
                 }
             }
         }
@@ -650,12 +660,16 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
-    
+
+    func blockVortex(block: Block) {
+        block.xScale = (block.xScale / 1.00001)
+        block.alpha = block.alpha / 1.00001
+        block.zRotation = block.zRotation + 1
+    }
     
     // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
-            print("the touch ended")
             let block = blockTouched!
             //Set the color to the not selected color
             block.color = .black
@@ -665,8 +679,8 @@ class GameScene: SKScene, UITextFieldDelegate {
             if block.getType() == "hammer" {
                 snapNegativeBlockIntoPlace(block: block)
                 for case let child as Block in self.children {
-                    if child.getSubtractionBlock() != nil && (child.getSubtractionBlock()!.getValue() <= child.getValue()) {
-                        //VORTEX!!!
+                    if child.getSubtractionBlock() != nil && (child.getSubtractionBlock()!.getValue() <= child.getValue()) && hammer.intersects(child){
+                        //VORTEX!!! WHY????!!!!
                         //let fieldNode = SKFieldNode.radialGravityField()
                         //fieldNode.categoryBitMask = 0x1 << 0
                         //fieldNode.strength = 2.8
@@ -678,9 +692,13 @@ class GameScene: SKScene, UITextFieldDelegate {
                         //print(fieldNode)
                         //hammer.addChild(fieldNode)
                         //Remove in a super cool black hole way!!!!
-                        child.removeFromParent()
-                        //SHIT OVER THE BLOCKS AFTER IT IN A BAR!!!
+                        while child.xScale > 0.1 {
+                            child.xScale = (child.xScale / 1.0001)
+                            print("in loop", child.xScale)
+                        }
+                        //SHIFT OVER THE BLOCKS AFTER IT IN A BAR!!!
                         hammer.position = HAMMERPOSITION
+                        child.removeFromParent()
                     }
                 }
 
