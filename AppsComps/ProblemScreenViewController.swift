@@ -10,6 +10,9 @@
 import UIKit
 import SpriteKit
 
+
+
+
 class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     @IBOutlet weak var gameView: SKView!
@@ -17,9 +20,15 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var submitTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     
+    
+    var incorrectAttempts: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setProblemText()
+        
+
         gameView.showsFPS = true
         gameView.showsNodeCount = true
         
@@ -29,8 +38,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         let scene = GameScene(size: gameView.bounds.size)
         gameView.presentScene(scene)
         
-        testAPIConnector()
+        
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -41,30 +52,72 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         return true
     }
     
-    
-    // this is an example of how to use the APIConnector
-    func testAPIConnector() {
+
+    @IBAction func submitAnswer(_ sender: AnyObject) {
+        let answer = submitTextField.text
         let connector = APIConnector()
-        connector.requestNextProblem(callingDelegate: self, level: 0, studentID: "STUDENT1")
-        
-        connector.attemptAddProblemData(callingDelegate: self, start_time: "10/12", end_time: "10/12", answer: "6", wasCorrect: false)
+        connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
     }
     
-    // Function that gets called when next problem comes back
-    func handleNextProblem(data: [NSArray]) {
-        print("Incoming handleNextProblem data")
-        print(data)
-    }
 
     
     
-    // Function that gets called when student data comes back
-    func handleAddProblemDataAttempt(data: Bool) {
-        print("Incoming handleAddProblemDataAttempt data")
-        print(data)
+    func setProblemText() {
+        let connector = APIConnector()
+        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
+        
     }
     
+
+
     
+    
+    // Function that gets called when problem answer comes back
+    func handleSubmitAnswer(data: String) {
+        if (data == "correct") {
+            let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
+            rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
+                self.submitTextField.text = ""
+                self.setProblemText()
+            }))
+            present(rightAnswerAlert, animated: true, completion: nil)
+
+        }
+        else {
+            incorrectAttempts += 1
+            if (incorrectAttempts < 3) {
+                let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (action: UIAlertAction!) in
+                    self.submitTextField.text = ""
+                }))
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                }))
+                present(wrongAnswerAlert, animated: true, completion: nil)
+            }
+            else {
+                let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (action: UIAlertAction!) in
+                    self.submitTextField.text = ""
+                }))
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
+                    self.submitTextField.text = ""
+                    self.setProblemText() // need to make this update student progro
+                }))
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                }))
+                present(wrongAnswerAlert, animated: true, completion: nil)
+                
+                
+            }
+
+        }
+    }
+    
+    // Function that gets called when next problem comes back
+    func handleNextProblem(data: String) {
+        problemLabel.text = data
+
+    }
     
     
     /*

@@ -15,8 +15,9 @@ import Foundation
     @objc optional func handleStudentData(data: [NSArray]) ;
     
     // For the problem screen
-    @objc optional func handleNextProblem(data: [NSArray]) ;
-    @objc optional func handleAddProblemDataAttempt(data: Bool) ;
+    @objc optional func handleNextProblem(data: String) ;
+    @objc optional func handleSubmitAnswer(data: String) ;
+    //@objc optional func handleAddProblemDataAttempt(data: Bool) ;
     
     // Methods for student class
     @objc optional func handleStudentDashInfo(data: [NSArray]) ;
