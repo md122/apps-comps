@@ -11,6 +11,8 @@ import UIKit
 
 class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
     
+    @IBOutlet var goToProblemsButton: UIBarButtonItem!
+    
     var students = [NSArray]()
     
     var level1Students = [NSArray]()
@@ -97,7 +99,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
        // let deleteStudentsButton = UISwitch()
         segmentBarItem.target = self
 //        segmentBarItem.action = #selector(modeSegmentChanged)
-        toolbarItems = [segmentBarItem]
+        
+        //let deleteStudentBarButton = init(barButtonSystemItem systemItem: UIBarButtonSystemItem, target: Any?, action: Selector?)
+//        let deleteStudentBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: "someAction")
+        toolbarItems = [segmentBarItem, goToProblemsButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
     }
@@ -105,10 +110,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     // Note there is a similar logout in Student, changes to one should also go in the other
     @IBAction func logoutClicked(_ sender: AnyObject) {
-        let createAccountAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        let logoutAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
         
         // Log out option
-        createAccountAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
+        logoutAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
             if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
                 GIDSignIn.sharedInstance().signOut()
             }
@@ -116,9 +121,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
         }))
         // cancel option
-        createAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
-        present(createAccountAlert, animated: true, completion: nil)
+        present(logoutAlert, animated: true, completion: nil)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

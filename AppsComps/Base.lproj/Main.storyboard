@@ -352,20 +352,25 @@
                             <outlet property="delegate" destination="MEl-8u-sh3" id="LZI-Ua-Xqa"/>
                         </connections>
                     </collectionView>
+                    <toolbarItems>
+                        <barButtonItem title="Go to Problems" id="sXC-kq-SKn">
+                            <connections>
+                                <segue destination="7gr-Yh-NVx" kind="show" identifier="FromTeacherToProblemSelector" id="YMb-pw-gum"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="UXq-py-S0U">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Qqs-Kb-gjW">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="Qqs-Kb-gjW">
                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="logoutClicked:" destination="MEl-8u-sh3" id="wl1-8z-w55"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Go to Problems" id="sXC-kq-SKn">
-                            <connections>
-                                <segue destination="7gr-Yh-NVx" kind="show" identifier="FromTeacherToProblemSelector" id="YMb-pw-gum"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="goToProblemsButton" destination="sXC-kq-SKn" id="lXF-sv-sC2"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdd-RI-Hlb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
