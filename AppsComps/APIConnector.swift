@@ -19,7 +19,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleNextProblem!(data: responseData as! NSDictionary)
                     }
@@ -41,7 +41,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleSubmitAnswer!(data: responseData as! NSDictionary)
                     }
@@ -54,8 +54,19 @@ class APIConnector: NSObject  {
     
     // STUDENT ACCOUNT
     func requestStudentDashInfo(callingDelegate: APIDataDelegate, studentID: String) {
-        let dummyData: NSDictionary = ["error": "none", "data": ["Dash Data"]]
-        callingDelegate.handleStudentDashInfo?(data: dummyData)
+        let url = baseURL + "requestStudentDashInfo/" + studentID
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 200...299:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleStudentDashInfoRequest!(data: responseData as! [NSDictionary])
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
     }
     
     
@@ -65,7 +76,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleAddStudentToClassAttempt!(data: responseData as! NSDictionary)
                     }
@@ -81,7 +92,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
                     }
@@ -94,12 +105,12 @@ class APIConnector: NSObject  {
     
     func requestProblemHistory(callingDelegate: APIDataDelegate, studentID: String) {
         let dummyData: NSDictionary = ["error": "none", "data": ["Dash Data"]]
-        callingDelegate.handleStudentDashInfo?(data: dummyData)
+        callingDelegate.handleProblemHistory?(data: dummyData)
     }
     
     func requestCorrectIncorrectRatio(callingDelegate: APIDataDelegate, studentID: String) {
         let dummyData: NSDictionary = ["error": "none", "data": ["Dash Data"]]
-        callingDelegate.handleStudentDashInfo?(data: dummyData)
+        callingDelegate.handleCorrectIncorrectRatio?(data: dummyData)
     }
     
     // TEACHER ACOUNT
@@ -109,7 +120,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleTeacherDashInfoRequest!(data: responseData as! NSDictionary)
                     }
@@ -125,7 +136,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleClassroomDataRequest!(data: responseData as! NSDictionary)
                     }
@@ -142,7 +153,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleAddClassroomAttempt!(data: responseData as! NSDictionary)
                     }
@@ -159,7 +170,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
                     }
@@ -178,7 +189,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleLoginAttempt!(data: responseData as! NSDictionary)
                     }
@@ -195,7 +206,7 @@ class APIConnector: NSObject  {
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200...299:
                     if let responseData = response.result.value{
                         callingDelegate.handleCreateAccountAttempt!(data: responseData as! NSDictionary)
                     }

@@ -26,7 +26,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var logoView: UIImageView!
     
     let screen: CGRect = UIScreen.main.bounds
-
+    let connector = APIConnector()
     //TODO: level should also be taken from teacher/student class, or the global class
     let level = 2
     
@@ -43,6 +43,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         let height = headerView.frame.height
         let widthUnit = width/100
         let heightUnit = height/100
+        
+        
+        
         
         //Aligning the labels to the left and right of the header. App logo will be in the center of the header
         
@@ -96,6 +99,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             rightButton.tintColor = .red
             self.navigationItem.rightBarButtonItem = rightButton
         }
+        
+        //Get Student dash info to show up on header
+        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
     }
     
     
@@ -148,9 +154,8 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         
         // Log out option
         leaveClassAlert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { (action: UIAlertAction!) in
-            let connector = APIConnector()
             //CHANGE CLASSROOMID TO ACTUAL ID LATER
-            connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: self.classroomText.text!)
+            self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: self.classroomText.text!)
         }))
         
         // cancel option
@@ -165,7 +170,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         //CHANGE JOIN CLASSROOM TO LEAVE
         leaveButton.setTitle("Leave Classroom", for: .normal)
         if let studentUser = currentUser as? Student {
-            if (studentUser.getClassRoomID() == "") {
+            //CHECK USER'S ACTUAL CLASSROOM ID
+            if (studentUser.getClassRoomID() != "") {
+                //leaveButton.removeTarget(self, action: Selector?, for: <#T##UIControlEvents#>)
                 leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
             }
         }
@@ -184,6 +191,10 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             }
             
         }
+    }
+    
+    func handleStudentDashInfoRequest(data: [NSDictionary]) {
+        print(data)
     }
 
 }
