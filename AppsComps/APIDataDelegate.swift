@@ -20,7 +20,7 @@ import Foundation
     //@objc optional func handleAddProblemDataAttempt(data: Bool) ;
     
     // Methods for student class
-    @objc optional func handleStudentDashInfo(data: NSDictionary) ;
+    @objc optional func handleStudentDashInfoRequest(data: [NSDictionary]) ;
     @objc optional func handleAddStudentToClassAttempt(data: NSDictionary) ;
     @objc optional func handleRemoveStudentFromClassAttempt(data: NSDictionary) ;
     @objc optional func handleProblemHistory(data: NSDictionary) ;
