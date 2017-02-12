@@ -19,9 +19,9 @@ class Teacher: Account, APIDataDelegate {
      */
     
 
-    func getHighestLevel()->String{
+    override func getHighestLevel()->String{
         //always is highest level
-        return "6"
+        return "4"
     }
     
     override init?(idToken: String, name: String){
@@ -59,26 +59,29 @@ class Teacher: Account, APIDataDelegate {
     // this is an example of how to use the APIConnector
     func testAPIConnector() {
         let connector = APIConnector()
-        connector.requestTeacherDashInfo(callingDelegate: self, teacherID: "Teacher1")
+        connector.requestTeacherDashInfo(callingDelegate: self, teacherID: self.getIdToken())
+        connector.requestClassroomData(callingDelegate: self, classroomID: "5")
         connector.attemptAddClassroom(callingDelegate: self, teacherID: "Teacher1", classroomName: "Cats Room")
         connector.attemptRemoveClassroom(callingDelegate: self, classroomID: "Classroom1")
     }
     
-    // Function that gets called when teacher Dash Info gets back
-    func handleTeacherDashInfo(data: [NSArray]) {
+    // Given a teacher ID, returns a list of classroom data, with name and classID
+    func handleTeacherDashInfoRequest(data: NSDictionary) {
+        print(data)
+    }
+    
+    // Given a classroom ID, returns a list of student data, with name and studentID
+    func handleClassroomDataRequest(data: NSDictionary) {
         print(data)
     }
     
     // Function that gets called when attempt to add classroom gets back
-    func handleAddClassroomAttempt(data: Bool) {
+    func handleAddClassroomAttempt(data: NSDictionary) {
         print(data)
     }
     
     // Function that gets called when attempt to remove classroom gets back
-    func handleRemoveClassroomAttempt(data: Bool) {
+    func handleRemoveClassroomAttempt(data: NSDictionary) {
         print(data)
     }
-    
-    
-    
 }

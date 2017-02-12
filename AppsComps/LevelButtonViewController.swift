@@ -19,6 +19,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.collectionView?.backgroundColor = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
 
     }
 
@@ -42,10 +43,10 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
      */
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width: CGFloat = screen.width
-        //let height: CGFloat = screen.height
+        
         let unit: CGFloat = width/100
         
-        let size = CGSize(width: unit*20, height: unit*20)
+        let size = CGSize(width: unit*20, height: unit*30)
         return size
     }
     
@@ -60,19 +61,28 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
+        
         
         //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
         
         cell.levelButton?.setTitle(self.levelLabels[indexPath.row], for: .normal)
-        cell.levelButton?.setTitleColor(UIColor.white, for: .normal)
         cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
-        cell.levelButton?.checkAccess(curLev: 2)
-        cell.levelButton?.frame.size = cell.frame.size
-        cell.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
+        let locked: Bool = (cell.levelButton?.checkAccess(curLev: 2))!
+        let width: CGFloat = screen.width
+        
+        let unit: CGFloat = width/100
+        cell.levelButton?.frame.size = CGSize(width: unit*20, height: unit*20)
+        cell.levelButton?.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
+        cell.levelButton?.setTitleColor(UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0), for: .normal)
+        var image : String = "emptystars"
+        
+        if (!locked) {
+            image = "threestars"
+            
+        }
+        cell.levelView.image = UIImage(named: image)
         
         return cell
     }

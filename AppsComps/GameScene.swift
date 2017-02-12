@@ -5,14 +5,14 @@
 //  Created by Zoe Peterson on 10/29/16.
 //  Copyright © 2016 Zoe Peterson. All rights reserved.
 //  Blocks moving based on tutorial https://www.raywenderlich.com/123393/how-to-create-a-breakout-game-with-sprite-kit-and-swift
-
 // Creates blocks ever time a block is let go at a position greater than (200, 200). Doesn't yet snap back to original location of the block is not drag the block back to the original space.
-
 import SpriteKit
 import GameplayKit
 import UIKit
 
 class GameScene: SKScene, UITextFieldDelegate {
+    
+    // SKCamera
     
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
@@ -41,7 +41,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     let VARBLOCKSIZE:CGSize
     let GARBAGEPOSITION:CGPoint
     let GARBAGESIZE:CGSize
-    let LEVELCIRCLERADIUS:CGFloat
     let SNAPDISTANCE:Double
     
     // not implemented
@@ -61,21 +60,20 @@ class GameScene: SKScene, UITextFieldDelegate {
         height = size.height
         HEIGHTUNIT = height/16
         WIDTHUNIT = width/16
-        BARX = 2*HEIGHTUNIT
-        TOPBARY = 10.5*HEIGHTUNIT
-        BOTTOMBARY = 8*HEIGHTUNIT
-        BLOCKHEIGHT = 1*HEIGHTUNIT
+        BARX = 1.5*WIDTHUNIT
+        TOPBARY = 13*HEIGHTUNIT
+        BOTTOMBARY = 10*HEIGHTUNIT
+        BLOCKHEIGHT = 2*HEIGHTUNIT
         VARBLOCKWIDTH = 1.5*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
-        GARBAGESIZE = CGSize(width: 2.25*WIDTHUNIT, height: 1.2*2.25*WIDTHUNIT)
-        LEVELCIRCLERADIUS = 0.3*WIDTHUNIT
+        GARBAGESIZE = CGSize(width: 2.5*WIDTHUNIT, height: 1.2*2.5*WIDTHUNIT)
         
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 2.5*HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
-       
+        
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
@@ -89,7 +87,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func addBlockChild(_ node: SKNode) {
         node.zPosition = CGFloat(currentBlockZ)
         currentBlockZ += 3
@@ -124,93 +122,11 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         self.addChild(bottomBarStarter)
         
-        //Add the level circles
-        for i in 0 ..< 3 {
-            let level = SKShapeNode(circleOfRadius: self.LEVELCIRCLERADIUS)
-            level.strokeColor = .black
-            level.glowWidth = 1.0
-            level.fillColor =  .white
-            level.position = CGPoint(x: 14*WIDTHUNIT+2*CGFloat(i)*LEVELCIRCLERADIUS, y: 15*HEIGHTUNIT)
-            self.levelCircles.append(level)
-            self.addChild(level)
-        }
-        let levelText = SKLabelNode(fontNamed: "Arial")
-        levelText.position = CGPoint(x: 14.5*WIDTHUNIT, y: 14.25*HEIGHTUNIT)
-        levelText.text = "Level: "
-        levelText.fontSize = 15
-        levelText.fontColor = .black
-        self.addChild(levelText)
-        
-        // This should be a UILabel
-        let problemRectSize = CGSize(width: 11*WIDTHUNIT, height: 3*HEIGHTUNIT)
-        let problemRect = SKShapeNode(rectOf: problemRectSize, cornerRadius: HEIGHTUNIT)
-        problemRect.position = CGPoint(x: 7*WIDTHUNIT, y: 14*HEIGHTUNIT)
-        problemRect.strokeColor = .black
-        problemRect.glowWidth = 0.5
-        self.addChild(problemRect)
-        let problemText = SKLabelNode(fontNamed: "Arial")
-        problemText.position = CGPoint(x: problemRect.position.x, y: problemRect.position.y - problemText.frame.height / 2.0)
-        problemText.text = "Here is a problem"
-        problemText.fontSize = 15*min(problemRectSize.width / problemText.frame.width, problemRectSize.height / problemText.frame.height)
-        problemText.fontColor = .black
-        self.addChild(problemText)
-        
-        // This should be a UITextField or a UITextView
-        let variableRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
-        let variableRect = SKShapeNode(rectOf: variableRectSize, cornerRadius: HEIGHTUNIT)
-        variableRect.position = CGPoint(x: 14*WIDTHUNIT, y: 11*HEIGHTUNIT)
-        variableRect.strokeColor = .black
-        variableRect.glowWidth = 0.5
-        self.addChild(variableRect)
-        let variableText = SKLabelNode(fontNamed: "Arial")
-        variableText.position = CGPoint(x: variableRect.position.x, y: variableRect.position.y - variableText.frame.height / 2.0)
-        variableText.text = "variables"
-        variableText.fontSize = 15*min(variableRectSize.width / variableText.frame.width, variableRectSize.height / variableText.frame.height)
-        variableText.fontColor = .black
-        self.addChild(variableText)
-        
-        // This should be a UILabelView
-        let messageRectSize = CGSize(width: 2.5*WIDTHUNIT, height: 3*HEIGHTUNIT)
-        let messageRect = SKShapeNode(rectOf: messageRectSize, cornerRadius: HEIGHTUNIT)
-        messageRect.position = CGPoint(x: 14*WIDTHUNIT, y:5*HEIGHTUNIT)
-        messageRect.strokeColor = .black
-        messageRect.glowWidth = 0.5
-        self.addChild(messageRect)
-        let messageText = SKLabelNode(fontNamed: "Arial")
-        messageText.position = CGPoint(x: messageRect.position.x, y: messageRect.position.y - messageText.frame.height / 2.0)
-        messageText.text = "Message"
-        messageText.fontSize = 15*min(messageRectSize.width / messageText.frame.width, messageRectSize.height / messageText.frame.height)
-        messageText.fontColor = .black
-        self.addChild(messageText)
-        
-        let textFieldRect = CGRect(x: 13*WIDTHUNIT, y: 14*HEIGHTUNIT,
-                               width: 2*WIDTHUNIT, height: 1*HEIGHTUNIT)
-        let answerTextField = UITextField(frame: textFieldRect)
-        answerTextField.delegate = self
-        answerTextField.borderStyle = UITextBorderStyle.roundedRect
-        answerTextField.textColor = .black
-        answerTextField.placeholder = "Your answer"
-        answerTextField.backgroundColor = .lightGray
-        answerTextField.autocorrectionType = UITextAutocorrectionType.yes
-        self.view?.addSubview(answerTextField)
-        let submitButton = ButtonNode(texture: nil, color: .yellow, size: CGSize(width: 2*WIDTHUNIT, height: 0.75*HEIGHTUNIT))
-        submitButton.position = CGPoint(x: 14*WIDTHUNIT, y: 0.5*HEIGHTUNIT)
-        let submitLabel = SKLabelNode(fontNamed: "GillSans-Bold")
-        self.addChild(submitButton)
-        submitLabel.position = CGPoint(x: submitButton.position.x, y: submitButton.position.y - submitLabel.frame.height / 2.0)
-        submitLabel.text = "Submit!"
-        submitLabel.fontSize = 12
-        submitLabel.fontColor = .black
-        self.addChild(submitLabel)
-        submitButton.action = { (button) in
-            //do things when submit button is pressed
-        }
-        
         //Pinchy stuff
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         self.view?.addGestureRecognizer(pinchGesture)
-
+        
     }
     
     
@@ -224,7 +140,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 sender.scale = (blockTouched?.xScale)!
             }
         }
-        
+            
         else if sender.state == .changed {
             let pinchScale = sender.scale
             
@@ -244,13 +160,14 @@ class GameScene: SKScene, UITextFieldDelegate {
                 
                 //If not scaling to off the page!!!!! ZOE DO THIS NEXT
                 //If changing a variable block, scale all of the variable blocks???
-                    blockTouched?.xScale = pinchScale
+                blockTouched?.xScale = pinchScale
                 
-                    //Move the block over so it's only increasing to the right
-                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                //Move the block over so it's only increasing to the right
+                blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 
-                    //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
-                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
+                blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                blockTouched?.getBlockColorRectangle().xScale = CGFloat(1-1.5*(1/(blockTouched?.getWidth())!))
             }
         }
             
@@ -384,7 +301,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         return -1
     }
-
+    
     //Searches in a bar and finds the index of the block passed in. Returns that index of -1 if the block is not in the bar.
     func findIndexOfBlock(bar: [Block], block: Block) -> Int {
         if (bar.count == 0) {
@@ -435,17 +352,17 @@ class GameScene: SKScene, UITextFieldDelegate {
             if (indexInTopBar > -1) {
                 //If we move the block outside of the bar, by moving it too high, too left, or too right
                 if (   (Double(block.position.y) > Double(TOPBARY) + block.getHeight())   ||
-                       (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
+                    (Double(block.position.y) < Double(TOPBARY) - block.getHeight())   ||
                     ((abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight()) && (Double(block.position.x) < Double(BARX) - block.getWidth() / 2)                                                   ||
-                    (abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: topBar)))) {
+                        (abs(Double(TOPBARY) - Double(block.position.y)) < block.getHeight())  && (Double(block.position.x) - (block.getWidth() / 2) > getEndOfBar(bar: topBar)))) {
                     shiftBlocks(bar: topBar, width:-1*block.getWidth(), index:indexInTopBar)
                     topBar.remove(at: indexInTopBar)
                 }
-                
-                //if the y value didn't change enough, put the bar back in its spot
-                //The spot it goes back into has the y-value of the bar height
-                //And an x value of the previous block x location + half of the previous block width + half of this block width
-                // I have no idea why I need the temps... but it doesn't work without them...
+                    
+                    //if the y value didn't change enough, put the bar back in its spot
+                    //The spot it goes back into has the y-value of the bar height
+                    //And an x value of the previous block x location + half of the previous block width + half of this block width
+                    // I have no idea why I need the temps... but it doesn't work without them...
                 else {
                     //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
                     var xPosition : CGFloat = 0.0
@@ -460,7 +377,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         //Half the width of the block being added
                         xPosition += CGFloat(block.getWidth() / 2)
                     }
-                    //First block in the bar
+                        //First block in the bar
                     else {
                         xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
                     }
@@ -468,7 +385,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                     block.position = CGPoint(x:xPosition, y:CGFloat(TOPBARY))
                 }
             }
-            //If it's not already in the top bar, are you dragging it to the top bar?
+                //If it's not already in the top bar, are you dragging it to the top bar?
             else if abs(Double(TOPBARY) - Double(block.position.y)) < SNAPDISTANCE {
                 let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
                 if insertionIndex > -1 {
@@ -485,10 +402,10 @@ class GameScene: SKScene, UITextFieldDelegate {
                     shiftBlocks(bar: bottomBar, width:-1*block.getWidth(), index:indexInBottomBar)
                     bottomBar.remove(at: indexInBottomBar)
                 }
-                //if the y value didn't change enough, put the bar back in its spot
-                //The spot it goes back into has the y-value of the bar height
-                //And an x value of the previous block x location + half of the previous block width + half of this block width
-                // I have no idea why I need the temps... but it doesn't work without them...
+                    //if the y value didn't change enough, put the bar back in its spot
+                    //The spot it goes back into has the y-value of the bar height
+                    //And an x value of the previous block x location + half of the previous block width + half of this block width
+                    // I have no idea why I need the temps... but it doesn't work without them...
                 else {
                     //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
                     var xPosition : CGFloat = 0.0
@@ -510,7 +427,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                     block.position = CGPoint(x:xPosition, y:CGFloat(BOTTOMBARY))
                 }
             }
-            //If it's not already in the bottom bar, are you dragging it to the bottom bar?
+                //If it's not already in the bottom bar, are you dragging it to the bottom bar?
             else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < SNAPDISTANCE {
                 let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
                 if insertionIndex > -1 {
@@ -524,7 +441,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 garbage.setScale(1.0)
             }
             
-            // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank. 
+            // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank.
             // If not, put the block back where it came from
             if (block == numBlockInBank) {
                 //Block has moved outside of block bank
@@ -564,4 +481,5 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
 }
+
 

@@ -25,6 +25,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(currentUser == nil) {
+            currentUser = Teacher(idToken: "23", name: "Meg Crenshaw")
+            (currentUser as! Teacher).testAPIConnector()
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

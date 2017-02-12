@@ -14,20 +14,47 @@ class APIConnector: NSObject  {
     
     
     // PROBLEM SCREEN
-    func requestNextProblem(callingDelegate: APIDataDelegate, level: Int, studentID: String) {
+    func requestNextProblem(callingDelegate: APIDataDelegate, studentID: String) {
         let url = baseURL + "attemptGetNextProblem/" + studentID
-        let dummyData: [NSArray] = [["Problem Data"], ["Problem Data"]]
-        callingDelegate.handleNextProblem?(data: dummyData)
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleNextProblem!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
+
     }
     
-    func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
+    /*func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
         let dummyData = false
         callingDelegate.handleAddProblemDataAttempt?(data: dummyData)
+    }*/
+    
+    func attemptSubmitAnswer(callingDelegate: APIDataDelegate, studentID: String, studentAnswer: String) {
+        let url = baseURL + "attemptSubmitAnswer/" + studentID + "/" + studentAnswer
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleSubmitAnswer!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
     }
     
     // STUDENT ACCOUNT
     func requestStudentDashInfo(callingDelegate: APIDataDelegate, studentID: String) {
-        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
+        let dummyData: NSDictionary = ["error": "none", "data": ["Dash Data"]]
         callingDelegate.handleStudentDashInfo?(data: dummyData)
     }
     
@@ -35,64 +62,93 @@ class APIConnector: NSObject  {
     
     func attemptAddStudentToClassroom(callingDelegate: APIDataDelegate, studentID: String, classroomID: String) {
         let url = baseURL + "attemptAddStudentToClassroom/" + studentID + "/" + classroomID
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
-                } else if (utf8Text == "ERROR: student id or classroom id invalid") {
-                    print("Need to figure out how to handle this")
-                } else if (utf8Text == "ERROR: Student already in classroom") {
-                    print("Need to figure out how to handle this")
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleAddStudentToClassAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
                 }
-                callingDelegate.handleAddStudentToClassAttempt?(data: result)
             }
         }
     }
     
     func attemptRemoveStudentFromClassroom(callingDelegate: APIDataDelegate, studentID: String, classroomID: String) {
         let url = baseURL + "attemptRemoveStudentFromClassroom/" + studentID + "/" + classroomID
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
                 }
-                callingDelegate.handleRemoveStudentFromClassAttempt?(data: result)
             }
         }
     }
     
     func requestProblemHistory(callingDelegate: APIDataDelegate, studentID: String) {
-        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
-        callingDelegate.handleProblemHistory?(data: dummyData)
+        let dummyData: NSDictionary = ["error": "none", "data": ["Dash Data"]]
+        callingDelegate.handleStudentDashInfo?(data: dummyData)
     }
     
     func requestCorrectIncorrectRatio(callingDelegate: APIDataDelegate, studentID: String) {
-        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
-        callingDelegate.handleCorrectIncorrectRatio?(data: dummyData)
+        let dummyData: NSDictionary = ["error": "none", "data": ["Dash Data"]]
+        callingDelegate.handleStudentDashInfo?(data: dummyData)
     }
     
     // TEACHER ACOUNT
     
     func requestTeacherDashInfo(callingDelegate: APIDataDelegate, teacherID: String) {
-        let dummyData: [NSArray] = [["Dash Data"], ["Dash Data"]]
-        callingDelegate.handleTeacherDashInfo?(data: dummyData)
+        let url = baseURL + "requestTeacherDashInfo/" + teacherID
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleTeacherDashInfoRequest!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
+    }
+    
+    func requestClassroomData(callingDelegate: APIDataDelegate, classroomID: String) {
+        let url = baseURL + "requestClassroomData/" + classroomID
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleClassroomDataRequest!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
     }
     
     // Attempts to add class room, returns null if not able, otherwise returns ID
     func attemptAddClassroom(callingDelegate: APIDataDelegate, teacherID: String, classroomName: String) {
         let url = baseURL + "attemptAddClassroom/" + teacherID + "/" + classroomName
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleAddClassroomAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
                 }
-                if (utf8Text == "ERROR: Account id invalid") {
-                    print("Need to figure out how to handle this")
-                }
-                callingDelegate.handleAddClassroomAttempt?(data: result)
             }
         }
     }
@@ -100,16 +156,16 @@ class APIConnector: NSObject  {
     // API call to attempt to remove a classroom
     func attemptRemoveClassroom(callingDelegate: APIDataDelegate, classroomID: String) {
         let url = baseURL + "attemptRemoveClassroom/" + classroomID
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
                 }
-                if (utf8Text == "ERROR: Account id invalid") {
-                    print("Need to figure out how to handle this")
-                }
-                callingDelegate.handleRemoveClassroomAttempt?(data: result)
             }
         }
     }
@@ -119,13 +175,16 @@ class APIConnector: NSObject  {
     func attemptLogin(callingDelegate: APIDataDelegate, idToken: String) {
         
         let url = baseURL + "attemptLogin/" + idToken
-        Alamofire.request(url).responseData { response in
-            if let responseData = response.result.value, let utf8Text = String(data: responseData, encoding: .utf8) {
-                /* var result = false
-                if (utf8Text == "True") {
-                    result = true
-                } */
-                callingDelegate.handleLoginAttempt?(data: utf8Text)
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleLoginAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
             }
         }
     }
@@ -134,17 +193,15 @@ class APIConnector: NSObject  {
     func attemptCreateAccount(callingDelegate: APIDataDelegate, idToken: String, accountType: String) {
         let url = baseURL + "attemptCreateUser/" + idToken + "/" + accountType
         Alamofire.request(url).responseJSON { response in
-            if let responseData = response.result.value{
-                /*
-                var result = false
-                if (utf8Text == "True") {
-                    result = true
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 201:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleCreateAccountAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
                 }
-                if (utf8Text == "ERROR: Account already exists") {
-                    print("Need to figure out how to handle this")
-                }
-                */
-                callingDelegate.handleCreateAccountAttempt?(data: responseData as! [NSArray])
             }
         }
     }
@@ -158,12 +215,7 @@ class APIConnector: NSObject  {
                 print("________________________________")
                 print("Got some JSON")
                 print("JSON: \(JSON)")
-                
-                callingDelegate.handleStudentData?(data: JSON as! [NSArray])
             }
-            
         }
     }
-    
-    
 }

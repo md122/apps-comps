@@ -102,7 +102,7 @@ class Block: SKSpriteNode {
         return self.label
     }
     
-    func getBlockColorRectangle() ->SKSpriteNode{
+    func getBlockColorRectangle() -> SKSpriteNode{
         return self.innerBlockColor
     }
 
