@@ -5,9 +5,7 @@
 //  Created by Zoe Peterson on 10/29/16.
 //  Copyright © 2016 Zoe Peterson. All rights reserved.
 //  Blocks moving based on tutorial https://www.raywenderlich.com/123393/how-to-create-a-breakout-game-with-sprite-kit-and-swift
-
 // Creates blocks ever time a block is let go at a position greater than (200, 200). Doesn't yet snap back to original location of the block is not drag the block back to the original space.
-
 import SpriteKit
 import GameplayKit
 import UIKit
@@ -86,8 +84,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
         HAMMERPOSITION = CGPoint(x: 0.25*WIDTHUNIT+2*GARBAGESIZE.width, y: HEIGHTUNIT)
-
-       
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
@@ -105,7 +101,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func addBlockChild(_ node: SKNode) {
         node.zPosition = CGFloat(currentBlockZ)
         currentBlockZ += 6
@@ -149,7 +145,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         self.view?.addGestureRecognizer(pinchGesture)
-
+        
     }
     
     //Got this from the stack overflow post...
@@ -167,7 +163,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 }
             }
         }
-        
+            
         else if sender.state == .changed {
             let pinchScale = sender.scale
             //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
@@ -258,6 +254,11 @@ class GameScene: SKScene, UITextFieldDelegate {
                     }
                 }
                 //From fixing a merge conflict...!!!
+                
+                //If not scaling to off the page!!!!! ZOE DO THIS NEXT
+                //If changing a variable block, scale all of the variable blocks???
+                //blockTouched?.xScale = pinchScale
+                
                 //Move the block over so it's only increasing to the right
                 //blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
                 
@@ -430,7 +431,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         return -1
     }
-
+    
     //Searches in a bar and finds the index of the block passed in. Returns that index of -1 if the block is not in the bar.
     func findIndexOfBlock(bar: [Block], block: Block) -> Int {
         if (bar.count == 0) {
@@ -465,7 +466,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
         return endOfBar
     }
-    
     //At the end of a touch or when the pinch action starts put the block back into place and update stuff based on where it goes
     //Might make block touched nil, because it might snap the block into the garbage can
     func snapPositiveBlockIntoPlace(block: Block) {
@@ -483,10 +483,10 @@ class GameScene: SKScene, UITextFieldDelegate {
                 topBar.remove(at: indexInTopBar)
             }
                 
-            //if the y value didn't change enough, put the bar back in its spot
-            //The spot it goes back into has the y-value of the bar height
-            //And an x value of the previous block x location + half of the previous block width + half of this block width
-            // I have no idea why I need the temps... but it doesn't work without them...
+                //if the y value didn't change enough, put the bar back in its spot
+                //The spot it goes back into has the y-value of the bar height
+                //And an x value of the previous block x location + half of the previous block width + half of this block width
+                // I have no idea why I need the temps... but it doesn't work without them...
             else {
                 //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
                 var xPosition : CGFloat = 0.0
@@ -501,7 +501,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                     //Half the width of the block being added
                     xPosition += CGFloat(block.getWidth() / 2)
                 }
-                //First block in the bar
+                    //First block in the bar
                 else {
                     xPosition += CGFloat(BARX) + CGFloat(block.getWidth() / 2)
                 }
@@ -509,7 +509,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 block.position = CGPoint(x:xPosition, y:CGFloat(TOPBARY))
             }
         }
-        //If it's not already in the top bar, are you dragging it to the top bar?
+            //If it's not already in the top bar, are you dragging it to the top bar?
         else if abs(Double(TOPBARY) - Double(block.position.y)) < SNAPDISTANCE {
             let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
             if insertionIndex > -1 {
@@ -551,7 +551,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 block.position = CGPoint(x:xPosition, y:CGFloat(BOTTOMBARY))
             }
         }
-        //If it's not already in the bottom bar, are you dragging it to the bottom bar?
+            //If it's not already in the bottom bar, are you dragging it to the bottom bar?
         else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < SNAPDISTANCE {
             let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
             if insertionIndex > -1 {
@@ -572,7 +572,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             else {
                 block.position = NUMBLOCKBANKPOSITION
             }
-        
+            
         }
         
         // Are you dragging a block from the variable bank? If you moved it "far enough", repopulate the varBlockBank.
@@ -615,7 +615,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                 }
             }
         }
-        
         // Are you dragging a block from the number bank? If you moved it "far enough", repopulate the numBlockBank.
         // If not, put the block back where it came from
         if (block == subNumBlockInBank) {
@@ -667,7 +666,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         block.zRotation = block.zRotation + 1
     }
     
-    // Called when you lift up your finger
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
             let block = blockTouched!
@@ -685,7 +683,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         //fieldNode.categoryBitMask = 0x1 << 0
                         //fieldNode.strength = 2.8
                         
-                       
+                        
                         //child.physicsBody?.fieldBitMask = 0x1 << 0
                         
                         //fieldNode.run(SKAction.sequence([SKAction.strength(to: 0, duration: 2.0), SKAction.removeFromParent()]))
@@ -701,21 +699,16 @@ class GameScene: SKScene, UITextFieldDelegate {
                         child.removeFromParent()
                     }
                 }
-
+                
             }
             else {
                 snapNegativeBlockIntoPlace(block: block)
             }
-            
-            
-            
             blockTouched = nil
         }
     }
-    
     override func update(_ currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
-    
 }
 

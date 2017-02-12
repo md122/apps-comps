@@ -57,31 +57,31 @@ class Student: Account, APIDataDelegate {
     }
     
     // Function that gets called when studentDashInfo gets back
-    func handleStudentDashInfo(data: [NSArray]) {
+    func handleStudentDashInfo(data: NSDictionary) {
         print("Incoming handleStudentDashInfo data")
         print(data)
     }
     
     // Function that gets called when attempt to remove student from class gets back
-    func handleAddStudentToClassAttempt(data: Bool) {
+    func handleAddStudentToClassAttempt(data: NSDictionary) {
         print("Incoming handleAddStudentToClassAttempt data")
         print(data)
     }
     
     // Function that gets called when attempt to remove student from class gets back
-    func handleRemoveStudentFromClassAttempt(data: Bool) {
+    func handleRemoveStudentFromClassAttempt(data: NSDictionary) {
         print("Incoming handleRemoveStudentFromClassAttempt data")
         print(data)
     }
     
     // Function that gets called when problem history gets back
-    func handleProblemHistory(data: [NSArray]) {
+    func handleProblemHistory(data: NSDictionary) {
         print("Incoming handleProblemHistory data")
         print(data)
     }
     
     // Function that gets called when correct/incorrect ratio gets back
-    func handleCorrectIncorrectRatio(data: [NSArray]) {
+    func handleCorrectIncorrectRatio(data: NSDictionary) {
         print("Incoming handleCorrectIncorrectRatio data")
         print(data)
     }

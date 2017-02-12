@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -108,26 +108,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="A problem goes here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftv-Qc-Hob">
-                                <frame key="frameInset" minX="432" minY="20" width="160" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A problem goes here" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftv-Qc-Hob">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hLG-Wb-CdC" userLabel="Game" customClass="SKView">
-                                <frame key="frameInset" minY="90" width="788" height="679"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hLG-Wb-CdC" userLabel="Game" customClass="SKView">
                                 <color key="backgroundColor" red="1" green="0.19316454220000001" blue="0.40991690200000003" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mP0-VS-LJC">
-                                <frame key="frameInset" minX="817" minY="414" width="170" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mP0-VS-LJC">
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhQ-QK-QiL">
-                                <frame key="frameInset" minX="817" minY="452" width="158" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhQ-QK-QiL">
                                 <accessibility key="accessibilityConfiguration" label="Submit Button"/>
                                 <state key="normal" title="Submit Answer"/>
+                                <connections>
+                                    <action selector="submitAnswer:" destination="cnD-Rx-Jca" eventType="touchUpInside" id="YeF-8c-gOc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -168,7 +167,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0eD-eZ-imV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JDx-YS-U4u">
-                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u1H-Z3-vnB" userLabel="Menu View">
@@ -210,7 +209,7 @@
                                 <color key="backgroundColor" red="1" green="0.61064428559999995" blue="0.71442666659999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e39-bF-GlZ">
-                                <frame key="frameInset" minX="-1" minY="205" height="563"/>
+                                <frame key="frameInset" minX="-1" minY="205" height="563" maxX="1"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <connections>
                                     <segue destination="fSl-Vx-zgN" kind="embed" id="mxx-Iw-UIW"/>
@@ -400,7 +399,7 @@
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
-                        <rect key="frame" x="0.0" y="0.0" width="704" height="563"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="563"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Su9-fR-Opt">
@@ -452,6 +451,6 @@
         <image name="logo placeholder" width="338" height="89"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YMb-pw-gum"/>
+        <segue reference="50h-do-3yE"/>
     </inferredMetricsTieBreakers>
 </document>
