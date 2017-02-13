@@ -99,8 +99,7 @@ class ClassroomTableMasterViewController: UITableViewController {
         self.leftBarButton.title = "Edit"
     }
     
-    override func tableView(_ tableView: UITableView,
-                            didSelectRowAt indexPath: IndexPath){
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if self.isEditing == false {
             detailViewController?.loadStudentCollection(classroomID: "test")
         }
