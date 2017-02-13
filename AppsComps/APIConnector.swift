@@ -94,7 +94,7 @@ class APIConnector: NSObject  {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
-                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
+                        callingDelegate.handleRemoveStudentFromClassAttempt!(data: responseData as! NSDictionary)
                     }
                 default:
                     print("error with response status: \(status)")
@@ -149,7 +149,8 @@ class APIConnector: NSObject  {
     
     // Attempts to add class room, returns null if not able, otherwise returns ID
     func attemptAddClassroom(callingDelegate: APIDataDelegate, teacherID: String, classroomName: String) {
-        let url = baseURL + "attemptAddClassroom/" + teacherID + "/" + classroomName
+        var url = baseURL + "attemptAddClassroom/" + teacherID + "/" + classroomName
+        url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
@@ -165,14 +166,14 @@ class APIConnector: NSObject  {
     }
     
     // API call to attempt to remove a classroom
-    func attemptRemoveClassroom(callingDelegate: APIDataDelegate, classroomID: String) {
-        let url = baseURL + "attemptRemoveClassroom/" + classroomID
+    func attemptRemoveClassroom(callingDelegate: APIDataDelegate, classroomID: Int) {
+        let url = baseURL + "attemptRemoveClassroom/" + String(classroomID)
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
-                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
+                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary, classID: classroomID)
                     }
                 default:
                     print("error with response status: \(status)")

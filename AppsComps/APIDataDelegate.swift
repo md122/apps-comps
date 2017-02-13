@@ -30,7 +30,7 @@ import Foundation
     @objc optional func handleTeacherDashInfoRequest(data: NSDictionary) ;
     @objc optional func handleClassroomDataRequest(data: NSDictionary) ;
     @objc optional func handleAddClassroomAttempt(data: NSDictionary) ;
-    @objc optional func handleRemoveClassroomAttempt(data: NSDictionary) ;
+    @objc optional func handleRemoveClassroomAttempt(data: NSDictionary, classID: Int) ;
     
     // Methods for login screen
     @objc optional func handleLoginAttempt(data: NSDictionary) ;

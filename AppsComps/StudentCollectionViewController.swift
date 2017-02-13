@@ -49,6 +49,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
     }
     
+    func loadData(studentsData: [NSArray]) {
+        print(studentsData)
+    }
+    
     func modeSegmentChanged(_ sender: AnyObject) {
         if sender.selectedSegmentIndex == 1 {
             self.cellMode = true
