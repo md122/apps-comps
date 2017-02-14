@@ -21,13 +21,12 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setProblemText()
         
         gameView.showsFPS = true
         gameView.showsNodeCount = true
         
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
         gameView.ignoresSiblingOrder = true
         
         let scene = GameScene(size: gameView.bounds.size)
@@ -51,8 +50,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     func setProblemText() {
-        let connector = APIConnector()
-        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
+        problemLabel.text = "Gretchen plays the clarinet, and her teacher has a required amount of time that a practice session is supposed to last. Last week she practiced the required amount of time 6 times, and practiced for 30 extra minutes on Thursday. This week she practiced the required amount 5 times and practiced 90 minutes less this week than last week. How long does Gretchen’s teacher require that a practice session last?"
+        
+        //let connector = APIConnector()
+        //connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
         
     }
     
