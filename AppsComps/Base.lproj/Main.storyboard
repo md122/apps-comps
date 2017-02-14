@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -117,6 +118,9 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hLG-Wb-CdC" userLabel="Game" customClass="SKView">
                                 <color key="backgroundColor" red="1" green="0.19316454220000001" blue="0.40991690200000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hLG-Wb-CdC" secondAttribute="height" multiplier="137:100" id="R1G-Aq-ppo"/>
+                                </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mP0-VS-LJC">
                                 <nil key="textColor"/>
@@ -143,7 +147,6 @@
                             <constraint firstItem="hLG-Wb-CdC" firstAttribute="leading" secondItem="ayL-yk-Lo9" secondAttribute="leading" id="ec6-uk-Fy8"/>
                             <constraint firstItem="mP0-VS-LJC" firstAttribute="centerY" secondItem="ayL-yk-Lo9" secondAttribute="centerY" id="fQt-K3-1Hf"/>
                             <constraint firstAttribute="bottom" secondItem="hLG-Wb-CdC" secondAttribute="bottom" id="lth-MU-dG8"/>
-                            <constraint firstItem="hLG-Wb-CdC" firstAttribute="top" secondItem="ftv-Qc-Hob" secondAttribute="top" constant="100" id="y8l-g9-hGn" userLabel="Game.top = Problem Label.top + 100"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
