@@ -21,7 +21,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     var topBar = [Block]()
     var bottomBar = [Block]()
-    var levelCircles = [SKShapeNode]()
     var garbage:SKSpriteNode
     
     // The starting coordinates
