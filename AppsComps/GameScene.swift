@@ -11,7 +11,7 @@ import GameplayKit
 import UIKit
 
 class GameScene: SKScene, UITextFieldDelegate {
-    
+    let parentViewController:UIViewController
     // SKCamera
     
     // Makes the blocks stack in the correct order
@@ -62,7 +62,8 @@ class GameScene: SKScene, UITextFieldDelegate {
     var subNumBlockInBank:Block
     var subVarBlockInBank:Block
     
-    override init(size: CGSize) {
+    init(size: CGSize, parent: UIViewController) {
+        self.parentViewController = parent
         width = size.width
         height = size.height
         HEIGHTUNIT = height/16
@@ -85,10 +86,10 @@ class GameScene: SKScene, UITextFieldDelegate {
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
         HAMMERPOSITION = CGPoint(x: 0.25*WIDTHUNIT+2*GARBAGESIZE.width, y: HEIGHTUNIT)
         currentBlockZ = 1.0
-        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE)
-        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE)
-        subNumBlockInBank = Block(type:.subNumber, size: NUMBLOCKSIZE)
-        subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE)
+        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, value: 1.0)
+        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE, value: 1.0)
+        subNumBlockInBank = Block(type:.subNumber, size: NUMBLOCKSIZE, value: -1.0)
+        subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE, value: -1.0)
         
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         hammer = Hammer()
@@ -102,6 +103,10 @@ class GameScene: SKScene, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func tester() {
+        print("testing 1 2 3")
+    }
+    
     func addBlockChild(_ node: SKNode) {
         node.zPosition = CGFloat(currentBlockZ)
         currentBlockZ += 6
@@ -111,6 +116,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     // Called immediately after a scene is loaded
     // Sets the layout of all components in the problem screen
     override func didMove(to view: SKView) {
+
         self.backgroundColor = .white
         
         garbage.position = GARBAGEPOSITION
@@ -146,6 +152,14 @@ class GameScene: SKScene, UITextFieldDelegate {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         self.view?.addGestureRecognizer(pinchGesture)
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPressFrom(_:)))
+        self.view?.addGestureRecognizer(longPressGesture)
+        
+    }
+    func handleLongPressFrom(_ sender: UILongPressGestureRecognizer) {
+        if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != hammer{
+            changeBlockValueAlert(block: blockTouched!)
+        }
     }
     
     //Got this from the stack overflow post...
@@ -278,6 +292,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
     
+    
     //Block is touched first checks if it's child is touched, and then checks to see if it is touched
     func blockIsTouched(touchLocation: CGPoint, child: SKNode?) -> String {
         if let block = child as? Block {
@@ -304,6 +319,71 @@ class GameScene: SKScene, UITextFieldDelegate {
         blockTouched?.color = .red
         blockTouched?.zPosition = currentBlockZ
         currentBlockZ += 6
+    }
+    
+    func changeBlockValueAlert(block: Block) {
+        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        changeValueAlert.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.keyboardType = UIKeyboardType.numberPad
+        })
+        
+        changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
+        changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
+            let valueEntered = Double(changeValueAlert.textFields![0].text!)
+            //SANATIZE THE INPUTS!!!!!!
+            var newBlock: Block
+            if block.getType() == "variable" {
+                newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: valueEntered!)
+            }
+            else if block.getType() == "subVariable"{
+                newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered!)
+            }
+            //Number case
+            else if block.getType() == "number"{
+                newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered!)
+            }
+            //subNumber case, not specified so new block always initializes
+            else {
+                newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered!)
+            }
+            if block.getSubtractionBlock() != nil {
+                let subBlock = block.getSubtractionBlock()
+                subBlock?.removeFromParent()
+                //Probs need to scale up!!!
+                newBlock.setSubtractionBlock(block: subBlock)
+            }
+            //Not quite old position
+            newBlock.position = block.position
+            newBlock.xScale = block.xScale
+            //If the old block was in a bar, we do not need to scoot it over
+            //WHY THE SELF. !!!!!!!
+            let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
+            let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
+            let shift = newBlock.getWidth() - block.getWidth()
+            if indexInTopBar > -1 {
+                //Add new block to bar, remove old block from bar
+                print("index in top bar", indexInTopBar)
+                self.topBar.remove(at: indexInTopBar)
+                self.topBar.insert(newBlock, at:indexInTopBar)
+                self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar - 1)
+            }
+            else if indexInBottomBar > -1 {
+                //Add new block to bar, remove old block from bar
+                self.bottomBar.remove(at: indexInBottomBar)
+                self.bottomBar.insert(newBlock, at:indexInBottomBar)
+                self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar - 1)
+            }
+            
+            block.removeFromParent()
+            self.addBlockChild(newBlock)
+            //Scale the label because the block scale changed after it was created
+            newBlock.getLabel().xScale = 1 / newBlock.xScale
+            
+            //In a bar, remove from bar and scoot everyone over
+
+        }))
+        self.parentViewController.present(changeValueAlert, animated: true, completion: nil)
     }
     
     // Called when you touch the screen
@@ -457,6 +537,23 @@ class GameScene: SKScene, UITextFieldDelegate {
             }
         }
     }
+    //If the block is in the top bar or the bottom bar, this function removes it and scoots the blocks that come after it over
+    func removeBlockFromBarAndScootBlocksOver(block: Block) {
+        let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
+        let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
+        
+        //The block is in the top bar
+        if (indexInTopBar > -1) {
+            shiftBlocks(bar: topBar, width:-1*block.getWidth(), index:indexInTopBar)
+            topBar.remove(at: indexInTopBar)
+        }
+        
+        //The block is in the bottom bar
+        if (indexInBottomBar > -1) {
+            shiftBlocks(bar: bottomBar, width:-1*block.getWidth(), index:indexInBottomBar)
+            bottomBar.remove(at: indexInBottomBar)
+        }
+    }
     
     //Returns the x coordinate for the end of the last block in the bar passed in
     func getEndOfBar(bar: [Block]) -> Double {
@@ -564,7 +661,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == numBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .number, size: NUMBLOCKSIZE)
+                let newBlock = Block(type: .number, size: NUMBLOCKSIZE, value: 1.0)
                 newBlock.position = NUMBLOCKBANKPOSITION
                 numBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -580,7 +677,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == varBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .variable, size: VARBLOCKSIZE)
+                let newBlock = Block(type: .variable, size: VARBLOCKSIZE, value: 1.0)
                 newBlock.position = VARBLOCKBANKPOSITION
                 varBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -620,7 +717,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == subNumBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - SUBNUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - SUBNUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .subNumber, size: NUMBLOCKSIZE)
+                let newBlock = Block(type: .subNumber, size: NUMBLOCKSIZE, value: -1.0)
                 newBlock.position = SUBNUMBLOCKBANKPOSITION
                 subNumBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -635,7 +732,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == subVarBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - SUBVARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - SUBVARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .subVariable, size: VARBLOCKSIZE)
+                let newBlock = Block(type: .subVariable, size: VARBLOCKSIZE, value: -1.0)
                 newBlock.position = SUBVARBLOCKBANKPOSITION
                 subVarBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -675,9 +772,9 @@ class GameScene: SKScene, UITextFieldDelegate {
                 snapPositiveBlockIntoPlace(block: block)
             }
             if block.getType() == "hammer" {
-                snapNegativeBlockIntoPlace(block: block)
+                //snapNegativeBlockIntoPlace(block: block)
                 for case let child as Block in self.children {
-                    if child.getSubtractionBlock() != nil && (child.getSubtractionBlock()!.getValue() <= child.getValue()) && hammer.intersects(child){
+                    if child.getSubtractionBlock() != nil && (abs(child.getSubtractionBlock()!.getValue()) <= child.getValue()) && hammer.intersects(child){
                         //VORTEX!!! WHY????!!!!
                         //let fieldNode = SKFieldNode.radialGravityField()
                         //fieldNode.categoryBitMask = 0x1 << 0
@@ -690,15 +787,15 @@ class GameScene: SKScene, UITextFieldDelegate {
                         //print(fieldNode)
                         //hammer.addChild(fieldNode)
                         //Remove in a super cool black hole way!!!!
-                        while child.xScale > 0.1 {
-                            child.xScale = (child.xScale / 1.0001)
-                            print("in loop", child.xScale)
-                        }
-                        //SHIFT OVER THE BLOCKS AFTER IT IN A BAR!!!
-                        hammer.position = HAMMERPOSITION
+                        //while child.xScale > 0.1 {
+                         //   child.xScale = (child.xScale / 1.0001)
+                         //   print("in loop", child.xScale)
+                        //}
+                        removeBlockFromBarAndScootBlocksOver(block: child)
                         child.removeFromParent()
                     }
                 }
+                hammer.position = HAMMERPOSITION
                 
             }
             else {

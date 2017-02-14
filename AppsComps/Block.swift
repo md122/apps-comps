@@ -39,29 +39,41 @@ class Block: SKSpriteNode {
         
     }
     
-    init(type: BlockType, size: CGSize) {
+    init(type: BlockType, size: CGSize, value: Double) {
+        var blockSize = CGSize(width: size.width, height: size.height)
         self.type = type
-        self.value = 1.0
+        self.value = value
         subtractionBlock = nil
         
-        BLOCKHEIGHT = size.height
-        BLOCKWIDTH = size.width
-        
+        BLOCKHEIGHT = blockSize.height
+        if type == .variable || type == .subVariable {
+            BLOCKWIDTH = blockSize.width * CGFloat(abs(value))
+        }
+        else {
+             BLOCKWIDTH = blockSize.width
+        }
+    
         switch self.type {
         case .number:
-            super.init(texture: nil, color: .black, size: size)
-            innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
+            super.init(texture: nil, color: .black, size: blockSize)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: blockSize)
             label.text = String(value)
             label.fontSize = 20
         case .variable:
-            super.init(texture: nil, color: .black, size:size)
-            innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
-            label.text = "x"
+            blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
+            super.init(texture: nil, color: .black, size:blockSize)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: blockSize)
+            if self.value == 1 {
+                label.text = "x"
+            }
+            else {
+                label.text = String(self.value) + "x"
+            }
             label.fontSize = 20
         case .subNumber:
-            super.init(texture: nil, color: .black, size:size)
-            innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: size)
-            label.text = String(-1 * value)
+            super.init(texture: nil, color: .black, size:blockSize)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: blockSize)
+            label.text = String(value)
             self.alpha = 0.40
             label.alpha = 1 / 0.40
             label.position = CGPoint(x: self.getWidth() / 6, y: -1 * self.getHeight() / 4)
@@ -77,9 +89,15 @@ class Block: SKSpriteNode {
             self.addChild(shape)
             label.fontSize = 15
         case .subVariable:
-            super.init(texture: nil, color: .black, size:size)
-            innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: size)
-            label.text = "-x"
+            blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
+            super.init(texture: nil, color: .black, size:blockSize)
+            innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: blockSize)
+            if self.value == -1 {
+                label.text = "-x"
+            }
+            else {
+                label.text = String(self.value) + "x"
+            }
             self.alpha = 0.40
             label.alpha = 1 / 0.40
             label.position = CGPoint(x: self.getWidth() / 4, y: -1 * self.getHeight() / 4)
@@ -99,11 +117,10 @@ class Block: SKSpriteNode {
             self.type = .hammer
             self.value = 1.0
             subtractionBlock = nil
-            super.init(texture: nil, color: .black, size:size)
-            print("hammer")
+            super.init(texture: nil, color: .black, size:blockSize)
         }
         
-        self.xScale = xScale
+        //self.xScale = xScale
         innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))
         innerBlockColor.yScale = CGFloat(1-1.5*(1/self.getHeight()))
         
@@ -113,8 +130,8 @@ class Block: SKSpriteNode {
         
         //Set the look of the label and attach the label to this block 2 units higher than its parent
         label.fontColor = .black
-        label.xScale = 1 / xScale
         self.addChild(label)
+        label.xScale = 1 / self.xScale
         label.zPosition = 2
     }
     
@@ -122,9 +139,9 @@ class Block: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setValue(value: Double) -> Void{
-        self.value = value
-    }
+    //func setValue(value: Double) -> Void{
+    //    self.value = value
+    //}
     
     func getValue() -> Double{
         return value
@@ -141,6 +158,7 @@ class Block: SKSpriteNode {
     //Changing width by scale factor so width returns the width of the bar after it's scaled
     func getWidth() -> Double{
         return Double(BLOCKWIDTH) * Double(self.xScale)
+
     }
     
     func getTopRightX() -> Double{
@@ -173,7 +191,6 @@ class Block: SKSpriteNode {
     }
     
     func setSubtractionBlock(block: Block?) {
-        print("adding a child")
         self.subtractionBlock = block
         block?.position = CGPoint(x:((self.getWidth() / 2) - (block?.getWidth())! / 2) / Double(self.xScale), y:0)
         block?.xScale = (block?.xScale)! / self.xScale

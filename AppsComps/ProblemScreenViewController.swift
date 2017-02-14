@@ -20,14 +20,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var submitTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     
-    
     var incorrectAttempts: Int = 0
-    
+    var scene: GameScene?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setProblemText()
-        
 
         gameView.showsFPS = true
         gameView.showsNodeCount = true
@@ -35,9 +34,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         gameView.ignoresSiblingOrder = true
         
-        let scene = GameScene(size: gameView.bounds.size)
+        scene = GameScene(size: gameView.bounds.size, parent: self)
         gameView.presentScene(scene)
-        
         
     }
     
@@ -54,6 +52,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     @IBAction func submitAnswer(_ sender: AnyObject) {
+        scene?.tester()
         let answer = submitTextField.text
         let connector = APIConnector()
         connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
