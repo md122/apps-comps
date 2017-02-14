@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00CF8B331E3E51D4005B7653 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CF8B321E3E51D3005B7653 /* ButtonNode.swift */; };
 		1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */; };
 		1135C03A1E4ED756008671B6 /* GraphCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0391E4ED756008671B6 /* GraphCollectionViewCell.swift */; };
 		1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */; };
@@ -82,7 +81,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00CF8B321E3E51D3005B7653 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		00CF8B3A1E3E96EA005B7653 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		00CF8B3C1E3E96EA005B7653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -311,7 +309,6 @@
 			isa = PBXGroup;
 			children = (
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
-				00CF8B321E3E51D3005B7653 /* ButtonNode.swift */,
 				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
 				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
 			);
@@ -828,7 +825,6 @@
 				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
 				817491D81E343FC00057B5F3 /* LevelButtonCollectionCell.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
-				00CF8B331E3E51D4005B7653 /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

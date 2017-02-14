@@ -10,16 +10,12 @@
 import UIKit
 import SpriteKit
 
-
-
-
 class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     @IBOutlet weak var gameView: SKView!
     @IBOutlet weak var problemLabel: UILabel!
     @IBOutlet weak var submitTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
-    
     
     var incorrectAttempts: Int = 0
     
@@ -28,7 +24,6 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         
         setProblemText()
         
-
         gameView.showsFPS = true
         gameView.showsNodeCount = true
         
@@ -37,11 +32,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         
         let scene = GameScene(size: gameView.bounds.size)
         gameView.presentScene(scene)
-        
-        
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -59,18 +50,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
     }
     
-
-    
-    
     func setProblemText() {
         let connector = APIConnector()
         connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
         
     }
-    
-
-
-    
     
     // Function that gets called when problem answer comes back
     func handleSubmitAnswer(data: NSDictionary) {
@@ -106,10 +90,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
                 wrongAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
                 }))
                 present(wrongAnswerAlert, animated: true, completion: nil)
-                
-                
             }
-
         }
     }
     
