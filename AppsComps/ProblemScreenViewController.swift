@@ -19,14 +19,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     var incorrectAttempts: Int = 0
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
 
         setProblemText()
         
         gameView.showsFPS = true
         gameView.showsNodeCount = true
-        
         gameView.ignoresSiblingOrder = true
         
         let scene = GameScene(size: gameView.bounds.size)
