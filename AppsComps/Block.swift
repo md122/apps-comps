@@ -34,12 +34,14 @@ class Block: SKSpriteNode {
         
         switch self.type {
             case .number:
+                let numberColor = UIColor(hexString: "#00A1E4")
                 super.init(texture: nil, color: .black, size: size)
-                innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: numberColor, size: size)
                 label.text = String(value)
             case .variable:
+                let variableColor = UIColor(hexString: "#89fc00")
                 super.init(texture: nil, color: .black, size:size)
-                innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: size)
+                innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: size)
                 label.text = "x"
         }
         innerBlockColor.xScale = CGFloat(1-1.5*(1/self.getWidth()))

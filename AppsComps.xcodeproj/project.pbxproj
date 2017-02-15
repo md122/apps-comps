@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AD2D551E54C30200127AC3 /* UIColor.swift */; };
 		1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */; };
 		1135C03A1E4ED756008671B6 /* GraphCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0391E4ED756008671B6 /* GraphCollectionViewCell.swift */; };
 		1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */; };
@@ -81,6 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00AD2D551E54C30200127AC3 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		00CF8B3A1E3E96EA005B7653 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		00CF8B3C1E3E96EA005B7653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
 				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
 				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
+				00AD2D551E54C30200127AC3 /* UIColor.swift */,
 			);
 			name = ProblemScreen;
 			sourceTree = "<group>";
@@ -820,6 +823,7 @@
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
 				1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */,
+				00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */,
 				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
 				11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */,
 				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
