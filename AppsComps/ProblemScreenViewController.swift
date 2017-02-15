@@ -98,8 +98,9 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     // Function that gets called when next problem comes back
     func handleNextProblem(data: NSDictionary) {
-        problemLabel.text = data["data"] as? String
-
+        if (data["error"] as! String == "none") {
+            problemLabel.text = (data["data"] as! [NSArray])[0][0] as? String
+        }
     }
     
     
