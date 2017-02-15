@@ -108,11 +108,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
             let tempData = data["data"] as! [NSArray]
             self.problemLabel.text = tempData[0][0] as? String
         }
-
     }
-    
-    
-    
     
     /*
      // MARK: - Navigation
