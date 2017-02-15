@@ -30,9 +30,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
             GIDSignIn.sharedInstance().signOut()
         }
         
-        let connect = APIConnector()
+        //let connect = APIConnector()
         //connect.attemptAddClassroom(callingDelegate: self, teacherID: "23", classroomName: "CatsRoom")
-        connect.requestClassroomData(callingDelegate: self, classroomID: "42")
     }
     
     

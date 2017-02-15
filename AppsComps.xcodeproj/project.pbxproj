@@ -7,16 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00CF8B331E3E51D4005B7653 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CF8B321E3E51D3005B7653 /* ButtonNode.swift */; };
+		1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */; };
+		1135C03A1E4ED756008671B6 /* GraphCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0391E4ED756008671B6 /* GraphCollectionViewCell.swift */; };
+		1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */; };
+		1135C0411E4FCB32008671B6 /* EmptyCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0401E4FCB32008671B6 /* EmptyCollectionReusableView.swift */; };
 		113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */; };
 		113B052B1DDBB3AF00D001DD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052A1DDBB3AF00D001DD /* Account.swift */; };
 		113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052C1DDBB3B500D001DD /* Teacher.swift */; };
 		113B052F1DDBB3BB00D001DD /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052E1DDBB3BB00D001DD /* Student.swift */; };
 		113B05351DDBB3D400D001DD /* Classroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05341DDBB3D400D001DD /* Classroom.swift */; };
-		1186F59D1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F59C1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift */; };
 		1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */; };
 		1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */; };
 		1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */; };
+		11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */; };
 		12E5B6C7AF1EC81893F3CBC0 /* Pods_AppsComps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7EA029543374792360F5C /* Pods_AppsComps.framework */; };
 		22399E351E3A503C00DB2193 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22399E341E3A503C00DB2193 /* MainNavigationController.swift */; };
 		228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
@@ -79,18 +82,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00CF8B321E3E51D3005B7653 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		00CF8B3A1E3E96EA005B7653 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		00CF8B3C1E3E96EA005B7653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		1135C0391E4ED756008671B6 /* GraphCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphCollectionViewCell.swift; sourceTree = "<group>"; };
+		1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		1135C0401E4FCB32008671B6 /* EmptyCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyCollectionReusableView.swift; sourceTree = "<group>"; };
 		113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectorViewController.swift; sourceTree = "<group>"; };
 		113B052A1DDBB3AF00D001DD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		113B052C1DDBB3B500D001DD /* Teacher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		113B052E1DDBB3BB00D001DD /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		113B05341DDBB3D400D001DD /* Classroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classroom.swift; sourceTree = "<group>"; };
-		1186F59C1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherDashboardDetailViewController.swift; sourceTree = "<group>"; };
 		1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewController.swift; sourceTree = "<group>"; };
 		1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableMasterViewController.swift; sourceTree = "<group>"; };
 		1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewCell.swift; sourceTree = "<group>"; };
+		11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableViewCell.swift; sourceTree = "<group>"; };
 		22399E341E3A503C00DB2193 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnector.swift; sourceTree = "<group>"; };
 		22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +171,50 @@
 				00CF8B3C1E3E96EA005B7653 /* Info.plist */,
 			);
 			path = NumberKeyboard;
+			sourceTree = "<group>";
+		};
+		1135C0381E4ED5BE008671B6 /* Student Collection */ = {
+			isa = PBXGroup;
+			children = (
+				1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */,
+				1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */,
+				1135C0391E4ED756008671B6 /* GraphCollectionViewCell.swift */,
+				1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */,
+				1135C0401E4FCB32008671B6 /* EmptyCollectionReusableView.swift */,
+				1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */,
+			);
+			name = "Student Collection";
+			sourceTree = "<group>";
+		};
+		1135C03D1E4EE02B008671B6 /* ClassroomTable */ = {
+			isa = PBXGroup;
+			children = (
+				1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */,
+				11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */,
+			);
+			name = ClassroomTable;
+			sourceTree = "<group>";
+		};
+		1135C03E1E4EE0A5008671B6 /* TypeClasses */ = {
+			isa = PBXGroup;
+			children = (
+				113B052A1DDBB3AF00D001DD /* Account.swift */,
+				113B052C1DDBB3B500D001DD /* Teacher.swift */,
+				113B05341DDBB3D400D001DD /* Classroom.swift */,
+				113B052E1DDBB3BB00D001DD /* Student.swift */,
+			);
+			name = TypeClasses;
+			sourceTree = "<group>";
+		};
+		1135C03F1E4EE0D8008671B6 /* ProblemSelector */ = {
+			isa = PBXGroup;
+			children = (
+				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
+				81BF3A391E30255100196750 /* LevelButtonViewController.swift */,
+				810F05671E26DB5900F1FD49 /* LevelButton.swift */,
+				817491D71E343FC00057B5F3 /* LevelButtonCollectionCell.swift */,
+			);
+			name = ProblemSelector;
 			sourceTree = "<group>";
 		};
 		5378CE6D0C42F688A5BEBC51 /* Frameworks */ = {
@@ -261,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
-				00CF8B321E3E51D3005B7653 /* ButtonNode.swift */,
 				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
 				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
 				4773C4531E4AE88600C07CB2 /* Hammer.swift */,
@@ -272,19 +321,11 @@
 		8145A0301DDE17ED009A9CC7 /* Dashboards */ = {
 			isa = PBXGroup;
 			children = (
-				113B052A1DDBB3AF00D001DD /* Account.swift */,
 				22399E341E3A503C00DB2193 /* MainNavigationController.swift */,
-				113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */,
-				81BF3A391E30255100196750 /* LevelButtonViewController.swift */,
-				817491D71E343FC00057B5F3 /* LevelButtonCollectionCell.swift */,
-				810F05671E26DB5900F1FD49 /* LevelButton.swift */,
-				113B052E1DDBB3BB00D001DD /* Student.swift */,
-				1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */,
-				1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */,
-				113B05341DDBB3D400D001DD /* Classroom.swift */,
-				1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */,
-				1186F59C1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift */,
-				113B052C1DDBB3B500D001DD /* Teacher.swift */,
+				1135C03E1E4EE0A5008671B6 /* TypeClasses */,
+				1135C03F1E4EE0D8008671B6 /* ProblemSelector */,
+				1135C03D1E4EE02B008671B6 /* ClassroomTable */,
+				1135C0381E4ED5BE008671B6 /* Student Collection */,
 			);
 			name = Dashboards;
 			sourceTree = "<group>";
@@ -763,7 +804,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1186F59D1E31EB39004AE62F /* TeacherDashboardDetailViewController.swift in Sources */,
+				1135C03A1E4ED756008671B6 /* GraphCollectionViewCell.swift in Sources */,
 				47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */,
 				22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */,
 				818EC65C1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
@@ -773,18 +814,21 @@
 				4773C4541E4AE88600C07CB2 /* Hammer.swift in Sources */,
 				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
+				1135C0411E4FCB32008671B6 /* EmptyCollectionReusableView.swift in Sources */,
 				1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */,
 				22399E351E3A503C00DB2193 /* MainNavigationController.swift in Sources */,
 				113B052B1DDBB3AF00D001DD /* Account.swift in Sources */,
 				113B052F1DDBB3BB00D001DD /* Student.swift in Sources */,
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
+				1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */,
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
+				1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */,
 				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
+				11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */,
 				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
 				817491D81E343FC00057B5F3 /* LevelButtonCollectionCell.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
-				00CF8B331E3E51D4005B7653 /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,7 +21,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     var topBar = [Block]()
     var bottomBar = [Block]()
-    var levelCircles = [SKShapeNode]()
     var garbage:SKSpriteNode
     var hammer:SKSpriteNode
     
@@ -77,7 +76,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         VARBLOCKSCALE = 1
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
-        GARBAGESIZE = CGSize(width: 2.5*WIDTHUNIT, height: 1.2*2.5*WIDTHUNIT)
+        GARBAGESIZE = CGSize(width: 3*WIDTHUNIT, height:4*WIDTHUNIT)
         
         NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
