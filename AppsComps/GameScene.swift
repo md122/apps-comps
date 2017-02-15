@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class GameScene: SKScene, UITextFieldDelegate {
+class GameScene: SKScene {
     
     // SKCamera
     
@@ -21,7 +21,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     var topBar = [Block]()
     var bottomBar = [Block]()
-    var levelCircles = [SKShapeNode]()
     var garbage:SKSpriteNode
     
     // The starting coordinates
@@ -60,7 +59,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         height = size.height
         HEIGHTUNIT = height/16
         WIDTHUNIT = width/16
-        BARX = 1.5*WIDTHUNIT
+        BARX = 1*WIDTHUNIT
         TOPBARY = 13*HEIGHTUNIT
         BOTTOMBARY = 10*HEIGHTUNIT
         BLOCKHEIGHT = 2*HEIGHTUNIT
@@ -68,7 +67,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         NUMBLOCKWIDTH = 1*WIDTHUNIT
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
-        GARBAGESIZE = CGSize(width: 2.5*WIDTHUNIT, height: 1.2*2.5*WIDTHUNIT)
+        GARBAGESIZE = CGSize(width: 3*WIDTHUNIT, height: 1.2*3*WIDTHUNIT)
         
         NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
@@ -112,13 +111,14 @@ class GameScene: SKScene, UITextFieldDelegate {
         self.addBlockChild(varBlockInBank)
         
         //These are the rectangles that show where the bars start. It's a bit hacky to get the height from varBlockInBank but the height is stored in the block class
-        let topBarStarter = SKSpriteNode(texture: nil, color: .blue, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
-        topBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(TOPBARY))
+        let barStarterColor1 = UIColor(hexString: "#323641")
+        let topBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3, height : BLOCKHEIGHT))
+        topBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
         
         self.addChild(topBarStarter)
         
-        let bottomBarStarter = SKSpriteNode(texture: nil, color: .blue, size: CGSize(width: 4, height : varBlockInBank.getHeight()))
-        bottomBarStarter.position = CGPoint(x:CGFloat(BARX - 2), y:CGFloat(BOTTOMBARY))
+        let bottomBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3, height : BLOCKHEIGHT))
+        bottomBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(BOTTOMBARY))
         
         self.addChild(bottomBarStarter)
         
@@ -128,9 +128,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         self.view?.addGestureRecognizer(pinchGesture)
         
     }
-    
-    
-    
     
     //Got this from the stack overflow post...
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
