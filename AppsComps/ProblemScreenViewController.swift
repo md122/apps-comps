@@ -55,8 +55,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBAction func submitAnswer(_ sender: AnyObject) {
         scene?.tester()
         let answer = submitTextField.text
-        let connector = APIConnector()
-        connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
+        APIConnector().attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
     }
     
     func setProblemText() {
@@ -105,7 +104,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     // Function that gets called when next problem comes back
     func handleNextProblem(data: NSDictionary) {
-        problemLabel.text = data["data"] as? String
+        if (data["error"] as! String == "none") {
+            let tempData = data["data"] as! [NSArray]
+            self.problemLabel.text = tempData[0][0] as? String
+        }
 
     }
     
