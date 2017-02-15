@@ -52,7 +52,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: screen.width, height: headerView.frame.height)
         classroomText.frame = CGRect(x: widthUnit*5, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
         classroomText.textAlignment = NSTextAlignment.left
-                greetingText.frame = CGRect(x: 0, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
+        greetingText.frame = CGRect(x: 0, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
         greetingText.textAlignment = NSTextAlignment.right
         levelText.frame = CGRect(x: 0, y: heightUnit*25 + greetingText.frame.height, width: widthUnit*95, height: heightUnit*50)
         levelText.textAlignment = NSTextAlignment.right
@@ -72,6 +72,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         //JOIN/LEAVE CLASSROOM
         if let studentUser = currentUser as? Student {
             //INCLUDE IF STATEMENT TO SEE IF STUDENT IS IN CLASS -> IF YES, LEAVE CLASS. IF NO, JOIN CLASS
+            leaveButton.isHidden = false
             leaveButton.setTitle("Join Classroom", for: .normal)
             leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: leaveButton.frame.size.width, height: leaveButton.frame.size.height)
             leaveButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
@@ -84,7 +85,11 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             }
             
         }
-        
+            //TEACHER SIDE REMOVES JOIN/LEAVE CLASSROOM ABILITY
+        else {
+            leaveButton.isHidden = true
+            classroomText.isHidden = true
+        }
         
         //Temporary logo
         //Check here for how to resize image: http://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
