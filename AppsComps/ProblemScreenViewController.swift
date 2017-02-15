@@ -22,15 +22,22 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
 
         setProblemText()
 
-        gameView.showsFPS = true
-        gameView.showsNodeCount = true
-        
+        gameView.showsFPS = false
+        gameView.showsNodeCount = false
         gameView.ignoresSiblingOrder = true
         
         scene = GameScene(size: gameView.bounds.size, parent: self)
+
+        gameView.layer.borderWidth = 5
+        gameView.layer.cornerRadius = 0
+        gameView.layer.masksToBounds = true
         gameView.presentScene(scene)
 
     }
@@ -101,6 +108,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         problemLabel.text = data["data"] as? String
 
     }
+    
+    
     
     
     /*

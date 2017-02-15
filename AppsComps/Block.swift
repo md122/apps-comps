@@ -55,14 +55,14 @@ class Block: SKSpriteNode {
     
         switch self.type {
         case .number:
-            super.init(texture: nil, color: .black, size: blockSize)
-            innerBlockColor = SKSpriteNode(texture: nil, color: .purple, size: blockSize)
+            let numberColor = UIColor(hexString: "#00A1E4")
+            super.init(texture: nil, color: .black, size: size)
+            innerBlockColor = SKSpriteNode(texture: nil, color: numberColor, size: size)
             label.text = String(value)
-            label.fontSize = 20
         case .variable:
-            blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
-            super.init(texture: nil, color: .black, size:blockSize)
-            innerBlockColor = SKSpriteNode(texture: nil, color: .green, size: blockSize)
+            let variableColor = UIColor(hexString: "#89fc00")
+            super.init(texture: nil, color: .black, size:size)
+            innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: size)
             if self.value == 1 {
                 label.text = "x"
             }
