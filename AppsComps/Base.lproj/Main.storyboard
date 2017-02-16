@@ -25,7 +25,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Go to Teacher Dash"/>
                                 <connections>
-                                    <segue destination="PAa-xC-RMd" kind="show" id="MQR-3L-OwI"/>
+                                    <segue destination="2fh-uj-As3" kind="show" id="GJO-ZI-c2u"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with Google to start!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6Q-C9-9in">
@@ -71,6 +71,7 @@
                             <constraint firstItem="0Ka-Ag-mkx" firstAttribute="centerY" secondItem="J8k-bU-PI4" secondAttribute="centerY" id="qKA-xv-75W"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="hAf-H3-KaZ"/>
                     <connections>
                         <outlet property="signInButton" destination="0Ka-Ag-mkx" id="10g-on-4Jq"/>
                         <outlet property="signOutButton" destination="MAQ-92-C9M" id="5hh-g3-YzK"/>
@@ -209,7 +210,7 @@
                                 <color key="backgroundColor" red="1" green="0.61064428559999995" blue="0.71442666659999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e39-bF-GlZ">
-                                <frame key="frameInset" minX="-2.5" minY="205" height="563" maxX="3"/>
+                                <frame key="frameInset" minX="-1.5" minY="205" height="563" maxX="2"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <connections>
                                     <segue destination="fSl-Vx-zgN" kind="embed" id="mxx-Iw-UIW"/>
@@ -218,6 +219,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="tRo-ip-WXo"/>
                     <navigationItem key="navigationItem" id="B4W-dQ-NDF"/>
                     <connections>
                         <outlet property="classroomText" destination="Pdd-kg-KrR" id="Z7K-yD-m9u"/>
@@ -439,10 +441,11 @@
             </objects>
             <point key="canvasLocation" x="508" y="-833.43328335832086"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Item-->
         <scene sceneID="wMz-tc-QHY">
             <objects>
                 <splitViewController id="AKD-zf-Mmq" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="9np-ED-R6P"/>
                     <toolbarItems/>
                     <connections>
                         <segue destination="FY1-ed-rqB" kind="relationship" relationship="masterViewController" id="Pe5-na-GCT"/>
@@ -513,10 +516,29 @@
             </objects>
             <point key="canvasLocation" x="-1295" y="-214"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="8GR-WR-j7M">
+            <objects>
+                <tabBarController id="2fh-uj-As3" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="tZ0-sS-htc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="AKD-zf-Mmq" kind="relationship" relationship="viewControllers" id="IrA-cd-QO8"/>
+                        <segue destination="7gr-Yh-NVx" kind="relationship" relationship="viewControllers" id="huN-WH-OYf"/>
+                        <segue destination="qQB-40-xno" kind="relationship" relationship="viewControllers" id="e7q-dx-WrF"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I4u-Oa-nua" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2767" y="410"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="h9V-By-3SK">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" id="e9f-1B-4ya" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -590,6 +612,7 @@
         <image name="logo placeholder" width="338" height="89"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QkZ-dC-Slc"/>
+        <segue reference="IrA-cd-QO8"/>
+        <segue reference="huN-WH-OYf"/>
     </inferredMetricsTieBreakers>
 </document>

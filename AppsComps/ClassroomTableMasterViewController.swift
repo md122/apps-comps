@@ -102,7 +102,9 @@ class ClassroomTableMasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if self.isEditing == false {
             let id = String(indexPath.row)
+            var classroomTitle = UIBarButtonItem(title: classrooms[indexPath.row], style: UIBarButtonItemStyle.plain, target: nil, action: nil)
             detailViewController?.loadStudentCollection(classroomID: id)
+            detailViewController?.navigationItem.rightBarButtonItems?.append(classroomTitle)
         }
     }
 

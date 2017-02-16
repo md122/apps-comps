@@ -98,8 +98,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
         self.navigationItem.leftBarButtonItem = collapseTableButton
-        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        self.navigationController?.setToolbarHidden(false, animated: false)
+        self.navigationItem.rightBarButtonItem = segmentBarItem
+        //self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+        //self.navigationController?.setToolbarHidden(false, animated: false)
     }
 
     
