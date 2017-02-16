@@ -17,6 +17,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     var students = [NSArray]()
     
+    @IBOutlet var collapseTableButton: UIBarButtonItem!
     var level1Students = [NSArray]()
     var level2Students = [NSArray]()
     var level3Students = [NSArray]()
@@ -24,6 +25,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var studentsByLevel : [[NSArray]]? = nil
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+    var isCollapsed = false
    
     
     var cellMode = Bool()
@@ -95,28 +97,29 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
+        self.navigationItem.leftBarButtonItem = collapseTableButton
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
     }
 
     
     // Note there is a similar logout in Student, changes to one should also go in the other
-    @IBAction func logoutClicked(_ sender: AnyObject) {
-        let logoutAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // Log out option
-        logoutAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
-            if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
-                GIDSignIn.sharedInstance().signOut()
-            }
-            currentUser = nil
-            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
-        }))
-        // cancel option
-        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        }))
-        present(logoutAlert, animated: true, completion: nil)
-    }
+//    @IBAction func logoutClicked(_ sender: AnyObject) {
+//        let logoutAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+//        
+//        // Log out option
+//        logoutAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
+//            if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+//                GIDSignIn.sharedInstance().signOut()
+//            }
+//            currentUser = nil
+//            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+//        }))
+//        // cancel option
+//        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+//        }))
+//        present(logoutAlert, animated: true, completion: nil)
+//    }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -124,7 +127,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         // Pass the selected object to the new view controller.
         if(segue.identifier == "FromTeacherToProblemSelector") {
             splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
-            splitViewController?.presentsWithGesture = false
+            splitViewController?.presentsWithGesture = true
         }
         
     }
@@ -316,6 +319,30 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let leftRightInset = self.view.frame.size.width / 14.0
         return UIEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
+    
+    @IBAction func collapseTable(_ sender: AnyObject) {
+        if isCollapsed == false {
+            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
+            splitViewController?.presentsWithGesture = true            //self.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+            self.navigationItem.leftBarButtonItem = collapseTableButton
+            collapseTableButton.title = "Show Table"
+            self.navigationItem.leftItemsSupplementBackButton = true
+            isCollapsed = true
+        } else if isCollapsed == true {
+            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+            splitViewController?.presentsWithGesture = true
+            self.navigationItem.leftBarButtonItem = collapseTableButton
+            collapseTableButton.title = "Collapse Table"
+            isCollapsed = false
+            
+        }
+        
+        //let controller = self.topViewController as! StudentCollectionViewController
+        //controller.detailItem = "HI"
+        //let showTableButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.rewind, target: self, action: nil)
+        
     }
     
     func getStudentData(studentList: [NSArray]) {
