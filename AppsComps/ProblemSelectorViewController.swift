@@ -19,11 +19,14 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var greetingText: UILabel!
     @IBOutlet weak var levelText: UILabel!
     @IBOutlet weak var leaveButton: UIButton!
+    @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var classroomText: UILabel!
     @IBOutlet weak var levelContainerView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var studentLogoutButton: UIBarButtonItem!
     @IBOutlet weak var logoView: UIImageView!
+
+
     
     let screen: CGRect = UIScreen.main.bounds
     let connector = APIConnector()
@@ -45,7 +48,6 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         
         
         
-        
         //Aligning the labels to the left and right of the header. App logo will be in the center of the header
         
         headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: screen.width, height: headerView.frame.height)
@@ -57,6 +59,8 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         levelText.textAlignment = NSTextAlignment.right
         greetingText.text = "Hello " + currentUser!.getName()
         levelText.text = "You are on level \(currentUser!.getHighestLevel())"
+        joinButton.setTitle("Join Classroom", for: .normal)
+        leaveButton.setTitle("Leave Class", for: .normal)
         
         //SET COLORS OF EVERYTHING
         let lightPink = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
@@ -69,23 +73,27 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         view.backgroundColor = lightPink
         
         //JOIN/LEAVE CLASSROOM
-        if let studentUser = currentUser as? Student {
+        if (currentUser as? Student) != nil {
             //INCLUDE IF STATEMENT TO SEE IF STUDENT IS IN CLASS -> IF YES, LEAVE CLASS. IF NO, JOIN CLASS
             leaveButton.isHidden = false
-            leaveButton.setTitle("Join Classroom", for: .normal)
             leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: leaveButton.frame.size.width, height: leaveButton.frame.size.height)
+            
             leaveButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
             leaveButton.backgroundColor = brightYellow
             leaveButton.layer.cornerRadius = 5
             leaveButton.setTitleColor(darkBlue, for: .normal)
             leaveButton.contentHorizontalAlignment = .left
-            if (studentUser.getClassRoomID() == "") {
-                leaveButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
-            }
-            
+            joinButton.backgroundColor = brightYellow
+            joinButton.layer.cornerRadius = 5
+            joinButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+            joinButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: joinButton.frame.size.width, height: joinButton.frame.size.height)
+            joinButton.setTitleColor(darkBlue, for: .normal)
+            joinButton.contentHorizontalAlignment = .left
+
         }
             //TEACHER SIDE REMOVES JOIN/LEAVE CLASSROOM ABILITY
         else {
+            joinButton.isHidden = true
             leaveButton.isHidden = true
             classroomText.text = "Teacher Mode"
             levelText.text = "All levels accessible"
@@ -105,8 +113,28 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             self.navigationItem.leftBarButtonItem = leftButton
         }
         
+        //Set up join/leave classroom button actions
+        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
+        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
+        
+        //Toolbar Inclusion
+        self.navigationController?.setToolbarHidden(false, animated: false)
+        
         //Get Student dash info to show up on header
         connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        
+        
+
+    }
+    
+    //Tutorial from https://www.youtube.com/watch?v=FgCIRMz_3dE
+    @IBAction func helpPopup(_ sender: AnyObject) {
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPopUpID") as! HelpViewController
+        popOverVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
     }
     
     
@@ -173,15 +201,8 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         print("Incoming handleAddStudentToClassAttempt data")
         print(data)
         //CHANGE JOIN CLASSROOM TO LEAVE
-        leaveButton.setTitle("Leave Class", for: .normal)
-        if let studentUser = currentUser as? Student {
-            //CHECK USER'S ACTUAL CLASSROOM ID
-            if (studentUser.getClassRoomID() != "") {
-                //CHANGE BUTTON TARGET TO LEAVE CLASSROOM INSTEAD OF ADD
-
-                leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
-            }
-        }
+        joinButton.isHidden = true
+        leaveButton.isHidden = false
 
     }
     
@@ -190,19 +211,20 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         print("Incoming handleRemoveStudentFromClassAttempt data")
         print(data)
         //CHANGE LEAVE CLASSROOM TO JOIN
-        if let studentUser = currentUser as? Student {
-            leaveButton.setTitle("Join Classroom", for: .normal)
-            if (studentUser.getClassRoomID() == "") {
-                leaveButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
-            }
+        joinButton.isHidden = false
+        leaveButton.isHidden = true
             
-        }
+        
     }
     
     func handleStudentDashInfoRequest(data: [NSDictionary]) {
         print("TESTING STUDENT DASH")
         //print(data)
         print(data[1]["data"])
+//        let studentClass = data[1]
+//        let studentInfo = studentClass["data"] as! [NSArray]
+//        let result = studentInfo[0][0] as? String
+//        print(result)
     }
 
 }
