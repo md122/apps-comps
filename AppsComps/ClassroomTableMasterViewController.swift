@@ -101,7 +101,8 @@ class ClassroomTableMasterViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if self.isEditing == false {
-            detailViewController?.loadStudentCollection(classroomID: "test")
+            let id = String(indexPath.row)
+            detailViewController?.loadStudentCollection(classroomID: id)
         }
     }
 

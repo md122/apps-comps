@@ -161,7 +161,7 @@
         <!--Problem Selector View Controller-->
         <scene sceneID="ul1-bv-saK">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="7gr-Yh-NVx" userLabel="Problem Selector View Controller" customClass="ProblemSelectorViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7gr-Yh-NVx" userLabel="Problem Selector View Controller" customClass="ProblemSelectorViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nRW-ma-mDN"/>
                         <viewControllerLayoutGuide type="bottom" id="0eD-eZ-imV"/>
@@ -219,7 +219,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="B4W-dQ-NDF"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="classroomText" destination="Pdd-kg-KrR" id="Z7K-yD-m9u"/>
                         <outlet property="greetingText" destination="Sgz-5w-fvX" id="ZhO-JA-F6W"/>
@@ -265,29 +264,33 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="KWR-nM-MX4" customClass="StudentCollectionViewCell" customModule="AppsComps" customModuleProvider="target">
+                            <collectionViewCell autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="KWR-nM-MX4" customClass="StudentCollectionViewCell" customModule="AppsComps" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="131" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="131" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy9-pF-ZRV">
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <view autoresizesSubviews="NO" contentMode="left" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zex-lp-Kmy">
+                                            <frame key="frameInset" width="131" height="128"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy9-pF-ZRV">
+                                                    <frame key="frameInset" minX="8" minY="16" width="110" height="104"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.049691020330000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailingMargin" secondItem="Wy9-pF-ZRV" secondAttribute="trailing" constant="9" id="Qgz-NQ-tau"/>
-                                    <constraint firstItem="Wy9-pF-ZRV" firstAttribute="bottom" secondItem="KWR-nM-MX4" secondAttribute="bottomMargin" id="Tbg-AA-1X0"/>
-                                    <constraint firstItem="Wy9-pF-ZRV" firstAttribute="leading" secondItem="KWR-nM-MX4" secondAttribute="leadingMargin" id="dES-VQ-dfm"/>
-                                    <constraint firstItem="Wy9-pF-ZRV" firstAttribute="top" secondItem="KWR-nM-MX4" secondAttribute="topMargin" constant="8" id="ui4-Uq-eLA"/>
-                                </constraints>
                                 <size key="customSize" width="131" height="128"/>
                                 <connections>
+                                    <outlet property="graphBar" destination="Zex-lp-Kmy" id="IYR-ca-YL4"/>
                                     <outlet property="studentNameLabel" destination="Wy9-pF-ZRV" id="Iwk-Og-c7K"/>
                                 </connections>
                             </collectionViewCell>
@@ -298,20 +301,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="131" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Percent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhf-kf-dFc">
-                                            <frame key="frameInset" minX="8" minY="49" width="115" height="31"/>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hir-g5-j6h">
+                                            <frame key="frameInset" minX="-55" minY="8" width="240" height="128"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6V-gA-0IS">
+                                                    <frame key="frameInset" minX="76" minY="54" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                 </view>
-                                <color key="backgroundColor" red="0.16792762611225476" green="1" blue="0.17984683789769562" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="customSize" width="131" height="128"/>
-                                <connections>
-                                    <outlet property="graphLabel" destination="rhf-kf-dFc" id="vil-nA-Guy"/>
-                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="empty" id="qXg-7I-F1g" customClass="TitleCollectionViewCell" customModule="AppsComps" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="188" width="365" height="121"/>
@@ -327,21 +333,29 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDL-tO-NnW">
-                                    <frame key="frameInset" minX="21" minY="15" width="82" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDL-tO-NnW">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="82" id="Cvs-Vb-ZhM"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="np1-q2-tgJ">
-                                    <frame key="frameInset" minX="197" minY="15" width="58" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="np1-q2-tgJ">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="58" id="d3o-0r-4Sv"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="NDL-tO-NnW" firstAttribute="baseline" secondItem="np1-q2-tgJ" secondAttribute="baseline" id="3wp-oB-u3a"/>
+                                <constraint firstItem="NDL-tO-NnW" firstAttribute="leading" secondItem="olh-6x-Cbz" secondAttribute="leadingMargin" constant="13" id="5sG-9d-qpm"/>
+                                <constraint firstItem="NDL-tO-NnW" firstAttribute="centerY" secondItem="olh-6x-Cbz" secondAttribute="centerY" id="Fag-bH-OAt"/>
+                                <constraint firstItem="np1-q2-tgJ" firstAttribute="leading" secondItem="NDL-tO-NnW" secondAttribute="trailing" constant="94" id="ukM-W5-2Bk"/>
+                            </constraints>
                             <connections>
                                 <outlet property="headerLabel1" destination="NDL-tO-NnW" id="Wr6-Ub-dEn"/>
                                 <outlet property="headerLabel2" destination="np1-q2-tgJ" id="2VI-Pd-pNd"/>
@@ -352,29 +366,26 @@
                             <outlet property="delegate" destination="MEl-8u-sh3" id="LZI-Ua-Xqa"/>
                         </connections>
                     </collectionView>
-                    <toolbarItems>
-                        <barButtonItem title="Go to Problems" id="sXC-kq-SKn">
-                            <connections>
-                                <segue destination="7gr-Yh-NVx" kind="show" identifier="FromTeacherToProblemSelector" id="YMb-pw-gum"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="UXq-py-S0U">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="Qqs-Kb-gjW">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Qqs-Kb-gjW">
                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="logoutClicked:" destination="MEl-8u-sh3" id="wl1-8z-w55"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Try Problems" id="RfS-dl-vwN">
+                            <connections>
+                                <action selector="toProblemsClicked:" destination="MEl-8u-sh3" id="59S-R8-m1F"/>
+                                <segue destination="7gr-Yh-NVx" kind="showDetail" identifier="FromTeacherToProblemSelector" action="showViewController:sender:" id="RHc-hD-y7Z"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="goToProblemsButton" destination="sXC-kq-SKn" id="lXF-sv-sC2"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdd-RI-Hlb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="509" y="-833"/>
+            <point key="canvasLocation" x="508" y="-833.43328335832086"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="wMz-tc-QHY">
@@ -526,6 +537,6 @@
         <image name="logo placeholder" width="338" height="89"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YMb-pw-gum"/>
+        <segue reference="RHc-hD-y7Z"/>
     </inferredMetricsTieBreakers>
 </document>

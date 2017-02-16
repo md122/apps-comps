@@ -95,9 +95,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
         if let navController = self.navigationController, navController.viewControllers.count < 2 {
-            let rightButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
-            rightButton.tintColor = .red
-            self.navigationItem.rightBarButtonItem = rightButton
+            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+            leftButton.tintColor = .red
+            self.navigationItem.rightBarButtonItem = leftButton
         }
         
         //Get Student dash info to show up on header

@@ -1,3 +1,5 @@
+
+
 //
 //  StudentCollectionViewController.swift
 //  MasterDetailTest
@@ -11,7 +13,7 @@ import UIKit
 
 class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
     
-    @IBOutlet var goToProblemsButton: UIBarButtonItem!
+  
     
     var students = [NSArray]()
     
@@ -22,6 +24,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var studentsByLevel : [[NSArray]]? = nil
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+   
     
     var cellMode = Bool()
 
@@ -34,20 +37,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        collectionView?.allowsMultipleSelection = true
-        
-//        if cellMode == nil {
-//            cellModeSegment.selectedSegmentIndex = 0
-//            cellMode = false
-//        } else if cellMode == false {
-//            cellModeSegment.selectedSegmentIndex = 0
-//        }  else if cellMode == true {
-//            cellModeSegment.selectedSegmentIndex = 1
-//        }
         
         
-        
-        getStudentData(studentList: [["Tiff Mering", "1", "000"], ["Tiff Mering", "1", "000"], ["Tiff Mering", "2", "000"], ["Tiff Mering", "3", "000"], ["Tiff Mering", "4", "000"], ["Tiff Mering", "4", "000"]])
+        getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Botwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
         
     }
     
@@ -61,9 +53,14 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
 
     func loadStudentCollection(classroomID: String) {
-        if classroomID == "test" {
+        if classroomID == "0" {
+            getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Bostwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
+        }else if classroomID == "1" {
+            getStudentData(studentList: [["Meghan Kreilkamp", "2", "000"], ["McCartney Goff", "2", "000"], ["Michael Bostwick", "2", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "2", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
+        } else if classroomID == "2" {
             getStudentData(studentList: [["Student Name", "1", "000"], ["Student Name", "1", "000"], ["Student Name", "2", "000"], ["Student Name", "3", "000"], ["Student Name", "4", "000"], ["Student Name", "4", "000"]])
-            
+        } else {
+            getStudentData(studentList: [["Student Name", "1", "000"]])
         }
         self.collectionView?.reloadData()
         
@@ -82,10 +79,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
         splitViewController?.presentsWithGesture = true
 
-//        let cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
-//        cellModeSegment.selectedSegmentIndex = 0
-        //cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .touchUpInside)
         cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+        
         if cellMode == nil {
             cellModeSegment.selectedSegmentIndex = 0
             cellMode = false
@@ -96,13 +91,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         }
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
-       // let deleteStudentsButton = UISwitch()
         segmentBarItem.target = self
-//        segmentBarItem.action = #selector(modeSegmentChanged)
-        
-        //let deleteStudentBarButton = init(barButtonSystemItem systemItem: UIBarButtonSystemItem, target: Any?, action: Selector?)
-//        let deleteStudentBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: "someAction")
-        toolbarItems = [segmentBarItem, goToProblemsButton]
+
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
     }
@@ -172,8 +164,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             case UICollectionElementKindSectionHeader:
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sectionHeader", for: indexPath) as! SectionHeaderCollectionReusableView
                 if indexPath.section == 0{
-                    headerView.headerLabel1.text = "Classroom Name"
-                    headerView.headerLabel2.text = "Classroom Code"
+                    headerView.headerLabel1.text = ""
+                    headerView.headerLabel2.text = ""
                 } else if indexPath.section == 1{
                     headerView.headerLabel1.text = "Level 1"
                     headerView.headerLabel2.text = ""
@@ -199,49 +191,106 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        let collectionWidth = floor(collectionView.frame.size.width)
         if indexPath.section == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "empty", for: indexPath) 
             return cell
         } else {
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
+            cell.backgroundColor = UIColor.white
+            if indexPath.section == 1{
+               cell.graphBar.backgroundColor = UIColor.red
+            } else if indexPath.section == 2{
+                cell.graphBar.backgroundColor = UIColor.blue
+            } else if indexPath.section == 3{
+                cell.graphBar.backgroundColor = UIColor.green
+            } else if indexPath.section == 4{
+                cell.graphBar.backgroundColor = UIColor.yellow
+            }
             if cellMode {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
-                //let sectionTitle = levelNumbers[indexPath.section-1]
                 let sectionStudents = studentsByLevel?[indexPath.section-1]
                 let student = sectionStudents?[indexPath.row]
                 cell.studentNameLabel.text = (student?[0] as! String)
-                return cell
+                cell.graphBar.frame.size.width = CGFloat(120.0)
             } else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphCell", for: indexPath)
-                
-                return cell
+                let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
+                let totalStudentsDouble = Double(totalStudents)
+                if indexPath.section == 1 {
+                    var percent = (Double(level1Students.count) / totalStudentsDouble)
+                    let width1 = Double(collectionWidth) * percent
+                    percent = Double(round(1000*percent)/10)
+                    cell.studentNameLabel.text = String(percent) + "%"
+                    cell.graphBar.frame.size.width = CGFloat(width1)
+                    
+                } else if indexPath.section == 2 {
+                    var percent = (Double(level2Students.count) / totalStudentsDouble)
+                    let width2 = Double(collectionWidth) * percent
+                    percent = Double(round(1000*percent)/10)
+                    cell.studentNameLabel.text = String(percent) + "%"
+                    cell.graphBar.frame.size.width = CGFloat(width2)
+                } else if indexPath.section == 3 {
+                    var percent = (Double(level3Students.count) / totalStudentsDouble)
+                    let width3 = Double(collectionWidth) * percent
+                    percent = Double(round(1000*percent)/10)
+                    cell.studentNameLabel.text = String(percent) + "%"
+                    cell.graphBar.frame.size.width = CGFloat(width3)
+                } else if indexPath.section == 4 {
+                    var percent = (Double(level4Students.count) / totalStudentsDouble)
+                    let width4 = Double(collectionWidth) * percent
+                    percent = Double(round(1000*percent)/10)
+                    cell.studentNameLabel.text = String(percent) + "%"
+                    cell.graphBar.frame.size.width = CGFloat(width4)
+                } else {
+                    print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+                    //return CGSize(width: 120.0, height: 120.0)
+                }
             }
+            return cell
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                                 layout collectionViewLayout: UICollectionViewLayout,
-                                 sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionWidth = floor(collectionView.frame.size.width)
+        //let collectionWidth = 600.0
+        
         if indexPath.section == 0{
           return CGSize(width: 10.0, height: 1.0)
         } else{
             if cellMode == true {
-                return CGSize(width: 100.0, height: 100.0)
+                
+                return CGSize(width: 120.0, height: 120.0)
+       
             } else {
-                if indexPath.section == 1 {
-                    return CGSize(width: 200.0, height: 100.0)
-                } else if indexPath.section == 2 {
-                    return CGSize(width: 100.0, height: 100.0)
-                } else if indexPath.section == 3 {
-                    return CGSize(width: 100.0, height: 100.0)
-                } else if indexPath.section == 4 {
-                    return CGSize(width: 300.0, height: 100.0)
-                } else {
-                    print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
-                    return CGSize(width: 100.0, height: 100.0)
-                }
+                return CGSize(width: collectionWidth, height: 120.0)
+//                let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
+//                let totalStudentsDouble = Double(totalStudents)
+//                if indexPath.section == 1 {
+//                    let width1 = Double(collectionWidth) * (Double(level1Students.count) / totalStudentsDouble)
+//                    print(width1)
+//                    return CGSize(width: 351.5, height: 120.0)
+//                } else if indexPath.section == 2 {
+//                    let width2 = Double(collectionWidth) * (Double(level2Students.count) / totalStudentsDouble)
+//                    print(width2)
+//                    return CGSize(width: 300.0, height: 120.0)
+//                } else if indexPath.section == 3 {
+//                    let width3 = Double(collectionWidth) * (Double(level3Students.count) / totalStudentsDouble)
+//                    print(width3)
+//                    return CGSize(width: 450.0, height: 120.0)
+//                } else if indexPath.section == 4 {
+//                    let width4 = Double(collectionWidth) * (Double(level4Students.count) / totalStudentsDouble)
+//                    print(width4)
+//                    return CGSize(width: 51.5, height: 120.0)
+//                } else {
+//                    print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+//                    return CGSize(width: 120.0, height: 120.0)
+//                }
             }
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let leftRightInset = self.view.frame.size.width / 14.0
+        return UIEdgeInsetsMake(0, 0, 0, 0)
     }
     
     func getStudentData(studentList: [NSArray]) {
@@ -266,7 +315,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
                 print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
             }
         }
+        
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
+
+        
     }
     
 

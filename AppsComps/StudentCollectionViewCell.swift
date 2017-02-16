@@ -12,6 +12,7 @@ class StudentCollectionViewCell: UICollectionViewCell {
    
     @IBOutlet var studentNameLabel: UILabel!
     
+    @IBOutlet var graphBar: UIView!
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
