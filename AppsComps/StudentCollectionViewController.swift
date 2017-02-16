@@ -56,7 +56,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         if classroomID == "0" {
             getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Bostwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
         }else if classroomID == "1" {
-            getStudentData(studentList: [["Meghan Kreilkamp", "2", "000"], ["McCartney Goff", "2", "000"], ["Michael Bostwick", "2", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "2", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
+            getStudentData(studentList: [["Meghan Kreilkamp", "2", "000"], ["McCartney Goff", "2", "000"], ["Michael Bostwick", "2", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "2", "000"], ["Angelia Jenkins", "1", "000"], ["Ryan Vondren", "1", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
         } else if classroomID == "2" {
             getStudentData(studentList: [["Student Name", "1", "000"], ["Student Name", "1", "000"], ["Student Name", "2", "000"], ["Student Name", "3", "000"], ["Student Name", "4", "000"], ["Student Name", "4", "000"]])
         } else {
@@ -146,7 +146,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         } else {
             if cellMode {
                 let sectionStudents = studentsByLevel?[section-1]
-                return sectionStudents!.count
+                if sectionStudents!.count == 0{
+                    return 1
+                } else {
+                    return sectionStudents!.count
+                }
             } else {
                 return 1
             }
@@ -209,9 +213,30 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             }
             if cellMode {
                 let sectionStudents = studentsByLevel?[indexPath.section-1]
-                let student = sectionStudents?[indexPath.row]
-                cell.studentNameLabel.text = (student?[0] as! String)
-                cell.graphBar.frame.size.width = CGFloat(120.0)
+                if sectionStudents?.count == 0{
+//                    if indexPath.section == 1{
+//                        cell.graphBar.backgroundColor = UIColor.white
+//                        cell.backgroundColor = UIColor.red
+//                    } else if indexPath.section == 2{
+//                        cell.graphBar.backgroundColor = UIColor.white
+//                        cell.backgroundColor = UIColor.blue
+//                    } else if indexPath.section == 3{
+//                        cell.graphBar.backgroundColor = UIColor.white
+//                        cell.backgroundColor = UIColor.green
+//                    } else if indexPath.section == 4{
+//                        cell.graphBar.backgroundColor = UIColor.lightGray
+//                        cell.backgroundColor = UIColor.yellow
+//                    }
+                    cell.graphBar.backgroundColor = UIColor.lightGray
+                    cell.studentNameLabel.text = "No Students"
+                    cell.graphBar.frame.size.width = CGFloat(120.0)
+                    //cell.graphBar.frame.size.height = CGFloat(115.0)
+                } else {
+                    let student = sectionStudents?[indexPath.row]
+                    cell.studentNameLabel.text = (student?[0] as! String)
+                    cell.graphBar.frame.size.width = CGFloat(120.0)
+                }
+                
             } else {
                 let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
                 let totalStudentsDouble = Double(totalStudents)
