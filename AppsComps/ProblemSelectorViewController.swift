@@ -28,8 +28,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
     let screen: CGRect = UIScreen.main.bounds
     let connector = APIConnector()
     //TODO: level should also be taken from teacher/student class, or the global class
-    let level = 2
-    
+
     override func viewDidLoad() {
         
         // Creates a fake user for testing purposes
@@ -57,7 +56,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         levelText.frame = CGRect(x: 0, y: heightUnit*25 + greetingText.frame.height, width: widthUnit*95, height: heightUnit*50)
         levelText.textAlignment = NSTextAlignment.right
         greetingText.text = "Hello " + currentUser!.getName()
-        levelText.text = "You are on level " + currentUser!.getHighestLevel()
+        levelText.text = "You are on level \(currentUser!.getHighestLevel())"
         
         //SET COLORS OF EVERYTHING
         let lightPink = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
@@ -88,7 +87,8 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             //TEACHER SIDE REMOVES JOIN/LEAVE CLASSROOM ABILITY
         else {
             leaveButton.isHidden = true
-            classroomText.isHidden = true
+            classroomText.text = "Teacher Mode"
+            levelText.text = "All levels accessible"
         }
         
         //Temporary logo
@@ -173,11 +173,12 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         print("Incoming handleAddStudentToClassAttempt data")
         print(data)
         //CHANGE JOIN CLASSROOM TO LEAVE
-        leaveButton.setTitle("Leave Classroom", for: .normal)
+        leaveButton.setTitle("Leave Class", for: .normal)
         if let studentUser = currentUser as? Student {
             //CHECK USER'S ACTUAL CLASSROOM ID
             if (studentUser.getClassRoomID() != "") {
-                //leaveButton.removeTarget(self, action: Selector?, for: <#T##UIControlEvents#>)
+                //CHANGE BUTTON TARGET TO LEAVE CLASSROOM INSTEAD OF ADD
+
                 leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
             }
         }
@@ -199,7 +200,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
     }
     
     func handleStudentDashInfoRequest(data: [NSDictionary]) {
-        print(data)
+        print("TESTING STUDENT DASH")
+        //print(data)
+        print(data[1]["data"])
     }
 
 }

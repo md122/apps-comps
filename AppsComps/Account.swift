@@ -39,8 +39,8 @@ class Account {
         return name
     }
     
-    func getHighestLevel() ->String {
-        return ""
+    func getHighestLevel() ->Int {
+        return 4
     }
 
 
