@@ -12,7 +12,6 @@ class APIConnector: NSObject  {
     
     let baseURL = "http://cmc307-05.mathcs.carleton.edu:5000/"
     
-    
     // PROBLEM SCREEN
     func requestNextProblem(callingDelegate: APIDataDelegate, studentID: String) {
         let url = baseURL + "attemptGetNextProblem/" + studentID
