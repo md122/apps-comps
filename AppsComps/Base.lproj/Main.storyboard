@@ -85,7 +85,7 @@
         <scene sceneID="0HH-g7-L8Q">
             <objects>
                 <navigationController id="bob-Z2-ijt" customClass="MainNavigationController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -121,7 +121,7 @@
                                     <constraint firstAttribute="width" secondItem="hLG-Wb-CdC" secondAttribute="height" multiplier="137:100" id="R1G-Aq-ppo"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mP0-VS-LJC">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your answer" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mP0-VS-LJC">
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -133,19 +133,29 @@
                                     <action selector="submitAnswer:" destination="cnD-Rx-Jca" eventType="touchUpInside" id="YeF-8c-gOc"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LI4-yJ-6un" userLabel="Level">
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="mP0-VS-LJC" secondAttribute="trailing" constant="20" id="00T-l6-VS9"/>
+                            <constraint firstItem="fwp-Sz-l2Q" firstAttribute="top" secondItem="yhQ-QK-QiL" secondAttribute="bottom" constant="20" id="8iw-aM-UDl"/>
                             <constraint firstItem="ftv-Qc-Hob" firstAttribute="leading" secondItem="ayL-yk-Lo9" secondAttribute="leadingMargin" constant="20" id="AB1-ql-Enu"/>
                             <constraint firstItem="yhQ-QK-QiL" firstAttribute="leading" secondItem="hLG-Wb-CdC" secondAttribute="trailing" constant="20" id="Cf6-Rv-ZUq"/>
+                            <constraint firstItem="LI4-yJ-6un" firstAttribute="leading" secondItem="hLG-Wb-CdC" secondAttribute="trailing" constant="20" id="Er8-C6-NAl"/>
                             <constraint firstItem="yhQ-QK-QiL" firstAttribute="top" secondItem="mP0-VS-LJC" secondAttribute="bottom" constant="5" id="GQy-Ig-t9L"/>
-                            <constraint firstItem="mP0-VS-LJC" firstAttribute="trailing" secondItem="ayL-yk-Lo9" secondAttribute="trailingMargin" id="Ncp-If-Pqb"/>
+                            <constraint firstItem="LI4-yJ-6un" firstAttribute="centerY" secondItem="ayL-yk-Lo9" secondAttribute="centerY" id="N67-IC-JyA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LI4-yJ-6un" secondAttribute="trailing" constant="20" id="OQB-Oq-YVX"/>
                             <constraint firstItem="mP0-VS-LJC" firstAttribute="leading" secondItem="hLG-Wb-CdC" secondAttribute="trailing" constant="20" id="Prb-Sc-afC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ftv-Qc-Hob" secondAttribute="trailing" constant="20" id="TZ0-Pb-6ec"/>
                             <constraint firstItem="ftv-Qc-Hob" firstAttribute="top" secondItem="srj-iC-Tai" secondAttribute="bottom" constant="20" id="bfx-lE-FKg"/>
                             <constraint firstItem="hLG-Wb-CdC" firstAttribute="leading" secondItem="ayL-yk-Lo9" secondAttribute="leading" id="ec6-uk-Fy8"/>
-                            <constraint firstItem="mP0-VS-LJC" firstAttribute="centerY" secondItem="ayL-yk-Lo9" secondAttribute="centerY" id="fQt-K3-1Hf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mP0-VS-LJC" secondAttribute="trailing" constant="20" id="iJS-5R-vLP"/>
                             <constraint firstAttribute="bottom" secondItem="hLG-Wb-CdC" secondAttribute="bottom" id="lth-MU-dG8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yhQ-QK-QiL" secondAttribute="trailing" constant="20" id="y1v-ka-OJe"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -243,7 +253,7 @@
         <scene sceneID="TGh-kI-Fkr">
             <objects>
                 <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -259,7 +269,7 @@
         <scene sceneID="D7W-CY-NE6">
             <objects>
                 <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5Bg-cB-sBO">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
                         <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -453,7 +463,7 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -473,7 +483,7 @@
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
                         <rect key="frame" x="0.0" y="0.0" width="703" height="563"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
