@@ -268,16 +268,17 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="KWR-nM-MX4" customClass="StudentCollectionViewCell" customModule="AppsComps" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="131" height="128"/>
+                                <rect key="frame" x="0.0" y="50" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="131" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view autoresizesSubviews="NO" contentMode="left" translatesAutoresizingMaskIntoConstraints="NO" id="Zex-lp-Kmy">
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy9-pF-ZRV">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" text="Student Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="84" translatesAutoresizingMaskIntoConstraints="NO" id="Wy9-pF-ZRV">
+                                                    <frame key="frameInset" minX="8" minY="16" width="84" height="76"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -298,7 +299,7 @@
                                     <constraint firstItem="Zex-lp-Kmy" firstAttribute="leading" secondItem="KWR-nM-MX4" secondAttribute="leading" id="d5z-uB-IJM"/>
                                     <constraint firstAttribute="trailing" secondItem="Zex-lp-Kmy" secondAttribute="trailing" id="rbV-BR-ouY"/>
                                 </constraints>
-                                <size key="customSize" width="131" height="128"/>
+                                <size key="customSize" width="100" height="100"/>
                                 <connections>
                                     <outlet property="graphBar" destination="Zex-lp-Kmy" id="IYR-ca-YL4"/>
                                     <outlet property="studentNameLabel" destination="Wy9-pF-ZRV" id="Iwk-Og-c7K"/>
@@ -346,7 +347,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdd-RI-Hlb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="897" y="409"/>
+            <point key="canvasLocation" x="896.5" y="408.5"/>
         </scene>
         <!--Student Progress-->
         <scene sceneID="bSz-bt-sEo">
@@ -555,6 +556,6 @@
         <image name="logo placeholder" width="338" height="89"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="50h-do-3yE"/>
+        <segue reference="zgI-j3-Ma7"/>
     </inferredMetricsTieBreakers>
 </document>
