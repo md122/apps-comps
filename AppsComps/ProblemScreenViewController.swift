@@ -86,8 +86,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
                     self.submitTextField.text = ""
                 }))
                 wrongAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
-                    self.submitTextField.text = ""
-                    self.setProblemText() // need to make this update student progro
+                    APIConnector().attemptSkipProblem(callingDelegate: self, studentID: currentUser!.getIdToken())
                 }))
                 wrongAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
                 }))
@@ -103,6 +102,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         }
     }
     
+    func handleSkipProblemAttempt(data: NSDictionary) {
+        if (data["error"] as! String == "none") {
+            self.setProblemText()
+        }
+    }
     
     
     

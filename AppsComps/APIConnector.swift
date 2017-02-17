@@ -31,10 +31,25 @@ class APIConnector: NSObject  {
 
     }
     
-    /*func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
-        let dummyData = false
-        callingDelegate.handleAddProblemDataAttempt?(data: dummyData)
-    }*/
+    
+    func attemptSkipProblem(callingDelegate: APIDataDelegate, studentID: String) {
+        let url = baseURL + "attemptSkipProblem/" + studentID
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 200...299:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleSkipProblemAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
+    }
+    
+    
+    
     
     func attemptSubmitAnswer(callingDelegate: APIDataDelegate, studentID: String, studentAnswer: String) {
         let url = baseURL + "attemptSubmitAnswer/" + studentID + "/" + studentAnswer
