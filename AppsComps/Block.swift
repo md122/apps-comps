@@ -24,7 +24,7 @@ class Block: SKSpriteNode {
     
     //Type is either number or variable
     var type: BlockType
-    var value: Double // Holds the value. I.e. in a 5x block, 5 is the value
+    var value: String // Holds the value. I.e. in a 5x block, 5 is the value
     var label = SKLabelNode(fontNamed: "Arial")
     var innerBlockColor = SKSpriteNode()
     var subtractionBlock: Block?
@@ -34,12 +34,12 @@ class Block: SKSpriteNode {
         BLOCKHEIGHT = 1
         BLOCKWIDTH = 1
         self.type = .hammer
-        self.value = 1
+        self.value = "1"
         super.init(texture: texture, color: color, size: size)
         
     }
     
-    init(type: BlockType, size: CGSize, value: Double) {
+    init(type: BlockType, size: CGSize, value: String) {
         var blockSize = CGSize(width: size.width, height: size.height)
         self.type = type
         self.value = value
@@ -47,7 +47,7 @@ class Block: SKSpriteNode {
         
         BLOCKHEIGHT = blockSize.height
         if type == .variable || type == .subVariable {
-            BLOCKWIDTH = blockSize.width * CGFloat(abs(value))
+            BLOCKWIDTH = blockSize.width * CGFloat(abs(Double(value)!))
         }
         else {
              BLOCKWIDTH = blockSize.width
@@ -58,18 +58,19 @@ class Block: SKSpriteNode {
             let numberColor = UIColor(hexString: "#00A1E4")
             super.init(texture: nil, color: .black, size: size)
             innerBlockColor = SKSpriteNode(texture: nil, color: numberColor, size: size)
-            label.text = String(value)
+            label.text = getValueString()
+            label.fontSize = 18
         case .variable:
             let variableColor = UIColor(hexString: "#89fc00")
             super.init(texture: nil, color: .black, size:size)
             innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: size)
-            if self.value == 1 {
+            if Double(self.value) == 1 {
                 label.text = "x"
             }
             else {
-                label.text = String(self.value) + "x"
+                label.text = getValueString() + "x"
             }
-            label.fontSize = 20
+            label.fontSize = 18
         case .subNumber:
             super.init(texture: nil, color: .black, size:blockSize)
             innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: blockSize)
@@ -87,12 +88,12 @@ class Block: SKSpriteNode {
             shape.lineWidth = 2
             shape.alpha = 1 / 0.40
             self.addChild(shape)
-            label.fontSize = 15
+            label.fontSize = 18
         case .subVariable:
             blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
             super.init(texture: nil, color: .black, size:blockSize)
             innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: blockSize)
-            if self.value == -1 {
+            if self.value=="-1" {
                 label.text = "-x"
             }
             else {
@@ -111,11 +112,11 @@ class Block: SKSpriteNode {
             shape.lineWidth = 2
             shape.alpha = 1 / 0.40
             self.addChild(shape)
-            label.fontSize = 15
+            label.fontSize = 18
         //This should never get called
         case .hammer:
             self.type = .hammer
-            self.value = 1.0
+            self.value = "1"
             subtractionBlock = nil
             super.init(texture: nil, color: .black, size:blockSize)
         }
@@ -144,7 +145,11 @@ class Block: SKSpriteNode {
     //}
     
     func getValue() -> Double{
-        return value
+        return Double(value)!
+    }
+    
+    func getValueString() -> String {
+        return self.value
     }
     
     func getHeight() -> Double{
@@ -202,11 +207,9 @@ class Block: SKSpriteNode {
     func removeSubtractionBlock() {
         subtractionBlock?.removeFromParent()
         self.subtractionBlock = nil
-        
     }
     
     func getSubtractionBlock() -> Block? {
         return self.subtractionBlock
     }
-
 }
