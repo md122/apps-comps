@@ -61,8 +61,9 @@ class Block: SKSpriteNode {
             label.text = String(value)
         case .variable:
             let variableColor = UIColor(hexString: "#89fc00")
-            super.init(texture: nil, color: .black, size:size)
-            innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: size)
+            blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
+            super.init(texture: nil, color: .black, size:blockSize)
+            innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: blockSize)
             if self.value == 1 {
                 label.text = "x"
             }

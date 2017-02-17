@@ -53,7 +53,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     @IBAction func submitAnswer(_ sender: AnyObject) {
-        scene?.tester()
+        //!!!!!!!! Right now problem screen always clears when you submit an answer, need to only clear when correct answer submitted
+        scene?.clearProblemScreen()
         let answer = submitTextField.text
         APIConnector().attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
     }

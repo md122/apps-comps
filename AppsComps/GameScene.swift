@@ -103,8 +103,16 @@ class GameScene: SKScene, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func tester() {
-        print("testing 1 2 3")
+    //Removes all blocks from the problem screen besides the block banks and the hammer
+    func clearProblemScreen() {
+        for case let child as Block in self.children {
+            if child != varBlockInBank && child != numBlockInBank && child != subNumBlockInBank && child != subVarBlockInBank && child != hammer {
+                child.removeFromParent()
+            }
+            //We need to set the bars back to empty
+            topBar = [Block]()
+            bottomBar = [Block]()
+        }
     }
     
     func addBlockChild(_ node: SKNode) {
@@ -188,13 +196,19 @@ class GameScene: SKScene, UITextFieldDelegate {
                 var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
                 //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
 
-                var differenceInBarSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
+                var differenceInBlockSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
+                //If we are scaling a variable or subtraction variable we want the change to actually be for 1x not nx
+                //Yes I know this is dumb...
+                var differenceInBlockSizeFor1x = 0.0
+                if blockTouched!.getType() == "variable" || blockTouched!.getType() == "subVariable" {
+                    differenceInBlockSizeFor1x = differenceInBlockSize / blockTouched!.getValue()
+                }
                 //This will be changed for the negative blocks attached to a parent block, so they move over the right amount
                 if indexInTopBar > -1 {
-                    shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
+                    shiftBlocks(bar: topBar, width:differenceInBlockSize, index:indexInTopBar)
                 }
                 if indexInBottomBar > -1 {
-                    shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
+                    shiftBlocks(bar: bottomBar, width:differenceInBlockSize, index:indexInBottomBar)
                 }
                 //If we are dealing with a subtraction block that is currently the child of a positive block don't scoot it over, but do mess with the scale factor because it is in it's parent world
                 if (blockTouched?.parent as? Block) != nil {
@@ -202,13 +216,13 @@ class GameScene: SKScene, UITextFieldDelegate {
                     let scale2 = Double((blockTouched?.parent?.xScale)!)
                     let previousBlockSize = scale1 * scale2 * Double((blockTouched?.getOriginalWidth())!)
                     let currentBlockSize = (Double(pinchScale)) * blockTouched!.getOriginalWidth()
-                    differenceInBarSize = currentBlockSize - previousBlockSize
+                    differenceInBlockSize = currentBlockSize - previousBlockSize
                     
                     //Scale the subtraction number, but not the subtraction variable because that will get scaled with it's parent
                     if blockTouched?.getType() == "subNumber" {
                         blockTouched?.xScale = (pinchScale / (blockTouched?.parent?.xScale)!)
                         blockTouched?.getLabel().xScale = (1 / pinchScale)
-                        blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - ((CGFloat(differenceInBarSize) / (blockTouched?.parent?.xScale)!)) / 2), y:(blockTouched?.position.y)!)
+                        blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - ((CGFloat(differenceInBlockSize) / (blockTouched?.parent?.xScale)!)) / 2), y:(blockTouched?.position.y)!)
                     }
                     else if blockTouched?.getType() == "subVariable" {
                             blockTouched?.getLabel().xScale = (1 / pinchScale)
@@ -217,7 +231,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 //Make the block only increase to the right for positive numbers and only increase to the left for negative
                 else if (blockTouched?.getType() == "variable" || blockTouched?.getType() == "number") {
                     blockTouched?.xScale = pinchScale
-                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + ((CGFloat(differenceInBarSize)) / 2)), y:(blockTouched?.position.y)!)
+                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + ((CGFloat(differenceInBlockSize)) / 2)), y:(blockTouched?.position.y)!)
                     //If this block has a child, make sure that child's label is scaled to 1
                     if blockTouched?.getSubtractionBlock() != nil {
                         blockTouched?.getSubtractionBlock()?.getLabel().xScale = pinchScale / ((blockTouched?.parent?.xScale)!)
@@ -230,7 +244,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 //The subtractions stretch to the left
                 else if blockTouched?.getType() == "subNumber" || blockTouched?.getType() == "subVariable" {
                     blockTouched?.xScale = pinchScale
-                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
+                    blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBlockSize) / 2)), y:(blockTouched?.position.y)!)
                     blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
                 }
 
@@ -239,16 +253,17 @@ class GameScene: SKScene, UITextFieldDelegate {
                     VARBLOCKSCALE = pinchScale
                     //go through each of the game scene children that are blocks
                     for case let child as Block in self.children {
+                        differenceInBlockSize = differenceInBlockSizeFor1x * child.getValue()
                         //If the block is a variable (and not the one we are currently moving or the one in the bank we need to stretch it also
                         if (child.getType() == "variable" || child.getType() == "subVariable") && child != blockTouched && child != varBlockInBank && child != subVarBlockInBank {
-                            child.xScale = pinchScale
+                            child.xScale = pinchScale * CGFloat(child.getValue())
                             
                             //Move the block over so it's only increasing to the right for addition and to the left for subtraction
                             if (child.getType() == "variable") {
-                                child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
+                                child.position = CGPoint(x:((child.position.x) + (CGFloat(differenceInBlockSize) / 2)), y:(child.position.y))
                             }
                             else {
-                                child.position = CGPoint(x:((child.position.x) - (CGFloat(differenceInBarSize) / 2)), y:(child.position.y))
+                                child.position = CGPoint(x:((child.position.x) - (CGFloat(differenceInBlockSize) / 2)), y:(child.position.y))
                             }
                             
                             //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
@@ -256,10 +271,10 @@ class GameScene: SKScene, UITextFieldDelegate {
                             indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:child)
                             //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
                             if indexInTopBar > -1 {
-                                shiftBlocks(bar: topBar, width:differenceInBarSize, index:indexInTopBar)
+                                shiftBlocks(bar: topBar, width:differenceInBlockSize, index:indexInTopBar)
                             }
                             if indexInBottomBar > -1 {
-                                shiftBlocks(bar: bottomBar, width:differenceInBarSize, index:indexInBottomBar)
+                                shiftBlocks(bar: bottomBar, width:differenceInBlockSize, index:indexInBottomBar)
                             }
                             child.getLabel().xScale = 1 / (child.xScale)
                             if child.getSubtractionBlock() != nil {
@@ -763,6 +778,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         block.alpha = block.alpha / 1.00001
         block.zRotation = block.zRotation + 1
     }
+    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
