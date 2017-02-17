@@ -138,18 +138,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        let numSections = levelNumbers.count + 1
+        let numSections = levelNumbers.count
         return numSections
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if section == 0{
-            return 1
-        } else {
+
             if cellMode {
-                let sectionStudents = studentsByLevel?[section-1]
+                let sectionStudents = studentsByLevel?[section]
                 if sectionStudents!.count == 0{
                     return 1
                 } else {
@@ -158,7 +156,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             } else {
                 return 1
             }
-        }
+
     }
     
 //    www.raywenderlich.com/136161/uicollectionview-tutorial-reusable-views-selection-reordering
@@ -171,19 +169,17 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
                 
             case UICollectionElementKindSectionHeader:
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sectionHeader", for: indexPath) as! SectionHeaderCollectionReusableView
-                if indexPath.section == 0{
-                    headerView.headerLabel1.text = ""
-                    headerView.headerLabel2.text = ""
-                } else if indexPath.section == 1{
+
+               if indexPath.section == 0{
                     headerView.headerLabel1.text = "Level 1"
                     headerView.headerLabel2.text = ""
-                } else if indexPath.section == 2{
+                } else if indexPath.section == 1{
                     headerView.headerLabel1.text = "Level 2"
                     headerView.headerLabel2.text = ""
-                } else if indexPath.section == 3{
+                } else if indexPath.section == 2{
                     headerView.headerLabel1.text = "Level 3"
                     headerView.headerLabel2.text = ""
-                } else if indexPath.section == 4{
+                } else if indexPath.section == 3{
                     headerView.headerLabel1.text = "Level 4"
                     headerView.headerLabel2.text = ""
                 } else {
@@ -200,23 +196,23 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let collectionWidth = floor(collectionView.frame.size.width)
-        if indexPath.section == 0{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "empty", for: indexPath) 
-            return cell
-        } else {
+//        if indexPath.section == 0{
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "empty", for: indexPath) 
+//            return cell
+//        } else {
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
             cell.backgroundColor = UIColor.white
-            if indexPath.section == 1{
+            if indexPath.section == 0{
                cell.graphBar.backgroundColor = UIColor.red
-            } else if indexPath.section == 2{
+            } else if indexPath.section == 1{
                 cell.graphBar.backgroundColor = UIColor.blue
-            } else if indexPath.section == 3{
+            } else if indexPath.section == 2{
                 cell.graphBar.backgroundColor = UIColor.green
-            } else if indexPath.section == 4{
+            } else if indexPath.section == 3{
                 cell.graphBar.backgroundColor = UIColor.yellow
             }
             if cellMode {
-                let sectionStudents = studentsByLevel?[indexPath.section-1]
+                let sectionStudents = studentsByLevel?[indexPath.section]
                 if sectionStudents?.count == 0{
 //                    if indexPath.section == 1{
 //                        cell.graphBar.backgroundColor = UIColor.white
@@ -244,26 +240,26 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             } else {
                 let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
                 let totalStudentsDouble = Double(totalStudents)
-                if indexPath.section == 1 {
+                if indexPath.section == 0 {
                     var percent = (Double(level1Students.count) / totalStudentsDouble)
                     let width1 = Double(collectionWidth) * percent
                     percent = Double(round(1000*percent)/10)
                     cell.studentNameLabel.text = String(percent) + "%"
                     cell.graphBar.frame.size.width = CGFloat(width1)
                     
-                } else if indexPath.section == 2 {
+                } else if indexPath.section == 1 {
                     var percent = (Double(level2Students.count) / totalStudentsDouble)
                     let width2 = Double(collectionWidth) * percent
                     percent = Double(round(1000*percent)/10)
                     cell.studentNameLabel.text = String(percent) + "%"
                     cell.graphBar.frame.size.width = CGFloat(width2)
-                } else if indexPath.section == 3 {
+                } else if indexPath.section == 2 {
                     var percent = (Double(level3Students.count) / totalStudentsDouble)
                     let width3 = Double(collectionWidth) * percent
                     percent = Double(round(1000*percent)/10)
                     cell.studentNameLabel.text = String(percent) + "%"
                     cell.graphBar.frame.size.width = CGFloat(width3)
-                } else if indexPath.section == 4 {
+                } else if indexPath.section == 3 {
                     var percent = (Double(level4Students.count) / totalStudentsDouble)
                     let width4 = Double(collectionWidth) * percent
                     percent = Double(round(1000*percent)/10)
@@ -275,16 +271,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
                 }
             }
             return cell
-        }
+        //}
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionWidth = floor(collectionView.frame.size.width)
         //let collectionWidth = 600.0
         
-        if indexPath.section == 0{
-          return CGSize(width: 10.0, height: 1.0)
-        } else{
+//        if indexPath.section == 0{
+//          return CGSize(width: 10.0, height: 1.0)
+//        } else{
             if cellMode == true {
                 
                 return CGSize(width: 120.0, height: 120.0)
@@ -314,7 +310,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 //                    return CGSize(width: 120.0, height: 120.0)
 //                }
             }
-        }
+        //}
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
