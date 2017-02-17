@@ -104,7 +104,7 @@ class ClassroomTableMasterViewController: UITableViewController {
             let id = String(indexPath.row)
             var classroomTitle = UIBarButtonItem(title: classrooms[indexPath.row], style: UIBarButtonItemStyle.plain, target: nil, action: nil)
             detailViewController?.loadStudentCollection(classroomID: id)
-            detailViewController?.navigationItem.rightBarButtonItems?.append(classroomTitle)
+            detailViewController?.navigationItem.title = classrooms[indexPath.row]
         }
     }
 

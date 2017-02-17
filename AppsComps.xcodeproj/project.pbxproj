@@ -21,6 +21,9 @@
 		1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */; };
 		1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */; };
 		1197B79A1E55864B0068FC4A /* TeacherDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7991E55864B0068FC4A /* TeacherDashboardViewController.swift */; };
+		1197B79F1E565A6E0068FC4A /* TeacherDashTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B79E1E565A6E0068FC4A /* TeacherDashTabBarController.swift */; };
+		1197B7A11E56A7740068FC4A /* ProgressSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7A01E56A7740068FC4A /* ProgressSplitViewController.swift */; };
+		1197B7A31E56A91B0068FC4A /* ShortNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7A21E56A91B0068FC4A /* ShortNavigationBar.swift */; };
 		11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */; };
 		12E5B6C7AF1EC81893F3CBC0 /* Pods_AppsComps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7EA029543374792360F5C /* Pods_AppsComps.framework */; };
 		22399E351E3A503C00DB2193 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22399E341E3A503C00DB2193 /* MainNavigationController.swift */; };
@@ -99,6 +102,9 @@
 		1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableMasterViewController.swift; sourceTree = "<group>"; };
 		1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewCell.swift; sourceTree = "<group>"; };
 		1197B7991E55864B0068FC4A /* TeacherDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeacherDashboardViewController.swift; path = AppsComps/TeacherDashboardViewController.swift; sourceTree = "<group>"; };
+		1197B79E1E565A6E0068FC4A /* TeacherDashTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherDashTabBarController.swift; sourceTree = "<group>"; };
+		1197B7A01E56A7740068FC4A /* ProgressSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressSplitViewController.swift; path = AppsComps/ProgressSplitViewController.swift; sourceTree = "<group>"; };
+		1197B7A21E56A91B0068FC4A /* ShortNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortNavigationBar.swift; sourceTree = "<group>"; };
 		11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableViewCell.swift; sourceTree = "<group>"; };
 		22399E341E3A503C00DB2193 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnector.swift; sourceTree = "<group>"; };
@@ -224,6 +230,8 @@
 		1197B79B1E55867B0068FC4A /* TeacherDashboard */ = {
 			isa = PBXGroup;
 			children = (
+				1197B79E1E565A6E0068FC4A /* TeacherDashTabBarController.swift */,
+				1197B7A01E56A7740068FC4A /* ProgressSplitViewController.swift */,
 				1197B7991E55864B0068FC4A /* TeacherDashboardViewController.swift */,
 				1135C0381E4ED5BE008671B6 /* Student Collection */,
 				1135C03D1E4EE02B008671B6 /* ClassroomTable */,
@@ -288,6 +296,7 @@
 				8145A02E1DDE17C0009A9CC7 /* API */,
 				8111C3441DBFBB6D002C8067 /* AppDelegate.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
+				1197B7A21E56A91B0068FC4A /* ShortNavigationBar.swift */,
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
 				8111C3521DBFBB6D002C8067 /* Info.plist */,
@@ -827,6 +836,7 @@
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
 				1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */,
 				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
+				1197B7A31E56A91B0068FC4A /* ShortNavigationBar.swift in Sources */,
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
 				1135C0411E4FCB32008671B6 /* EmptyCollectionReusableView.swift in Sources */,
 				1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */,
@@ -834,7 +844,9 @@
 				113B052B1DDBB3AF00D001DD /* Account.swift in Sources */,
 				113B052F1DDBB3BB00D001DD /* Student.swift in Sources */,
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
+				1197B7A11E56A7740068FC4A /* ProgressSplitViewController.swift in Sources */,
 				1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */,
+				1197B79F1E565A6E0068FC4A /* TeacherDashTabBarController.swift in Sources */,
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
 				1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */,
