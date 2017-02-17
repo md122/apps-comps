@@ -39,6 +39,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             currentUser = Student(idToken: "fakeID", name: "W")
         }
         
+        //Get Student dash info to show up on header
+        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        
         super.viewDidLoad()
         //Set up header with a coordinate scale
         let width = screen.width
@@ -75,6 +78,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         //JOIN/LEAVE CLASSROOM
         if (currentUser as? Student) != nil {
             //INCLUDE IF STATEMENT TO SEE IF STUDENT IS IN CLASS -> IF YES, LEAVE CLASS. IF NO, JOIN CLASS
+            
             leaveButton.isHidden = false
             leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: leaveButton.frame.size.width, height: leaveButton.frame.size.height)
             
@@ -120,8 +124,6 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         //Toolbar Inclusion
         self.navigationController?.setToolbarHidden(false, animated: false)
         
-        //Get Student dash info to show up on header
-        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
         
         
 
@@ -171,8 +173,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             
             let connector = APIConnector()
             connector.attemptAddStudentToClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: idTextField!)
-            //CHANGE THE CLASSROOM NAME
-            self.classroomText.text = idTextField
+            
         })
         joinClassAlert.addAction(joinAction)
         
@@ -201,8 +202,14 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         print("Incoming handleAddStudentToClassAttempt data")
         print(data)
         //CHANGE JOIN CLASSROOM TO LEAVE
-        joinButton.isHidden = true
-        leaveButton.isHidden = false
+        if data["error"] as? String == "none" && data["error1"] as? String == "none" {
+            joinButton.isHidden = true
+            leaveButton.isHidden = false
+            //CHANGE THE CLASSROOM NAME
+            let classRoom = data["data"] as! [NSArray]
+            self.classroomText.text = classRoom[0][0] as? String
+        }
+        
 
     }
     
@@ -211,20 +218,37 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         print("Incoming handleRemoveStudentFromClassAttempt data")
         print(data)
         //CHANGE LEAVE CLASSROOM TO JOIN
-        joinButton.isHidden = false
-        leaveButton.isHidden = true
-            
+        if data["error"] as? String == "none" {
+            joinButton.isHidden = false
+            leaveButton.isHidden = true
+        }
         
     }
     
     func handleStudentDashInfoRequest(data: [NSDictionary]) {
         print("TESTING STUDENT DASH")
         //print(data)
-        print(data[1]["data"])
-//        let studentClass = data[1]
-//        let studentInfo = studentClass["data"] as! [NSArray]
-//        let result = studentInfo[0][0] as? String
-//        print(result)
+        let progressDictionary = data[0]
+        let classroomDataDictionary = data[1]
+        if progressDictionary["error"] as? String == "none" {
+            let studentProgress = progressDictionary["data"] as! [NSArray]
+            let stars = studentProgress[0][0] as! Int
+            let level = studentProgress[0][1] as! Int
+            print(level)
+            print(stars)
+        }
+        
+        if classroomDataDictionary["error"] as? String == "none" {
+            let studentsClassroom = classroomDataDictionary["data"] as! [NSArray]
+            if studentsClassroom != [] {
+                let classroomName = studentsClassroom[0][0] as! String
+                let classroomID = studentsClassroom[0][1] as! Int
+                print(classroomName)
+                print(classroomID)
+            }
+        }
+        
+        
     }
 
 }
