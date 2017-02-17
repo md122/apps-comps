@@ -29,6 +29,8 @@ class ClassroomTableMasterViewController: UITableViewController {
         }
         tableView.allowsMultipleSelectionDuringEditing = true
         loadSampleClassrooms(classroomList: ["First Hour", "Second Hour", "Third Hour", "Fourth Hour"])
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
@@ -102,7 +104,6 @@ class ClassroomTableMasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if self.isEditing == false {
             let id = String(indexPath.row)
-            var classroomTitle = UIBarButtonItem(title: classrooms[indexPath.row], style: UIBarButtonItemStyle.plain, target: nil, action: nil)
             detailViewController?.loadStudentCollection(classroomID: id)
             detailViewController?.navigationItem.title = classrooms[indexPath.row]
         }

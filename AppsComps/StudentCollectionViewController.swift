@@ -172,19 +172,14 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
                if indexPath.section == 0{
                     headerView.headerLabel1.text = "Level 1"
-                    headerView.headerLabel2.text = ""
                 } else if indexPath.section == 1{
                     headerView.headerLabel1.text = "Level 2"
-                    headerView.headerLabel2.text = ""
                 } else if indexPath.section == 2{
                     headerView.headerLabel1.text = "Level 3"
-                    headerView.headerLabel2.text = ""
                 } else if indexPath.section == 3{
                     headerView.headerLabel1.text = "Level 4"
-                    headerView.headerLabel2.text = ""
                 } else {
                     headerView.headerLabel1.text = "ERROR"
-                    headerView.headerLabel2.text = "ERROR"
                 }
                 return headerView
             default:
@@ -205,9 +200,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             if indexPath.section == 0{
                cell.graphBar.backgroundColor = UIColor.red
             } else if indexPath.section == 1{
-                cell.graphBar.backgroundColor = UIColor.blue
+                cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.59, blue:0.85, alpha:1.0)
             } else if indexPath.section == 2{
-                cell.graphBar.backgroundColor = UIColor.green
+                cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
             } else if indexPath.section == 3{
                 cell.graphBar.backgroundColor = UIColor.yellow
             }
@@ -229,12 +224,13 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 //                    }
                     cell.graphBar.backgroundColor = UIColor.lightGray
                     cell.studentNameLabel.text = "No Students"
-                    cell.graphBar.frame.size.width = CGFloat(120.0)
-                    //cell.graphBar.frame.size.height = CGFloat(115.0)
+                    cell.graphBar.frame.size.width = CGFloat(100.0)
+                    cell.graphBar.frame.size.height = CGFloat(100.0)
                 } else {
                     let student = sectionStudents?[indexPath.row]
                     cell.studentNameLabel.text = (student?[0] as! String)
-                    cell.graphBar.frame.size.width = CGFloat(120.0)
+                    cell.graphBar.frame.size.width = CGFloat(100.0)
+                    cell.graphBar.frame.size.height = CGFloat(100.0)
                 }
                 
             } else {
@@ -283,10 +279,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 //        } else{
             if cellMode == true {
                 
-                return CGSize(width: 120.0, height: 120.0)
+                return CGSize(width: 100.0, height: 100.0)
        
             } else {
-                return CGSize(width: collectionWidth, height: 120.0)
+                return CGSize(width: collectionWidth, height: 100.0)
 //                let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
 //                let totalStudentsDouble = Double(totalStudents)
 //                if indexPath.section == 1 {
@@ -313,11 +309,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         //}
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let leftRightInset = self.view.frame.size.width / 14.0
-        return UIEdgeInsetsMake(0, 0, 0, 0)
-    }
-    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        let leftRightInset = self.view.frame.size.width / 14.0
+//        return UIEdgeInsetsMake(0, 0, 0, 0)
+//    }
+//    
     
     @IBAction func collapseTable(_ sender: AnyObject) {
         if isCollapsed == false {

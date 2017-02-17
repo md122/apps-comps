@@ -12,8 +12,6 @@ class ProgressSplitViewController: UISplitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let titleLeft = UIBarButtonItem(title: "Student Progress", style: .plain, target: nil, action: nil)
-        //self.navigationItem.leftBarButtonItem = titleLeft
         self.navigationItem.title = "Student Progress"
         // Do any additional setup after loading the view.
     }
