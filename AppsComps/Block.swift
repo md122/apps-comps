@@ -36,7 +36,6 @@ class Block: SKSpriteNode {
         self.type = .hammer
         self.value = "1"
         super.init(texture: texture, color: color, size: size)
-        
     }
     
     init(type: BlockType, size: CGSize, value: String) {
@@ -62,9 +61,10 @@ class Block: SKSpriteNode {
             label.fontSize = 18
         case .variable:
             let variableColor = UIColor(hexString: "#89fc00")
-            super.init(texture: nil, color: .black, size:size)
-            innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: size)
-            if Double(self.value) == 1 {
+            blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
+            super.init(texture: nil, color: .black, size:blockSize)
+            innerBlockColor = SKSpriteNode(texture: nil, color: variableColor, size: blockSize)
+            if self.value == "1" {
                 label.text = "x"
             }
             else {
