@@ -337,8 +337,72 @@ class GameScene: SKScene, UITextFieldDelegate {
         currentBlockZ += 6
     }
     
+    func sanitizePosVariableValue(input: String) -> String {
+        if let value = Double(input) {
+            if value > 0 && value < 1000 {
+                return input
+            }
+            return ""
+        }
+        else {
+            return ""
+        }
+    }
+    
+    func sanitizeNegVariableValue(input: String) -> String {
+        if let value = Double(input) {
+            if value < 0 {
+                if value > -1000 {
+                    return input
+                }
+                return ""
+            } else {
+                if value < 1000 {
+                    let negInput = "-"+input
+                    return negInput
+                }
+                return ""
+            }
+        }
+        else {
+            return ""
+        }
+    }
+    
+    func sanitizePosNumberValue(input: String) -> String {
+        if let value = Double(input) {
+            if value > 0 && value < 1000 {
+                return input
+            }
+            return ""
+        }
+        else {
+            return ""
+        }
+    }
+    
+    func sanitizeNegNumberValue(input: String) -> String {
+        if let value = Double(input) {
+            if value < 0 {
+                if value > -1000 {
+                    return input
+                }
+                return ""
+            } else {
+                if value < 1000 {
+                    let negInput = "-"+input
+                    return negInput
+                }
+                return ""
+            }
+        }
+        else {
+            return ""
+        }
+    }
+    
     func changeBlockValueAlert(block: Block) {
-        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
+        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, between 1 and 999, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
         
         changeValueAlert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.keyboardType = UIKeyboardType.numberPad
@@ -346,58 +410,71 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
-            let valueEntered = changeValueAlert.textFields![0].text
-            //SANATIZE THE INPUTS!!!!!!
-            var newBlock: Block
-            if block.getType() == "variable" {
-                newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: valueEntered!)
+            if var valueEntered = changeValueAlert.textFields![0].text{
+                var newBlock: Block? = nil
+                if block.getType() == "variable" {
+                    valueEntered = self.sanitizePosVariableValue(input: valueEntered)
+                    if valueEntered != "" {
+                        newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: valueEntered)
+                    }
+                }
+                else if block.getType() == "subVariable"{
+                    valueEntered = self.sanitizeNegVariableValue(input: valueEntered)
+                    if valueEntered != "" {
+                        newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered)
+                    }
+                }
+                    //Number case
+                else if block.getType() == "number" {
+                    valueEntered = self.sanitizePosNumberValue(input: valueEntered)
+                    if valueEntered != "" {
+                        newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered)
+                    }
+                }
+                    //subNumber case, not specified so new block always initializes
+                else {
+                    valueEntered = self.sanitizeNegNumberValue(input: valueEntered)
+                    if valueEntered != "" {
+                        newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered)
+                    }
+                }
+                
+                if newBlock != nil {
+                    if block.getSubtractionBlock() != nil {
+                        let subBlock = block.getSubtractionBlock()
+                        subBlock?.removeFromParent()
+                        //Probs need to scale up!!!
+                        newBlock?.setSubtractionBlock(block: subBlock)
+                    }
+                    //Not quite old position
+                    newBlock?.position = block.position
+                    newBlock?.xScale = block.xScale
+                    //If the old block was in a bar, we do not need to scoot it over
+                    let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
+                    let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
+                    let shift = (newBlock?.getWidth())! - block.getWidth()
+                    if indexInTopBar > -1 {
+                        //Add new block to bar, remove old block from bar
+                        print("index in top bar", indexInTopBar)
+                        self.topBar.remove(at: indexInTopBar)
+                        self.topBar.insert(newBlock!, at:indexInTopBar)
+                        self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar - 1)
+                    }
+                    else if indexInBottomBar > -1 {
+                        //Add new block to bar, remove old block from bar
+                        self.bottomBar.remove(at: indexInBottomBar)
+                        self.bottomBar.insert(newBlock!, at:indexInBottomBar)
+                        self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar - 1)
+                    }
+                    
+                    block.removeFromParent()
+                    self.addBlockChild(newBlock!)
+                    //Scale the label because the block scale changed after it was created
+                    newBlock?.getLabel().xScale = 1 / (newBlock?.xScale)!
+                    
+                    //In a bar, remove from bar and scoot everyone over
+                }
             }
-            else if block.getType() == "subVariable"{
-                newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered!)
-            }
-            //Number case
-            else if block.getType() == "number" {
-                newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered!)
-            }
-            //subNumber case, not specified so new block always initializes
-            else {
-                newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered!)
-            }
-            if block.getSubtractionBlock() != nil {
-                let subBlock = block.getSubtractionBlock()
-                subBlock?.removeFromParent()
-                //Probs need to scale up!!!
-                newBlock.setSubtractionBlock(block: subBlock)
-            }
-            //Not quite old position
-            newBlock.position = block.position
-            newBlock.xScale = block.xScale
-            //If the old block was in a bar, we do not need to scoot it over
-            //WHY THE SELF. !!!!!!!
-            let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
-            let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
-            let shift = newBlock.getWidth() - block.getWidth()
-            if indexInTopBar > -1 {
-                //Add new block to bar, remove old block from bar
-                print("index in top bar", indexInTopBar)
-                self.topBar.remove(at: indexInTopBar)
-                self.topBar.insert(newBlock, at:indexInTopBar)
-                self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar - 1)
-            }
-            else if indexInBottomBar > -1 {
-                //Add new block to bar, remove old block from bar
-                self.bottomBar.remove(at: indexInBottomBar)
-                self.bottomBar.insert(newBlock, at:indexInBottomBar)
-                self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar - 1)
-            }
-            
-            block.removeFromParent()
-            self.addBlockChild(newBlock)
-            //Scale the label because the block scale changed after it was created
-            newBlock.getLabel().xScale = 1 / newBlock.xScale
-            
-            //In a bar, remove from bar and scoot everyone over
-
         }))
         self.parentViewController.present(changeValueAlert, animated: true, completion: nil)
     }
