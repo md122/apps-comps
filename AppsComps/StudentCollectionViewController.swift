@@ -24,7 +24,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var level4Students = [NSArray]()
     var studentsByLevel : [[NSArray]]? = nil
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
-    var cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+    var cellModeSegment = UISegmentedControl(items: ["Overview", "Students"])
     var isCollapsed = false
    
     
@@ -83,10 +83,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
         cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
         
-        if cellMode == nil {
-            cellModeSegment.selectedSegmentIndex = 0
-            cellMode = false
-        } else if cellMode == false {
+//        if cellMode == nil {
+//            cellModeSegment.selectedSegmentIndex = 0
+//            cellMode = false
+//        } else
+        if cellMode == false {
             cellModeSegment.selectedSegmentIndex = 0
         }  else if cellMode == true {
             cellModeSegment.selectedSegmentIndex = 1
@@ -190,84 +191,78 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let collectionWidth = floor(collectionView.frame.size.width)
-//        if indexPath.section == 0{
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "empty", for: indexPath) 
-//            return cell
-//        } else {
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! StudentCollectionViewCell
-            cell.backgroundColor = UIColor.white
+        if cellMode == true {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StudentCell", for: indexPath) as! StudentCollectionViewCell
+            
             if indexPath.section == 0{
-               cell.graphBar.backgroundColor = UIColor.red
+                cell.backgroundColor = UIColor.red
             } else if indexPath.section == 1{
-                cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.59, blue:0.85, alpha:1.0)
+                cell.backgroundColor = UIColor(red:0.14, green:0.59, blue:0.85, alpha:1.0)
             } else if indexPath.section == 2{
-                cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
+                cell.backgroundColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
             } else if indexPath.section == 3{
-                cell.graphBar.backgroundColor = UIColor.yellow
+                cell.backgroundColor = UIColor.yellow
             }
-            if cellMode {
-                let sectionStudents = studentsByLevel?[indexPath.section]
-                if sectionStudents?.count == 0{
-//                    if indexPath.section == 1{
-//                        cell.graphBar.backgroundColor = UIColor.white
-//                        cell.backgroundColor = UIColor.red
-//                    } else if indexPath.section == 2{
-//                        cell.graphBar.backgroundColor = UIColor.white
-//                        cell.backgroundColor = UIColor.blue
-//                    } else if indexPath.section == 3{
-//                        cell.graphBar.backgroundColor = UIColor.white
-//                        cell.backgroundColor = UIColor.green
-//                    } else if indexPath.section == 4{
-//                        cell.graphBar.backgroundColor = UIColor.lightGray
-//                        cell.backgroundColor = UIColor.yellow
-//                    }
-                    cell.graphBar.backgroundColor = UIColor.lightGray
-                    cell.studentNameLabel.text = "No Students"
-                    cell.graphBar.frame.size.width = CGFloat(100.0)
-                    cell.graphBar.frame.size.height = CGFloat(100.0)
-                } else {
-                    let student = sectionStudents?[indexPath.row]
-                    cell.studentNameLabel.text = (student?[0] as! String)
-                    cell.graphBar.frame.size.width = CGFloat(100.0)
-                    cell.graphBar.frame.size.height = CGFloat(100.0)
-                }
-                
+            
+            let sectionStudents = studentsByLevel?[indexPath.section]
+            if sectionStudents?.count == 0{
+                cell.backgroundColor = UIColor.lightGray
+                cell.studentNameLabel.text = "No Students"
+                cell.frame.size.width = CGFloat(100.0)
+                cell.frame.size.height = CGFloat(100.0)
             } else {
-                let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
-                let totalStudentsDouble = Double(totalStudents)
-                if indexPath.section == 0 {
-                    var percent = (Double(level1Students.count) / totalStudentsDouble)
-                    let width1 = Double(collectionWidth) * percent
-                    percent = Double(round(1000*percent)/10)
-                    cell.studentNameLabel.text = String(percent) + "%"
-                    cell.graphBar.frame.size.width = CGFloat(width1)
-                    
-                } else if indexPath.section == 1 {
-                    var percent = (Double(level2Students.count) / totalStudentsDouble)
-                    let width2 = Double(collectionWidth) * percent
-                    percent = Double(round(1000*percent)/10)
-                    cell.studentNameLabel.text = String(percent) + "%"
-                    cell.graphBar.frame.size.width = CGFloat(width2)
-                } else if indexPath.section == 2 {
-                    var percent = (Double(level3Students.count) / totalStudentsDouble)
-                    let width3 = Double(collectionWidth) * percent
-                    percent = Double(round(1000*percent)/10)
-                    cell.studentNameLabel.text = String(percent) + "%"
-                    cell.graphBar.frame.size.width = CGFloat(width3)
-                } else if indexPath.section == 3 {
-                    var percent = (Double(level4Students.count) / totalStudentsDouble)
-                    let width4 = Double(collectionWidth) * percent
-                    percent = Double(round(1000*percent)/10)
-                    cell.studentNameLabel.text = String(percent) + "%"
-                    cell.graphBar.frame.size.width = CGFloat(width4)
-                } else {
-                    print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
-                    //return CGSize(width: 120.0, height: 120.0)
-                }
+                let student = sectionStudents?[indexPath.row]
+                cell.studentNameLabel.text = (student?[0] as! String)
+                cell.frame.size.width = CGFloat(100.0)
+                cell.frame.size.height = CGFloat(100.0)
             }
-            return cell
-        //}
+             return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphCell", for: indexPath) as! GraphCollectionViewCell
+            cell.backgroundColor = UIColor.white
+            let collectionWidth = floor(collectionView.frame.size.width)
+            let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
+            let totalStudentsDouble = Double(totalStudents)
+           
+            if indexPath.section == 0 {
+                var percent = (Double(level1Students.count) / totalStudentsDouble)
+                let width1 = Double(collectionWidth) * percent
+                percent = Double(round(1000*percent)/10)
+                cell.barLabel.text = String(percent) + "%"
+                cell.graphBar.backgroundColor = UIColor.red
+                cell.graphBar.frame.size.width = CGFloat(width1)
+            } else if indexPath.section == 1 {
+                var percent = (Double(level2Students.count) / totalStudentsDouble)
+                let width2 = Double(collectionWidth) * percent
+                percent = Double(round(1000*percent)/10)
+                cell.barLabel.text = String(percent) + "%"
+                cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.59, blue:0.85, alpha:1.0)
+                cell.graphBar.frame.size.width = CGFloat(width2)
+            } else if indexPath.section == 2 {
+                var percent = (Double(level3Students.count) / totalStudentsDouble)
+                let width3 = Double(collectionWidth) * percent
+                percent = Double(round(1000*percent)/10)
+                cell.barLabel.text = String(percent) + "%"
+                cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
+                cell.graphBar.frame.size.width = CGFloat(width3)
+            } else if indexPath.section == 3 {
+                var percent = (Double(level4Students.count) / totalStudentsDouble)
+                let width4 = Double(collectionWidth) * percent
+                percent = Double(round(1000*percent)/10)
+                cell.barLabel.text = String(percent) + "%"
+                cell.graphBar.backgroundColor = UIColor.yellow
+                cell.graphBar.frame.size.width = CGFloat(width4)
+            } else {
+                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+            }
+             return cell
+        }
+        
+        
+        
+        
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
