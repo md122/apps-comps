@@ -69,27 +69,27 @@ class GameScene: SKScene, UITextFieldDelegate {
         HEIGHTUNIT = height/16
         WIDTHUNIT = width/16
         BARX = 1*WIDTHUNIT
-        TOPBARY = 13*HEIGHTUNIT
-        BOTTOMBARY = 10*HEIGHTUNIT
+        TOPBARY = 12*HEIGHTUNIT
+        BOTTOMBARY = 9*HEIGHTUNIT
         BLOCKHEIGHT = 2*HEIGHTUNIT
-        VARBLOCKWIDTH = 1.5*WIDTHUNIT
+        VARBLOCKWIDTH = 2*WIDTHUNIT
         NUMBLOCKWIDTH = 1*WIDTHUNIT
         VARBLOCKSCALE = 1
         NUMBLOCKSIZE = CGSize(width: NUMBLOCKWIDTH, height : BLOCKHEIGHT)
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
-        GARBAGESIZE = CGSize(width: 3*WIDTHUNIT, height:4*WIDTHUNIT)
+        GARBAGESIZE = CGSize(width: 3*WIDTHUNIT, height:1.2*3*WIDTHUNIT)
         
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*4.5, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
+        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*6, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
         VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
-        SUBNUMBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
-        SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        SUBNUMBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x, y: NUMBLOCKBANKPOSITION.y-2.5*HEIGHTUNIT)
+        SUBVARBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x, y: SUBNUMBLOCKBANKPOSITION.y)
         GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
-        HAMMERPOSITION = CGPoint(x: 0.25*WIDTHUNIT+2*GARBAGESIZE.width, y: HEIGHTUNIT)
+        HAMMERPOSITION = CGPoint(x: SUBVARBLOCKBANKPOSITION.x+4*WIDTHUNIT, y: NUMBLOCKBANKPOSITION.y-HEIGHTUNIT)
         currentBlockZ = 1.0
-        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, value: 1.0)
-        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE, value: 1.0)
-        subNumBlockInBank = Block(type:.subNumber, size: NUMBLOCKSIZE, value: -1.0)
-        subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE, value: -1.0)
+        numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, value: "1")
+        varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE, value: "1")
+        subNumBlockInBank = Block(type:.subNumber, size: NUMBLOCKSIZE, value: "-1")
+        subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE, value: "-1")
         
         garbage = SKSpriteNode(imageNamed: "garbage.png")
         hammer = Hammer()
@@ -146,12 +146,12 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         //These are the rectangles that show where the bars start. It's a bit hacky to get the height from varBlockInBank but the height is stored in the block class
         let barStarterColor1 = UIColor(hexString: "#323641")
-        let topBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3, height : BLOCKHEIGHT))
+        let topBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3.5, height : BLOCKHEIGHT))
         topBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
         
         self.addChild(topBarStarter)
         
-        let bottomBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3, height : BLOCKHEIGHT))
+        let bottomBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3.5, height : BLOCKHEIGHT))
         bottomBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(BOTTOMBARY))
         
         self.addChild(bottomBarStarter)
@@ -354,7 +354,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
-            let valueEntered = Double(changeValueAlert.textFields![0].text!)
+            let valueEntered = changeValueAlert.textFields![0].text
             //SANATIZE THE INPUTS!!!!!!
             var newBlock: Block
             if block.getType() == "variable" {
@@ -364,7 +364,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered!)
             }
             //Number case
-            else if block.getType() == "number"{
+            else if block.getType() == "number" {
                 newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered!)
             }
             //subNumber case, not specified so new block always initializes
@@ -685,7 +685,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == numBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - NUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - NUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .number, size: NUMBLOCKSIZE, value: 1.0)
+                let newBlock = Block(type: .number, size: NUMBLOCKSIZE, value: "1")
                 newBlock.position = NUMBLOCKBANKPOSITION
                 numBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -701,7 +701,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == varBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - VARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - VARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .variable, size: VARBLOCKSIZE, value: 1.0)
+                let newBlock = Block(type: .variable, size: VARBLOCKSIZE, value: "1")
                 newBlock.position = VARBLOCKBANKPOSITION
                 varBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -741,7 +741,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == subNumBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - SUBNUMBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - SUBNUMBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .subNumber, size: NUMBLOCKSIZE, value: -1.0)
+                let newBlock = Block(type: .subNumber, size: NUMBLOCKSIZE, value: "-1")
                 newBlock.position = SUBNUMBLOCKBANKPOSITION
                 subNumBlockInBank = newBlock
                 self.addBlockChild(newBlock)
@@ -756,7 +756,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         if (block == subVarBlockInBank) {
             //Block has moved outside of block bank
             if (abs(block.position.x - SUBVARBLOCKBANKPOSITION.x) > CGFloat(block.getWidth()) || abs(block.position.y - SUBVARBLOCKBANKPOSITION.y) > CGFloat(block.getHeight())) {
-                let newBlock = Block(type: .subVariable, size: VARBLOCKSIZE, value: -1.0)
+                let newBlock = Block(type: .subVariable, size: VARBLOCKSIZE, value: "-1")
                 newBlock.position = SUBVARBLOCKBANKPOSITION
                 subVarBlockInBank = newBlock
                 self.addBlockChild(newBlock)
