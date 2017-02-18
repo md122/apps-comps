@@ -113,6 +113,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             topBar = [Block]()
             bottomBar = [Block]()
         }
+        VARBLOCKSCALE = 1
     }
     
     func addBlockChild(_ node: SKNode) {
@@ -161,11 +162,15 @@ class GameScene: SKScene, UITextFieldDelegate {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         self.view?.addGestureRecognizer(pinchGesture)
         
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPressFrom(_:)))
-        self.view?.addGestureRecognizer(longPressGesture)
-        
+        let doubleTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 1
+        doubleTapGesture.allowableMovement = 10
+        doubleTapGesture.minimumPressDuration = 0.01
+        self.view?.addGestureRecognizer(doubleTapGesture)
+
     }
-    func handleLongPressFrom(_ sender: UILongPressGestureRecognizer) {
+    
+    func handleDoubleTap(_ sender: UILongPressGestureRecognizer) {
         if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != hammer{
             changeBlockValueAlert(block: blockTouched!)
         }
@@ -197,12 +202,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 //The difference in the bar size is how big the bar was before the stretch - how big the bar is after the stretch
 
                 var differenceInBlockSize = (Double(pinchScale) * blockTouched!.getOriginalWidth() - Double(blockTouched!.xScale) * blockTouched!.getOriginalWidth())
-                //If we are scaling a variable or subtraction variable we want the change to actually be for 1x not nx
-                //Yes I know this is dumb...
-                var differenceInBlockSizeFor1x = 0.0
-                if blockTouched!.getType() == "variable" || blockTouched!.getType() == "subVariable" {
-                    differenceInBlockSizeFor1x = differenceInBlockSize / blockTouched!.getValue()
-                }
+               
                 //This will be changed for the negative blocks attached to a parent block, so they move over the right amount
                 if indexInTopBar > -1 {
                     shiftBlocks(bar: topBar, width:differenceInBlockSize, index:indexInTopBar)
@@ -225,19 +225,20 @@ class GameScene: SKScene, UITextFieldDelegate {
                         blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - ((CGFloat(differenceInBlockSize) / (blockTouched?.parent?.xScale)!)) / 2), y:(blockTouched?.position.y)!)
                     }
                     else if blockTouched?.getType() == "subVariable" {
-                            blockTouched?.getLabel().xScale = (1 / pinchScale)
+                            let blockParent = blockTouched?.parent as! Block
+                            blockTouched?.getLabel().xScale = (1 / pinchScale) / CGFloat((blockParent.getValue()))
                     }
                 }
+                
                 //Make the block only increase to the right for positive numbers and only increase to the left for negative
                 else if (blockTouched?.getType() == "variable" || blockTouched?.getType() == "number") {
                     blockTouched?.xScale = pinchScale
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + ((CGFloat(differenceInBlockSize)) / 2)), y:(blockTouched?.position.y)!)
+                    
+                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
+                    
                     //If this block has a child, make sure that child's label is scaled to 1
                     if blockTouched?.getSubtractionBlock() != nil {
-                        blockTouched?.getSubtractionBlock()?.getLabel().xScale = pinchScale / ((blockTouched?.parent?.xScale)!)
-                    }
-                    blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
-                    if blockTouched?.getSubtractionBlock() != nil && blockTouched?.getType() == "number" {
                         blockTouched?.getSubtractionBlock()?.getLabel().xScale = (1 / pinchScale) / (blockTouched?.getSubtractionBlock()?.xScale)!
                     }
                 }
@@ -247,16 +248,22 @@ class GameScene: SKScene, UITextFieldDelegate {
                     blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! - (CGFloat(differenceInBlockSize) / 2)), y:(blockTouched?.position.y)!)
                     blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
                 }
+                //If we are scaling a variable or subtraction variable we want the change to actually be for 1x not nx
+                //Yes I know this is dumb...
+                var differenceInBlockSizeFor1x = 0.0
+                if blockTouched!.getType() == "variable" || blockTouched!.getType() == "subVariable" {
+                    differenceInBlockSizeFor1x = differenceInBlockSize / abs(blockTouched!.getValue())
+                }
 
                 //If changing a variable block, scale all of the variable blocks and set the VARBLOCKSCALE so the new blocks from the bank are correct
                 if blockTouched?.getType() == "variable" || blockTouched?.getType() == "subVariable" {
                     VARBLOCKSCALE = pinchScale
                     //go through each of the game scene children that are blocks
                     for case let child as Block in self.children {
-                        differenceInBlockSize = differenceInBlockSizeFor1x * child.getValue()
+                        differenceInBlockSize = differenceInBlockSizeFor1x * abs(child.getValue())
                         //If the block is a variable (and not the one we are currently moving or the one in the bank we need to stretch it also
                         if (child.getType() == "variable" || child.getType() == "subVariable") && child != blockTouched && child != varBlockInBank && child != subVarBlockInBank {
-                            child.xScale = pinchScale * CGFloat(child.getValue())
+                            child.xScale = pinchScale
                             
                             //Move the block over so it's only increasing to the right for addition and to the left for subtraction
                             if (child.getType() == "variable") {
@@ -347,6 +354,15 @@ class GameScene: SKScene, UITextFieldDelegate {
         changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
             let valueEntered = changeValueAlert.textFields![0].text
+            
+            //Start by snapping block into place, so if the block is negative attached to positive it will be a child for all of this.
+            if block.getType() == "number" || block.getType() == "variable" {
+                self.snapPositiveBlockIntoPlace(block: block)
+            }
+            else {
+                self.snapNegativeBlockIntoPlace(block: block)
+            }
+            
             //SANATIZE THE INPUTS!!!!!!
             var newBlock: Block
             if block.getType() == "variable" {
@@ -363,41 +379,59 @@ class GameScene: SKScene, UITextFieldDelegate {
             else {
                 newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered!)
             }
+            //If the block has a child, transfer it over
             if block.getSubtractionBlock() != nil {
                 let subBlock = block.getSubtractionBlock()
                 subBlock?.removeFromParent()
                 //Probs need to scale up!!!
                 newBlock.setSubtractionBlock(block: subBlock)
             }
-            //Not quite old position
-            newBlock.position = block.position
-            newBlock.xScale = block.xScale
-            //If the old block was in a bar, we do not need to scoot it over
-            //WHY THE SELF. !!!!!!!
-            let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
-            let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
-            let shift = newBlock.getWidth() - block.getWidth()
-            if indexInTopBar > -1 {
-                //Add new block to bar, remove old block from bar
-                print("index in top bar", indexInTopBar)
-                self.topBar.remove(at: indexInTopBar)
-                self.topBar.insert(newBlock, at:indexInTopBar)
-                self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar - 1)
+            //If the block is a child, add the new child to the parent
+            if (block.parent as? Block) != nil {
+                let parent = block.parent as! Block
+                block.removeFromParent()
+                if block.getType() == "subVariable" {
+                    newBlock.xScale = self.VARBLOCKSCALE
+                }
+                newBlock.getLabel().xScale = 1 / newBlock.xScale
+                parent.setSubtractionBlock(block: newBlock)
             }
-            else if indexInBottomBar > -1 {
-                //Add new block to bar, remove old block from bar
-                self.bottomBar.remove(at: indexInBottomBar)
-                self.bottomBar.insert(newBlock, at:indexInBottomBar)
-                self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar - 1)
+            //Else do the stuff to add it correctly to the game scene
+            else {
+                //But the scale should be the same
+                newBlock.xScale = block.xScale
+                //Not quite old position, old position + half the change in block size
+                if block.getType() == "variable" || block.getType() == "number" {
+                    let xPosition = block.position.x + CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
+                    newBlock.position = CGPoint(x: xPosition, y: block.position.y)
+                }
+                else {
+                    let xPosition = block.position.x - CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
+                    newBlock.position = CGPoint(x: xPosition, y: block.position.y)
+                }
+                //If the old block was in a bar, we do not need to scoot it over
+                //WHY THE SELF all of the sudden? !!!!!!!
+                let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
+                let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
+                let shift = newBlock.getWidth() - block.getWidth()
+                if indexInTopBar > -1 {
+                    //Add new block to bar, remove old block from bar
+                    self.topBar.remove(at: indexInTopBar)
+                    self.topBar.insert(newBlock, at:indexInTopBar)
+                    self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar)
+                }
+                else if indexInBottomBar > -1 {
+                    //Add new block to bar, remove old block from bar
+                    self.bottomBar.remove(at: indexInBottomBar)
+                    self.bottomBar.insert(newBlock, at:indexInBottomBar)
+                    self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar)
+                }
+                
+                block.removeFromParent()
+                self.addBlockChild(newBlock)
+                //Scale the label because the block scale changed after it was created
+                newBlock.getLabel().xScale = 1 / newBlock.xScale
             }
-            
-            block.removeFromParent()
-            self.addBlockChild(newBlock)
-            //Scale the label because the block scale changed after it was created
-            newBlock.getLabel().xScale = 1 / newBlock.xScale
-            
-            //In a bar, remove from bar and scoot everyone over
-
         }))
         self.parentViewController.present(changeValueAlert, animated: true, completion: nil)
     }
@@ -463,7 +497,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             block.position = CGPoint(x:blockX, y:blockY)
             
             //If we are close to the garbage can grow the garbage can in size a bit
-            if (blockOverGarbageCan(block: block)) {
+            if (blockOverGarbageCan(block: block)) && block != hammer {
                 garbage.setScale(1.2)
             }
             else {
@@ -584,7 +618,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     func snapPositiveBlockIntoPlace(block: Block) {
         let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
         let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
-        
         //The block is in the top bar
         if (indexInTopBar > -1) {
             //If we move the block outside of the bar, by moving it too high, too left, or too right
@@ -714,7 +747,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     //Hammer goes here too because it's not a positive block
     func snapNegativeBlockIntoPlace(block: Block) {
-        
         //If on top of a positive block, snap it on top of that block.
         for case let child as Block in self.children {
             if (child.getType() == "number" && blockTouched?.getType() == "subNumber") || (child.getType() == "variable" && blockTouched?.getType() == "subVariable")  {
@@ -788,8 +820,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             if block.getType() == "number" || block.getType() == "variable" {
                 snapPositiveBlockIntoPlace(block: block)
             }
-            if block.getType() == "hammer" {
-                //snapNegativeBlockIntoPlace(block: block)
+            else if block.getType() == "hammer" {
                 for case let child as Block in self.children {
                     if child.getSubtractionBlock() != nil && (abs(child.getSubtractionBlock()!.getValue()) <= child.getValue()) && hammer.intersects(child){
                         //VORTEX!!! WHY????!!!!
