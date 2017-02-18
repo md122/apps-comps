@@ -113,6 +113,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             topBar = [Block]()
             bottomBar = [Block]()
         }
+        VARBLOCKSCALE = 1
     }
     
     func addBlockChild(_ node: SKNode) {
@@ -166,11 +167,10 @@ class GameScene: SKScene, UITextFieldDelegate {
         doubleTapGesture.allowableMovement = 10
         doubleTapGesture.minimumPressDuration = 0.01
         self.view?.addGestureRecognizer(doubleTapGesture)
-        
+
     }
     
     func handleDoubleTap(_ sender: UILongPressGestureRecognizer) {
-        print("hiiii")
         if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != hammer{
             changeBlockValueAlert(block: blockTouched!)
         }
@@ -183,7 +183,6 @@ class GameScene: SKScene, UITextFieldDelegate {
             if blockTouched != nil {
                 //We set the sender scale to start at the current scale for the current block so as it changes the block will change correctly
                 sender.scale = (blockTouched?.xScale)!
-                print("began scale", sender.scale)
                 if blockTouched?.getType() == "number" || blockTouched?.getType() == "variable" {
                     snapPositiveBlockIntoPlace(block: blockTouched!)
                 }
@@ -355,6 +354,15 @@ class GameScene: SKScene, UITextFieldDelegate {
         changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
             let valueEntered = changeValueAlert.textFields![0].text
+            
+            //Start by snapping block into place, so if the block is negative attached to positive it will be a child for all of this.
+            if block.getType() == "number" || block.getType() == "variable" {
+                self.snapPositiveBlockIntoPlace(block: block)
+            }
+            else {
+                self.snapNegativeBlockIntoPlace(block: block)
+            }
+            
             //SANATIZE THE INPUTS!!!!!!
             var newBlock: Block
             if block.getType() == "variable" {
@@ -371,41 +379,59 @@ class GameScene: SKScene, UITextFieldDelegate {
             else {
                 newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered!)
             }
+            //If the block has a child, transfer it over
             if block.getSubtractionBlock() != nil {
                 let subBlock = block.getSubtractionBlock()
                 subBlock?.removeFromParent()
                 //Probs need to scale up!!!
                 newBlock.setSubtractionBlock(block: subBlock)
             }
-            //Not quite old position
-            newBlock.position = block.position
-            newBlock.xScale = block.xScale
-            //If the old block was in a bar, we do not need to scoot it over
-            //WHY THE SELF. !!!!!!!
-            let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
-            let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
-            let shift = newBlock.getWidth() - block.getWidth()
-            if indexInTopBar > -1 {
-                //Add new block to bar, remove old block from bar
-                print("index in top bar", indexInTopBar)
-                self.topBar.remove(at: indexInTopBar)
-                self.topBar.insert(newBlock, at:indexInTopBar)
-                self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar - 1)
+            //If the block is a child, add the new child to the parent
+            if (block.parent as? Block) != nil {
+                let parent = block.parent as! Block
+                block.removeFromParent()
+                if block.getType() == "subVariable" {
+                    newBlock.xScale = self.VARBLOCKSCALE
+                }
+                newBlock.getLabel().xScale = 1 / newBlock.xScale
+                parent.setSubtractionBlock(block: newBlock)
             }
-            else if indexInBottomBar > -1 {
-                //Add new block to bar, remove old block from bar
-                self.bottomBar.remove(at: indexInBottomBar)
-                self.bottomBar.insert(newBlock, at:indexInBottomBar)
-                self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar - 1)
+            //Else do the stuff to add it correctly to the game scene
+            else {
+                //But the scale should be the same
+                newBlock.xScale = block.xScale
+                //Not quite old position, old position + half the change in block size
+                if block.getType() == "variable" || block.getType() == "number" {
+                    let xPosition = block.position.x + CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
+                    newBlock.position = CGPoint(x: xPosition, y: block.position.y)
+                }
+                else {
+                    let xPosition = block.position.x - CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
+                    newBlock.position = CGPoint(x: xPosition, y: block.position.y)
+                }
+                //If the old block was in a bar, we do not need to scoot it over
+                //WHY THE SELF all of the sudden? !!!!!!!
+                let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
+                let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
+                let shift = newBlock.getWidth() - block.getWidth()
+                if indexInTopBar > -1 {
+                    //Add new block to bar, remove old block from bar
+                    self.topBar.remove(at: indexInTopBar)
+                    self.topBar.insert(newBlock, at:indexInTopBar)
+                    self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar)
+                }
+                else if indexInBottomBar > -1 {
+                    //Add new block to bar, remove old block from bar
+                    self.bottomBar.remove(at: indexInBottomBar)
+                    self.bottomBar.insert(newBlock, at:indexInBottomBar)
+                    self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar)
+                }
+                
+                block.removeFromParent()
+                self.addBlockChild(newBlock)
+                //Scale the label because the block scale changed after it was created
+                newBlock.getLabel().xScale = 1 / newBlock.xScale
             }
-            
-            block.removeFromParent()
-            self.addBlockChild(newBlock)
-            //Scale the label because the block scale changed after it was created
-            newBlock.getLabel().xScale = 1 / newBlock.xScale
-            
-            //In a bar, remove from bar and scoot everyone over
-
         }))
         self.parentViewController.present(changeValueAlert, animated: true, completion: nil)
     }
@@ -608,7 +634,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                 //And an x value of the previous block x location + half of the previous block width + half of this block width
                 // I have no idea why I need the temps... but it doesn't work without them...
             else {
-                print("1")
                 //xPosition is for where we need to put the block back to, we calculate it using the position of the previous block in the bar
                 var xPosition : CGFloat = 0.0
                 //If not the first block in the bar
@@ -722,7 +747,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     //Hammer goes here too because it's not a positive block
     func snapNegativeBlockIntoPlace(block: Block) {
-        print("negative")
         //If on top of a positive block, snap it on top of that block.
         for case let child as Block in self.children {
             if (child.getType() == "number" && blockTouched?.getType() == "subNumber") || (child.getType() == "variable" && blockTouched?.getType() == "subVariable")  {
@@ -789,7 +813,6 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touches ended")
         if blockTouched != nil {
             let block = blockTouched!
             //Set the color to the not selected color
@@ -798,7 +821,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                 snapPositiveBlockIntoPlace(block: block)
             }
             else if block.getType() == "hammer" {
-                //snapNegativeBlockIntoPlace(block: block)
                 for case let child as Block in self.children {
                     if child.getSubtractionBlock() != nil && (abs(child.getSubtractionBlock()!.getValue()) <= child.getValue()) && hammer.intersects(child){
                         //VORTEX!!! WHY????!!!!
