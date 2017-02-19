@@ -70,6 +70,8 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
                 let firstClassroomID = String(classrooms[0][1] as! Int)
                 APIConnector().requestClassroomData(callingDelegate: self, classroomID: firstClassroomID)
             }
+        } else if data["error"] as! String == "HTTP" {
+            APIConnector().connectionDropped(callingDelegate: self)
         } else {
             print("Database error, run and scream")
         }
@@ -82,6 +84,8 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             self.classrooms.insert([classroomData[0][0], classroomData[0][1]], at: 0)
             let indexPath = IndexPath(row: 0, section: 0)
             self.tableView.insertRows(at: [indexPath], with: .automatic)
+        } else if data["error"] as! String == "HTTP" {
+            APIConnector().connectionDropped(callingDelegate: self)
         } else {
             print("Database error, run and scream")
         }
@@ -103,15 +107,18 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
                 let path = IndexPath(row: removeIndex, section: 0)
                 tableView.deleteRows(at: [path], with: .automatic)
             }
+        } else if data["error"] as! String == "HTTP" {
+            APIConnector().connectionDropped(callingDelegate: self)
         } else {
             print("Database error, need to handle this")
         }
-        
     }
     
     func handleClassroomDataRequest(data: NSDictionary) {
         if(data["error"] as! String == "none") {
             detailViewController?.loadData(studentsData: data["data"] as! [NSArray])
+        } else if data["error"] as! String == "HTTP" {
+            APIConnector().connectionDropped(callingDelegate: self)
         }
     }
 

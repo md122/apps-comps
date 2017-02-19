@@ -67,6 +67,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
                 }))
                 present(createAccountAlert, animated: true, completion: nil)
             }
+            else if data["error"] as! String == "HTTP" {
+                APIConnector().connectionDropped(callingDelegate: self)
+            }
             else if (data["data"] as! String == "Student") {
                 currentUser = Student(idToken: self.idToken!, name: name!)
                 performSegue(withIdentifier: "loginToStudentDash", sender: self)
@@ -103,7 +106,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
             self.name = user.profile.name
             let connector = APIConnector()
             connector.attemptLogin(callingDelegate: self, idToken: idToken!)
-            
         } else {
             print("\(error.localizedDescription)")
         }
@@ -116,26 +118,5 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         print(data)
         
     }
-        
-        
-        
-    // Called from appdelegate after user is authenticated by google
-    func didAttemptSignIn(idToken: String, name: String ) {
-        let connector = APIConnector()
-        self.name = name
-        self.idToken = idToken
-        connector.attemptLogin(callingDelegate: self, idToken: idToken)
-    }
-        
-        
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destinationViewController.
-         // Pass the selected object to the new view controller.
-         }
-         */
         
 }

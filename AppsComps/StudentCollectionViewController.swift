@@ -50,7 +50,33 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func loadData(studentsData: [NSArray]) {
-        print(studentsData)
+        getRealStudentData(studentList: studentsData)
+        self.collectionView?.reloadData()
+    }
+    
+    func getRealStudentData(studentList: [NSArray]) {
+        ///This is where we will requestClassroomInfo
+        students = studentList
+        
+        level1Students.removeAll()
+        level2Students.removeAll()
+        level3Students.removeAll()
+        level4Students.removeAll()
+        
+        for student in students {
+            if student[1] as! Int == 1{
+                level1Students.append(student)
+            } else if student[1] as! Int == 2{
+                level2Students.append(student)
+            } else if student[1] as! Int == 3{
+                level3Students.append(student)
+            } else if student[1] as! Int == 4{
+                level4Students.append(student)
+            } else {
+                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+            }
+        }
+        studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
     }
     
     func modeSegmentChanged(_ sender: AnyObject) {
