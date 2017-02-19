@@ -30,9 +30,9 @@ class Student: Account, APIDataDelegate {
         return ""
     }
     
-    override func getHighestLevel()->String{
+    override func getHighestLevel()->Int{
         //code that asks the database connector to send back the number of the highest level this student has unlocked (not the highest level passed, the highest level they are allowed to access)
-        return "4"
+        return 2
     }
     
     func getCorrectIncorrectRatio(level: String, timeRange: String)->String{

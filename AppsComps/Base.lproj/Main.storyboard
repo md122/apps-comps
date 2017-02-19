@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qQB-40-xno">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -100,7 +100,7 @@
         <!--Problem Screen View Controller-->
         <scene sceneID="uku-uC-YUg">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" id="cnD-Rx-Jca" customClass="ProblemScreenViewController" customModule="AppsComps" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="cnD-Rx-Jca" customClass="ProblemScreenViewController" customModule="AppsComps" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="srj-iC-Tai"/>
                         <viewControllerLayoutGuide type="bottom" id="fwp-Sz-l2Q"/>
@@ -176,7 +176,7 @@
         <!--Problem Selector View Controller-->
         <scene sceneID="ul1-bv-saK">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="7gr-Yh-NVx" userLabel="Problem Selector View Controller" customClass="ProblemSelectorViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7gr-Yh-NVx" userLabel="Problem Selector View Controller" customClass="ProblemSelectorViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nRW-ma-mDN"/>
                         <viewControllerLayoutGuide type="bottom" id="0eD-eZ-imV"/>
@@ -200,7 +200,7 @@
                                         <frame key="frameInset" minX="8" minY="36" width="150" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Leave Classroom"/>
+                                        <state key="normal" title="Leave Class"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hello!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgz-5w-fvX">
                                         <frame key="frameInset" minX="227" minY="8" width="731" height="35"/>
@@ -220,6 +220,12 @@
                                         <frame key="frameInset" minX="426" minY="-3" width="187" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwt-nz-ShV">
+                                        <frame key="frameInset" minX="8" minY="50" width="150" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Join Classroom"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.61064428559999995" blue="0.71442666659999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -233,12 +239,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Help" id="a0g-6c-T2A">
+                            <connections>
+                                <action selector="helpPopup:" destination="7gr-Yh-NVx" id="6IO-Bb-1pE"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="B4W-dQ-NDF"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="classroomText" destination="Pdd-kg-KrR" id="Z7K-yD-m9u"/>
                         <outlet property="greetingText" destination="Sgz-5w-fvX" id="ZhO-JA-F6W"/>
                         <outlet property="headerView" destination="u1H-Z3-vnB" id="b1L-Kg-SaD"/>
+                        <outlet property="joinButton" destination="fwt-nz-ShV" id="SPC-KN-g3C"/>
                         <outlet property="leaveButton" destination="fP1-bK-pgh" id="8tn-L4-dTa"/>
                         <outlet property="levelContainerView" destination="e39-bF-GlZ" id="Hni-D1-Fgh"/>
                         <outlet property="levelText" destination="4yj-1w-CuW" id="2M7-E3-G3k"/>
@@ -528,7 +542,72 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKX-HQ-ee9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="897.65624999999989" y="-2073.046875"/>
+            <point key="canvasLocation" x="945" y="-2029"/>
+        </scene>
+        <!--Help View Controller-->
+        <scene sceneID="cJP-QS-MTc">
+            <objects>
+                <viewController storyboardIdentifier="helpPopUpID" id="qWs-QL-Vkp" customClass="HelpViewController" customModule="AppsComps" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZUs-b9-rpM"/>
+                        <viewControllerLayoutGuide type="bottom" id="fwk-WM-g4m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TKb-go-j8c">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2M-JV-wMw">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yjg-NI-g5d">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="132" id="84a-oO-eST"/>
+                                            <constraint firstAttribute="height" constant="30" id="OiG-MN-hMf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Got it!">
+                                            <color key="titleColor" red="0.98598602718533024" green="1" blue="0.98046834352660217" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closePopUp:" destination="qWs-QL-Vkp" eventType="touchUpInside" id="3oj-h0-cIM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.50479711095581303" green="0.47403589095617088" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Yjg-NI-g5d" firstAttribute="centerX" secondItem="X2M-JV-wMw" secondAttribute="centerX" id="4wt-ft-w3M"/>
+                                    <constraint firstAttribute="bottom" secondItem="Yjg-NI-g5d" secondAttribute="bottom" constant="22" id="n7R-ts-fPb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="X2M-JV-wMw" firstAttribute="centerX" secondItem="TKb-go-j8c" secondAttribute="centerX" id="LdL-zf-SKq"/>
+                            <constraint firstItem="X2M-JV-wMw" firstAttribute="top" secondItem="ZUs-b9-rpM" secondAttribute="bottom" constant="27" id="T1C-G6-wmJ"/>
+                            <constraint firstItem="X2M-JV-wMw" firstAttribute="centerY" secondItem="TKb-go-j8c" secondAttribute="centerY" id="chV-aZ-vA5"/>
+                            <constraint firstItem="X2M-JV-wMw" firstAttribute="trailing" secondItem="TKb-go-j8c" secondAttribute="trailingMargin" constant="-61" id="he8-BH-bER"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U7A-q3-kQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1515.8203125" y="-2517.1875"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="VoY-aY-gAe">
+            <objects>
+                <viewController id="4wW-OU-lDk" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tsC-0J-CTm"/>
+                        <viewControllerLayoutGuide type="bottom" id="DzY-KS-6NT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="baz-2S-iXC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eL2-C2-V75" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>
