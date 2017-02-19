@@ -65,14 +65,17 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         APIConnector().attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!, level: self.level, problemNum: self.currentProblem!)
     }
     
+    
+    
     func setProblemText() {
         let connector = APIConnector()
         connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: level)
     }
     
     
-    func updateLevel(){
-        self.level += 1
+    
+    func setLevel(level: Int){
+        self.level = level
         levelLabel.text = "Level: \(self.level)"
         
     }
@@ -86,7 +89,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
                 let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + nextLevel! + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
                 rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
                     self.submitTextField.text = ""
-                    self.updateLevel()
+                    self.setLevel(level: self.level+1)
                     self.setProblemText()
                 }))
                 rightAnswerAlert.addAction(UIAlertAction(title: "Stay on this level", style: .default, handler: { (action: UIAlertAction!) in
