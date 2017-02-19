@@ -12,7 +12,7 @@ import SpriteKit
 class Hammer: Block {
 
     init() {
-        let texture = SKTexture(imageNamed: "hammer.png")
+        let texture = SKTexture(imageNamed: "vortex")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
     }
     

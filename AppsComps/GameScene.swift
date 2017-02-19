@@ -23,7 +23,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var topBar = [Block]()
     var bottomBar = [Block]()
     var garbage:SKSpriteNode
-    var hammer:SKSpriteNode
+    var vortex:SKSpriteNode
     
     // The starting coordinates
     let width:CGFloat
@@ -44,7 +44,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     let NUMBLOCKSIZE:CGSize
     let VARBLOCKSIZE:CGSize
     let GARBAGEPOSITION:CGPoint
-    let HAMMERPOSITION:CGPoint
+    let VORTEXPOSITION:CGPoint
     let GARBAGESIZE:CGSize
     let SNAPDISTANCE:Double
     
@@ -79,12 +79,15 @@ class GameScene: SKScene, UITextFieldDelegate {
         VARBLOCKSIZE = CGSize(width: VARBLOCKWIDTH, height : BLOCKHEIGHT)
         GARBAGESIZE = CGSize(width: 3*WIDTHUNIT, height:1.2*3*WIDTHUNIT)
         
-        NUMBLOCKBANKPOSITION = CGPoint(x: WIDTHUNIT*6, y: 3*HEIGHTUNIT+0.5*BLOCKHEIGHT)
-        VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+NUMBLOCKWIDTH+VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
-        SUBNUMBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x, y: NUMBLOCKBANKPOSITION.y-2.5*HEIGHTUNIT)
-        SUBVARBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x, y: SUBNUMBLOCKBANKPOSITION.y)
-        GARBAGEPOSITION = CGPoint(x: 0.25*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
-        HAMMERPOSITION = CGPoint(x: SUBVARBLOCKBANKPOSITION.x+4*WIDTHUNIT, y: NUMBLOCKBANKPOSITION.y-HEIGHTUNIT)
+        GARBAGEPOSITION = CGPoint(x: 0.5*WIDTHUNIT+0.5*GARBAGESIZE.width, y: 0.25*HEIGHTUNIT+0.5*GARBAGESIZE.height)
+        
+        //padding between each block is 1/4*VARBLOCKWIDTH
+        NUMBLOCKBANKPOSITION = CGPoint(x: GARBAGEPOSITION.x+1*VARBLOCKWIDTH+0.5*NUMBLOCKWIDTH, y: GARBAGEPOSITION.y)
+        VARBLOCKBANKPOSITION = CGPoint(x: NUMBLOCKBANKPOSITION.x+0.5*NUMBLOCKWIDTH+0.75*VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        SUBNUMBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x+0.75*VARBLOCKWIDTH+0.5*NUMBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+0.5*NUMBLOCKWIDTH+0.75*VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
+        VORTEXPOSITION = CGPoint(x: SUBVARBLOCKBANKPOSITION.x+1.5*VARBLOCKWIDTH, y: GARBAGEPOSITION.y+0.25*GARBAGESIZE.height)
+        
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, value: "1")
         varBlockInBank = Block(type:.variable, size: VARBLOCKSIZE, value: "1")
@@ -92,7 +95,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE, value: "-1")
         
         garbage = SKSpriteNode(imageNamed: "garbage.png")
-        hammer = Hammer()
+        vortex = SKSpriteNode(imageNamed: "vortex.png")
         
         SNAPDISTANCE = 20.0
         
@@ -103,10 +106,10 @@ class GameScene: SKScene, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //Removes all blocks from the problem screen besides the block banks and the hammer
+    //Removes all blocks from the problem screen besides the block banks and the vortex
     func clearProblemScreen() {
         for case let child as Block in self.children {
-            if child != varBlockInBank && child != numBlockInBank && child != subNumBlockInBank && child != subVarBlockInBank && child != hammer {
+            if child != varBlockInBank && child != numBlockInBank && child != subNumBlockInBank && child != subVarBlockInBank && child != vortex {
                 child.removeFromParent()
             }
             //We need to set the bars back to empty
@@ -128,11 +131,11 @@ class GameScene: SKScene, UITextFieldDelegate {
         self.backgroundColor = .white
         
         garbage.position = GARBAGEPOSITION
-        hammer.position = HAMMERPOSITION
+        vortex.position = VORTEXPOSITION
         garbage.size = GARBAGESIZE
-        hammer.size = CGSize(width:GARBAGESIZE.width / 2, height: GARBAGESIZE.height / 2)
+        vortex.size = CGSize(width: 1.5*WIDTHUNIT, height: 1.5*WIDTHUNIT)
         self.addChild(garbage)
-        self.addChild(hammer)
+        self.addChild(vortex)
         
         //Add the original block in the number block bank and the variable block bank
         numBlockInBank.position = NUMBLOCKBANKPOSITION
@@ -144,7 +147,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         subVarBlockInBank.position = SUBVARBLOCKBANKPOSITION
         self.addBlockChild(subVarBlockInBank)
         
-        //These are the rectangles that show where the bars start. It's a bit hacky to get the height from varBlockInBank but the height is stored in the block class
+        //These are the rectangles that show where the bars start
         let barStarterColor1 = UIColor(hexString: "#323641")
         let topBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3.5, height : BLOCKHEIGHT))
         topBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
@@ -166,7 +169,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         
     }
     func handleLongPressFrom(_ sender: UILongPressGestureRecognizer) {
-        if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != hammer{
+        if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != vortex{
             changeBlockValueAlert(block: blockTouched!)
         }
     }
@@ -190,7 +193,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         else if sender.state == .changed {
             let pinchScale = sender.scale
             //If the pinch starts with a touch on a block. We can't stretch blocks while they are in the bank
-            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != hammer {
+            if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != vortex {
                 //We need to shift all of the blocks after the one being stretched over by the amount the pinch changed the block
                 var indexInTopBar = findIndexOfBlock(bar: topBar, block:blockTouched!)
                 var indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:blockTouched!)
@@ -424,7 +427,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered)
                     }
                 }
-                    //Number case
+                //Number case
                 else if block.getType() == "number" {
                     valueEntered = self.sanitizePosNumberValue(input: valueEntered)
                     if valueEntered != "" {
@@ -789,7 +792,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
-    //Hammer goes here too because it's not a positive block
+    //vortex goes here too because it's not a positive block
     func snapNegativeBlockIntoPlace(block: Block) {
         
         //If on top of a positive block, snap it on top of that block.
@@ -839,8 +842,8 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
         //Remove the block from the gamescene if it is on top of the garbage can when the touch ends
         if (blockOverGarbageCan(block: block)) {
-            if blockTouched == hammer {
-                hammer.position = HAMMERPOSITION
+            if blockTouched == vortex {
+                vortex.position = VORTEXPOSITION
             }
             else {
                 block.removeFromParent()
@@ -865,10 +868,10 @@ class GameScene: SKScene, UITextFieldDelegate {
             if block.getType() == "number" || block.getType() == "variable" {
                 snapPositiveBlockIntoPlace(block: block)
             }
-            if block.getType() == "hammer" {
+            if block.getType() == "vortex" {
                 //snapNegativeBlockIntoPlace(block: block)
                 for case let child as Block in self.children {
-                    if child.getSubtractionBlock() != nil && (abs(child.getSubtractionBlock()!.getValue()) <= child.getValue()) && hammer.intersects(child){
+                    if child.getSubtractionBlock() != nil && (abs(child.getSubtractionBlock()!.getValue()) <= child.getValue()) && vortex.intersects(child){
                         //VORTEX!!! WHY????!!!!
                         //let fieldNode = SKFieldNode.radialGravityField()
                         //fieldNode.categoryBitMask = 0x1 << 0
@@ -879,7 +882,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         
                         //fieldNode.run(SKAction.sequence([SKAction.strength(to: 0, duration: 2.0), SKAction.removeFromParent()]))
                         //print(fieldNode)
-                        //hammer.addChild(fieldNode)
+                        //vortex.addChild(fieldNode)
                         //Remove in a super cool black hole way!!!!
                         //while child.xScale > 0.1 {
                          //   child.xScale = (child.xScale / 1.0001)
@@ -889,7 +892,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         child.removeFromParent()
                     }
                 }
-                hammer.position = HAMMERPOSITION
+                vortex.position = VORTEXPOSITION
                 
             }
             else {
