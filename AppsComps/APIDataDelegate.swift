@@ -16,7 +16,7 @@ import Foundation
     
     // For the problem screen
     @objc optional func handleNextProblem(data: NSDictionary) ;
-    @objc optional func handleSubmitAnswer(data: NSDictionary) ;
+    @objc optional func handleSubmitAnswer(data: [NSDictionary]) ;
     @objc optional func handleSkipProblemAttempt(data: NSDictionary) ;
     
     // Methods for student class
