@@ -86,7 +86,7 @@
             <objects>
                 <navigationController id="bob-Z2-ijt" customClass="MainNavigationController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="bB4-Ql-mMZ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -240,7 +240,7 @@
         <scene sceneID="TGh-kI-Fkr">
             <objects>
                 <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -255,8 +255,8 @@
         <!--Student Collection View Controller-->
         <scene sceneID="D7W-CY-NE6">
             <objects>
-                <collectionViewController id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
+                <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5Bg-cB-sBO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -355,14 +355,14 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="UXq-py-S0U">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="giQ-B9-U29">
+                        <barButtonItem key="leftBarButtonItem" id="giQ-B9-U29">
                             <connections>
-                                <action selector="collapseTable:" destination="MEl-8u-sh3" id="dAO-cN-YC7"/>
+                                <action selector="showButtonClicked:" destination="MEl-8u-sh3" id="Eot-b9-efn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="collapseTableButton" destination="giQ-B9-U29" id="AMy-e6-5y4"/>
+                        <outlet property="showTableButton" destination="giQ-B9-U29" id="r2o-4J-3Qv"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdd-RI-Hlb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -374,7 +374,7 @@
             <objects>
                 <navigationController title="Student Progress" id="3XX-kf-WLW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Progress" id="wHz-fQ-KpL"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -454,14 +454,19 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="My Classes" id="YeP-tY-m03">
                         <barButtonItem key="backBarButtonItem" title="My Classes" id="gHg-ro-hB7"/>
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="7Zh-Oy-S5t">
+                        <barButtonItem key="leftBarButtonItem" title="&lt;Hide" id="D4a-vS-9aO">
+                            <connections>
+                                <action selector="collapseClicked:" destination="wXA-27-oqq" id="rbT-ap-M4Z"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="7Zh-Oy-S5t">
                             <connections>
                                 <action selector="editButtonTapped:" destination="wXA-27-oqq" id="mCX-bZ-Q58"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Action" id="D4a-vS-9aO"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="collapseButton" destination="D4a-vS-9aO" id="nCs-G8-XR5"/>
                         <outlet property="leftBarButton" destination="7Zh-Oy-S5t" id="iKl-hV-Vsp"/>
                         <outlet property="rightBarButton" destination="D4a-vS-9aO" id="oD2-oT-CIq"/>
                     </connections>
@@ -481,8 +486,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="bus-vF-wNi" kind="relationship" relationship="viewControllers" id="3MP-T3-2DD"/>
                         <segue destination="3XX-kf-WLW" kind="relationship" relationship="viewControllers" id="nq8-QJ-5Rz"/>
+                        <segue destination="bus-vF-wNi" kind="relationship" relationship="viewControllers" id="hgm-Je-Sdx"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4u-Oa-nua" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -493,7 +498,7 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -514,7 +519,7 @@
             <objects>
                 <navigationController title="Problem Selector" id="bus-vF-wNi" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Problems" id="X7G-Pk-h55"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KMB-kU-oze" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KMB-kU-oze" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -530,7 +535,7 @@
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="563"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

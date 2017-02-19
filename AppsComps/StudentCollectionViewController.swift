@@ -17,7 +17,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     var students = [NSArray]()
     
-    @IBOutlet var collapseTableButton: UIBarButtonItem!
+    @IBOutlet var showTableButton: UIBarButtonItem!
+
     var level1Students = [NSArray]()
     var level2Students = [NSArray]()
     var level3Students = [NSArray]()
@@ -98,7 +99,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
-        self.navigationItem.leftBarButtonItem = collapseTableButton
+        self.navigationItem.leftBarButtonItem = showTableButton
         self.navigationItem.rightBarButtonItem = segmentBarItem
         //self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         //self.navigationController?.setToolbarHidden(false, animated: false)
@@ -257,13 +258,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             }
              return cell
         }
-        
-        
-        
-        
-        
-        
+
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionWidth = floor(collectionView.frame.size.width)
@@ -308,29 +305,37 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 //        let leftRightInset = self.view.frame.size.width / 14.0
 //        return UIEdgeInsetsMake(0, 0, 0, 0)
 //    }
-//    
     
-    @IBAction func collapseTable(_ sender: AnyObject) {
-        if isCollapsed == false {
-            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
-            splitViewController?.presentsWithGesture = true            //self.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-            self.navigationItem.leftBarButtonItem = collapseTableButton
-            collapseTableButton.title = "Show Table"
-            self.navigationItem.leftItemsSupplementBackButton = true
-            isCollapsed = true
-        } else if isCollapsed == true {
-            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
-            splitViewController?.presentsWithGesture = true
-            self.navigationItem.leftBarButtonItem = collapseTableButton
-            collapseTableButton.title = "Collapse Table"
-            isCollapsed = false
-            
-        }
-        
-        //let controller = self.topViewController as! StudentCollectionViewController
-        //controller.detailItem = "HI"
-        //let showTableButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.rewind, target: self, action: nil)
-        
+    
+    
+    
+//    @IBAction func showTable(_ sender: AnyObject) {
+//        self.showTable()
+////        if isCollapsed == false {
+////            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
+////            splitViewController?.presentsWithGesture = true            //self.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
+////            self.navigationItem.leftBarButtonItem = collapseTableButton
+////            collapseTableButton.title = "Show Table"
+////            self.navigationItem.leftItemsSupplementBackButton = true
+////            isCollapsed = true
+////        } else if isCollapsed == true {
+////            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+////            splitViewController?.presentsWithGesture = true
+////            self.navigationItem.leftBarButtonItem = collapseTableButton
+////            collapseTableButton.title = "Collapse Table"
+////            isCollapsed = false
+//        
+//       // }
+//        
+//        //let controller = self.topViewController as! StudentCollectionViewController
+//        //controller.detailItem = "HI"
+//        //let showTableButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.rewind, target: self, action: nil)
+//        
+//    }
+    
+    
+    @IBAction func showButtonClicked(_ sender: AnyObject) {
+         self.showTable()
     }
     
     func getStudentData(studentList: [NSArray]) {
@@ -359,6 +364,22 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
 
         
+    }
+    
+    func hideTable() {
+        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
+        splitViewController?.presentsWithGesture = true
+        self.navigationItem.leftBarButtonItem = showTableButton
+        showTableButton.title = "<My Classes"
+        self.collectionView?.reloadData()
+    }
+    
+    func showTable() {
+        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+        splitViewController?.presentsWithGesture = true
+        self.navigationItem.leftBarButtonItem = showTableButton
+        showTableButton.title = ""
+        self.collectionView?.reloadData()
     }
     
 
