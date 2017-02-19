@@ -807,6 +807,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
 
+    //Currently not working :/
     func blockVortex(block: Block) {
         block.xScale = (block.xScale / 1.00001)
         block.alpha = block.alpha / 1.00001
