@@ -21,6 +21,24 @@ class ProgressSplitViewController: UISplitViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func logoutClicked(_ sender: AnyObject) {
+        let logoutAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // Log out option
+        logoutAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
+            if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+                GIDSignIn.sharedInstance().signOut()
+            }
+            currentUser = nil
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+        }))
+        // cancel option
+        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        present(logoutAlert, animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation
