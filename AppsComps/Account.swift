@@ -43,6 +43,9 @@ class Account {
         return 4
     }
 
+    func getClassRoomID() -> Int {
+        return 0
+    }
 
 }
 

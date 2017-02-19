@@ -16,15 +16,15 @@
 import UIKit
 
 class ProblemSelectorViewController: UIViewController, APIDataDelegate {
-    @IBOutlet weak var greetingText: UILabel!
-    @IBOutlet weak var levelText: UILabel!
-    @IBOutlet weak var leaveButton: UIButton!
-    @IBOutlet weak var joinButton: UIButton!
-    @IBOutlet weak var classroomText: UILabel!
+//    @IBOutlet weak var greetingText: UILabel!
+//    @IBOutlet weak var levelText: UILabel!
+//    @IBOutlet weak var leaveButton: UIButton!
+//    @IBOutlet weak var joinButton: UIButton!
+//    @IBOutlet weak var classroomText: UILabel!
     @IBOutlet weak var levelContainerView: UIView!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var studentLogoutButton: UIBarButtonItem!
-    @IBOutlet weak var logoView: UIImageView!
+//    @IBOutlet weak var headerView: UIView!
+//    @IBOutlet weak var studentLogoutButton: UIBarButtonItem!
+//    @IBOutlet weak var logoView: UIImageView!
 
 
     
@@ -44,70 +44,70 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         
         super.viewDidLoad()
         //Set up header with a coordinate scale
-        let width = screen.width
-        let height = headerView.frame.height
-        let widthUnit = width/100
-        let heightUnit = height/100
-        
-        
-        
-        //Aligning the labels to the left and right of the header. App logo will be in the center of the header
-        
-        headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: screen.width, height: headerView.frame.height)
-        classroomText.frame = CGRect(x: widthUnit*5, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
-        classroomText.textAlignment = NSTextAlignment.left
-        greetingText.frame = CGRect(x: 0, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
-        greetingText.textAlignment = NSTextAlignment.right
-        levelText.frame = CGRect(x: 0, y: heightUnit*25 + greetingText.frame.height, width: widthUnit*95, height: heightUnit*50)
-        levelText.textAlignment = NSTextAlignment.right
-        greetingText.text = "Hello " + currentUser!.getName()
-        levelText.text = "You are on level \(currentUser!.getHighestLevel())"
-        joinButton.setTitle("Join Classroom", for: .normal)
-        leaveButton.setTitle("Leave Class", for: .normal)
-        
-        //SET COLORS OF EVERYTHING
-        let lightPink = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
-        let brightYellow = UIColor(red:0.94, green:0.80, blue:0.41, alpha:1.0)
-        let darkBlue = UIColor(red:0.05, green:0.11, blue:0.20, alpha:1.0)
-        headerView.backgroundColor = darkBlue
-        classroomText.textColor = brightYellow
-        greetingText.textColor = brightYellow
-        levelText.textColor = brightYellow
-        view.backgroundColor = lightPink
-        
-        //JOIN/LEAVE CLASSROOM
-        if (currentUser as? Student) != nil {
-            //INCLUDE IF STATEMENT TO SEE IF STUDENT IS IN CLASS -> IF YES, LEAVE CLASS. IF NO, JOIN CLASS
-            
-            leaveButton.isHidden = false
-            leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: leaveButton.frame.size.width, height: leaveButton.frame.size.height)
-            
-            leaveButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-            leaveButton.backgroundColor = brightYellow
-            leaveButton.layer.cornerRadius = 5
-            leaveButton.setTitleColor(darkBlue, for: .normal)
-            leaveButton.contentHorizontalAlignment = .left
-            joinButton.backgroundColor = brightYellow
-            joinButton.layer.cornerRadius = 5
-            joinButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-            joinButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: joinButton.frame.size.width, height: joinButton.frame.size.height)
-            joinButton.setTitleColor(darkBlue, for: .normal)
-            joinButton.contentHorizontalAlignment = .left
-
-        }
-            //TEACHER SIDE REMOVES JOIN/LEAVE CLASSROOM ABILITY
-        else {
-            joinButton.isHidden = true
-            leaveButton.isHidden = true
-            classroomText.text = "Teacher Mode"
-            levelText.text = "All levels accessible"
-        }
-        
-        //Temporary logo
-        //Check here for how to resize image: http://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
-        logoView.image = UIImage(named: "mathlogo")
-        logoView.center = CGPoint(x: widthUnit*50, y: heightUnit*50)
-        
+//        let width = screen.width
+//        let height = headerView.frame.height
+//        let widthUnit = width/100
+//        let heightUnit = height/100
+//        
+//        
+//        
+//        //Aligning the labels to the left and right of the header. App logo will be in the center of the header
+//        
+//        headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: screen.width, height: headerView.frame.height)
+//        classroomText.frame = CGRect(x: widthUnit*5, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
+//        classroomText.textAlignment = NSTextAlignment.left
+//        greetingText.frame = CGRect(x: 0, y: heightUnit*25, width: widthUnit*95, height: heightUnit*25)
+//        greetingText.textAlignment = NSTextAlignment.right
+//        levelText.frame = CGRect(x: 0, y: heightUnit*25 + greetingText.frame.height, width: widthUnit*95, height: heightUnit*50)
+//        levelText.textAlignment = NSTextAlignment.right
+//        greetingText.text = "Hello " + currentUser!.getName()
+//        levelText.text = "You are on level \(currentUser!.getHighestLevel())"
+//        joinButton.setTitle("Join Classroom", for: .normal)
+//        leaveButton.setTitle("Leave Class", for: .normal)
+//        
+//        //SET COLORS OF EVERYTHING
+//        let lightPink = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
+//        let brightYellow = UIColor(red:0.94, green:0.80, blue:0.41, alpha:1.0)
+//        let darkBlue = UIColor(red:0.05, green:0.11, blue:0.20, alpha:1.0)
+//        headerView.backgroundColor = darkBlue
+//        classroomText.textColor = brightYellow
+//        greetingText.textColor = brightYellow
+//        levelText.textColor = brightYellow
+//        view.backgroundColor = lightPink
+//        
+//        //JOIN/LEAVE CLASSROOM
+//        if (currentUser as? Student) != nil {
+//            //INCLUDE IF STATEMENT TO SEE IF STUDENT IS IN CLASS -> IF YES, LEAVE CLASS. IF NO, JOIN CLASS
+//            
+//            leaveButton.isHidden = false
+//            leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: leaveButton.frame.size.width, height: leaveButton.frame.size.height)
+//            
+//            leaveButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+//            leaveButton.backgroundColor = brightYellow
+//            leaveButton.layer.cornerRadius = 5
+//            leaveButton.setTitleColor(darkBlue, for: .normal)
+//            leaveButton.contentHorizontalAlignment = .left
+//            joinButton.backgroundColor = brightYellow
+//            joinButton.layer.cornerRadius = 5
+//            joinButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+//            joinButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + classroomText.frame.height + heightUnit*15, width: joinButton.frame.size.width, height: joinButton.frame.size.height)
+//            joinButton.setTitleColor(darkBlue, for: .normal)
+//            joinButton.contentHorizontalAlignment = .left
+//
+//        }
+//            //TEACHER SIDE REMOVES JOIN/LEAVE CLASSROOM ABILITY
+//        else {
+//            joinButton.isHidden = true
+//            leaveButton.isHidden = true
+//            classroomText.text = "Teacher Mode"
+//            levelText.text = "All levels accessible"
+//        }
+//        
+//        //Temporary logo
+//        //Check here for how to resize image: http://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
+//        logoView.image = UIImage(named: "mathlogo")
+//        logoView.center = CGPoint(x: widthUnit*50, y: heightUnit*50)
+//        
         // Set the UIButton to Logout if the less than 2 items on navigation stack
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
@@ -117,9 +117,9 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             self.navigationItem.leftBarButtonItem = leftButton
         }
         
-        //Set up join/leave classroom button actions
-        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
-        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
+//        //Set up join/leave classroom button actions
+//        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
+//        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
         
         //Toolbar Inclusion
         self.navigationController?.setToolbarHidden(false, animated: false)
@@ -183,47 +183,47 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         present(joinClassAlert, animated: true, completion: nil)
     }
     
-    @IBAction func leaveClassroom(_ sender: AnyObject) {
-        let leaveClassAlert = UIAlertController(title: "Leave Classroom", message: "Are you sure you want to leave the classroom?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // Log out option
-        leaveClassAlert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { (action: UIAlertAction!) in
-            //CHANGE CLASSROOMID TO ACTUAL ID LATER
-            self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: self.classroomText.text!)
-        }))
-        
-        // cancel option
-        leaveClassAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        }))
-        present(leaveClassAlert, animated: true, completion: nil)    }
-    
-    //RETURNS A BOOL THEN A LIST: 1) name of teacher 2) name of classroom
-    func handleAddStudentToClassAttempt(data: NSDictionary) {
-        print("Incoming handleAddStudentToClassAttempt data")
-        print(data)
-        //CHANGE JOIN CLASSROOM TO LEAVE
-        if data["error"] as? String == "none" && data["error1"] as? String == "none" {
-            joinButton.isHidden = true
-            leaveButton.isHidden = false
-            //CHANGE THE CLASSROOM NAME
-            let classRoom = data["data"] as! [NSArray]
-            self.classroomText.text = classRoom[0][0] as? String
-        }
-        
-
-    }
-    
-    // Function that gets called when attempt to remove student from class gets back
-    func handleRemoveStudentFromClassAttempt(data: NSDictionary) {
-        print("Incoming handleRemoveStudentFromClassAttempt data")
-        print(data)
-        //CHANGE LEAVE CLASSROOM TO JOIN
-        if data["error"] as? String == "none" {
-            joinButton.isHidden = false
-            leaveButton.isHidden = true
-        }
-        
-    }
+//    @IBAction func leaveClassroom(_ sender: AnyObject) {
+//        let leaveClassAlert = UIAlertController(title: "Leave Classroom", message: "Are you sure you want to leave the classroom?", preferredStyle: UIAlertControllerStyle.alert)
+//        
+//        // Log out option
+//        leaveClassAlert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { (action: UIAlertAction!) in
+//            //CHANGE CLASSROOMID TO ACTUAL ID LATER
+//            self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: self.classroomText.text!)
+//        }))
+//        
+//        // cancel option
+//        leaveClassAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+//        }))
+//        present(leaveClassAlert, animated: true, completion: nil)    }
+//    
+//    //RETURNS A BOOL THEN A LIST: 1) name of teacher 2) name of classroom
+//    func handleAddStudentToClassAttempt(data: NSDictionary) {
+//        print("Incoming handleAddStudentToClassAttempt data")
+//        print(data)
+//        //CHANGE JOIN CLASSROOM TO LEAVE
+//        if data["error"] as? String == "none" && data["error1"] as? String == "none" {
+//            joinButton.isHidden = true
+//            leaveButton.isHidden = false
+//            //CHANGE THE CLASSROOM NAME
+//            let classRoom = data["data"] as! [NSArray]
+//            self.classroomText.text = classRoom[0][0] as? String
+//        }
+//        
+//
+//    }
+//    
+//    // Function that gets called when attempt to remove student from class gets back
+//    func handleRemoveStudentFromClassAttempt(data: NSDictionary) {
+//        print("Incoming handleRemoveStudentFromClassAttempt data")
+//        print(data)
+//        //CHANGE LEAVE CLASSROOM TO JOIN
+//        if data["error"] as? String == "none" {
+//            joinButton.isHidden = false
+//            leaveButton.isHidden = true
+//        }
+//        
+//    }
     
     func handleStudentDashInfoRequest(data: [NSDictionary]) {
         print("TESTING STUDENT DASH")

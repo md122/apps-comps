@@ -10,6 +10,7 @@
 import UIKit
 
 class Student: Account, APIDataDelegate {
+    var classroomID: Int = 0
     
     override init?(idToken: String, name: String){
         super.init(idToken: idToken, name: name)
@@ -25,9 +26,13 @@ class Student: Account, APIDataDelegate {
     }
  
 
-    func getClassRoomID()->String{
+    override func getClassRoomID()->Int{
         //code that asks the database connector for the classroom id associated with the account id of this student
-        return ""
+        return classroomID
+    }
+    
+    func setClassRoomID(id: Int) {
+        classroomID = id
     }
     
     override func getHighestLevel()->Int{
