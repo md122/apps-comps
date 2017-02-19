@@ -19,8 +19,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var levelLabel: UILabel!
     
     var level: Int = 1
-    var currentProblem: Int?
     var incorrectAttempts: Int = 0
+    var currentProblem: Int?
     var scene: GameScene?
 
     override func viewDidLoad() {
@@ -81,12 +81,28 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     // Function that gets called when problem answer comes back
     func handleSubmitAnswer(data: [NSDictionary]) {
         if (data[0]["isCorrect"] as! String == "correct") {
-            let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
-            rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
-                self.submitTextField.text = ""
-                self.setProblemText()
-            }))
-            present(rightAnswerAlert, animated: true, completion: nil)
+            if (data[0]["nextLevelUnlocked"] as! String != "false") {
+                let nextLevel = data[0]["nextLevelUnlocked"] as? String
+                let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + nextLevel! + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
+                rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
+                    self.submitTextField.text = ""
+                    self.updateLevel()
+                    self.setProblemText()
+                }))
+                rightAnswerAlert.addAction(UIAlertAction(title: "Stay on this level", style: .default, handler: { (action: UIAlertAction!) in
+                    self.submitTextField.text = ""
+                    self.setProblemText()
+                }))
+                present(rightAnswerAlert, animated: true, completion: nil)
+            }
+            else {
+                let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
+                rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
+                    self.submitTextField.text = ""
+                    self.setProblemText()
+                }))
+                present(rightAnswerAlert, animated: true, completion: nil)
+            }
 
         }
         else {
