@@ -140,9 +140,10 @@ class Block: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //func setValue(value: Double) -> Void{
-    //    self.value = value
-    //}
+    func setValue(value: String) -> Void{
+        self.value = value
+        self.label.text = value
+    }
     
     func getValue() -> Double{
         return Double(value)!

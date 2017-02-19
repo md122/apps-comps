@@ -344,6 +344,84 @@ class GameScene: SKScene, UITextFieldDelegate {
         currentBlockZ += 6
     }
     
+    func changeBlockValue(value: String, block: Block) {
+        //Start by snapping block into place, so if the block is negative attached to positive it will be a child for all of this.
+        if block.getType() == "number" || block.getType() == "variable" {
+            self.snapPositiveBlockIntoPlace(block: block)
+        }
+        else {
+            self.snapNegativeBlockIntoPlace(block: block)
+        }
+        var newBlock: Block
+        if block.getType() == "variable" {
+            newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: value)
+        }
+        else if block.getType() == "subVariable"{
+            newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: value)
+        }
+            //Number case
+        else if block.getType() == "number" {
+            newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: value)
+        }
+            //subNumber case, not specified so new block always initializes
+        else {
+            newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: value)
+        }
+        //If the block has a child, transfer it over
+        if block.getSubtractionBlock() != nil {
+            let subBlock = block.getSubtractionBlock()
+            subBlock?.removeFromParent()
+            //Probs need to scale up!!!
+            newBlock.setSubtractionBlock(block: subBlock)
+        }
+        //If the block is a child, add the new child to the parent
+        if (block.parent as? Block) != nil {
+            let parent = block.parent as! Block
+            block.removeFromParent()
+            if block.getType() == "subVariable" {
+                newBlock.xScale = self.VARBLOCKSCALE
+            }
+            newBlock.getLabel().xScale = 1 / newBlock.xScale
+            parent.setSubtractionBlock(block: newBlock)
+        }
+            //Else do the stuff to add it correctly to the game scene
+        else {
+            //But the scale should be the same
+            newBlock.xScale = block.xScale
+            //Not quite old position, old position + half the change in block size
+            if block.getType() == "variable" || block.getType() == "number" {
+                let xPosition = block.position.x + CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
+                newBlock.position = CGPoint(x: xPosition, y: block.position.y)
+            }
+            else {
+                let xPosition = block.position.x - CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
+                newBlock.position = CGPoint(x: xPosition, y: block.position.y)
+            }
+            //If the old block was in a bar, we do not need to scoot it over
+            //WHY THE SELF all of the sudden? !!!!!!!
+            let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
+            let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
+            let shift = newBlock.getWidth() - block.getWidth()
+            if indexInTopBar > -1 {
+                //Add new block to bar, remove old block from bar
+                self.topBar.remove(at: indexInTopBar)
+                self.topBar.insert(newBlock, at:indexInTopBar)
+                self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar)
+            }
+            else if indexInBottomBar > -1 {
+                //Add new block to bar, remove old block from bar
+                self.bottomBar.remove(at: indexInBottomBar)
+                self.bottomBar.insert(newBlock, at:indexInBottomBar)
+                self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar)
+            }
+            
+            block.removeFromParent()
+            self.addBlockChild(newBlock)
+            //Scale the label because the block scale changed after it was created
+            newBlock.getLabel().xScale = 1 / newBlock.xScale
+        }
+    }
+    
     func changeBlockValueAlert(block: Block) {
         let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -354,84 +432,8 @@ class GameScene: SKScene, UITextFieldDelegate {
         changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
             let valueEntered = changeValueAlert.textFields![0].text
-            
-            //Start by snapping block into place, so if the block is negative attached to positive it will be a child for all of this.
-            if block.getType() == "number" || block.getType() == "variable" {
-                self.snapPositiveBlockIntoPlace(block: block)
-            }
-            else {
-                self.snapNegativeBlockIntoPlace(block: block)
-            }
-            
-            //SANATIZE THE INPUTS!!!!!!
-            var newBlock: Block
-            if block.getType() == "variable" {
-                newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: valueEntered!)
-            }
-            else if block.getType() == "subVariable"{
-                newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered!)
-            }
-            //Number case
-            else if block.getType() == "number" {
-                newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered!)
-            }
-            //subNumber case, not specified so new block always initializes
-            else {
-                newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered!)
-            }
-            //If the block has a child, transfer it over
-            if block.getSubtractionBlock() != nil {
-                let subBlock = block.getSubtractionBlock()
-                subBlock?.removeFromParent()
-                //Probs need to scale up!!!
-                newBlock.setSubtractionBlock(block: subBlock)
-            }
-            //If the block is a child, add the new child to the parent
-            if (block.parent as? Block) != nil {
-                let parent = block.parent as! Block
-                block.removeFromParent()
-                if block.getType() == "subVariable" {
-                    newBlock.xScale = self.VARBLOCKSCALE
-                }
-                newBlock.getLabel().xScale = 1 / newBlock.xScale
-                parent.setSubtractionBlock(block: newBlock)
-            }
-            //Else do the stuff to add it correctly to the game scene
-            else {
-                //But the scale should be the same
-                newBlock.xScale = block.xScale
-                //Not quite old position, old position + half the change in block size
-                if block.getType() == "variable" || block.getType() == "number" {
-                    let xPosition = block.position.x + CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
-                    newBlock.position = CGPoint(x: xPosition, y: block.position.y)
-                }
-                else {
-                    let xPosition = block.position.x - CGFloat(((newBlock.getWidth() - block.getWidth()) / 2))
-                    newBlock.position = CGPoint(x: xPosition, y: block.position.y)
-                }
-                //If the old block was in a bar, we do not need to scoot it over
-                //WHY THE SELF all of the sudden? !!!!!!!
-                let indexInTopBar = self.findIndexOfBlock(bar: self.topBar, block:block)
-                let indexInBottomBar = self.findIndexOfBlock(bar: self.bottomBar, block:block)
-                let shift = newBlock.getWidth() - block.getWidth()
-                if indexInTopBar > -1 {
-                    //Add new block to bar, remove old block from bar
-                    self.topBar.remove(at: indexInTopBar)
-                    self.topBar.insert(newBlock, at:indexInTopBar)
-                    self.shiftBlocks(bar:self.topBar, width: shift, index: indexInTopBar)
-                }
-                else if indexInBottomBar > -1 {
-                    //Add new block to bar, remove old block from bar
-                    self.bottomBar.remove(at: indexInBottomBar)
-                    self.bottomBar.insert(newBlock, at:indexInBottomBar)
-                    self.shiftBlocks(bar:self.bottomBar, width: shift, index: indexInBottomBar)
-                }
-                
-                block.removeFromParent()
-                self.addBlockChild(newBlock)
-                //Scale the label because the block scale changed after it was created
-                newBlock.getLabel().xScale = 1 / newBlock.xScale
-            }
+            //SANATIZE THE INPUTS!!!!!
+            self.changeBlockValue(value: valueEntered!, block: block)
         }))
         self.parentViewController.present(changeValueAlert, animated: true, completion: nil)
     }
@@ -603,6 +605,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             shiftBlocks(bar: bottomBar, width:-1*block.getWidth(), index:indexInBottomBar)
             bottomBar.remove(at: indexInBottomBar)
         }
+        block.removeFromParent()
     }
     
     //Returns the x coordinate for the end of the last block in the bar passed in
@@ -745,7 +748,6 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
-    //Hammer goes here too because it's not a positive block
     func snapNegativeBlockIntoPlace(block: Block) {
         //If on top of a positive block, snap it on top of that block.
         for case let child as Block in self.children {
@@ -811,7 +813,6 @@ class GameScene: SKScene, UITextFieldDelegate {
         block.zRotation = block.zRotation + 1
     }
     
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
             let block = blockTouched!
@@ -821,8 +822,51 @@ class GameScene: SKScene, UITextFieldDelegate {
                 snapPositiveBlockIntoPlace(block: block)
             }
             else if block.getType() == "hammer" {
-                for case let child as Block in self.children {
-                    if child.getSubtractionBlock() != nil && (abs(child.getSubtractionBlock()!.getValue()) <= child.getValue()) && hammer.intersects(child){
+                //First make a list of the blocks to remove so that when you start removing things it doesn't make other blocks seem like they are over the hammer after they shift. If the hammer is touching two blocks do subtraction on both of them
+                var blocksToSubtractOn = [Block]()
+                for case let blockToSubtractFrom as Block in self.children {
+                    //We only want to deal with positive blocks, that have a child both smaller than them and with a value less than them that intersect the hammer.
+                    if (blockToSubtractFrom.getType() == "variable" || blockToSubtractFrom.getType() == "number") && blockToSubtractFrom.getSubtractionBlock() != nil && (abs(blockToSubtractFrom.getSubtractionBlock()!.getValue()) <= blockToSubtractFrom.getValue()) && (blockToSubtractFrom.getSubtractionBlock()!.getWidth() <= blockToSubtractFrom.getWidth()) && hammer.intersects(blockToSubtractFrom){
+                            blocksToSubtractOn.append(blockToSubtractFrom)
+                    }
+                }
+                //go through each block we are doing the subtraction from
+                for blockToSubtractFrom in blocksToSubtractOn {
+                    let newBlockValue = String(blockToSubtractFrom.getValue() + (blockToSubtractFrom.getSubtractionBlock()?.getValue())!)
+                    if Double(newBlockValue) == 0 {
+                        removeBlockFromBarAndScootBlocksOver(block: blockToSubtractFrom)
+                    }
+                    //For numbers change the scale of the block here
+                    else if blockToSubtractFrom.getType() == "number" {
+                        let oldWidth = blockToSubtractFrom.getWidth()
+                        blockToSubtractFrom.xScale = blockToSubtractFrom.xScale - ((blockToSubtractFrom.getSubtractionBlock()?.xScale)! * blockToSubtractFrom.xScale)
+                        blockToSubtractFrom.getLabel().xScale = 1 / blockToSubtractFrom.xScale
+                        blockToSubtractFrom.setValue(value: newBlockValue)
+                        let newWidth = blockToSubtractFrom.getWidth()
+                        let shiftAmount = (CGFloat(oldWidth - newWidth)) * -1
+                        blockToSubtractFrom.position.x = blockToSubtractFrom.position.x + (shiftAmount / 2)
+                        
+                        //Probls should make a function, but I didn't...
+                        let indexInTopBar = findIndexOfBlock(bar: topBar, block: blockToSubtractFrom)
+                        let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block: blockToSubtractFrom)
+                        
+                        //The block is in the top bar
+                        if (indexInTopBar > -1) {
+                            shiftBlocks(bar: topBar, width:Double(shiftAmount), index:indexInTopBar)
+                        }
+                        //The block is in the bottom bar
+                        if (indexInBottomBar > -1) {
+                            shiftBlocks(bar: bottomBar, width:Double(shiftAmount), index:indexInBottomBar)
+                        }
+
+                        blockToSubtractFrom.removeSubtractionBlock()
+                    }
+                    //For variables changeBlockValue does the changing size and scooting things over
+                    else {
+                        blockToSubtractFrom.removeSubtractionBlock()
+                        self.changeBlockValue(value: newBlockValue, block: blockToSubtractFrom)
+                    }
+                        
                         //VORTEX!!! WHY????!!!!
                         //let fieldNode = SKFieldNode.radialGravityField()
                         //fieldNode.categoryBitMask = 0x1 << 0
@@ -839,9 +883,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                          //   child.xScale = (child.xScale / 1.0001)
                          //   print("in loop", child.xScale)
                         //}
-                        removeBlockFromBarAndScootBlocksOver(block: child)
-                        child.removeFromParent()
-                    }
+                        //removeBlockFromBarAndScootBlocksOver(block: block)
+                        //block.removeFromParent()
                 }
                 hammer.position = HAMMERPOSITION
                 
