@@ -13,8 +13,8 @@ class APIConnector: NSObject  {
     let baseURL = "http://cmc307-05.mathcs.carleton.edu:5000/"
     
     // PROBLEM SCREEN
-    func requestNextProblem(callingDelegate: APIDataDelegate, studentID: String) {
-        let url = baseURL + "attemptGetNextProblem/" + studentID
+    func requestNextProblem(callingDelegate: APIDataDelegate, studentID: String, level: Int) {
+        let url = baseURL + "attemptGetNextProblem/" + studentID + "/" + String(level)
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
@@ -30,19 +30,34 @@ class APIConnector: NSObject  {
 
     }
     
-    /*func attemptAddProblemData(callingDelegate: APIDataDelegate, start_time: String, end_time: String, answer: String, wasCorrect: Bool) {
-        let dummyData = false
-        callingDelegate.handleAddProblemDataAttempt?(data: dummyData)
-    }*/
     
-    func attemptSubmitAnswer(callingDelegate: APIDataDelegate, studentID: String, studentAnswer: String) {
-        let url = baseURL + "attemptSubmitAnswer/" + studentID + "/" + studentAnswer
+    func attemptSkipProblem(callingDelegate: APIDataDelegate, studentID: String, level: Int, problemNum: Int) {
+        let url = baseURL + "attemptSkipProblem/" + studentID + "/" + String(level) + "/" + String(problemNum)
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
-                        callingDelegate.handleSubmitAnswer!(data: responseData as! NSDictionary)
+                        callingDelegate.handleSkipProblemAttempt!(data: responseData as! NSDictionary)
+                    }
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    func attemptSubmitAnswer(callingDelegate: APIDataDelegate, studentID: String, studentAnswer: String, level: Int, problemNum: Int) {
+        let url = baseURL + "attemptSubmitAnswer/" + studentID + "/" + studentAnswer + "/" + String(level) + "/" + String(problemNum)
+        Alamofire.request(url).responseJSON { response in
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 200...299:
+                    if let responseData = response.result.value{
+                        callingDelegate.handleSubmitAnswer!(data: responseData as! [NSDictionary])
                     }
                 default:
                     print("error with response status: \(status)")
