@@ -81,7 +81,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
         splitViewController?.presentsWithGesture = true
 
-        cellModeSegment = UISegmentedControl(items: ["Graph", "By Student"])
+        cellModeSegment = UISegmentedControl(items: ["Overview", "Students"])
         
 //        if cellMode == nil {
 //            cellModeSegment.selectedSegmentIndex = 0
