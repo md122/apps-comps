@@ -18,22 +18,28 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var submitButton: UIButton!
     
     var incorrectAttempts: Int = 0
+    var scene: GameScene?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
         setProblemText()
-        
-        gameView.showsFPS = true
-        gameView.showsNodeCount = true
+
+        gameView.showsFPS = false
+        gameView.showsNodeCount = false
         gameView.ignoresSiblingOrder = true
         
+        scene = GameScene(size: gameView.bounds.size, parent: self)
+
         gameView.layer.borderWidth = 5
-        gameView.layer.cornerRadius = 10
+        gameView.layer.cornerRadius = 0
         gameView.layer.masksToBounds = true
-        
-        let scene = GameScene(size: gameView.bounds.size)
         gameView.presentScene(scene)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,9 +53,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     @IBAction func submitAnswer(_ sender: AnyObject) {
+        //!!!!!!!! Right now problem screen always clears when you submit an answer, need to only clear when correct answer submitted
+        scene?.clearProblemScreen()
         let answer = submitTextField.text
-        let connector = APIConnector()
-        connector.attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
+        APIConnector().attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!)
     }
     
     func setProblemText() {
@@ -98,10 +105,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     // Function that gets called when next problem comes back
     func handleNextProblem(data: NSDictionary) {
         if (data["error"] as! String == "none") {
-            problemLabel.text = (data["data"] as! [NSArray])[0][0] as? String
+            let tempData = data["data"] as! [NSArray]
+            self.problemLabel.text = tempData[0][0] as? String
         }
     }
-    
+
     func handleSkipProblemAttempt(data: NSDictionary) {
         if (data["error"] as! String == "none") {
             self.setProblemText()
@@ -110,6 +118,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     
     
+
     /*
      // MARK: - Navigation
      
