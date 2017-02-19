@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class Hammer: Block {
+class Vortex: Block {
 
     init() {
         let texture = SKTexture(imageNamed: "vortex")

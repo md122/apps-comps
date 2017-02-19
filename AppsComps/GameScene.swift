@@ -95,7 +95,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE, value: "-1")
         
         garbage = SKSpriteNode(imageNamed: "garbage.png")
-        vortex = SKSpriteNode(imageNamed: "vortex.png")
+        vortex = Vortex()
         
         SNAPDISTANCE = 20.0
         
