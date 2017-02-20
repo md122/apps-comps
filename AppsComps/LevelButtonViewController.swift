@@ -69,7 +69,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         cell.levelButton?.setTitle(self.levelLabels[indexPath.row], for: .normal)
         cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
-        let locked: Bool = (cell.levelButton?.checkAccess(curLev: 2))!
+        let locked: Bool = (cell.levelButton?.checkAccess(curLev: (currentUser?.getHighestLevel())!))!
         let width: CGFloat = screen.width
         
         let unit: CGFloat = width/100
