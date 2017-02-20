@@ -15,6 +15,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
      */
     var classroomName: String = ""
     var inClassRoom: Bool = false
+    var classroomID: Int = 0
     
     var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var levels = [1,2,3,4]
@@ -105,6 +106,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
                     headerView.leaveButton.isHidden = true
                     headerView.joinButton.isHidden = false
                     
+                    headerView.classroomText.text = ""
                     headerView.joinButton.backgroundColor = brightYellow
                     headerView.joinButton.layer.cornerRadius = 5
                     headerView.joinButton.contentEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
@@ -191,14 +193,17 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     @IBAction func joinClassroom(_ sender: AnyObject) {
         let joinClassAlert = UIAlertController(title: "Enter Classroom ID", message: "", preferredStyle: .alert)
         
-        joinClassAlert.addTextField(configurationHandler: nil)
+        //joinClassAlert.addTextField(configurationHandler: nil)
+        joinClassAlert.addTextField { (textField: UITextField!) in
+            textField.keyboardType = UIKeyboardType.numberPad
+        }
         
         // Join option
         let joinAction = UIAlertAction(title: "Join", style: .default, handler: {
             alert -> Void in
             
             let idTextField = joinClassAlert.textFields![0].text
-            
+            //CHECK IF IT'S AN INT > 0, IF NOT TELL THEM IT'S INVALID
             let connector = APIConnector()
             connector.attemptAddStudentToClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: idTextField!)
             
@@ -217,7 +222,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         // Log out option
         leaveClassAlert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { (action: UIAlertAction!) in
             //CHANGE CLASSROOMID TO ACTUAL ID LATER
-            self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: String(describing: currentUser?.getClassRoomID()))
+            self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: String(describing: self.classroomID))
         }))
 
         // cancel option
@@ -232,6 +237,11 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         //CHANGE JOIN CLASSROOM TO LEAVE
         if data["error"] as? String == "none" && data["error1"] as? String == "none" {
             inClassRoom = true
+            let studentsClassroom = data["data"] as! [NSArray]
+            let className = studentsClassroom[0][0] as! String
+            let classID = studentsClassroom[0][1] as! Int
+            classroomName = className
+            classroomID = classID
         }
         self.collectionView?.reloadData()
 
@@ -244,6 +254,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         //CHANGE LEAVE CLASSROOM TO JOIN
         if data["error"] as? String == "none" {
             inClassRoom = false
+            classroomName = ""
+            classroomID = 0
         }
         self.collectionView?.reloadData()
     }
@@ -265,10 +277,11 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             let studentsClassroom = classroomDataDictionary["data"] as! [NSArray]
             if studentsClassroom != [] {
                 let className = studentsClassroom[0][0] as! String
-                let classroomID = studentsClassroom[0][1] as! Int
+                let classID = studentsClassroom[0][1] as! Int
                 print(className)
-                print(classroomID)
+                print(classID)
                 classroomName = className
+                classroomID = classID
                 inClassRoom = true
             }
             else {
@@ -276,7 +289,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
                 inClassRoom = false
             }
         }
-        
+        self.collectionView?.reloadData()
         
     }
 
