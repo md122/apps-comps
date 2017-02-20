@@ -16,6 +16,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     var classroomName: String = ""
     var inClassRoom: Bool = false
     var classroomID: Int = 0
+    var highestLevel: Int = 4
+    var levelProgress: Int = 3
     
     var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var levels = [1,2,3,4]
@@ -171,7 +173,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         cell.levelButton?.setTitle(self.levelLabels[indexPath.row], for: .normal)
         cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
-        let locked: Bool = (cell.levelButton?.checkAccess(curLev: (currentUser?.getHighestLevel())!))!
+        let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
         let width: CGFloat = screen.width
         
         let unit: CGFloat = width/100
@@ -181,7 +183,17 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         var image : String = "emptystars"
         
         if (!locked) {
-            image = "threestars"
+            if (cell.levelButton?.getLevel() == highestLevel) {
+                switch levelProgress {
+                    case 1: image = "onestars"
+                    case 2: image = "twostars"
+                    case 3: image = "threestars"
+                    default: image = "emptystars"
+                }
+            }
+            else{
+                image = "threestars"
+            }
             
         }
         cell.levelView.image = UIImage(named: image)
@@ -269,6 +281,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             let studentProgress = progressDictionary["data"] as! [NSArray]
             let stars = studentProgress[0][0] as! Int
             let level = studentProgress[0][1] as! Int
+            levelProgress = stars
+            highestLevel = level
             print(level)
             print(stars)
         }
