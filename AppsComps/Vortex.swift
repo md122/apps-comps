@@ -9,10 +9,10 @@
 import UIKit
 import SpriteKit
 
-class Hammer: Block {
+class Vortex: Block {
 
     init() {
-        let texture = SKTexture(imageNamed: "hammer.png")
+        let texture = SKTexture(imageNamed: "vortex")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
     }
     
