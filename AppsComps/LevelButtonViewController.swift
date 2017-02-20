@@ -279,12 +279,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         let classroomDataDictionary = data[1]
         if progressDictionary["error"] as? String == "none" {
             let studentProgress = progressDictionary["data"] as! [NSArray]
-            let stars = studentProgress[0][0] as! Int
-            let level = studentProgress[0][1] as! Int
-            levelProgress = stars
-            highestLevel = level
-            print(level)
-            print(stars)
+            levelProgress = studentProgress[0][0] as! Int
+            highestLevel = studentProgress[0][1] as! Int
+  
         }
         
         if classroomDataDictionary["error"] as? String == "none" {

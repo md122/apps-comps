@@ -225,30 +225,6 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
 //        
 //    }
     
-    func handleStudentDashInfoRequest(data: [NSDictionary]) {
-        print("TESTING STUDENT DASH")
-        //print(data)
-        let progressDictionary = data[0]
-        let classroomDataDictionary = data[1]
-        if progressDictionary["error"] as? String == "none" {
-            let studentProgress = progressDictionary["data"] as! [NSArray]
-            let stars = studentProgress[0][0] as! Int
-            let level = studentProgress[0][1] as! Int
-            print(level)
-            print(stars)
-        }
-        
-        if classroomDataDictionary["error"] as? String == "none" {
-            let studentsClassroom = classroomDataDictionary["data"] as! [NSArray]
-            if studentsClassroom != [] {
-                let classroomName = studentsClassroom[0][0] as! String
-                let classroomID = studentsClassroom[0][1] as! Int
-                print(classroomName)
-                print(classroomID)
-            }
-        }
-        
-        
-    }
+
 
 }

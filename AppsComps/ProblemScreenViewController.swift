@@ -17,10 +17,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var submitTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var stars: UIImageView!
     
     var level: Int = 1
+    var highestLevel: Int = 2
     var incorrectAttempts: Int = 0
     var currentProblem: Int?
+    var levelProgress: Int = 1
     var scene: GameScene?
 
     override func viewDidLoad() {
@@ -73,23 +76,53 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     
-    
-    func setLevel(level: Int){
-        self.level = level
-        levelLabel.text = "Level: \(self.level)"
-        
+    func setHighestLevel(level: Int) {
+        self.highestLevel = level
     }
     
+    func setLevel(level: Int) {
+        self.level = level
+        levelLabel.text = "Level: \(self.level)"
+    }
     
+
+    
+    func setStars(correctAnswers: Int) {
+        
+        
+        var image : String = "emptystars"
+        if (self.highestLevel == self.level) {
+            self.levelProgress = correctAnswers
+            switch levelProgress {
+                case 0: image = "onestars"
+                case 1: image = "onestars"
+                case 2: image = "twostars"
+                case 3: image = "threestars"
+                default: image = "emptystars"
+            }
+        }
+        else {
+            self.levelProgress = 3
+            image = "threestars"
+        }
+        stars.image = UIImage(named: image)
+    }
+
+
     // Function that gets called when problem answer comes back
     func handleSubmitAnswer(data: [NSDictionary]) {
         if (data[0]["isCorrect"] as! String == "correct") {
+            let temp = data[2]["data"] as! [NSArray]
+            self.levelProgress = (temp[0][0] as? Int)!
+            self.setStars(correctAnswers: self.levelProgress)
             if (data[0]["nextLevelUnlocked"] as! String != "false") {
+                setHighestLevel(level: (data[0]["nextLevelUnlocked"] as? Int)!)
                 let nextLevel = data[0]["nextLevelUnlocked"] as? String
                 let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + nextLevel! + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
                 rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
                     self.submitTextField.text = ""
                     self.setLevel(level: self.level+1)
+                    self.setStars(correctAnswers: 0)
                     self.setProblemText()
                 }))
                 rightAnswerAlert.addAction(UIAlertAction(title: "Stay on this level", style: .default, handler: { (action: UIAlertAction!) in
@@ -147,6 +180,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     func handleSkipProblemAttempt(data: NSDictionary) {
         if (data["error"] as! String == "none") {
+            self.setStars(correctAnswers: 0)
             self.setProblemText()
         }
     }
