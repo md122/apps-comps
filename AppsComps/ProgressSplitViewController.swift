@@ -15,9 +15,13 @@ class ProgressSplitViewController: UISplitViewController {
         self.navigationItem.title = "Student Progress"
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
-        self.navigationItem.rightBarButtonItem = logoutButton
+        //self.navigationItem.rightBarButtonItem = logoutButton
 //        let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
 //        self.navigationItem.leftBarButtonItem = helpButton
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+//        var toolbarItems = [logoutButton]
+//        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+//        self.navigationController?.setToolbarHidden(false, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,6 +44,17 @@ class ProgressSplitViewController: UISplitViewController {
         logOutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         present(logOutAlert, animated: true, completion: nil)
+    }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        if(segue.identifier == "FromTeacherToProblemSelector") {
+            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
+            splitViewController?.presentsWithGesture = true
+        }
+        
     }
     
 //    (void)splitViewController:(UISplitViewController*)splitController willHideViewController:(UIViewController*)viewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController:(UIPopoverController*)popoverController

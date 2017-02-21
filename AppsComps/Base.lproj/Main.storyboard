@@ -26,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Go to Teacher Dash"/>
                                 <connections>
-                                    <segue destination="2fh-uj-As3" kind="show" identifier="loginToTeacherDash" id="fnU-7x-lFJ"/>
+                                    <segue destination="3XX-kf-WLW" kind="show" identifier="loginToTeacherDash" id="ktp-v6-Px9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with Google to start!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6Q-C9-9in">
@@ -332,11 +332,17 @@
         <!--Progress-->
         <scene sceneID="wMz-tc-QHY">
             <objects>
-                <splitViewController id="AKD-zf-Mmq" customClass="ProgressSplitViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController hidesBottomBarWhenPushed="YES" id="AKD-zf-Mmq" customClass="ProgressSplitViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Student Progress" id="9np-ED-R6P"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Progress" id="fyM-nX-3cQ"/>
+                    <navigationItem key="navigationItem" title="Progress" id="fyM-nX-3cQ">
+                        <barButtonItem key="rightBarButtonItem" title="Try Problems" id="jXk-w3-RdN">
+                            <connections>
+                                <segue destination="fSl-Vx-zgN" kind="push" identifier="FromTeacherToProblemSelector" id="pU4-bV-pg5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="FY1-ed-rqB" kind="relationship" relationship="masterViewController" id="Pe5-na-GCT"/>
                         <segue destination="e9f-1B-4ya" kind="relationship" relationship="detailViewController" id="yOY-Ld-586"/>
@@ -411,33 +417,18 @@
             </objects>
             <point key="canvasLocation" x="897" y="1479"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="8GR-WR-j7M">
-            <objects>
-                <tabBarController id="2fh-uj-As3" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="YEC-kG-ppV"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="tZ0-sS-htc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="3XX-kf-WLW" kind="relationship" relationship="viewControllers" id="nq8-QJ-5Rz"/>
-                        <segue destination="bob-Z2-ijt" kind="relationship" relationship="viewControllers" id="f0V-mp-HiN"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I4u-Oa-nua" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1467" y="-1659"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="h9V-By-3SK">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" id="e9f-1B-4ya" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="FGa-1V-jiV">
+                        <rect key="frame" x="0.0" y="724" width="703" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="MEl-8u-sh3" kind="relationship" relationship="rootViewController" id="4DE-uW-akC"/>
                     </connections>
@@ -604,6 +595,6 @@
         <image name="submitButton" width="600" height="309"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fKu-gq-v19"/>
+        <segue reference="pU4-bV-pg5"/>
     </inferredMetricsTieBreakers>
 </document>

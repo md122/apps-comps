@@ -23,6 +23,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var cellModeSegment = UISegmentedControl(items: ["Overview", "Students"])
     var isCollapsed = false
+    //var toolbarItems = [UIBarButtonItem]
    
     
     var cellMode = Bool()
@@ -123,12 +124,33 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
 
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-//        toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
         self.navigationItem.leftBarButtonItem = showTableButton
         self.navigationItem.rightBarButtonItem = segmentBarItem
-        //self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        //self.navigationController?.setToolbarHidden(false, animated: false)
+        let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+        logoutButton.tintColor = .red
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        toolbarItems = [flexibleSpace, logoutButton]
+        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+        self.navigationController?.setToolbarHidden(false, animated: false)
+
+
+    }
+    
+    func logoutClicked(_ sender: UIBarButtonItem) {
+        let logOutAlert = UIAlertController(title: "", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // Log out option
+        logOutAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
+            if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+                GIDSignIn.sharedInstance().signOut()
+            }
+            currentUser = nil
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+        }))
+        // cancel option
+        logOutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        present(logOutAlert, animated: true, completion: nil)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

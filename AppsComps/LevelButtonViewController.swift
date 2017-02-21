@@ -9,7 +9,7 @@
 import UIKit
 
 
-class LevelButtonViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, APIDataDelegate {
+class LevelButtonViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate, APIDataDelegate {
     /*Code referenced from https://www.youtube.com/watch?v=UH3HoPar_xg
      Got tips about labeling the cell from http://stackoverflow.com/questions/31735228/how-to-make-a-simple-collection-view-with-swift
      */
@@ -33,11 +33,13 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         //Setting the buttons on the navigation bar
         self.navigationItem.title = "Home"
+        let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
-        self.navigationItem.rightBarButtonItem = logoutButton
-        let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-        self.navigationItem.leftBarButtonItem = helpButton
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        toolbarItems = [helpButton, flexibleSpace, logoutButton]
+        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+        self.navigationController?.setToolbarHidden(false, animated: false)
     }
     
     override func didReceiveMemoryWarning() {
