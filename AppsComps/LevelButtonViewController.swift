@@ -32,7 +32,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
         
         //Setting the buttons on the navigation bar
-        self.navigationItem.title = "Level Selector"
+        self.navigationItem.title = "Home"
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         self.navigationItem.rightBarButtonItem = logoutButton
