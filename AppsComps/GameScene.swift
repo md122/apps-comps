@@ -412,7 +412,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
     func changeBlockValueAlert(block: Block) {
-        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, between 1 and 999, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
+        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, greater than 0 and less than 1000, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
         
         changeValueAlert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.keyboardType = UIKeyboardType.numberPad
@@ -888,10 +888,11 @@ class GameScene: SKScene, UITextFieldDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if blockTouched != nil {
             let block = blockTouched!
-            //Set the color to the not selected color
-            block.color = .black
+            
             if block.getType() == "number" || block.getType() == "variable" {
                 snapPositiveBlockIntoPlace(block: block)
+                //Set the color to the not selected color
+                block.color = .black
             }
             else if block.getType() == "vortex" {
                 for case let child as Block in self.children {
@@ -921,6 +922,8 @@ class GameScene: SKScene, UITextFieldDelegate {
             }
             else {
                 snapNegativeBlockIntoPlace(block: block)
+                //Set the color to the not selected color
+                block.color = .white
             }
             blockTouched = nil
         }
