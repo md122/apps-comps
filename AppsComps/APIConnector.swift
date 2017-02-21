@@ -24,10 +24,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleNextProblem!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleNextProblem!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
 
@@ -45,7 +45,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
+            } else {
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -64,10 +67,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleSubmitAnswer!(data: [["error": "HTTP"]])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleSubmitAnswer!(data: [["error": "HTTP"]])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -84,10 +87,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleStudentDashInfoRequest!(data: [["error": "HTTP"]])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleStudentDashInfoRequest!(data: [["error": "HTTP"]])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -105,10 +108,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleAddStudentToClassAttempt!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleAddStudentToClassAttempt!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -124,10 +127,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleRemoveStudentFromClassAttempt!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleRemoveStudentFromClassAttempt!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -155,10 +158,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -174,10 +177,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleClassroomDataRequest!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleClassroomDataRequest!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -195,10 +198,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleAddClassroomAttempt!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleAddClassroomAttempt!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -216,10 +219,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleRemoveClassroomAttempt!(data: ["error": "HTTP"], classID: classroomID)
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleRemoveClassroomAttempt!(data: ["error": "HTTP"], classID: classroomID)
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -238,10 +241,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleLoginAttempt!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleLoginAttempt!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
@@ -258,10 +261,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleCreateAccountAttempt!(data: ["error": "HTTP"])
+                    self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
                 }
             } else {
-                callingDelegate.handleCreateAccountAttempt!(data: ["error": "HTTP"])
+                self.connectionDropped(callingDelegate: callingDelegate as! UIViewController)
             }
         }
     }
