@@ -47,6 +47,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     let HAMMERPOSITION:CGPoint
     let GARBAGESIZE:CGSize
     let SNAPDISTANCE:Double
+    let BORDERWIDTH:Double
     
     // not implemented
     var isSorted = false
@@ -95,6 +96,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         hammer = Hammer()
         
         SNAPDISTANCE = 20.0
+        BORDERWIDTH = 2
         
         super.init(size: size)
     }
@@ -120,6 +122,12 @@ class GameScene: SKScene, UITextFieldDelegate {
         node.zPosition = CGFloat(currentBlockZ)
         currentBlockZ += 6
         super.addChild(node)
+    }
+    
+    func scaleBorder(block: Block) {
+        block.getBlockColorRectangle().xScale = (CGFloat(-1*BORDERWIDTH) + (NUMBLOCKWIDTH * block.xScale)) / (block.xScale * NUMBLOCKWIDTH)
+        block.getBlockColorRectangle().yScale = (CGFloat(-1*BORDERWIDTH) + (BLOCKHEIGHT * block.yScale)) / (block.yScale * BLOCKHEIGHT)
+
     }
     
     // Called immediately after a scene is loaded
@@ -290,18 +298,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         }
                     }
                 }
-                //From fixing a merge conflict...!!!
-                
-                //If not scaling to off the page!!!!! ZOE DO THIS NEXT
-                //If changing a variable block, scale all of the variable blocks???
-                //blockTouched?.xScale = pinchScale
-                
-                //Move the block over so it's only increasing to the right
-                //blockTouched?.position = CGPoint(x:((blockTouched?.position.x)! + (CGFloat(differenceInBarSize) / 2)), y:(blockTouched?.position.y)!)
-                
-                //Because the scale of a child is relative to it's parent to make the label have a scale of 1, we do 1/parent
-                //blockTouched?.getLabel().xScale = 1/(blockTouched?.xScale)!
-                //blockTouched?.getBlockColorRectangle().xScale = CGFloat(1-1.5*(1/(blockTouched?.getWidth())!))
+                self.scaleBorder(block: blockTouched!)
             }
         }
             
@@ -827,6 +824,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 var blocksToSubtractOn = [Block]()
                 for case let blockToSubtractFrom as Block in self.children {
                     //We only want to deal with positive blocks, that have a child both smaller than them and with a value less than them that intersect the hammer.
+                    //Width causes problems!!!
                     if (blockToSubtractFrom.getType() == "variable" || blockToSubtractFrom.getType() == "number") && blockToSubtractFrom.getSubtractionBlock() != nil && (abs(blockToSubtractFrom.getSubtractionBlock()!.getValue()) <= blockToSubtractFrom.getValue()) && (blockToSubtractFrom.getSubtractionBlock()!.getWidth() <= blockToSubtractFrom.getWidth()) && hammer.intersects(blockToSubtractFrom){
                             blocksToSubtractOn.append(blockToSubtractFrom)
                     }
