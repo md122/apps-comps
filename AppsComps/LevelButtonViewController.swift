@@ -1,3 +1,4 @@
+
 //
 //  LevelButtonViewController.swift
 //  AppsComps
@@ -5,13 +6,12 @@
 //  Created by appscomps on 1/18/17.
 //  Copyright © 2017 appscomps. All rights reserved.
 //
-
 import UIKit
 
 
 class LevelButtonViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, APIDataDelegate {
     /*Code referenced from https://www.youtube.com/watch?v=UH3HoPar_xg
-      Got tips about labeling the cell from http://stackoverflow.com/questions/31735228/how-to-make-a-simple-collection-view-with-swift
+     Got tips about labeling the cell from http://stackoverflow.com/questions/31735228/how-to-make-a-simple-collection-view-with-swift
      */
     var classroomName: String = ""
     var inClassRoom: Bool = false
@@ -38,9 +38,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         self.navigationItem.rightBarButtonItem = logoutButton
         let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
         self.navigationItem.leftBarButtonItem = helpButton
-
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -124,7 +123,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
                     headerView.joinButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + headerView.classroomText.frame.height + heightUnit*15, width: headerView.joinButton.frame.size.width, height: headerView.joinButton.frame.size.height)
                     headerView.joinButton.setTitleColor(darkBlue, for: .normal)
                     headerView.joinButton.contentHorizontalAlignment = .left
-
+                    
                 }
                 
             }
@@ -135,7 +134,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
                 headerView.classroomText.text = "Teacher Mode"
                 headerView.levelLabel.text = "All levels accessible"
             }
-
+            
             
             //Set up join/leave classroom button actions
             headerView.joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
@@ -165,8 +164,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     //Setting the padding between the level cells. Currently set up so that 4 buttons are vertically centered.
     func collectionView(_ collectionView: UICollectionView,
-                                 layout collectionViewLayout: UICollectionViewLayout,
-                                 insetForSectionAt section: Int) -> UIEdgeInsets{
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets{
         let height: CGFloat = screen.height
         let hUnit: CGFloat = height/100
         return UIEdgeInsets(top: hUnit*20, left: 5, bottom: hUnit*20, right: 5)
@@ -195,10 +194,10 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         if (!locked) {
             if (cell.levelButton.getLevel() == highestLevel) {
                 switch levelProgress {
-                    case 1: image = "onestars"
-                    case 2: image = "twostars"
-                    case 3: image = "threestars"
-                    default: image = "emptystars"
+                case 1: image = "onestars"
+                case 2: image = "twostars"
+                case 3: image = "threestars"
+                default: image = "emptystars"
                 }
             }
             else{
@@ -246,21 +245,21 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         }))
         present(joinClassAlert, animated: true, completion: nil)
     }
-
+    
     @IBAction func leaveClassroom(_ sender: AnyObject) {
         let leaveClassAlert = UIAlertController(title: "Leave Classroom", message: "Are you sure you want to leave the classroom?", preferredStyle: UIAlertControllerStyle.alert)
-
+        
         // Log out option
         leaveClassAlert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { (action: UIAlertAction!) in
             //CHANGE CLASSROOMID TO ACTUAL ID LATER
             self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: String(describing: self.classroomID))
         }))
-
+        
         // cancel option
         leaveClassAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         present(leaveClassAlert, animated: true, completion: nil)    }
-
+    
     //RETURNS A BOOL THEN A LIST: 1) name of teacher 2) name of classroom
     func handleAddStudentToClassAttempt(data: NSDictionary) {
         print("Incoming handleAddStudentToClassAttempt data")
@@ -275,9 +274,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             classroomID = classID
         }
         self.collectionView?.reloadData()
-
+        
     }
-
+    
     // Function that gets called when attempt to remove student from class gets back
     func handleRemoveStudentFromClassAttempt(data: NSDictionary) {
         print("Incoming handleRemoveStudentFromClassAttempt data")
@@ -298,12 +297,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         let classroomDataDictionary = data[1]
         if progressDictionary["error"] as? String == "none" {
             let studentProgress = progressDictionary["data"] as! [NSArray]
-            let stars = studentProgress[0][0] as! Int
-            let level = studentProgress[0][1] as! Int
-            levelProgress = stars
-            highestLevel = level
-            print(level)
-            print(stars)
+            levelProgress = studentProgress[0][0] as! Int
+            highestLevel = studentProgress[0][1] as! Int
+            
         }
         
         if classroomDataDictionary["error"] as? String == "none" {
@@ -351,7 +347,5 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParentViewController: self)
     }
-
-    
 
 }

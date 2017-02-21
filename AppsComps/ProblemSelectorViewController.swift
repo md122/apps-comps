@@ -117,6 +117,29 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
 //<<<<<<< HEAD
+////<<<<<<< HEAD
+////        if let navController = self.navigationController, navController.viewControllers.count < 2 {
+////            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+////            leftButton.tintColor = .red
+////            self.navigationItem.leftBarButtonItem = leftButton
+////        }
+////        
+//////        //Set up join/leave classroom button actions
+//////        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
+//////        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
+////=======
+//////        if let navController = self.navigationController, navController.viewControllers.count < 2 {
+//////            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+//////            leftButton.tintColor = .red
+//////            self.navigationItem.rightBarButtonItem = leftButton
+//////        }
+//////        
+////        //Set up join/leave classroom button actions
+////        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
+////        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
+////>>>>>>> 25f4e3fa4869ea9051ccb0f6dbe3c1ddd614f3af
+//=======
+//
 //        if let navController = self.navigationController, navController.viewControllers.count < 2 {
 //            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
 //            leftButton.tintColor = .red
@@ -126,17 +149,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
 ////        //Set up join/leave classroom button actions
 ////        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
 ////        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
-//=======
-////        if let navController = self.navigationController, navController.viewControllers.count < 2 {
-////            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
-////            leftButton.tintColor = .red
-////            self.navigationItem.rightBarButtonItem = leftButton
-////        }
-////        
-//        //Set up join/leave classroom button actions
-//        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
-//        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
-//>>>>>>> 25f4e3fa4869ea9051ccb0f6dbe3c1ddd614f3af
+//>>>>>>> 14272ba728fa8d0f9aafa1284e45a63cc3029efa
         
         //Toolbar Inclusion
         self.navigationController?.setToolbarHidden(false, animated: false)
@@ -242,30 +255,6 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
 //        
 //    }
     
-    func handleStudentDashInfoRequest(data: [NSDictionary]) {
-        print("TESTING STUDENT DASH")
-        //print(data)
-        let progressDictionary = data[0]
-        let classroomDataDictionary = data[1]
-        if progressDictionary["error"] as? String == "none" {
-            let studentProgress = progressDictionary["data"] as! [NSArray]
-            let stars = studentProgress[0][0] as! Int
-            let level = studentProgress[0][1] as! Int
-            print(level)
-            print(stars)
-        }
-        
-        if classroomDataDictionary["error"] as? String == "none" {
-            let studentsClassroom = classroomDataDictionary["data"] as! [NSArray]
-            if studentsClassroom != [] {
-                let classroomName = studentsClassroom[0][0] as! String
-                let classroomID = studentsClassroom[0][1] as! Int
-                print(classroomName)
-                print(classroomID)
-            }
-        }
-        
-        
-    }
+
 
 }
