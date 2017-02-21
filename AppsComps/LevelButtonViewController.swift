@@ -209,8 +209,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         return cell
     }
-    
-    @IBAction func goToProblemScreen(_ sender: LevelButton) {
+    @IBAction func goToProblemScreen(_ sender: AnyObject) {
         let curLevel = sender.getLevel()
         print(curLevel)
         let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "probScreenID") as! ProblemScreenViewController
@@ -218,6 +217,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         vc.setLevel(level: curLevel)
         self.navigationController?.pushViewController(vc, animated:true)
     }
+    
+
     
     
     @IBAction func joinClassroom(_ sender: AnyObject) {
