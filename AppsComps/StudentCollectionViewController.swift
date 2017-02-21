@@ -1,5 +1,3 @@
-
-
 //
 //  StudentCollectionViewController.swift
 //  MasterDetailTest
@@ -12,9 +10,7 @@ import UIKit
 
 
 class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
-    
-  
-    
+
     var students = [NSArray]()
     
     @IBOutlet var showTableButton: UIBarButtonItem!
@@ -104,25 +100,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         //self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         //self.navigationController?.setToolbarHidden(false, animated: false)
     }
-
-    
-    // Note there is a similar logout in Student, changes to one should also go in the other
-//    @IBAction func logoutClicked(_ sender: AnyObject) {
-//        let logoutAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
-//        
-//        // Log out option
-//        logoutAlert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction!) in
-//            if (GIDSignIn.sharedInstance().hasAuthInKeychain()) {
-//                GIDSignIn.sharedInstance().signOut()
-//            }
-//            currentUser = nil
-//            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
-//        }))
-//        // cancel option
-//        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-//        }))
-//        present(logoutAlert, animated: true, completion: nil)
-//    }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -146,18 +123,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-
-            if cellMode {
-                let sectionStudents = studentsByLevel?[section]
-                if sectionStudents!.count == 0{
-                    return 1
-                } else {
-                    return sectionStudents!.count
-                }
-            } else {
+        if cellMode {
+            let sectionStudents = studentsByLevel?[section]
+            if sectionStudents!.count == 0{
                 return 1
+            } else {
+                return sectionStudents!.count
             }
+        } else {
+            return 1
+        }
 
     }
     
@@ -165,8 +140,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
-
-        
             switch kind {
                 
             case UICollectionElementKindSectionHeader:
@@ -194,7 +167,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if cellMode == true {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StudentCell", for: indexPath) as! StudentCollectionViewCell
-            
             if indexPath.section == 0{
                 cell.backgroundColor = UIColor.red
             } else if indexPath.section == 1{
@@ -264,75 +236,12 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionWidth = floor(collectionView.frame.size.width)
-        //let collectionWidth = 600.0
-        
-//        if indexPath.section == 0{
-//          return CGSize(width: 10.0, height: 1.0)
-//        } else{
-            if cellMode == true {
-                
-                return CGSize(width: 100.0, height: 100.0)
-       
-            } else {
-                return CGSize(width: collectionWidth, height: 100.0)
-//                let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
-//                let totalStudentsDouble = Double(totalStudents)
-//                if indexPath.section == 1 {
-//                    let width1 = Double(collectionWidth) * (Double(level1Students.count) / totalStudentsDouble)
-//                    print(width1)
-//                    return CGSize(width: 351.5, height: 120.0)
-//                } else if indexPath.section == 2 {
-//                    let width2 = Double(collectionWidth) * (Double(level2Students.count) / totalStudentsDouble)
-//                    print(width2)
-//                    return CGSize(width: 300.0, height: 120.0)
-//                } else if indexPath.section == 3 {
-//                    let width3 = Double(collectionWidth) * (Double(level3Students.count) / totalStudentsDouble)
-//                    print(width3)
-//                    return CGSize(width: 450.0, height: 120.0)
-//                } else if indexPath.section == 4 {
-//                    let width4 = Double(collectionWidth) * (Double(level4Students.count) / totalStudentsDouble)
-//                    print(width4)
-//                    return CGSize(width: 51.5, height: 120.0)
-//                } else {
-//                    print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
-//                    return CGSize(width: 120.0, height: 120.0)
-//                }
-            }
-        //}
+        if cellMode == true {
+            return CGSize(width: 100.0, height: 100.0)
+        } else {
+            return CGSize(width: collectionWidth, height: 100.0)
+        }
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        let leftRightInset = self.view.frame.size.width / 14.0
-//        return UIEdgeInsetsMake(0, 0, 0, 0)
-//    }
-    
-    
-    
-    
-//    @IBAction func showTable(_ sender: AnyObject) {
-//        self.showTable()
-////        if isCollapsed == false {
-////            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
-////            splitViewController?.presentsWithGesture = true            //self.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-////            self.navigationItem.leftBarButtonItem = collapseTableButton
-////            collapseTableButton.title = "Show Table"
-////            self.navigationItem.leftItemsSupplementBackButton = true
-////            isCollapsed = true
-////        } else if isCollapsed == true {
-////            splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
-////            splitViewController?.presentsWithGesture = true
-////            self.navigationItem.leftBarButtonItem = collapseTableButton
-////            collapseTableButton.title = "Collapse Table"
-////            isCollapsed = false
-//        
-//       // }
-//        
-//        //let controller = self.topViewController as! StudentCollectionViewController
-//        //controller.detailItem = "HI"
-//        //let showTableButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.rewind, target: self, action: nil)
-//        
-//    }
-    
     
     @IBAction func showButtonClicked(_ sender: AnyObject) {
          self.showTable()
@@ -361,9 +270,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             }
         }
         
-        studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
-
-        
+        studentsByLevel = [level1Students, level2Students, level3Students, level4Students] 
     }
     
     func hideTable() {

@@ -20,17 +20,11 @@ class ClassroomTableMasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        //let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        //self.navigationItem.rightBarButtonItem = addButton
-        //let collapseButton = UIBarButtonItem(displayModeButtonItem:)
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
         tableView.allowsMultipleSelectionDuringEditing = true
-        //self.navigationItem.rightBarButtonItem = self.splitViewController?.displayModeButtonItem
 
         loadSampleClassrooms(classroomList: ["First Hour", "Second Hour", "Third Hour", "Fourth Hour"])
         let indexPath = IndexPath(row: 0, section: 0)
@@ -38,22 +32,6 @@ class ClassroomTableMasterViewController: UITableViewController {
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
-        
-//        if tableView.isEditing == false{
-//            //tableView.setEditing(!tableView.isEditing, animated: true)
-//            self.isEditing = true
-//            sender.title = "Done"
-//            let trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteClassroomList(_:)))
-//            self.navigationItem.rightBarButtonItem = trashButton
-//        } else {
-//            //tableView.setEditing(!tableView.isEditing, animated: true)
-//            self.isEditing = false
-//            sender.title = "Edit"
-//            let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-//            self.navigationItem.rightBarButtonItem = addButton
-//        
-//        }
-        
         if tableView.isEditing == false{
             //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = true
@@ -66,7 +44,6 @@ class ClassroomTableMasterViewController: UITableViewController {
             //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = false
             sender.title = "Edit"
-            //let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
             self.navigationItem.leftBarButtonItem = collapseButton
             let indexPath = IndexPath(row: self.classrooms.count, section: 0)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -90,25 +67,6 @@ class ClassroomTableMasterViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-//    func insertNewObject(_ sender: Any) {
-//        let createClassroomAlert = UIAlertController(title: "New Classroom", message: "Enter classroom name:", preferredStyle: UIAlertControllerStyle.alert)
-//        
-//        // Text field to enter Classroom name
-//        createClassroomAlert.addTextField(configurationHandler: nil)
-//        
-//        // cancel option
-//        createClassroomAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in}))
-//        // adds new classroom to table
-//        createClassroomAlert.addAction(UIAlertAction(title: "Enter", style: .cancel, handler: { (action: UIAlertAction!) in
-//            let classroom = createClassroomAlert.textFields![0].text!
-//            self.classrooms.insert(classroom, at: 0)
-//            let indexPath = IndexPath(row: 0, section: 0)
-//            self.tableView.insertRows(at: [indexPath], with: .automatic)
-//        }))
-//        
-//        present(createClassroomAlert, animated: true, completion: nil)
-//    }
     
     func insertNewObject(_ sender: Any) {
         let createClassroomAlert = UIAlertController(title: "New Classroom", message: "Enter classroom name:", preferredStyle: UIAlertControllerStyle.alert)
@@ -144,10 +102,6 @@ class ClassroomTableMasterViewController: UITableViewController {
                 //tableView.deleteRows(at: selection, with: .automatic)
             }
         }
-//        self.isEditing = false
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-//        self.navigationItem.rightBarButtonItem = addButton
-//        self.leftBarButton.title = "Edit"
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
@@ -157,24 +111,6 @@ class ClassroomTableMasterViewController: UITableViewController {
             detailViewController?.navigationItem.title = classrooms[indexPath.row]
         }
     }
-
-
-    // MARK: - Segues
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow {
-//                let classroom = classrooms[indexPath.row]
-//                //let controller = (segue.destination as! UINavigationController).topViewController as! StudentCollectionViewController
-//                //controller.detailItem = classroom
-//                //controller.detailItem = "Hi!"
-////                detailViewController?.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-////                detailViewController?.navigationItem.leftItemsSupplementBackButton = true
-//                
-//            }
-//        }
-//    }
 
     // MARK: - Table View
 
@@ -187,11 +123,6 @@ class ClassroomTableMasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-//
-//        let classroom = self.classrooms[indexPath.row]
-//        cell.textLabel?.text = classroom
-//        return cell
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
         
@@ -214,17 +145,7 @@ class ClassroomTableMasterViewController: UITableViewController {
         }
         return true
     }
-
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-//        //cell.editingAccessoryType = UITableViewCellAccessoryType.checkmark
-//        if editingStyle == .delete {
-//            classrooms.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        } else if editingStyle == .insert {
-//            
-//        }
-//    }
+    
     func loadSampleClassrooms(classroomList: [String]) {
         
         classrooms = classroomList
