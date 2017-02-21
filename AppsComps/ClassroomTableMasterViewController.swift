@@ -29,6 +29,8 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         //loadSampleClassrooms(classroomList: [["First Hour", "23"], ["Second Hour", "24"] ["Third Hour", "45"], ["Fourth Hour", "22"]])
         
         APIConnector().requestTeacherDashInfo(callingDelegate: self, teacherID: currentUser!.getIdToken())
+
+        
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
@@ -62,6 +64,8 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     override func viewWillAppear(_ animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+//        self.detailViewController?.setTitle(className: classrooms[0][0] as! String)
+       // self.detailViewController?.title = "asdfasdfas"
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +79,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             if classrooms.count > 0 {
                 let firstClassroomID = String(classrooms[0][1] as! Int)
                 APIConnector().requestClassroomData(callingDelegate: self, classroomID: firstClassroomID)
+                self.detailViewController?.setTitle(className: (classrooms[0][0] as! String))
             }
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)

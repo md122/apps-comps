@@ -38,7 +38,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         // self.clearsSelectionOnViewWillAppear = false
         
         
-        getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Botwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
+//        getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Botwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
         
     }
     
@@ -81,19 +81,19 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         self.collectionView?.reloadData()
     }
 
-    func loadStudentCollection(classroomID: String) {
-        if classroomID == "0" {
-            getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Bostwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
-        }else if classroomID == "1" {
-            getStudentData(studentList: [["Meghan Kreilkamp", "2", "000"], ["McCartney Goff", "2", "000"], ["Michael Bostwick", "2", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "2", "000"], ["Angelia Jenkins", "1", "000"], ["Ryan Vondren", "1", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
-        } else if classroomID == "2" {
-            getStudentData(studentList: [["Student Name", "1", "000"], ["Student Name", "1", "000"], ["Student Name", "2", "000"], ["Student Name", "3", "000"], ["Student Name", "4", "000"], ["Student Name", "4", "000"]])
-        } else {
-            getStudentData(studentList: [["Student Name", "1", "000"]])
-        }
-        self.collectionView?.reloadData()
-        
-    }
+//    func loadStudentCollection(classroomID: String) {
+//        if classroomID == "0" {
+//            getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Bostwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
+//        }else if classroomID == "1" {
+//            getStudentData(studentList: [["Meghan Kreilkamp", "2", "000"], ["McCartney Goff", "2", "000"], ["Michael Bostwick", "2", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "2", "000"], ["Angelia Jenkins", "1", "000"], ["Ryan Vondren", "1", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
+//        } else if classroomID == "2" {
+//            getStudentData(studentList: [["Student Name", "1", "000"], ["Student Name", "1", "000"], ["Student Name", "2", "000"], ["Student Name", "3", "000"], ["Student Name", "4", "000"], ["Student Name", "4", "000"]])
+//        } else {
+//            getStudentData(studentList: [["Student Name", "1", "000"]])
+//        }
+//        self.collectionView?.reloadData()
+//        
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -123,8 +123,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
 
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+//        toolbarItems = [flexibleSpace, segmentBarItem, flexibleSpace]
         self.navigationItem.leftBarButtonItem = showTableButton
         self.navigationItem.rightBarButtonItem = segmentBarItem
         //self.navigationController?.setToolbarItems(toolbarItems, animated: false)
@@ -224,12 +224,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphCell", for: indexPath) as! GraphCollectionViewCell
             cell.backgroundColor = UIColor.white
             let collectionWidth = floor(collectionView.frame.size.width)
-            let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
-            var totalStudentsDouble = Double(totalStudents)
-            
-            // CHANGE THIS, a buggy fix so that it doesn't break with no students in classroom
-            if totalStudentsDouble == 0 {
-                totalStudentsDouble = 1
+           // CHANGE THIS, a buggy fix so that it doesn't break with no students in classroom
+            var totalStudentsDouble = 0.0
+            if !(studentsByLevel != nil) {
+                totalStudentsDouble = 1.0
+            } else {
+                let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
+                totalStudentsDouble = Double(totalStudents)
+                if totalStudentsDouble == 0.0 {
+                    totalStudentsDouble = 1.0
+                }
             }
             
             if indexPath.section == 0 {
@@ -282,31 +286,31 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
          self.showTable()
     }
     
-    func getStudentData(studentList: [NSArray]) {
-        ///This is where we will requestClassroomInfo
-        students = studentList
-        
-        level1Students.removeAll()
-        level2Students.removeAll()
-        level3Students.removeAll()
-        level4Students.removeAll()
-        
-        for student in students {
-            if student[1] as! String == "1"{
-                level1Students.append(student)
-            } else if student[1] as! String == "2"{
-                level2Students.append(student)
-            } else if student[1] as! String == "3"{
-                level3Students.append(student)
-            } else if student[1] as! String == "4"{
-                level4Students.append(student)
-            } else {
-                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
-            }
-        }
-        
-        studentsByLevel = [level1Students, level2Students, level3Students, level4Students] 
-    }
+//    func getStudentData(studentList: [NSArray]) {
+//        ///This is where we will requestClassroomInfo
+//        students = studentList
+//        
+//        level1Students.removeAll()
+//        level2Students.removeAll()
+//        level3Students.removeAll()
+//        level4Students.removeAll()
+//        
+//        for student in students {
+//            if student[1] as! String == "1"{
+//                level1Students.append(student)
+//            } else if student[1] as! String == "2"{
+//                level2Students.append(student)
+//            } else if student[1] as! String == "3"{
+//                level3Students.append(student)
+//            } else if student[1] as! String == "4"{
+//                level4Students.append(student)
+//            } else {
+//                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+//            }
+//        }
+//        
+//        studentsByLevel = [level1Students, level2Students, level3Students, level4Students] 
+//    }
     
     func hideTable() {
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
