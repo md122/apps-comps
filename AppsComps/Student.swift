@@ -10,6 +10,7 @@
 import UIKit
 
 class Student: Account, APIDataDelegate {
+    var classroomID: Int = 0
     
     override init?(idToken: String, name: String){
         super.init(idToken: idToken, name: name)
@@ -25,14 +26,18 @@ class Student: Account, APIDataDelegate {
     }
  
 
-    func getClassRoomID()->String{
+    override func getClassRoomID()->Int{
         //code that asks the database connector for the classroom id associated with the account id of this student
-        return ""
+        return classroomID
     }
     
-    override func getHighestLevel()->String{
+    func setClassRoomID(id: Int) {
+        classroomID = id
+    }
+    
+    override func getHighestLevel()->Int{
         //code that asks the database connector to send back the number of the highest level this student has unlocked (not the highest level passed, the highest level they are allowed to access)
-        return "4"
+        return 2
     }
     
     func getCorrectIncorrectRatio(level: String, timeRange: String)->String{
@@ -57,31 +62,31 @@ class Student: Account, APIDataDelegate {
     }
     
     // Function that gets called when studentDashInfo gets back
-    func handleStudentDashInfo(data: [NSArray]) {
+    func handleStudentDashInfo(data: NSDictionary) {
         print("Incoming handleStudentDashInfo data")
         print(data)
     }
     
     // Function that gets called when attempt to remove student from class gets back
-    func handleAddStudentToClassAttempt(data: Bool) {
+    func handleAddStudentToClassAttempt(data: NSDictionary) {
         print("Incoming handleAddStudentToClassAttempt data")
         print(data)
     }
     
     // Function that gets called when attempt to remove student from class gets back
-    func handleRemoveStudentFromClassAttempt(data: Bool) {
+    func handleRemoveStudentFromClassAttempt(data: NSDictionary) {
         print("Incoming handleRemoveStudentFromClassAttempt data")
         print(data)
     }
     
     // Function that gets called when problem history gets back
-    func handleProblemHistory(data: [NSArray]) {
+    func handleProblemHistory(data: NSDictionary) {
         print("Incoming handleProblemHistory data")
         print(data)
     }
     
     // Function that gets called when correct/incorrect ratio gets back
-    func handleCorrectIncorrectRatio(data: [NSArray]) {
+    func handleCorrectIncorrectRatio(data: NSDictionary) {
         print("Incoming handleCorrectIncorrectRatio data")
         print(data)
     }
