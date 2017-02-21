@@ -412,6 +412,13 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
     func changeBlockValueAlert(block: Block) {
+        let invalidInputAlert = UIAlertController(title: "Invalid input", message: "Your submission was invalid :(. Make sure you're submitting only a number less than 1000, and if it's a positive block, make sure your number is positive!", preferredStyle: UIAlertControllerStyle.alert)
+        invalidInputAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
+            self.changeBlockValueAlert(block: block)
+        }))
+        invalidInputAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
         let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, greater than 0 and less than 1000, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
         
         changeValueAlert.addTextField(configurationHandler: {(textField: UITextField!) in
@@ -420,18 +427,23 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
+            
             if var valueEntered = changeValueAlert.textFields![0].text {
                 var newBlock: Block? = nil
                 if block.getType() == "variable" {
                     valueEntered = self.sanitizePosVariableValue(input: valueEntered)
                     if valueEntered != "" {
                         newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: valueEntered)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                 else if block.getType() == "subVariable"{
                     valueEntered = self.sanitizeNegVariableValue(input: valueEntered)
                     if valueEntered != "" {
                         newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                 //Number case
@@ -439,6 +451,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                     valueEntered = self.sanitizePosNumberValue(input: valueEntered)
                     if valueEntered != "" {
                         newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                     //subNumber case, not specified so new block always initializes
@@ -446,6 +460,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                     valueEntered = self.sanitizeNegNumberValue(input: valueEntered)
                     if valueEntered != "" {
                         newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                 
