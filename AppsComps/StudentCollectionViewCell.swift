@@ -11,7 +11,7 @@ import UIKit
 class StudentCollectionViewCell: UICollectionViewCell {
    
     @IBOutlet var studentNameLabel: UILabel!
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
