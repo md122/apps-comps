@@ -72,7 +72,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             headerView.levelLabel.textAlignment = NSTextAlignment.right
             headerView.classroomText.text = classroomName
             headerView.greetingLabel.text = "Hello " + currentUser!.getName()
-            headerView.levelLabel.text = "You are on level \(currentUser!.getHighestLevel())"
+            headerView.levelLabel.text = "You are on level \(highestLevel)"
             headerView.joinButton.setTitle("Join Classroom", for: .normal)
             headerView.leaveButton.setTitle("Leave Class", for: .normal)
             
@@ -89,6 +89,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             //Check here for how to resize image: http://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
             headerView.logoView.image = UIImage(named: "logo placeholder")
             headerView.logoView.center = CGPoint(x: widthUnit*50, y: heightUnit*50)
+            headerView.logoView.frame = CGRect(x: headerView.logoView.frame.origin.x, y: headerView.logoView.frame.origin.y, width: widthUnit*35, height: headerView.frame.height)
             
             //JOIN/LEAVE CLASSROOM
             if (currentUser as? Student) != nil {
@@ -171,19 +172,20 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
         
-        cell.levelButton?.setTitle(self.levelLabels[indexPath.row], for: .normal)
-        cell.levelButton?.setLevel(lev: self.levels[indexPath.row])
+        cell.levelButton.setTitle(self.levelLabels[indexPath.row], for: .normal)
+        cell.levelButton.setLevel(lev: self.levels[indexPath.row])
         let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
         let width: CGFloat = screen.width
         
         let unit: CGFloat = width/100
-        cell.levelButton?.frame.size = CGSize(width: unit*20, height: unit*20)
-        cell.levelButton?.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
-        cell.levelButton?.setTitleColor(UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0), for: .normal)
+        cell.levelButton.frame.size = CGSize(width: unit*20, height: unit*20)
+        cell.levelButton.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
+        cell.levelButton.setTitleColor(UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0), for: .normal)
+        cell.levelButton.addTarget(self, action: #selector(self.goToProblemScreen), for: .touchUpInside)
         var image : String = "emptystars"
         
         if (!locked) {
-            if (cell.levelButton?.getLevel() == highestLevel) {
+            if (cell.levelButton.getLevel() == highestLevel) {
                 switch levelProgress {
                     case 1: image = "onestars"
                     case 2: image = "twostars"
@@ -199,6 +201,15 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         cell.levelView.image = UIImage(named: image)
         
         return cell
+    }
+    
+    @IBAction func goToProblemScreen(_ sender: LevelButton) {
+        let curLevel = sender.getLevel()
+        print(curLevel)
+        let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "probScreenID") as! ProblemScreenViewController
+        
+        vc.setLevel(level: curLevel)
+        self.navigationController?.pushViewController(vc, animated:true)
     }
     
     
