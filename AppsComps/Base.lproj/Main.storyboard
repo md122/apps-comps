@@ -100,13 +100,13 @@
         <!--Problem Screen View Controller-->
         <scene sceneID="uku-uC-YUg">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="cnD-Rx-Jca" customClass="ProblemScreenViewController" customModule="AppsComps" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="probScreenID" autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="cnD-Rx-Jca" customClass="ProblemScreenViewController" customModule="AppsComps" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="srj-iC-Tai"/>
                         <viewControllerLayoutGuide type="bottom" id="fwp-Sz-l2Q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ayL-yk-Lo9">
-                        <rect key="frame" x="0.0" y="44" width="1024" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A problem goes here" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ftv-Qc-Hob">
@@ -465,9 +465,6 @@
                                             <state key="normal" title="Level">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <connections>
-                                                <segue destination="cnD-Rx-Jca" kind="show" id="vQx-hh-tgX"/>
-                                            </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emptystars" translatesAutoresizingMaskIntoConstraints="NO" id="JgP-c3-OUR" userLabel="Level View">
                                             <frame key="frameInset" minX="20" minY="250" width="175" height="50"/>
@@ -476,7 +473,7 @@
                                     </subviews>
                                 </view>
                                 <connections>
-                                    <outlet property="levelButton" destination="PIO-12-0JW" id="wUT-EL-D6K"/>
+                                    <outlet property="levelButton" destination="PIO-12-0JW" id="Prd-2j-NN2"/>
                                     <outlet property="levelView" destination="JgP-c3-OUR" id="ahl-I3-1fZ"/>
                                 </connections>
                             </collectionViewCell>
