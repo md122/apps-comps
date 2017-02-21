@@ -88,7 +88,7 @@
             <objects>
                 <navigationController id="bob-Z2-ijt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="7eK-cY-H7a"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -177,7 +177,7 @@
         <scene sceneID="TGh-kI-Fkr">
             <objects>
                 <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -310,8 +310,8 @@
         <scene sceneID="bSz-bt-sEo">
             <objects>
                 <navigationController title="Student Progress" id="3XX-kf-WLW" customClass="DashboardNavigationViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Progress" id="wHz-fQ-KpL"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
+                    <tabBarItem key="tabBarItem" id="wHz-fQ-KpL"/>
+                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -327,7 +327,7 @@
         <scene sceneID="wMz-tc-QHY">
             <objects>
                 <splitViewController id="AKD-zf-Mmq" customClass="ProgressSplitViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Student Progress" id="9np-ED-R6P"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Progress" id="fyM-nX-3cQ"/>
@@ -428,7 +428,7 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -444,7 +444,7 @@
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -595,6 +595,6 @@
         <image name="submitButton" width="600" height="309"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fKu-gq-v19"/>
+        <segue reference="PVD-jD-qci"/>
     </inferredMetricsTieBreakers>
 </document>
