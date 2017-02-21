@@ -39,8 +39,13 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             currentUser = Student(idToken: "fakeID", name: "W")
         }
         
-        //Get Student dash info to show up on header
-        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        // Sam put this in an if statement because it crashes the program
+        // Basically it assumes the user is a student, so it crashes the db call
+        if(currentUser != nil && (currentUser as? Student) != nil) {
+            //Get Student dash info to show up on header
+            connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        }
+    
         
         super.viewDidLoad()
         //Set up header with a coordinate scale
@@ -111,6 +116,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         // Set the UIButton to Logout if the less than 2 items on navigation stack
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
+
         if let navController = self.navigationController, navController.viewControllers.count < 2 {
             let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
             leftButton.tintColor = .red
