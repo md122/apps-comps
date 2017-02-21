@@ -30,6 +30,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
         if(currentUser == nil) {
             currentUser = Teacher(idToken: "23", name: "Meg Crenshaw")
             (currentUser as! Teacher).testAPIConnector()
@@ -123,8 +124,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
-
-        self.navigationItem.leftBarButtonItem = showTableButton
+        //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
+        let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+//        self.navigationItem.leftBarButtonItem = showTableButton
+        self.navigationItem.leftBarButtonItem = showIDButton
         self.navigationItem.rightBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
@@ -134,6 +137,15 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         self.navigationController?.setToolbarHidden(false, animated: false)
 
 
+    }
+    
+    func helpClicked(_ sender: UIBarButtonItem) {
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPopUpID") as! HelpViewController
+        popOverVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
     }
     
     func logoutClicked(_ sender: UIBarButtonItem) {
