@@ -111,12 +111,12 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         // Set the UIButton to Logout if the less than 2 items on navigation stack
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
-        if let navController = self.navigationController, navController.viewControllers.count < 2 {
-            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
-            leftButton.tintColor = .red
-            self.navigationItem.rightBarButtonItem = leftButton
-        }
-        
+//        if let navController = self.navigationController, navController.viewControllers.count < 2 {
+//            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+//            leftButton.tintColor = .red
+//            self.navigationItem.rightBarButtonItem = leftButton
+//        }
+//        
         //Set up join/leave classroom button actions
         joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
         leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)

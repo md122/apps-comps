@@ -85,9 +85,9 @@
         <!--Item-->
         <scene sceneID="0HH-g7-L8Q">
             <objects>
-                <navigationController id="bob-Z2-ijt" customClass="MainNavigationController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="bob-Z2-ijt" customClass="DashboardNavigationViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="7eK-cY-H7a"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -233,7 +233,7 @@
                                 <color key="backgroundColor" red="1" green="0.61064428559999995" blue="0.71442666659999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e39-bF-GlZ">
-                                <frame key="frameInset" minX="-1.5" minY="205" height="563" maxX="1.5"/>
+                                <frame key="frameInset" minX="-1.5" minY="205" height="563" maxX="2"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <connections>
                                     <segue destination="fSl-Vx-zgN" kind="embed" id="mxx-Iw-UIW"/>
@@ -249,7 +249,10 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" id="B4W-dQ-NDF"/>
+                    <navigationItem key="navigationItem" title="Problem Selector" id="B4W-dQ-NDF">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="h5b-RL-j27"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="mxd-dc-YQp"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="classroomText" destination="Pdd-kg-KrR" id="Z7K-yD-m9u"/>
                         <outlet property="greetingText" destination="Sgz-5w-fvX" id="ZhO-JA-F6W"/>
@@ -269,7 +272,7 @@
         <scene sceneID="TGh-kI-Fkr">
             <objects>
                 <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -284,8 +287,8 @@
         <!--Student Collection View Controller-->
         <scene sceneID="D7W-CY-NE6">
             <objects>
-                <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5Bg-cB-sBO">
+                <collectionViewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
                         <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -401,9 +404,9 @@
         <!--Student Progress-->
         <scene sceneID="bSz-bt-sEo">
             <objects>
-                <navigationController title="Student Progress" id="3XX-kf-WLW" sceneMemberID="viewController">
+                <navigationController title="Student Progress" id="3XX-kf-WLW" customClass="DashboardNavigationViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Progress" id="wHz-fQ-KpL"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -415,22 +418,29 @@
             </objects>
             <point key="canvasLocation" x="-1467" y="-552"/>
         </scene>
-        <!--Student Progress-->
+        <!--Progress-->
         <scene sceneID="wMz-tc-QHY">
             <objects>
                 <splitViewController id="AKD-zf-Mmq" customClass="ProgressSplitViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Student Progress" id="9np-ED-R6P"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="fyM-nX-3cQ">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="PYd-4K-lJa">
-                            <color key="tintColor" red="1" green="0.0" blue="0.049691020330000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <navigationItem key="navigationItem" title="Progress" id="fyM-nX-3cQ">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="EAB-6B-yz8">
                             <connections>
-                                <action selector="logoutClicked:" destination="AKD-zf-Mmq" id="9to-Ik-sFi"/>
+                                <action selector="helpClicked:" destination="AKD-zf-Mmq" id="rGr-wx-rth"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="DNG-Ea-go4">
+                            <connections>
+                                <action selector="logoutClicked:" destination="AKD-zf-Mmq" id="f5E-dO-Lue"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="helpButton" destination="EAB-6B-yz8" id="aZ0-In-M0t"/>
+                        <outlet property="logoutButton" destination="DNG-Ea-go4" id="q1g-cq-W49"/>
+                        <outlet property="logoutClicked" destination="DNG-Ea-go4" id="Dxd-sa-PIK"/>
                         <segue destination="FY1-ed-rqB" kind="relationship" relationship="masterViewController" id="Pe5-na-GCT"/>
                         <segue destination="e9f-1B-4ya" kind="relationship" relationship="detailViewController" id="yOY-Ld-586"/>
                     </connections>
@@ -516,7 +526,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="3XX-kf-WLW" kind="relationship" relationship="viewControllers" id="nq8-QJ-5Rz"/>
-                        <segue destination="bob-Z2-ijt" kind="relationship" relationship="viewControllers" id="BiB-gl-jpe"/>
+                        <segue destination="bob-Z2-ijt" kind="relationship" relationship="viewControllers" id="PVD-jD-qci"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4u-Oa-nua" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -527,7 +537,7 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -543,29 +553,12 @@
             </objects>
             <point key="canvasLocation" x="-347" y="409"/>
         </scene>
-        <!--Problem Selector-->
-        <scene sceneID="VfP-up-Wkp">
-            <objects>
-                <navigationController title="Problem Selector" id="bus-vF-wNi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Problems" id="X7G-Pk-h55"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KMB-kU-oze" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="7gr-Yh-NVx" kind="relationship" relationship="rootViewController" id="wI3-MM-L9i"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cBc-0j-0ha" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-448" y="-1723"/>
-        </scene>
         <!--Level Button View Controller-->
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="563"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
+                        <rect key="frame" x="0.0" y="0.0" width="1023.5" height="563"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Su9-fR-Opt">
@@ -665,7 +658,6 @@
         <image name="logo placeholder" width="338" height="89"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wI3-MM-L9i"/>
-        <segue reference="BiB-gl-jpe"/>
+        <segue reference="PVD-jD-qci"/>
     </inferredMetricsTieBreakers>
 </document>

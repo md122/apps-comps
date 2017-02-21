@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AD2D551E54C30200127AC3 /* UIColor.swift */; };
-		1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0361E4ED375008671B6 /* TitleCollectionViewCell.swift */; };
-		1135C03A1E4ED756008671B6 /* GraphCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C0391E4ED756008671B6 /* GraphCollectionViewCell.swift */; };
+		1135C0371E4ED375008671B6 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */; };
 		113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */; };
 		113B052B1DDBB3AF00D001DD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052A1DDBB3AF00D001DD /* Account.swift */; };
@@ -23,6 +22,7 @@
 		1197B7A11E56A7740068FC4A /* ProgressSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7A01E56A7740068FC4A /* ProgressSplitViewController.swift */; };
 		1197B7A31E56A91B0068FC4A /* ShortNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7A21E56A91B0068FC4A /* ShortNavigationBar.swift */; };
 		1197B7A51E590A350068FC4A /* GraphCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7A41E590A350068FC4A /* GraphCollectionViewCell.swift */; };
+		1197B7AB1E5BCBA40068FC4A /* DashboardNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197B7AA1E5BCBA40068FC4A /* DashboardNavigationViewController.swift */; };
 		11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */; };
 		12E5B6C7AF1EC81893F3CBC0 /* Pods_AppsComps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7EA029543374792360F5C /* Pods_AppsComps.framework */; };
 		22399E351E3A503C00DB2193 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22399E341E3A503C00DB2193 /* MainNavigationController.swift */; };
@@ -103,6 +103,7 @@
 		1197B7A01E56A7740068FC4A /* ProgressSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressSplitViewController.swift; path = AppsComps/ProgressSplitViewController.swift; sourceTree = "<group>"; };
 		1197B7A21E56A91B0068FC4A /* ShortNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortNavigationBar.swift; sourceTree = "<group>"; };
 		1197B7A41E590A350068FC4A /* GraphCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphCollectionViewCell.swift; sourceTree = "<group>"; };
+		1197B7AA1E5BCBA40068FC4A /* DashboardNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardNavigationViewController.swift; sourceTree = "<group>"; };
 		11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableViewCell.swift; sourceTree = "<group>"; };
 		22399E341E3A503C00DB2193 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnector.swift; sourceTree = "<group>"; };
@@ -295,6 +296,7 @@
 				8111C3441DBFBB6D002C8067 /* AppDelegate.swift */,
 				8111C34A1DBFBB6D002C8067 /* Main.storyboard */,
 				1197B7A21E56A91B0068FC4A /* ShortNavigationBar.swift */,
+				1197B7AA1E5BCBA40068FC4A /* DashboardNavigationViewController.swift */,
 				8111C34D1DBFBB6D002C8067 /* Assets.xcassets */,
 				8111C34F1DBFBB6D002C8067 /* LaunchScreen.storyboard */,
 				8111C3521DBFBB6D002C8067 /* Info.plist */,
@@ -893,9 +895,10 @@
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
 				1197B7A11E56A7740068FC4A /* ProgressSplitViewController.swift in Sources */,
 				1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */,
+				1197B7AB1E5BCBA40068FC4A /* DashboardNavigationViewController.swift in Sources */,
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
-				1135C0371E4ED375008671B6 /* TitleCollectionViewCell.swift in Sources */,
+				1135C0371E4ED375008671B6 /* (null) in Sources */,
 				00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */,
 				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
 				11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */,
