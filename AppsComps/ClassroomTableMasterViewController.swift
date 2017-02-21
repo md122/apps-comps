@@ -159,6 +159,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if self.isEditing == false {
             APIConnector().requestClassroomData(callingDelegate: self, classroomID: String(classrooms[indexPath.row][1] as! Int))
+            self.detailViewController?.setTitle(className: classrooms[indexPath.row][0] as! String)
         }
     }
 

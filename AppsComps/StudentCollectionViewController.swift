@@ -324,6 +324,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         self.collectionView?.reloadData()
     }
     
+    func setTitle(className: String) {
+        self.navigationItem.title = className
+        self.collectionView?.reloadData()
+    }
+    
 
 
     // MARK: UICollectionViewDelegate
