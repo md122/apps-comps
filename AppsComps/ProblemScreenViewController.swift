@@ -19,8 +19,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var stars: UIImageView!
     
-    var level: Int = 4
-    var highestLevel: Int = 4
+    var level: Int = 3
+    var highestLevel: Int = 3
     var incorrectAttempts: Int = 0
     var currentProblem: Int?
     var levelProgress: Int = 2
@@ -172,7 +172,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
                 self.setStars(correctAnswers: self.levelProgress)
                 if (levelProgress == 3) {
                     self.highestLevel += 1
-                    if self.highestLevel < 4 {
+                    if (self.highestLevel < 5) {
                         
                         unlockLevelAlert()
                     }
