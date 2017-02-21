@@ -83,11 +83,11 @@
             </objects>
             <point key="canvasLocation" x="-1092" y="-2717.0914542728638"/>
         </scene>
-        <!--Item-->
+        <!--Main Navigation Controller-->
         <scene sceneID="0HH-g7-L8Q">
             <objects>
                 <navigationController id="bob-Z2-ijt" customClass="MainNavigationController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -198,7 +198,7 @@
             <objects>
                 <collectionViewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4r7-Np-QbH">
@@ -448,7 +448,7 @@
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -529,12 +529,12 @@
                                 </label>
                             </subviews>
                             <connections>
-                                <outlet property="classroomText" destination="TBq-Uf-TUy" id="ZYm-Y9-VXA"/>
-                                <outlet property="greetingLabel" destination="2oB-wG-ClI" id="Gua-vo-hwj"/>
-                                <outlet property="joinButton" destination="tOq-Vb-VV3" id="Dqk-66-TGn"/>
-                                <outlet property="leaveButton" destination="DZT-6b-MF5" id="PrO-m3-t6Y"/>
-                                <outlet property="levelLabel" destination="9LT-Tx-tef" id="SNR-Ng-ERI"/>
-                                <outlet property="logoView" destination="lAx-dy-STY" id="vwf-l2-w9f"/>
+                                <outlet property="classroomText" destination="TBq-Uf-TUy" id="l6I-0q-FPp"/>
+                                <outlet property="greetingLabel" destination="2oB-wG-ClI" id="AVB-Dp-MsW"/>
+                                <outlet property="joinButton" destination="tOq-Vb-VV3" id="bBA-Qk-wwO"/>
+                                <outlet property="leaveButton" destination="DZT-6b-MF5" id="aVj-WF-bGS"/>
+                                <outlet property="levelLabel" destination="9LT-Tx-tef" id="azn-GK-Kk0"/>
+                                <outlet property="logoView" destination="lAx-dy-STY" id="vIe-CN-nSS"/>
                             </connections>
                         </collectionReusableView>
                     </collectionView>
