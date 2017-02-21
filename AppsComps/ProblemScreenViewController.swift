@@ -113,9 +113,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     func setLevel(level: Int) {
         self.level = level
-<<<<<<< HEAD
-        print(self.level)
-=======
+
         levelLabel.text = "Level: \(self.level)"
     }
     
@@ -176,7 +174,6 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     func skipProblemAlert(errorMessage: String) {
         let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
->>>>>>> 14272ba728fa8d0f9aafa1284e45a63cc3029efa
         
         wrongAnswerAlert.addAction(UIAlertAction(title: "Go to Next Problem", style: .default, handler: { (action: UIAlertAction!) in
             APIConnector().attemptSkipProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: self.level, problemNum: self.currentProblem!)
