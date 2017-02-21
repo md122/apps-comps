@@ -55,10 +55,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         return true
     }
     
-    func handleSubmitAnswer() {
+    func submitAnswerAlerts() {
         let invalidAnswerAlert = UIAlertController(title: "Invalid submission", message: "Your submission was invalid :(. Make sure you're submitting only a number!", preferredStyle: UIAlertControllerStyle.alert)
         invalidAnswerAlert.addAction(UIAlertAction(title: "Submit another answer", style: .default, handler: { (action: UIAlertAction!) in
-            self.handleSubmitAnswer()
+            self.submitAnswerAlerts()
         }))
         invalidAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
@@ -88,7 +88,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     @IBAction func submitAnswer(_ sender: AnyObject) {
-        handleSubmitAnswer()
+        submitAnswerAlerts()
     }
     
     func setProblemText() {
