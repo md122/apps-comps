@@ -39,8 +39,13 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             currentUser = Student(idToken: "fakeID", name: "W")
         }
         
-        //Get Student dash info to show up on header
-        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        // Sam put this in an if statement because it crashes the program
+        // Basically it assumes the user is a student, so it crashes the db call
+        if(currentUser != nil && (currentUser as? Student) != nil) {
+            //Get Student dash info to show up on header
+            connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        }
+    
         
         super.viewDidLoad()
         //Set up header with a coordinate scale

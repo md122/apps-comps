@@ -24,10 +24,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleNextProblem!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleNextProblem!(data: ["error": "HTTP"])
             }
         }
 
@@ -64,10 +64,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleSubmitAnswer!(data: [["error": "HTTP"]])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleSubmitAnswer!(data: [["error": "HTTP"]])
             }
         }
     }
@@ -84,10 +84,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleStudentDashInfoRequest!(data: [["error": "HTTP"]])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleStudentDashInfoRequest!(data: [["error": "HTTP"]])
             }
         }
     }
@@ -105,10 +105,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleAddStudentToClassAttempt!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleAddStudentToClassAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -124,10 +124,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleRemoveStudentFromClassAttempt!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleRemoveStudentFromClassAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -174,10 +174,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleClassroomDataRequest!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleClassroomDataRequest!(data: ["error": "HTTP"])
             }
         }
     }
@@ -195,10 +195,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleAddClassroomAttempt!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleAddClassroomAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -216,10 +216,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleRemoveClassroomAttempt!(data: ["error": "HTTP"], classID: classroomID)
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleRemoveClassroomAttempt!(data: ["error": "HTTP"], classID: classroomID)
             }
         }
     }
@@ -238,10 +238,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
-                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                    callingDelegate.handleLoginAttempt!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleLoginAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -261,7 +261,7 @@ class APIConnector: NSObject  {
                     callingDelegate.handleCreateAccountAttempt!(data: ["error": "HTTP"])
                 }
             } else {
-                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
+                callingDelegate.handleCreateAccountAttempt!(data: ["error": "HTTP"])
             }
         }
     }

@@ -225,8 +225,13 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             cell.backgroundColor = UIColor.white
             let collectionWidth = floor(collectionView.frame.size.width)
             let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
-            let totalStudentsDouble = Double(totalStudents)
-           
+            var totalStudentsDouble = Double(totalStudents)
+            
+            // CHANGE THIS, a buggy fix so that it doesn't break with no students in classroom
+            if totalStudentsDouble == 0 {
+                totalStudentsDouble = 1
+            }
+            
             if indexPath.section == 0 {
                 var percent = (Double(level1Students.count) / totalStudentsDouble)
                 let width1 = Double(collectionWidth) * percent
