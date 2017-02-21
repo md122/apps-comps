@@ -16,10 +16,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     @IBOutlet weak var problemLabel: UILabel!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var stars: UIImageView!
     
-    var level: Int = 1
+    var level: Int = 3
+    var highestLevel: Int = 3
     var incorrectAttempts: Int = 0
     var currentProblem: Int?
+    var levelProgress: Int = 2
     var scene: GameScene?
 
     override func viewDidLoad() {
@@ -27,6 +30,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         levelLabel.text = "Level: \(self.level)"
         
         setProblemText()
+        setStars(correctAnswers: self.levelProgress)
         super.viewDidLoad()
     }
     
@@ -94,60 +98,131 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: level)
     }
     
-    func setLevel(level: Int){
-        self.level = level
-        levelLabel.text = "Level: \(self.level)"
-        
+
+    
+    func setHighestLevel(level: Int) {
+        self.highestLevel = level
     }
     
+    func setLevel(level: Int) {
+        self.level = level
+        levelLabel.text = "Level: \(self.level)"
+    }
+    
+
+    
+    func setStars(correctAnswers: Int) {
+        var image : String = "emptystars"
+        if (self.highestLevel == self.level) {
+            self.levelProgress = correctAnswers
+            switch levelProgress {
+                case 1: image = "onestars"
+                case 2: image = "twostars"
+                case 3: image = "threestars"
+                default: image = "emptystars"
+            }
+        }
+        else {
+            self.levelProgress = 3
+            image = "threestars"
+        }
+        stars.image = UIImage(named: image)
+    }
+    
+    func rightAnswerAlert() {
+        let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
+        rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
+            self.setProblemText()
+            self.scene?.clearProblemScreen()
+        }))
+        present(rightAnswerAlert, animated: true, completion: nil)
+    }
+    
+    
+    func unlockLevelAlert() {
+        let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + String(self.highestLevel) + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
+        rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
+            self.setLevel(level: self.level+1)
+            self.levelProgress = 0
+            self.setStars(correctAnswers: 0)
+            self.setProblemText()
+        }))
+        rightAnswerAlert.addAction(UIAlertAction(title: "Stay on this level", style: .default, handler: { (action: UIAlertAction!) in
+            self.setProblemText()
+        }))
+        present(rightAnswerAlert, animated: true, completion: nil)
+    }
+    
+
+    func endOfProblemsAlert() {
+        let endOfProblems = UIAlertController(title: "Correct!", message: "Great job! You solved all the levels!", preferredStyle: UIAlertControllerStyle.alert)
+        endOfProblems.addAction(UIAlertAction(title: "Keep doing problems", style: .default, handler: { (action: UIAlertAction!) in
+            self.scene?.clearProblemScreen()
+            self.setProblemText()
+            
+        }))
+        present(endOfProblems, animated: true, completion: nil)
+    }
+    
+    func skipProblemAlert(errorMessage: String) {
+        let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+        
+        wrongAnswerAlert.addAction(UIAlertAction(title: "Go to Next Problem", style: .default, handler: { (action: UIAlertAction!) in
+            APIConnector().attemptSkipProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: self.level, problemNum: self.currentProblem!)
+        }))
+        wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        present(wrongAnswerAlert, animated: true, completion: nil)
+    }
+    
+
+    func wrongAnswerAlert() {
+        let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
+        wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .default, handler: { (action: UIAlertAction!) in
+        }))
+        wrongAnswerAlert.addAction(UIAlertAction(title: "Start Over Problem", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.scene?.clearProblemScreen()
+        }))
+        present(wrongAnswerAlert, animated: true, completion: nil)
+
+    }
+    
+
     // Function that gets called when problem answer comes back
     func handleSubmitAnswer(data: [NSDictionary]) {
         if (data[0]["isCorrect"] as! String == "correct") {
-            if (data[0]["nextLevelUnlocked"] as! String != "false") {
-                let nextLevel = data[0]["nextLevelUnlocked"] as? String
-                let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + nextLevel! + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
-                rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
-                    self.setLevel(level: self.level+1)
-                    self.setProblemText()
-                }))
-                rightAnswerAlert.addAction(UIAlertAction(title: "Stay on this level", style: .default, handler: { (action: UIAlertAction!) in
-                    self.setProblemText()
-                }))
-                present(rightAnswerAlert, animated: true, completion: nil)
+            if (self.level == self.highestLevel) {
+                self.levelProgress += 1
+                self.setStars(correctAnswers: self.levelProgress)
+                if (levelProgress == 3) {
+                    self.highestLevel += 1
+                    if (self.highestLevel < 5) {
+                        
+                        unlockLevelAlert()
+                    }
+                    else {
+                        endOfProblemsAlert()
+                    }
+                }
+                else {
+                    rightAnswerAlert()
+                }
             }
             else {
-                let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
-                rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
-                    self.setProblemText()
-                    self.scene?.clearProblemScreen()
-                }))
-                present(rightAnswerAlert, animated: true, completion: nil)
+                rightAnswerAlert()
             }
-
         }
         else {
             incorrectAttempts += 1
             if (incorrectAttempts < 3) {
-                let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .default, handler: { (action: UIAlertAction!) in
-                }))
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Start Over Problem", style: .cancel, handler: { (action: UIAlertAction!) in
-                    self.scene?.clearProblemScreen()
-                }))
-                present(wrongAnswerAlert, animated: true, completion: nil)
+                wrongAnswerAlert()
             }
             else {
                 let temp = data[1]["data"] as! [NSArray]
                 let correctAnswer = temp[0][0] as? String
                 let errorMessage = "Correct answer: " + correctAnswer!
-                let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
-                
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Go to Next Problem", style: .default, handler: { (action: UIAlertAction!) in
-                    APIConnector().attemptSkipProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: self.level, problemNum: self.currentProblem!)
-                }))
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .cancel, handler: { (action: UIAlertAction!) in
-                }))
-                present(wrongAnswerAlert, animated: true, completion: nil)
+                skipProblemAlert(errorMessage: errorMessage)
+
             }
         }
     }
@@ -164,6 +239,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     func handleSkipProblemAttempt(data: NSDictionary) {
         if (data["error"] as! String == "none") {
+            if self.highestLevel == self.level {
+                self.levelProgress = 0
+                self.setStars(correctAnswers: 0)
+            }
             self.setProblemText()
         }
     }

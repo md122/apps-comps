@@ -11,6 +11,7 @@ import SpriteKit
 
 class Vortex: Block {
 
+
     init() {
         let texture = SKTexture(imageNamed: "vortex")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
@@ -19,4 +20,5 @@ class Vortex: Block {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
