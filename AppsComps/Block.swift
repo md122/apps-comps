@@ -16,7 +16,7 @@ class Block: SKSpriteNode {
         case variable
         case subNumber
         case subVariable
-        case hammer
+        case vortex
     }
     
     let BLOCKHEIGHT:CGFloat
@@ -33,7 +33,7 @@ class Block: SKSpriteNode {
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         BLOCKHEIGHT = 1
         BLOCKWIDTH = 1
-        self.type = .hammer
+        self.type = .vortex
         self.value = "1"
         super.init(texture: texture, color: color, size: size)
     }
@@ -72,7 +72,7 @@ class Block: SKSpriteNode {
             }
             label.fontSize = 18
         case .subNumber:
-            super.init(texture: nil, color: .black, size:blockSize)
+            super.init(texture: nil, color: .white, size:blockSize)
             innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: blockSize)
             label.text = String(value)
             self.alpha = 0.40
@@ -91,7 +91,7 @@ class Block: SKSpriteNode {
             label.fontSize = 18
         case .subVariable:
             blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
-            super.init(texture: nil, color: .black, size:blockSize)
+            super.init(texture: nil, color: .white, size:blockSize)
             innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: blockSize)
             if self.value=="-1" {
                 label.text = "-x"
@@ -114,8 +114,8 @@ class Block: SKSpriteNode {
             self.addChild(shape)
             label.fontSize = 18
         //This should never get called
-        case .hammer:
-            self.type = .hammer
+        case .vortex:
+            self.type = .vortex
             self.value = "1"
             subtractionBlock = nil
             super.init(texture: nil, color: .black, size:blockSize)

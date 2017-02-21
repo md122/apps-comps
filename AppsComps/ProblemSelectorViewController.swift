@@ -39,8 +39,13 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
             currentUser = Student(idToken: "fakeID", name: "W")
         }
         
-        //Get Student dash info to show up on header
-        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        // Sam put this in an if statement because it crashes the program
+        // Basically it assumes the user is a student, so it crashes the db call
+        if(currentUser != nil && (currentUser as? Student) != nil) {
+            //Get Student dash info to show up on header
+            connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        }
+    
         
         super.viewDidLoad()
         //Set up header with a coordinate scale
@@ -111,6 +116,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
         // Set the UIButton to Logout if the less than 2 items on navigation stack
         // This occurs when a going straight from the login to student view
         // In other words make a logout button on student view, but not if coming from teacher
+<<<<<<< HEAD
         if let navController = self.navigationController, navController.viewControllers.count < 2 {
             let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
             leftButton.tintColor = .red
@@ -120,6 +126,17 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
 //        //Set up join/leave classroom button actions
 //        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
 //        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
+=======
+//        if let navController = self.navigationController, navController.viewControllers.count < 2 {
+//            let leftButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+//            leftButton.tintColor = .red
+//            self.navigationItem.rightBarButtonItem = leftButton
+//        }
+//        
+        //Set up join/leave classroom button actions
+        joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
+        leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
+>>>>>>> 25f4e3fa4869ea9051ccb0f6dbe3c1ddd614f3af
         
         //Toolbar Inclusion
         self.navigationController?.setToolbarHidden(false, animated: false)
