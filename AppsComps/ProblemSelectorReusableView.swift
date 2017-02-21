@@ -9,23 +9,12 @@
 import UIKit
 
 class ProblemSelectorReusableView: UICollectionReusableView {
-//    @IBOutlet weak var classroomText: UILabel!
-   
+
     @IBOutlet weak var classroomText: UILabel!
-    
-//    @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var joinButton: UIButton!
-    
-//    @IBOutlet weak var leaveButton: UIButton!
     @IBOutlet weak var leaveButton: UIButton!
-    
-//    @IBOutlet weak var greetingLabel: UILabel!
     @IBOutlet weak var greetingLabel: UILabel!
-    
-//    @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
-    
-//    @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var logoView: UIImageView!
     
     
