@@ -64,10 +64,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         return true
     }
     
-    func submitAnswerAlerts() {
+    func submitAnswerAlert() {
         let invalidAnswerAlert = UIAlertController(title: "Invalid submission", message: "Your submission was invalid :(. Make sure you're submitting only a number!", preferredStyle: UIAlertControllerStyle.alert)
         invalidAnswerAlert.addAction(UIAlertAction(title: "Submit another answer", style: .default, handler: { (action: UIAlertAction!) in
-            self.submitAnswerAlerts()
+            self.submitAnswerAlert()
         }))
         invalidAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
@@ -91,13 +91,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
             }
         }))
         self.present(submitAnswerAlert, animated: true, completion: nil)
-        //let answer = submitTextField.text
-        //let answer = "asdf"
     }
     
 
     @IBAction func submitAnswer(_ sender: AnyObject) {
-        submitAnswerAlerts()
+        submitAnswerAlert()
     }
     
     func setProblemText() {
@@ -187,7 +185,6 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     func wrongAnswerAlert() {
         let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
         wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .default, handler: { (action: UIAlertAction!) in
-            self.scene?.clearProblemScreen()
         }))
         wrongAnswerAlert.addAction(UIAlertAction(title: "Start Over Problem", style: .cancel, handler: { (action: UIAlertAction!) in
             self.scene?.clearProblemScreen()
@@ -225,7 +222,6 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
             incorrectAttempts += 1
             if (incorrectAttempts < 3) {
                 wrongAnswerAlert()
-
             }
             else {
                 let temp = data[1]["data"] as! [NSArray]
