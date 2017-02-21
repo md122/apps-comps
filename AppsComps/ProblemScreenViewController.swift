@@ -14,7 +14,6 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     @IBOutlet weak var gameView: SKView!
     @IBOutlet weak var problemLabel: UILabel!
-    @IBOutlet weak var submitTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var levelLabel: UILabel!
     
@@ -26,14 +25,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     override func viewDidLoad() {
         
         levelLabel.text = "Level: \(self.level)"
+        
         setProblemText()
         super.viewDidLoad()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
-        
 
         gameView.showsFPS = false
         gameView.showsNodeCount = false
@@ -45,7 +43,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         gameView.layer.cornerRadius = 0
         gameView.layer.masksToBounds = true
         gameView.presentScene(scene)
-
+                
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,29 +55,52 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         return true
     }
     
-
-    @IBAction func submitAnswer(_ sender: AnyObject) {
-        //!!!!!!!! Right now problem screen always clears when you submit an answer, need to only clear when correct answer submitted
-        scene?.clearProblemScreen()
-        let answer = submitTextField.text
-        APIConnector().attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: answer!, level: self.level, problemNum: self.currentProblem!)
+    func submitAnswerAlerts() {
+        let invalidAnswerAlert = UIAlertController(title: "Invalid submission", message: "Your submission was invalid :(. Make sure you're submitting only a number!", preferredStyle: UIAlertControllerStyle.alert)
+        invalidAnswerAlert.addAction(UIAlertAction(title: "Submit another answer", style: .default, handler: { (action: UIAlertAction!) in
+            self.submitAnswerAlerts()
+        }))
+        invalidAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
+        let submitAnswerAlert = UIAlertController(title: "Submit answer", message: "Enter your number answer!", preferredStyle: UIAlertControllerStyle.alert)
+        submitAnswerAlert.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.keyboardType = UIKeyboardType.numberPad
+        })
+        
+        submitAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
+        submitAnswerAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
+            if let valueEntered = submitAnswerAlert.textFields![0].text {
+                if Double(valueEntered) != nil {
+                    APIConnector().attemptSubmitAnswer(callingDelegate: self, studentID: currentUser!.getIdToken(), studentAnswer: valueEntered, level: self.level, problemNum: self.currentProblem!)
+                } else {
+                    self.present(invalidAnswerAlert, animated: true, completion: nil)
+                }
+                
+            } else {
+                self.present(invalidAnswerAlert, animated: true, completion: nil)
+            }
+        }))
+        self.present(submitAnswerAlert, animated: true, completion: nil)
+        //let answer = submitTextField.text
+        //let answer = "asdf"
     }
     
-    
+
+    @IBAction func submitAnswer(_ sender: AnyObject) {
+        submitAnswerAlerts()
+    }
     
     func setProblemText() {
         let connector = APIConnector()
         connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: level)
     }
     
-    
-    
     func setLevel(level: Int){
         self.level = level
         levelLabel.text = "Level: \(self.level)"
         
     }
-    
     
     // Function that gets called when problem answer comes back
     func handleSubmitAnswer(data: [NSDictionary]) {
@@ -88,12 +109,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
                 let nextLevel = data[0]["nextLevelUnlocked"] as? String
                 let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + nextLevel! + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
                 rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
-                    self.submitTextField.text = ""
                     self.setLevel(level: self.level+1)
                     self.setProblemText()
                 }))
                 rightAnswerAlert.addAction(UIAlertAction(title: "Stay on this level", style: .default, handler: { (action: UIAlertAction!) in
-                    self.submitTextField.text = ""
                     self.setProblemText()
                 }))
                 present(rightAnswerAlert, animated: true, completion: nil)
@@ -101,8 +120,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
             else {
                 let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job!", preferredStyle: UIAlertControllerStyle.alert)
                 rightAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
-                    self.submitTextField.text = ""
                     self.setProblemText()
+                    self.scene?.clearProblemScreen()
                 }))
                 present(rightAnswerAlert, animated: true, completion: nil)
             }
@@ -112,10 +131,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
             incorrectAttempts += 1
             if (incorrectAttempts < 3) {
                 let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (action: UIAlertAction!) in
-                    self.submitTextField.text = ""
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .default, handler: { (action: UIAlertAction!) in
+                    self.scene?.clearProblemScreen()
                 }))
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Start Over Problem", style: .cancel, handler: { (action: UIAlertAction!) in
+                    self.scene?.clearProblemScreen()
                 }))
                 present(wrongAnswerAlert, animated: true, completion: nil)
             }
@@ -125,10 +145,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
                 let errorMessage = "Correct answer: " + correctAnswer!
                 let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
                 
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Go to next problem", style: .default, handler: { (action: UIAlertAction!) in
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Go to Next Problem", style: .default, handler: { (action: UIAlertAction!) in
                     APIConnector().attemptSkipProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: self.level, problemNum: self.currentProblem!)
                 }))
-                wrongAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .cancel, handler: { (action: UIAlertAction!) in
                 }))
                 present(wrongAnswerAlert, animated: true, completion: nil)
             }
@@ -151,9 +171,6 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         }
     }
     
-    
-    
-
     /*
      // MARK: - Navigation
      

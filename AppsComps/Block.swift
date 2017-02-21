@@ -72,7 +72,7 @@ class Block: SKSpriteNode {
             }
             label.fontSize = 18
         case .subNumber:
-            super.init(texture: nil, color: .black, size:blockSize)
+            super.init(texture: nil, color: .white, size:blockSize)
             innerBlockColor = SKSpriteNode(texture: nil, color: .red, size: blockSize)
             label.text = String(value)
             self.alpha = 0.40
@@ -91,7 +91,7 @@ class Block: SKSpriteNode {
             label.fontSize = 18
         case .subVariable:
             blockSize = CGSize(width: BLOCKWIDTH, height: BLOCKHEIGHT)
-            super.init(texture: nil, color: .black, size:blockSize)
+            super.init(texture: nil, color: .white, size:blockSize)
             innerBlockColor = SKSpriteNode(texture: nil, color: .orange, size: blockSize)
             if self.value=="-1" {
                 label.text = "-x"
