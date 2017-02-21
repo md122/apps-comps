@@ -216,7 +216,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "probScreenID") as! ProblemScreenViewController
         
         vc.setLevel(level: curLevel)
-        //self.navigationController?.pushViewController(vc, animated:true)
+        self.navigationController?.pushViewController(vc, animated:true)
     }
     
     

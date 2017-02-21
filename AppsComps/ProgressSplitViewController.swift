@@ -42,6 +42,8 @@ class ProgressSplitViewController: UISplitViewController {
         present(logOutAlert, animated: true, completion: nil)
     }
     
+//    (void)splitViewController:(UISplitViewController*)splitController willHideViewController:(UIViewController*)viewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController:(UIPopoverController*)popoverController
+    
 //    func helpClicked(_ sender: UIBarButtonItem) {
 //        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPopUpID") as! HelpViewController
 //        popOverVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
