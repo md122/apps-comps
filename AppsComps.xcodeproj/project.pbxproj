@@ -43,7 +43,6 @@
 		815BD5811DF06E4500DA377F /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
 		815BD5821DF06E4600DA377F /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
 		816A05891E5A49DB00916EB1 /* ProblemSelectorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A05881E5A49DB00916EB1 /* ProblemSelectorReusableView.swift */; };
-		816A058D1E5AB3D300916EB1 /* Hammer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816A058C1E5AB3D300916EB1 /* Hammer.swift */; };
 		817491D81E343FC00057B5F3 /* LevelButtonCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817491D71E343FC00057B5F3 /* LevelButtonCollectionCell.swift */; };
 		818EC6561DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
 		818EC6571DDC0E6500F4F2E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */; };
@@ -129,7 +128,6 @@
 		8111C3681DBFBB6D002C8067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		814C4D731E5655CE002D9F23 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		816A05881E5A49DB00916EB1 /* ProblemSelectorReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectorReusableView.swift; sourceTree = "<group>"; };
-		816A058C1E5AB3D300916EB1 /* Hammer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hammer.swift; sourceTree = "<group>"; };
 		817491D71E343FC00057B5F3 /* LevelButtonCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelButtonCollectionCell.swift; sourceTree = "<group>"; };
 		818EC6551DDC0E6500F4F2E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -893,7 +891,6 @@
 				113B052F1DDBB3BB00D001DD /* Student.swift in Sources */,
 				228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */,
 				1197B7A11E56A7740068FC4A /* ProgressSplitViewController.swift in Sources */,
-				1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */,
 				1197B7AB1E5BCBA40068FC4A /* DashboardNavigationViewController.swift in Sources */,
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
@@ -903,7 +900,6 @@
 				11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */,
 				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
 				817491D81E343FC00057B5F3 /* LevelButtonCollectionCell.swift in Sources */,
-				816A058D1E5AB3D300916EB1 /* Hammer.swift in Sources */,
 				816A05891E5A49DB00916EB1 /* ProblemSelectorReusableView.swift in Sources */,
 				1197B7A51E590A350068FC4A /* GraphCollectionViewCell.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,

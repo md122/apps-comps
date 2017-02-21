@@ -24,10 +24,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
 
     override func viewDidLoad() {
         
-<<<<<<< HEAD
-=======
         levelLabel.text = "Level: \(self.level)"
->>>>>>> 25f4e3fa4869ea9051ccb0f6dbe3c1ddd614f3af
         
         setProblemText()
         super.viewDidLoad()
