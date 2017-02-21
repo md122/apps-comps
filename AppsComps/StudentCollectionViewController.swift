@@ -42,6 +42,36 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
     }
     
+    func loadData(studentsData: [NSArray]) {
+        getRealStudentData(studentList: studentsData)
+        self.collectionView?.reloadData()
+    }
+    
+    func getRealStudentData(studentList: [NSArray]) {
+        ///This is where we will requestClassroomInfo
+        students = studentList
+        
+        level1Students.removeAll()
+        level2Students.removeAll()
+        level3Students.removeAll()
+        level4Students.removeAll()
+        
+        for student in students {
+            if student[1] as! Int == 1{
+                level1Students.append(student)
+            } else if student[1] as! Int == 2{
+                level2Students.append(student)
+            } else if student[1] as! Int == 3{
+                level3Students.append(student)
+            } else if student[1] as! Int == 4{
+                level4Students.append(student)
+            } else {
+                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
+            }
+        }
+        studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
+    }
+    
     func modeSegmentChanged(_ sender: AnyObject) {
         if sender.selectedSegmentIndex == 1 {
             self.cellMode = true
@@ -195,8 +225,13 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             cell.backgroundColor = UIColor.white
             let collectionWidth = floor(collectionView.frame.size.width)
             let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
-            let totalStudentsDouble = Double(totalStudents)
-           
+            var totalStudentsDouble = Double(totalStudents)
+            
+            // CHANGE THIS, a buggy fix so that it doesn't break with no students in classroom
+            if totalStudentsDouble == 0 {
+                totalStudentsDouble = 1
+            }
+            
             if indexPath.section == 0 {
                 var percent = (Double(level1Students.count) / totalStudentsDouble)
                 let width1 = Double(collectionWidth) * percent

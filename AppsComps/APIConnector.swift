@@ -24,7 +24,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleNextProblem!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleNextProblem!(data: ["error": "HTTP"])
             }
         }
 
@@ -61,7 +64,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleSubmitAnswer!(data: [["error": "HTTP"]])
                 }
+            } else {
+                callingDelegate.handleSubmitAnswer!(data: [["error": "HTTP"]])
             }
         }
     }
@@ -78,7 +84,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleStudentDashInfoRequest!(data: [["error": "HTTP"]])
                 }
+            } else {
+                callingDelegate.handleStudentDashInfoRequest!(data: [["error": "HTTP"]])
             }
         }
     }
@@ -96,7 +105,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleAddStudentToClassAttempt!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleAddStudentToClassAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -108,11 +120,14 @@ class APIConnector: NSObject  {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
-                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
+                        callingDelegate.handleRemoveStudentFromClassAttempt!(data: responseData as! NSDictionary)
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleRemoveStudentFromClassAttempt!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleRemoveStudentFromClassAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -140,7 +155,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleTeacherDashInfoRequest!(data: ["error": "HTTP"])
             }
         }
     }
@@ -156,14 +174,18 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleClassroomDataRequest!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleClassroomDataRequest!(data: ["error": "HTTP"])
             }
         }
     }
     
     // Attempts to add class room, returns null if not able, otherwise returns ID
     func attemptAddClassroom(callingDelegate: APIDataDelegate, teacherID: String, classroomName: String) {
-        let url = baseURL + "attemptAddClassroom/" + teacherID + "/" + classroomName
+        var url = baseURL + "attemptAddClassroom/" + teacherID + "/" + classroomName
+        url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
@@ -173,24 +195,31 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleAddClassroomAttempt!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleAddClassroomAttempt!(data: ["error": "HTTP"])
             }
         }
     }
     
     // API call to attempt to remove a classroom
-    func attemptRemoveClassroom(callingDelegate: APIDataDelegate, classroomID: String) {
-        let url = baseURL + "attemptRemoveClassroom/" + classroomID
+    func attemptRemoveClassroom(callingDelegate: APIDataDelegate, classroomID: Int) {
+        let url = baseURL + "attemptRemoveClassroom/" + String(classroomID)
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
-                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary)
+                        print(responseData as! NSDictionary)
+                        callingDelegate.handleRemoveClassroomAttempt!(data: responseData as! NSDictionary, classID: classroomID)
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleRemoveClassroomAttempt!(data: ["error": "HTTP"], classID: classroomID)
                 }
+            } else {
+                callingDelegate.handleRemoveClassroomAttempt!(data: ["error": "HTTP"], classID: classroomID)
             }
         }
     }
@@ -209,7 +238,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleLoginAttempt!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleLoginAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -226,7 +258,10 @@ class APIConnector: NSObject  {
                     }
                 default:
                     print("error with response status: \(status)")
+                    callingDelegate.handleCreateAccountAttempt!(data: ["error": "HTTP"])
                 }
+            } else {
+                callingDelegate.handleCreateAccountAttempt!(data: ["error": "HTTP"])
             }
         }
     }
@@ -242,5 +277,13 @@ class APIConnector: NSObject  {
                 print("JSON: \(JSON)")
             }
         }
+    }
+    
+    func connectionDropped(callingDelegate: UIViewController) {
+        let failedConnectionAlert = UIAlertController(title: "Something went wrong...", message: "Sorry for the inconvenience, please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+        // cancel option
+        failedConnectionAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        callingDelegate.present(failedConnectionAlert, animated: true, completion: nil)
     }
 }
