@@ -123,6 +123,9 @@ class APIConnector: NSObject  {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
+
+                        //print(responseData)
+
                         callingDelegate.handleRemoveStudentFromClassAttempt!(data: responseData as! NSDictionary)
                     }
                 default:

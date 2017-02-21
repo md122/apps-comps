@@ -8,7 +8,7 @@
 import UIKit
 
 class LevelButtonCollectionCell: UICollectionViewCell {
-    @IBOutlet weak var levelButton: LevelButton?
+    @IBOutlet weak var levelButton: LevelButton!
     @IBOutlet weak var levelView: UIImageView!
     
     
