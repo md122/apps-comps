@@ -17,24 +17,6 @@ class ClassroomTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-    
-//    override func setEditing(_ editing: Bool, animated: Bool){
-//        if self.isEditing == true {
-//            self.editingAccessoryType = UITableViewCellAccessoryType.UISwitch
-//        }
-//    }
-    
-//    if self.isEditing = true {
-//    
-//    }
-    
-   // override var editingAccessoryType: UITableViewCellAccessoryType { get set }
-    
-//    override var editingAccessoryView: UISwitch? {
-//        
-//    }
 
 }

@@ -18,11 +18,6 @@ class Teacher: Account, APIDataDelegate {
      Delete a classroom
      */
     
-
-    override func getHighestLevel()->String{
-        //always is highest level
-        return "4"
-    }
     
     override init?(idToken: String, name: String){
         super.init(idToken: idToken, name: name)
