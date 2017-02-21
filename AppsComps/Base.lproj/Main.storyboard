@@ -83,11 +83,12 @@
             </objects>
             <point key="canvasLocation" x="-1092" y="-2717.0914542728638"/>
         </scene>
-        <!--Main Navigation Controller-->
+        <!--Problems-->
         <scene sceneID="0HH-g7-L8Q">
             <objects>
-                <navigationController id="bob-Z2-ijt" customClass="MainNavigationController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
+                <navigationController id="bob-Z2-ijt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Problems" id="oL2-Vl-y0u"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -314,7 +315,7 @@
         <scene sceneID="bSz-bt-sEo">
             <objects>
                 <navigationController title="Student Progress" id="3XX-kf-WLW" customClass="DashboardNavigationViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" id="wHz-fQ-KpL"/>
+                    <tabBarItem key="tabBarItem" title="Progress" id="wHz-fQ-KpL"/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="FRe-em-MoA" customClass="ShortNavigationBar" customModule="AppsComps" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -421,7 +422,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="3XX-kf-WLW" kind="relationship" relationship="viewControllers" id="nq8-QJ-5Rz"/>
-                        <segue destination="bob-Z2-ijt" kind="relationship" relationship="viewControllers" id="PVD-jD-qci"/>
+                        <segue destination="bob-Z2-ijt" kind="relationship" relationship="viewControllers" id="dow-qU-cuD"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4u-Oa-nua" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -599,6 +600,6 @@
         <image name="submitButton" width="600" height="309"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PVD-jD-qci"/>
+        <segue reference="dow-qU-cuD"/>
     </inferredMetricsTieBreakers>
 </document>
