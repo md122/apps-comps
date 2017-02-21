@@ -52,9 +52,6 @@
 		818EC65E1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818EC65B1DDC13AD00F4F2E6 /* LoginViewController.swift */; };
 		81BF3A3A1E30255100196750 /* LevelButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BF3A391E30255100196750 /* LevelButtonViewController.swift */; };
 		87ED06ED380F425EFCE63721 /* Pods_AppsCompsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */; };
-		9C734F791E5C2F15005294DC /* ProblemSelectorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C734F781E5C2F15005294DC /* ProblemSelectorReusableView.swift */; };
-		9C734F7A1E5C2F15005294DC /* ProblemSelectorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C734F781E5C2F15005294DC /* ProblemSelectorReusableView.swift */; };
-		9C734F7B1E5C2F15005294DC /* ProblemSelectorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C734F781E5C2F15005294DC /* ProblemSelectorReusableView.swift */; };
 		AD099CD9771DFAB41874D8B8 /* Pods_AppsCompsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,7 +138,6 @@
 		81BF3A391E30255100196750 /* LevelButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelButtonViewController.swift; sourceTree = "<group>"; };
 		877835773D49FE6AC942C72E /* Pods_AppsCompsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E7EA029543374792360F5C /* Pods_AppsComps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsComps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C734F781E5C2F15005294DC /* ProblemSelectorReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectorReusableView.swift; sourceTree = "<group>"; };
 		BFB97FA33B19926DADFBC507 /* Pods-AppsCompsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests.release.xcconfig"; sourceTree = "<group>"; };
 		F3A9E2D32ADCB3DD08AA140E /* Pods-AppsCompsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsUITests/Pods-AppsCompsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F8EAA6D1DB6389D34FE25275 /* Pods-AppsComps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsComps.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps.release.xcconfig"; sourceTree = "<group>"; };
@@ -226,7 +222,6 @@
 				817491D71E343FC00057B5F3 /* LevelButtonCollectionCell.swift */,
 				816A05881E5A49DB00916EB1 /* ProblemSelectorReusableView.swift */,
 				814C4D731E5655CE002D9F23 /* HelpViewController.swift */,
-				9C734F781E5C2F15005294DC /* ProblemSelectorReusableView.swift */,
 			);
 			name = ProblemSelector;
 			sourceTree = "<group>";
@@ -953,7 +948,6 @@
 				11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */,
 				810F05681E26DB5900F1FD49 /* LevelButton.swift in Sources */,
 				817491D81E343FC00057B5F3 /* LevelButtonCollectionCell.swift in Sources */,
-				816A05891E5A49DB00916EB1 /* ProblemSelectorReusableView.swift in Sources */,
 				1197B7A51E590A350068FC4A /* GraphCollectionViewCell.swift in Sources */,
 				113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */,
 			);
