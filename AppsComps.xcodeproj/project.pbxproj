@@ -25,7 +25,7 @@
 		22399E351E3A503C00DB2193 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22399E341E3A503C00DB2193 /* MainNavigationController.swift */; };
 		228DB9E61DC7FA2A00FA64A7 /* APIConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228DB9E51DC7FA2A00FA64A7 /* APIConnector.swift */; };
 		22F7A14A1DD7D0CE00EC3C38 /* APIDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */; };
-		4773C4541E4AE88600C07CB2 /* Hammer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773C4531E4AE88600C07CB2 /* Hammer.swift */; };
+		4773C4541E4AE88600C07CB2 /* Vortex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773C4531E4AE88600C07CB2 /* Vortex.swift */; };
 		47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */; };
 		47EBC3031DC563AD002F4DC1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3021DC563AD002F4DC1 /* GameScene.swift */; };
 		47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBC3081DD68E0B002F4DC1 /* Block.swift */; };
@@ -105,7 +105,7 @@
 		22F7A1491DD7D0CE00EC3C38 /* APIDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDataDelegate.swift; sourceTree = "<group>"; };
 		280308DC992BAE59AE7A4ED2 /* Pods_AppsCompsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppsCompsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		400F1B9383CC6CE0D915FDD9 /* Pods-AppsCompsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppsCompsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppsCompsTests/Pods-AppsCompsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4773C4531E4AE88600C07CB2 /* Hammer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hammer.swift; sourceTree = "<group>"; };
+		4773C4531E4AE88600C07CB2 /* Vortex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vortex.swift; sourceTree = "<group>"; };
 		47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemScreenViewController.swift; sourceTree = "<group>"; };
 		47EBC3021DC563AD002F4DC1 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		47EBC3081DD68E0B002F4DC1 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				47EBC3021DC563AD002F4DC1 /* GameScene.swift */,
 				47EBC2CE1DC55F16002F4DC1 /* ProblemScreenViewController.swift */,
 				47EBC3081DD68E0B002F4DC1 /* Block.swift */,
-				4773C4531E4AE88600C07CB2 /* Hammer.swift */,
+				4773C4531E4AE88600C07CB2 /* Vortex.swift */,
 				00AD2D551E54C30200127AC3 /* UIColor.swift */,
 			);
 			name = ProblemScreen;
@@ -355,6 +355,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8111C36B1DBFBB6D002C8067 /* Build configuration list for PBXNativeTarget "AppsComps" */;
 			buildPhases = (
+				8C32D7CF68841B1ED528D921 /* [CP] Check Pods Manifest.lock */,
 				7C8661FABFB74B5EE578FB53 /* [CP] Check Pods Manifest.lock */,
 				542B2B74F721D0D83B4878DF /* [CP] Check Pods Manifest.lock */,
 				540DB1605821FB0F8ACD7BF1 /* [CP] Check Pods Manifest.lock */,
@@ -380,6 +381,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8111C36E1DBFBB6D002C8067 /* Build configuration list for PBXNativeTarget "AppsCompsTests" */;
 			buildPhases = (
+				7F0EE6D6B7E608652DE1F356 /* [CP] Check Pods Manifest.lock */,
 				DFEA98C0F10E2CD1645EB0B1 /* [CP] Check Pods Manifest.lock */,
 				B7A9720F7ACDA102C7C5750D /* [CP] Check Pods Manifest.lock */,
 				2C6F4D70AAC15403CEB45351 /* [CP] Check Pods Manifest.lock */,
@@ -405,6 +407,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8111C3711DBFBB6D002C8067 /* Build configuration list for PBXNativeTarget "AppsCompsUITests" */;
 			buildPhases = (
+				ACB37248AEF84F54053B5535 /* [CP] Check Pods Manifest.lock */,
 				80468CB256FA57676B5E61CB /* [CP] Check Pods Manifest.lock */,
 				4F1C22038530A38BCE2D699D /* [CP] Check Pods Manifest.lock */,
 				113EEE4B3EB92102826A437B /* [CP] Check Pods Manifest.lock */,
@@ -653,6 +656,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		7F0EE6D6B7E608652DE1F356 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		80468CB256FA57676B5E61CB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -666,6 +684,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8C32D7CF68841B1ED528D921 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A2918E4892C3E9F4207A1305 /* 📦 Copy Pods Resources */ = {
@@ -696,6 +729,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppsComps/Pods-AppsComps-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACB37248AEF84F54053B5535 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B310D4BB7C8B93B5D148E7D5 /* 📦 Embed Pods Frameworks */ = {
@@ -818,7 +866,7 @@
 				81BF3A3A1E30255100196750 /* LevelButtonViewController.swift in Sources */,
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
 				1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */,
-				4773C4541E4AE88600C07CB2 /* Hammer.swift in Sources */,
+				4773C4541E4AE88600C07CB2 /* Vortex.swift in Sources */,
 				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
 				1135C0411E4FCB32008671B6 /* EmptyCollectionReusableView.swift in Sources */,
