@@ -216,7 +216,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "probScreenID") as! ProblemScreenViewController
         
         vc.setLevel(level: curLevel)
-        self.navigationController?.pushViewController(vc, animated:true)
+        //self.navigationController?.pushViewController(vc, animated:true)
     }
     
     
@@ -299,7 +299,6 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             let studentProgress = progressDictionary["data"] as! [NSArray]
             levelProgress = studentProgress[0][0] as! Int
             highestLevel = studentProgress[0][1] as! Int
-            
         }
         
         if classroomDataDictionary["error"] as? String == "none" {
