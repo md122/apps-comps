@@ -28,8 +28,6 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         super.viewDidLoad()
         self.collectionView?.backgroundColor = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
         
-        //Get Student dash info to show up on header
-        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
         
         //Setting the buttons on the navigation bar
         self.navigationItem.title = "Home"
@@ -40,6 +38,11 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         toolbarItems = [helpButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //Get Student dash info to show up on header
+        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
     }
     
     override func didReceiveMemoryWarning() {
@@ -217,6 +220,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "probScreenID") as! ProblemScreenViewController
         
         vc.setLevel(level: curLevel)
+        vc.setHighestLevel(level: highestLevel)
+        vc.setLevelProgress(progress: levelProgress)
         self.navigationController?.pushViewController(vc, animated:true)
     }
     

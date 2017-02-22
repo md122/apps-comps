@@ -22,20 +22,19 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     var highestLevel: Int = 3
     var incorrectAttempts: Int = 0
     var currentProblem: Int?
-    var levelProgress: Int = 2
+    var levelProgress: Int = 3
     var scene: GameScene?
 
     override func viewDidLoad() {
         
-        levelLabel.text = "Level: \(self.level)"
-        
         setProblemText()
-        setStars(correctAnswers: self.levelProgress)
+        
         super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         levelLabel.text = "Level: \(self.level)"
+        setStars(correctAnswers: self.levelProgress)
     }
     
     
@@ -109,11 +108,9 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         self.highestLevel = level
     }
     
-//    func setLevel(level: Int) {
-//        self.level = level
-//
-//        levelLabel.text = "Level: \(self.level)"
-//    }
+    func setLevelProgress(progress: Int) {
+        self.levelProgress = progress
+    }
     
     func setLevel(level: Int){
         self.level = level
