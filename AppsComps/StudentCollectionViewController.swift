@@ -10,6 +10,7 @@ import UIKit
 
 
 class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
+    @IBOutlet var showIDButton: UIBarButtonItem!
 
     var students = [NSArray]()
     
@@ -54,7 +55,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
         //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-        let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+        //let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
         //        self.navigationItem.leftBarButtonItem = showTableButton
         //self.navigationItem.leftBarButtonItem = showIDButton
         //self.navigationItem.rightBarButtonItem = segmentBarItem

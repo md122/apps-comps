@@ -300,7 +300,9 @@
                         </connections>
                     </collectionView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem systemItem="add" id="FOQ-On-8fb"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="UXq-py-S0U">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" id="giQ-B9-U29">
@@ -310,7 +312,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="showIDButton" destination="FOQ-On-8fb" id="OV0-dP-xOq"/>
                         <outlet property="showTableButton" destination="giQ-B9-U29" id="r2o-4J-3Qv"/>
+                        <segue destination="r9N-5x-WyK" kind="popoverPresentation" popoverAnchorBarButtonItem="FOQ-On-8fb" id="ePO-R0-LUo">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdd-RI-Hlb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -359,22 +365,45 @@
             <point key="canvasLocation" x="-1468" y="481"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="p3K-bD-ua9">
+        <scene sceneID="F8O-iF-URk">
             <objects>
-                <viewController id="WDQ-P5-l1V" sceneMemberID="viewController">
+                <viewController id="r9N-5x-WyK" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bBr-oj-AkW"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZlU-Td-tTc"/>
+                        <viewControllerLayoutGuide type="top" id="ZB1-zd-BUt"/>
+                        <viewControllerLayoutGuide type="bottom" id="sbK-ID-vh6"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Sqd-Bb-1V0">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                    <view key="view" contentMode="scaleToFill" id="rbz-jY-uvX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Classroom Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLO-KN-df7">
+                                <frame key="frameInset" minX="107" minY="28" width="163" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ID Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djH-oL-8Ot">
+                                <frame key="frameInset" minX="329" minY="28" width="83" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share this number with your students, and they can use it to join this class." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBe-SZ-keO">
+                                <frame key="frameInset" minX="107" minY="111" width="571" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p2F-lQ-Kxy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ac1-dr-zGo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1333" y="1350"/>
+            <point key="canvasLocation" x="-1406.25" y="1829.6875"/>
         </scene>
         <!--Master-->
         <scene sceneID="sCC-lM-gPl">
