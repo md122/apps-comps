@@ -23,6 +23,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var topBar = [Block]()
     var bottomBar = [Block]()
     var garbage:SKSpriteNode
+    var clearButton:SKSpriteNode
     var vortex:SKSpriteNode
     
     // The starting coordinates
@@ -45,12 +46,11 @@ class GameScene: SKScene, UITextFieldDelegate {
     let VARBLOCKSIZE:CGSize
     let GARBAGEPOSITION:CGPoint
     let VORTEXPOSITION:CGPoint
+    let CLEARBUTTONPOSITION:CGPoint
     let GARBAGESIZE:CGSize
     let SNAPDISTANCE:Double
     let BORDERWIDTH:Double
     
-    // not implemented
-    var isSorted = false
     
     // Set as the block that is touched so that
     // in touchesMoved, the block will move
@@ -88,6 +88,8 @@ class GameScene: SKScene, UITextFieldDelegate {
         SUBNUMBLOCKBANKPOSITION = CGPoint(x: VARBLOCKBANKPOSITION.x+0.75*VARBLOCKWIDTH+0.5*NUMBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         SUBVARBLOCKBANKPOSITION = CGPoint(x: SUBNUMBLOCKBANKPOSITION.x+0.5*NUMBLOCKWIDTH+0.75*VARBLOCKWIDTH, y: NUMBLOCKBANKPOSITION.y)
         VORTEXPOSITION = CGPoint(x: SUBVARBLOCKBANKPOSITION.x+1.5*VARBLOCKWIDTH, y: GARBAGEPOSITION.y+0.25*GARBAGESIZE.height)
+        CLEARBUTTONPOSITION = CGPoint(x: SUBVARBLOCKBANKPOSITION.x+1.5*VARBLOCKWIDTH, y: GARBAGEPOSITION.y-0.25*GARBAGESIZE.height)
+
         
         currentBlockZ = 1.0
         numBlockInBank = Block(type:.number, size: NUMBLOCKSIZE, value: "1")
@@ -96,6 +98,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         subVarBlockInBank = Block(type:.subVariable, size: VARBLOCKSIZE, value: "-1")
         
         garbage = SKSpriteNode(imageNamed: "garbage.png")
+        clearButton = SKSpriteNode(imageNamed: "clearButton.phg")
         vortex = Vortex()
         
         SNAPDISTANCE = 20.0
@@ -128,14 +131,8 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
     func scaleBorder(block: Block) {
-        if block.getType() == "number" || block.getType() == "subNumber" {
-            block.getBlockColorRectangle().xScale = (CGFloat(-1*BORDERWIDTH) + (NUMBLOCKWIDTH * block.xScale)) / (block.xScale * NUMBLOCKWIDTH)
+            block.getBlockColorRectangle().xScale = (CGFloat(-1*BORDERWIDTH) + (CGFloat(block.getOriginalWidth()) * block.xScale)) / (block.xScale * CGFloat(block.getOriginalWidth()))
             block.getBlockColorRectangle().yScale = (CGFloat(-1*BORDERWIDTH) + (BLOCKHEIGHT * block.yScale)) / (block.yScale * BLOCKHEIGHT)
-        }
-        else {
-            block.getBlockColorRectangle().xScale = (CGFloat(-1*BORDERWIDTH) + (VARBLOCKWIDTH * block.xScale)) / (block.xScale * VARBLOCKWIDTH)
-            block.getBlockColorRectangle().yScale = (CGFloat(-1*BORDERWIDTH) + (BLOCKHEIGHT * block.yScale)) / (block.yScale * BLOCKHEIGHT)
-        }
     }
     
     // Called immediately after a scene is loaded
@@ -146,10 +143,13 @@ class GameScene: SKScene, UITextFieldDelegate {
         
         garbage.position = GARBAGEPOSITION
         vortex.position = VORTEXPOSITION
+        clearButton.position = CLEARBUTTONPOSITION
         garbage.size = GARBAGESIZE
         vortex.size = CGSize(width: 1.5*WIDTHUNIT, height: 1.5*WIDTHUNIT)
+        clearButton.size = CGSize(width: 2*WIDTHUNIT, height: 1.5*HEIGHTUNIT)
         self.addChild(garbage)
         self.addChild(vortex)
+        self.addChild(clearButton)
         
         //Add the original block in the number block bank and the variable block bank
         numBlockInBank.position = NUMBLOCKBANKPOSITION
@@ -516,6 +516,13 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
 
     func changeBlockValueAlert(block: Block) {
+        let invalidInputAlert = UIAlertController(title: "Invalid input", message: "Your submission was invalid :(. Make sure you're submitting only a number less than 1000, and if it's a positive block, make sure your number is positive!", preferredStyle: UIAlertControllerStyle.alert)
+        invalidInputAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
+            self.changeBlockValueAlert(block: block)
+        }))
+        invalidInputAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
         let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, greater than 0 and less than 1000, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
         
         changeValueAlert.addTextField(configurationHandler: {(textField: UITextField!) in
@@ -528,6 +535,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             //let valueEntered = changeValueAlert.textFields![0].text
             //SANATIZE THE INPUTS!!!!!
             //self.changeBlockValue(value: valueEntered!, block: block)
+
             if var valueEntered = changeValueAlert.textFields![0].text {
                 var newBlock: Block? = nil
                 if block.getType() == "variable" {
@@ -535,6 +543,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                     if valueEntered != "" {
                         newBlock = Block(type: .variable, size:self.VARBLOCKSIZE, value: valueEntered)
                         self.scaleBorder(block: newBlock!)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                 else if block.getType() == "subVariable"{
@@ -542,6 +552,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                     if valueEntered != "" {
                         newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: valueEntered)
                         self.scaleBorder(block: newBlock!)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                 //Number case
@@ -550,6 +562,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                     if valueEntered != "" {
                         newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: valueEntered)
                         self.scaleBorder(block: newBlock!)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                     //subNumber case, not specified so new block always initializes
@@ -558,6 +572,8 @@ class GameScene: SKScene, UITextFieldDelegate {
                     if valueEntered != "" {
                         newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: valueEntered)
                         self.scaleBorder(block: newBlock!)
+                    } else {
+                        self.parentViewController.present(invalidInputAlert, animated: true, completion: nil)
                     }
                 }
                 
@@ -630,6 +646,10 @@ class GameScene: SKScene, UITextFieldDelegate {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         
+        if clearButton.contains(touchLocation) {
+            self.clearProblemScreen()
+        }
+        
         for child in self.children {
             if let block = child as? Block {
                 if blockIsTouched(touchLocation: touchLocation, child: block) == "thisBlock"{
@@ -654,8 +674,21 @@ class GameScene: SKScene, UITextFieldDelegate {
         return false
     }
     
+    func highlightBlocksUnderVortex() {
+        for case let blockToSubtractFrom as Block in self.children {
+            if (blockToSubtractFrom.getType() == "variable" || blockToSubtractFrom.getType() == "number") && blockToSubtractFrom.getSubtractionBlock() != nil && (abs(blockToSubtractFrom.getSubtractionBlock()!.getValue()) <= blockToSubtractFrom.getValue()) &&
+                (((blockToSubtractFrom.getSubtractionBlock()!.getWidth() * Double(blockToSubtractFrom.xScale)) <= blockToSubtractFrom.getWidth()) || (blockToSubtractFrom.getValue() == -1 * (blockToSubtractFrom.getSubtractionBlock()?.getValue())!)) && vortex.intersects(blockToSubtractFrom){
+                blockToSubtractFrom.yScale = 1.1
+            }
+            else {
+                blockToSubtractFrom.yScale = 1
+            }
+        }
+    }
+    
     // Called when you are moving your finger
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        highlightBlocksUnderVortex()
         //Check if a block is currently being touched
         if blockTouched != nil {
             //We set the scale when we move the block so the block in the variable block in the bank has a scale of 1

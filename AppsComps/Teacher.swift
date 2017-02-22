@@ -57,7 +57,7 @@ class Teacher: Account, APIDataDelegate {
         connector.requestTeacherDashInfo(callingDelegate: self, teacherID: self.getIdToken())
         connector.requestClassroomData(callingDelegate: self, classroomID: "5")
         connector.attemptAddClassroom(callingDelegate: self, teacherID: "Teacher1", classroomName: "Cats Room")
-        connector.attemptRemoveClassroom(callingDelegate: self, classroomID: "Classroom1")
+        connector.attemptRemoveClassroom(callingDelegate: self, classroomID: 23)
     }
     
     // Given a teacher ID, returns a list of classroom data, with name and classID
