@@ -250,6 +250,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             } else {
                 let student = sectionStudents?[indexPath.row]
                 cell.studentNameLabel.text = (student?[0] as! String)
+                cell.studentNameLabel.numberOfLines = 0
+                cell.studentNameLabel.minimumScaleFactor = 0.1
+                cell.studentNameLabel.baselineAdjustment = .alignCenters
+                cell.studentNameLabel.textAlignment  = .center
+                cell.studentNameLabel.adjustsFontSizeToFitWidth = true
                 cell.frame.size.width = CGFloat(100.0)
                 cell.frame.size.height = CGFloat(100.0)
             }
