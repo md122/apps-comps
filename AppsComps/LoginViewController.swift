@@ -15,6 +15,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
     var name: String?
     var idToken: String?
     
+    @IBOutlet weak var toStudentDashButton: UIButton!
+    @IBOutlet weak var toTeacherDashButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, APIDataDelegat
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             GIDSignIn.sharedInstance().signOut()
         }
+        
+        toTeacherDashButton.isHidden = true
+        toStudentDashButton.isHidden = true
         
         //let connect = APIConnector()
         //connect.attemptAddClassroom(callingDelegate: self, teacherID: "23", classroomName: "CatsRoom")

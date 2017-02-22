@@ -34,6 +34,11 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        levelLabel.text = "Level: \(self.level)"
+    }
+    
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
@@ -104,9 +109,16 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         self.highestLevel = level
     }
     
-    func setLevel(level: Int) {
+//    func setLevel(level: Int) {
+//        self.level = level
+//
+//        levelLabel.text = "Level: \(self.level)"
+//    }
+    
+    func setLevel(level: Int){
         self.level = level
-        levelLabel.text = "Level: \(self.level)"
+        print(self.level)
+        
     }
     
 
