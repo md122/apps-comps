@@ -537,7 +537,7 @@
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emptystars" translatesAutoresizingMaskIntoConstraints="NO" id="JgP-c3-OUR" userLabel="Level View">
-                                            <frame key="frameInset" minX="20" minY="250" width="175" height="50"/>
+                                            <frame key="frameInset" minX="36.5" minY="226" width="175" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -605,7 +605,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKX-HQ-ee9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-239" y="-1843"/>
+            <point key="canvasLocation" x="-239.06249999999997" y="-1843.75"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="cJP-QS-MTc">
@@ -662,6 +662,6 @@
         <image name="submitButton" width="600" height="309"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pU4-bV-pg5"/>
+        <segue reference="L15-YL-Vu5"/>
     </inferredMetricsTieBreakers>
 </document>

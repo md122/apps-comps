@@ -67,7 +67,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
         toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        self.navigationController?.setToolbarHidden(false, animated: false)
+        //self.navigationController?.setToolbarHidden(false, animated: false)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -170,7 +170,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
         toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        self.navigationController?.setToolbarHidden(false, animated: false)
+        //self.navigationController?.setToolbarHidden(false, animated: false)
 
 
     }
