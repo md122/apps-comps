@@ -109,10 +109,16 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         self.highestLevel = level
     }
     
-    func setLevel(level: Int) {
+//    func setLevel(level: Int) {
+//        self.level = level
+//
+//        levelLabel.text = "Level: \(self.level)"
+//    }
+    
+    func setLevel(level: Int){
         self.level = level
-
-        levelLabel.text = "Level: \(self.level)"
+        print(self.level)
+        
     }
     
 

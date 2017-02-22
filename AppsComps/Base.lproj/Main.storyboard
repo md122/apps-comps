@@ -423,7 +423,7 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
