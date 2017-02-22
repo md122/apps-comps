@@ -184,9 +184,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             
             //controller?.delegate = self
             //you could set the following in your storyboard
-            controller?.sourceView = self.view
-            controller?.sourceRect = CGRect(x:self.view.bounds.midX, y: self.view.bounds.midY,width: 315,height: 230)
-            controller?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+//            controller?.sourceView = self.view
+//            controller?.sourceRect = CGRect(x:self.view.bounds.midX, y: self.view.bounds.midY,width: 315,height: 230)
+//            controller?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
             
         }
         
