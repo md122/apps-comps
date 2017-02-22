@@ -1043,6 +1043,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        highlightBlocksUnderVortex()
         if blockTouched != nil {
             let block = blockTouched!
             
