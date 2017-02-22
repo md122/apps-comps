@@ -92,7 +92,7 @@
                 <navigationController hidesBottomBarWhenPushed="YES" id="bob-Z2-ijt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Problems" id="oL2-Vl-y0u"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TwO-lR-T54">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -187,7 +187,7 @@
             <objects>
                 <navigationController title="Master" hidesBottomBarWhenPushed="YES" toolbarHidden="NO" id="FY1-ed-rqB" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="lNN-Sv-OUr">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -203,7 +203,7 @@
         <scene sceneID="D7W-CY-NE6">
             <objects>
                 <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5Bg-cB-sBO">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
                         <rect key="frame" x="0.0" y="0.0" width="703" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -303,7 +303,7 @@
                     <toolbarItems>
                         <barButtonItem systemItem="add" id="FOQ-On-8fb">
                             <connections>
-                                <segue destination="r9N-5x-WyK" kind="popoverPresentation" popoverAnchorBarButtonItem="FOQ-On-8fb" id="vNo-FC-cK2">
+                                <segue destination="r9N-5x-WyK" kind="popoverPresentation" identifier="showIDSegue" popoverAnchorBarButtonItem="FOQ-On-8fb" id="vNo-FC-cK2">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                 </segue>
                             </connections>
@@ -332,7 +332,7 @@
                 <navigationController title="Student Progress" hidesBottomBarWhenPushed="YES" id="3XX-kf-WLW" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" id="FRe-em-MoA">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="FRe-em-MoA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -376,26 +376,26 @@
                         <viewControllerLayoutGuide type="bottom" id="sbK-ID-vh6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rbz-jY-uvX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Classroom Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLO-KN-df7">
-                                <frame key="frameInset" minX="107" minY="28" width="163" height="21"/>
+                                <frame key="frameInset" minX="16" minY="28" width="163" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ID Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djH-oL-8Ot">
-                                <frame key="frameInset" minX="329" minY="28" width="83" height="21"/>
+                                <frame key="frameInset" minX="187" minY="28" width="83" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share this number with your students, and they can use it to join this class." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBe-SZ-keO">
-                                <frame key="frameInset" minX="107" minY="111" width="571" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share this number with your students, and they can use it to join this class." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBe-SZ-keO">
+                                <frame key="frameInset" minX="34" minY="83" width="307" height="99"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -403,10 +403,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="350" height="250"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ac1-dr-zGo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2311" y="711"/>
+            <point key="canvasLocation" x="1573" y="409"/>
         </scene>
         <!--Master-->
         <scene sceneID="sCC-lM-gPl">
@@ -480,7 +482,7 @@
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="PsK-Ru-RhS">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -500,7 +502,7 @@
         <scene sceneID="5G1-G6-Uim">
             <objects>
                 <collectionViewController hidesBottomBarWhenPushed="YES" id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="R5Y-4m-oal">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
