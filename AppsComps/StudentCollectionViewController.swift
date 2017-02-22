@@ -32,10 +32,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
-        if(currentUser == nil) {
-            currentUser = Teacher(idToken: "23", name: "Meg Crenshaw")
-            (currentUser as! Teacher).testAPIConnector()
-        }
         
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
         splitViewController?.presentsWithGesture = true

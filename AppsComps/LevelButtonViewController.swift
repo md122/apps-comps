@@ -287,6 +287,18 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             let classID = studentsClassroom[0][1] as! Int
             classroomName = className
             classroomID = classID
+        } else if data["error1"] as? String == "ERROR: classroom does not exist" {
+            let noSuchClassroomAlert = UIAlertController(title: "Hmmm...", message: "That classroom ID doesn't appear to exist. Ask your teacher for a valid classroom ID.", preferredStyle: UIAlertControllerStyle.alert)
+            // cancel option
+            noSuchClassroomAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            present(noSuchClassroomAlert, animated: true, completion: nil)
+        } else if data["error1"] as? String == "ERROR: invalid classroom ID format" {
+            let noSuchClassroomAlert = UIAlertController(title: "Hmmm...", message: "That's not a valid classroom ID format. Classrooms ID's are a sequence of numbers. Ask your teacher for a valid classroom ID.", preferredStyle: UIAlertControllerStyle.alert)
+            // cancel option
+            noSuchClassroomAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            present(noSuchClassroomAlert, animated: true, completion: nil)
         }
         self.collectionView?.reloadData()
         
