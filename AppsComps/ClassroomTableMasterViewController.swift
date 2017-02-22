@@ -25,8 +25,6 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
         tableView.allowsMultipleSelectionDuringEditing = true
-        //classrooms = [["First Hour", "23"], ["Second Hour", "24"], ["Third Hour", "45"], ["Fourth Hour", "22"]]
-        //loadSampleClassrooms(classroomList: [["First Hour", "23"], ["Second Hour", "24"] ["Third Hour", "45"], ["Fourth Hour", "22"]])
         
         APIConnector().requestTeacherDashInfo(callingDelegate: self, teacherID: currentUser!.getIdToken())
 
@@ -35,7 +33,6 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
         if tableView.isEditing == false{
-            //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = true
             sender.title = "Done"
             let trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteClassroomList(_:)))
@@ -43,16 +40,12 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             let indexPath = IndexPath(row: self.classrooms.count, section: 0)
             self.tableView.insertRows(at: [indexPath], with: .automatic)
         } else {
-            //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = false
             sender.title = "Edit"
             self.navigationItem.leftBarButtonItem = collapseButton
             let indexPath = IndexPath(row: self.classrooms.count, section: 0)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            
         }
-        
-        
     }
     
     
@@ -64,8 +57,6 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     override func viewWillAppear(_ animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
         super.viewWillAppear(animated)
-//        self.detailViewController?.setTitle(className: classrooms[0][0] as! String)
-       // self.detailViewController?.title = "asdfasdfas"
     }
 
     override func didReceiveMemoryWarning() {
@@ -203,20 +194,5 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         return true
     }
 
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-//        //cell.editingAccessoryType = UITableViewCellAccessoryType.checkmark
-//        if editingStyle == .delete {
-//            classrooms.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        } else if editingStyle == .insert {
-//            
-//        }
-//    }
-    
-    func loadSampleClassrooms(classroomList: [NSArray]) {
-        
-        classrooms = classroomList
-    }
 }
 

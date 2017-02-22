@@ -24,8 +24,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var levelNumbers = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var cellModeSegment = UISegmentedControl(items: ["Overview", "Students"])
     var isCollapsed = false
-    //var toolbarItems = [UIBarButtonItem]
-   
     
     var cellMode = Bool()
 
@@ -54,26 +52,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
-        //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-        //let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
-        //        self.navigationItem.leftBarButtonItem = showTableButton
-        //self.navigationItem.leftBarButtonItem = showIDButton
-        //self.navigationItem.rightBarButtonItem = segmentBarItem
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        //let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
         self.navigationItem.rightBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         
         toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        //self.navigationController?.setToolbarHidden(false, animated: false)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        
-        
-//        getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Botwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
         
     }
     
@@ -115,20 +103,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         }
         self.collectionView?.reloadData()
     }
-
-//    func loadStudentCollection(classroomID: String) {
-//        if classroomID == "0" {
-//            getStudentData(studentList: [["Meghan Kreilkamp", "1", "000"], ["McCartney Goff", "1", "000"], ["Michael Bostwick", "1", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "3", "000"], ["Angelia Jenkins", "3", "000"], ["Ryan Vondren", "3", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
-//        }else if classroomID == "1" {
-//            getStudentData(studentList: [["Meghan Kreilkamp", "2", "000"], ["McCartney Goff", "2", "000"], ["Michael Bostwick", "2", "000"], ["Matthew Meyers", "2", "000"], ["Gemma Pillsbury", "2", "000"], ["Angelia Jenkins", "1", "000"], ["Ryan Vondren", "1", "000"], ["Dani Kohlwalki", "4", "000"], ["Hannah Klemm", "4", "000"], ["Anna Mahinzki", "4", "000"], ["Eric Munz", "4", "000"], ["Tyler Hienke", "4", "000"], ["Karsen Greenwood", "4", "000"], ["Megan Collins", "4", "000"]])
-//        } else if classroomID == "2" {
-//            getStudentData(studentList: [["Student Name", "1", "000"], ["Student Name", "1", "000"], ["Student Name", "2", "000"], ["Student Name", "3", "000"], ["Student Name", "4", "000"], ["Student Name", "4", "000"]])
-//        } else {
-//            getStudentData(studentList: [["Student Name", "1", "000"]])
-//        }
-//        self.collectionView?.reloadData()
-//        
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -157,22 +131,13 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
-        //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-        //let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
-//        self.navigationItem.leftBarButtonItem = showTableButton
-        //self.navigationItem.leftBarButtonItem = showIDButton
-        //self.navigationItem.rightBarButtonItem = segmentBarItem
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        //let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
         self.navigationItem.rightBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         
         toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-        //self.navigationController?.setToolbarHidden(false, animated: false)
-
-
     }
     
     func helpClicked(_ sender: UIBarButtonItem) {
@@ -203,8 +168,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
         if(segue.identifier == "FromTeacherToProblemSelector") {
             splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
             splitViewController?.presentsWithGesture = true
@@ -378,32 +341,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
          self.showTable()
     }
     
-//    func getStudentData(studentList: [NSArray]) {
-//        ///This is where we will requestClassroomInfo
-//        students = studentList
-//        
-//        level1Students.removeAll()
-//        level2Students.removeAll()
-//        level3Students.removeAll()
-//        level4Students.removeAll()
-//        
-//        for student in students {
-//            if student[1] as! String == "1"{
-//                level1Students.append(student)
-//            } else if student[1] as! String == "2"{
-//                level2Students.append(student)
-//            } else if student[1] as! String == "3"{
-//                level3Students.append(student)
-//            } else if student[1] as! String == "4"{
-//                level4Students.append(student)
-//            } else {
-//                print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
-//            }
-//        }
-//        
-//        studentsByLevel = [level1Students, level2Students, level3Students, level4Students] 
-//    }
-    
     func hideTable() {
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
         splitViewController?.presentsWithGesture = true
@@ -421,8 +358,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func setTitle(className: String) {
-       // let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
-        //let titleItems = [className, showIDButton] as [Any]
         self.navigationItem.title = className
         self.collectionView?.reloadData()
     }
