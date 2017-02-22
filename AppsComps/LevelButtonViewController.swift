@@ -19,6 +19,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     var highestLevel: Int = 4
     var levelProgress: Int = 3
     
+    
     var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
     var levels = [1,2,3,4]
     let screen: CGRect = UIScreen.main.bounds
@@ -26,6 +27,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         self.collectionView?.backgroundColor = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
         
         //Get Student dash info to show up on header
@@ -142,6 +145,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             headerView.joinButton.addTarget(self, action: #selector(self.joinClassroom), for: .touchUpInside)
             headerView.leaveButton.addTarget(self, action: #selector(self.leaveClassroom), for: .touchUpInside)
             
+            
             return headerView
         default:
             assert(false, "Unexpected element kind")
@@ -190,6 +194,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         cell.levelButton.frame.size = CGSize(width: unit*20, height: unit*20)
         cell.levelButton.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
         cell.levelButton.setTitleColor(UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0), for: .normal)
+        
         cell.levelButton.addTarget(self, action: #selector(self.goToProblemScreen), for: .touchUpInside)
         var image : String = "emptystars"
         
@@ -277,6 +282,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             classroomID = classID
         }
         self.collectionView?.reloadData()
+        self.collectionView?.reloadItems(at: [IndexPath(row: 1, section: 0)])
         
     }
     
@@ -291,6 +297,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             classroomID = 0
         }
         self.collectionView?.reloadData()
+        self.collectionView?.reloadItems(at: [IndexPath(row: 1, section: 0)])
     }
     
     func handleStudentDashInfoRequest(data: [NSDictionary]) {

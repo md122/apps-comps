@@ -12,10 +12,10 @@ class LevelButtonCollectionCell: UICollectionViewCell {
     @IBOutlet weak var levelView: UIImageView!
     
     
+    
     override init(frame: CGRect) {
         
         super.init(frame: frame)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -23,6 +23,8 @@ class LevelButtonCollectionCell: UICollectionViewCell {
         super.init(coder: aDecoder)
         
     }
+    
+
     
     
 }
