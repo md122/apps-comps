@@ -12,10 +12,13 @@ class DashboardNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let logoutButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: (logoutClicked(_:)))
-        let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+       // let logoutButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: (logoutClicked(_:)))
+       let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         self.navigationItem.leftBarButtonItem = logoutButton
         // Do any additional setup after loading the view.
+        toolbarItems = [logoutButton]
+        self.setToolbarItems(toolbarItems, animated: false)
+        self.setToolbarHidden(false, animated: false)
     }
 
     override func didReceiveMemoryWarning() {

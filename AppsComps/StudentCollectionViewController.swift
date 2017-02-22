@@ -10,6 +10,7 @@ import UIKit
 
 
 class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
+    @IBOutlet var showIDButton: UIBarButtonItem!
 
     var students = [NSArray]()
     
@@ -35,6 +36,38 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             currentUser = Teacher(idToken: "23", name: "Meg Crenshaw")
             (currentUser as! Teacher).testAPIConnector()
         }
+        
+        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+        splitViewController?.presentsWithGesture = true
+        
+        cellModeSegment = UISegmentedControl(items: ["Overview", "Students"])
+        
+        //        if cellMode == nil {
+        //            cellModeSegment.selectedSegmentIndex = 0
+        //            cellMode = false
+        //        } else
+        if cellMode == false {
+            cellModeSegment.selectedSegmentIndex = 0
+        }  else if cellMode == true {
+            cellModeSegment.selectedSegmentIndex = 1
+        }
+        cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
+        let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
+        segmentBarItem.target = self
+        //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
+        //let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+        //        self.navigationItem.leftBarButtonItem = showTableButton
+        //self.navigationItem.leftBarButtonItem = showIDButton
+        //self.navigationItem.rightBarButtonItem = segmentBarItem
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        //let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
+        self.navigationItem.rightBarButtonItem = segmentBarItem
+        let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+        logoutButton.tintColor = .red
+        
+        toolbarItems = [showIDButton, flexibleSpace, logoutButton]
+        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+        self.navigationController?.setToolbarHidden(false, animated: false)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -125,14 +158,17 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
         //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-        let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+        //let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
 //        self.navigationItem.leftBarButtonItem = showTableButton
-        self.navigationItem.leftBarButtonItem = showIDButton
+        //self.navigationItem.leftBarButtonItem = showIDButton
+        //self.navigationItem.rightBarButtonItem = segmentBarItem
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        //let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
         self.navigationItem.rightBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        toolbarItems = [flexibleSpace, logoutButton]
+        
+        toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
 
@@ -172,6 +208,23 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         if(segue.identifier == "FromTeacherToProblemSelector") {
             splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
             splitViewController?.presentsWithGesture = true
+        }
+        
+        //stackoverflow.com/questions/37335147/how-to-change-the-size-of-a-popover
+        if segue.identifier == "showIDSegue"
+        {
+            let vc = segue.destination
+            
+            vc.preferredContentSize = CGSize(width: 350, height: 250)
+            
+            let controller = vc.popoverPresentationController
+            
+            //controller?.delegate = self
+            //you could set the following in your storyboard
+            controller?.sourceView = self.view
+            controller?.sourceRect = CGRect(x:self.view.bounds.midX, y: self.view.bounds.midY,width: 315,height: 230)
+            controller?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            
         }
         
     }
@@ -250,6 +303,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             } else {
                 let student = sectionStudents?[indexPath.row]
                 cell.studentNameLabel.text = (student?[0] as! String)
+                cell.studentNameLabel.numberOfLines = 0
+                cell.studentNameLabel.minimumScaleFactor = 0.1
+                cell.studentNameLabel.baselineAdjustment = .alignCenters
+                cell.studentNameLabel.textAlignment  = .center
+                cell.studentNameLabel.adjustsFontSizeToFitWidth = true
                 cell.frame.size.width = CGFloat(100.0)
                 cell.frame.size.height = CGFloat(100.0)
             }
@@ -363,6 +421,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func setTitle(className: String) {
+       // let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+        //let titleItems = [className, showIDButton] as [Any]
         self.navigationItem.title = className
         self.collectionView?.reloadData()
     }
