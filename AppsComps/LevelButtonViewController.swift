@@ -18,6 +18,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     var classroomID: Int = 0
     var highestLevel: Int = 4
     var levelProgress: Int = 3
+    var firstTime = true
     
     
     var levelLabels = ["Level 1", "Level 2", "Level 3", "Level 4"]
@@ -32,7 +33,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         self.collectionView?.backgroundColor = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
         
         //Get Student dash info to show up on header
-        connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        if(currentUser?.getType() == "student") {
+            connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
+        }
         
         //Setting the buttons on the navigation bar
         self.navigationItem.title = "Home"
@@ -179,15 +182,12 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
-        
-        
         //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
-        
-        cell.levelButton.setTitle(self.levelLabels[indexPath.row], for: .normal)
         cell.levelButton.setLevel(lev: self.levels[indexPath.row])
-        let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
+        cell.levelButton.setTitle(self.levelLabels[indexPath.row], for: .normal)
+        
+            
         let width: CGFloat = screen.width
         
         let unit: CGFloat = width/100
@@ -196,6 +196,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         cell.levelButton.setTitleColor(UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0), for: .normal)
         
         cell.levelButton.addTarget(self, action: #selector(self.goToProblemScreen), for: .touchUpInside)
+    
+        
+        let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
         var image : String = "emptystars"
         
         if (!locked) {
@@ -216,6 +219,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         return cell
     }
+    
     @IBAction func goToProblemScreen(_ sender: AnyObject) {
         let curLevel = sender.getLevel()
         print(curLevel)
@@ -266,7 +270,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         // cancel option
         leaveClassAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
-        present(leaveClassAlert, animated: true, completion: nil)    }
+        present(leaveClassAlert, animated: true, completion: nil)
+    }
     
     //RETURNS A BOOL THEN A LIST: 1) name of teacher 2) name of classroom
     func handleAddStudentToClassAttempt(data: NSDictionary) {
@@ -328,6 +333,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             }
         }
         self.collectionView?.reloadData()
+        firstTime = false
         
     }
     
