@@ -17,7 +17,7 @@
                         <viewControllerLayoutGuide type="bottom" id="41p-Lj-2fO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="J8k-bU-PI4">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k67-Ge-mtw">
@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="width" constant="400" id="TtB-1e-IjI"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ka-Ag-mkx" customClass="GIDSignInButton">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ka-Ag-mkx" customClass="GIDSignInButton">
                                 <frame key="frameInset" width="1000" height="502"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -89,8 +89,9 @@
         <!--Problems-->
         <scene sceneID="0HH-g7-L8Q">
             <objects>
-                <navigationController id="bob-Z2-ijt" sceneMemberID="viewController">
+                <navigationController hidesBottomBarWhenPushed="YES" id="bob-Z2-ijt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Problems" id="oL2-Vl-y0u"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TwO-lR-T54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,7 +113,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fwp-Sz-l2Q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ayL-yk-Lo9">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hLG-Wb-CdC" userLabel="Game" customClass="SKView">
@@ -179,12 +180,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5P-sI-riT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1282.3088455772115" y="-1034.4000000000001"/>
+            <point key="canvasLocation" x="896" y="-950"/>
         </scene>
         <!--Master-->
         <scene sceneID="TGh-kI-Fkr">
             <objects>
-                <navigationController title="Master" id="FY1-ed-rqB" sceneMemberID="viewController">
+                <navigationController title="Master" hidesBottomBarWhenPushed="YES" toolbarHidden="NO" id="FY1-ed-rqB" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="lNN-Sv-OUr">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -200,9 +202,9 @@
         <!--Student Collection View Controller-->
         <scene sceneID="D7W-CY-NE6">
             <objects>
-                <collectionViewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="MEl-8u-sh3" customClass="StudentCollectionViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="5Bg-cB-sBO">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4r7-Np-QbH">
@@ -272,7 +274,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sectionHeader" id="olh-6x-Cbz" customClass="SectionHeaderCollectionReusableView" customModule="AppsComps" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="703" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDL-tO-NnW">
@@ -297,6 +299,7 @@
                             <outlet property="delegate" destination="MEl-8u-sh3" id="LZI-Ua-Xqa"/>
                         </connections>
                     </collectionView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="UXq-py-S0U">
                         <nil key="title"/>
@@ -317,16 +320,13 @@
         <!--Student Progress-->
         <scene sceneID="bSz-bt-sEo">
             <objects>
-                <navigationController title="Student Progress" hidesBottomBarWhenPushed="YES" toolbarHidden="NO" id="3XX-kf-WLW" customClass="DashboardNavigationViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                <navigationController title="Student Progress" hidesBottomBarWhenPushed="YES" id="3XX-kf-WLW" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="FRe-em-MoA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="doE-G2-QN0">
-                        <rect key="frame" x="0.0" y="980" width="768" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <connections>
                         <segue destination="AKD-zf-Mmq" kind="relationship" relationship="rootViewController" id="79V-xg-h3J"/>
                     </connections>
@@ -338,16 +338,9 @@
         <!--Progress-->
         <scene sceneID="wMz-tc-QHY">
             <objects>
-                <splitViewController id="AKD-zf-Mmq" customClass="ProgressSplitViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <toolbarItems>
-                        <barButtonItem title="Log Out" id="1zk-dH-OmA">
-                            <connections>
-                                <action selector="logOutClicked:" destination="AKD-zf-Mmq" id="UAt-r3-6bm"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Item" id="m6e-u8-Vf3"/>
-                    </toolbarItems>
+                <splitViewController hidesBottomBarWhenPushed="YES" id="AKD-zf-Mmq" customClass="ProgressSplitViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Progress" id="fyM-nX-3cQ">
                         <barButtonItem key="rightBarButtonItem" title="Try Problems" id="jXk-w3-RdN">
                             <connections>
@@ -357,7 +350,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="logoutButton" destination="1zk-dH-OmA" id="UzV-Kx-lq2"/>
                         <segue destination="FY1-ed-rqB" kind="relationship" relationship="masterViewController" id="Pe5-na-GCT"/>
                         <segue destination="e9f-1B-4ya" kind="relationship" relationship="detailViewController" id="yOY-Ld-586"/>
                     </connections>
@@ -366,12 +358,30 @@
             </objects>
             <point key="canvasLocation" x="-1468" y="481"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="p3K-bD-ua9">
+            <objects>
+                <viewController id="WDQ-P5-l1V" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bBr-oj-AkW"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZlU-Td-tTc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Sqd-Bb-1V0">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p2F-lQ-Kxy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1333" y="1350"/>
+        </scene>
         <!--Master-->
         <scene sceneID="sCC-lM-gPl">
             <objects>
                 <tableViewController title="Master" hidesBottomBarWhenPushed="YES" clearsSelectionOnViewWillAppear="NO" id="wXA-27-oqq" customClass="ClassroomTableMasterViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c0R-9A-zW8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -408,6 +418,7 @@
                             <outlet property="delegate" destination="wXA-27-oqq" id="NUi-DB-fje"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="My Classes" id="YeP-tY-m03">
                         <barButtonItem key="backBarButtonItem" title="My Classes" id="gHg-ro-hB7"/>
                         <barButtonItem key="leftBarButtonItem" title="&lt;Hide" id="D4a-vS-9aO">
@@ -421,6 +432,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collapseButton" destination="D4a-vS-9aO" id="nCs-G8-XR5"/>
                         <outlet property="leftBarButton" destination="7Zh-Oy-S5t" id="iKl-hV-Vsp"/>
@@ -435,12 +447,13 @@
         <scene sceneID="h9V-By-3SK">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="e9f-1B-4ya" sceneMemberID="viewController">
+                    <toolbarItems/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="PsK-Ru-RhS">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="FGa-1V-jiV">
-                        <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                        <rect key="frame" x="0.0" y="724" width="703" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -454,9 +467,9 @@
         <!--Level Button View Controller-->
         <scene sceneID="5G1-G6-Uim">
             <objects>
-                <collectionViewController id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController hidesBottomBarWhenPushed="YES" id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="R5Y-4m-oal">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Su9-fR-Opt">
@@ -497,7 +510,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="psHeader" id="30S-1q-soz" customClass="ProblemSelectorReusableView" customModule="AppsComps" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="116"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="116"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAx-dy-STY">
@@ -549,10 +562,11 @@
                         </collectionReusableView>
                     </collectionView>
                     <navigationItem key="navigationItem" id="I8Q-8k-kth"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKX-HQ-ee9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="620" y="-2074"/>
+            <point key="canvasLocation" x="-239" y="-1843"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="cJP-QS-MTc">
@@ -563,7 +577,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fwk-WM-g4m"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TKb-go-j8c">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2M-JV-wMw">
@@ -600,7 +614,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U7A-q3-kQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1515.8203125" y="-2517.1875"/>
+            <point key="canvasLocation" x="895" y="-2441"/>
         </scene>
     </scenes>
     <resources>

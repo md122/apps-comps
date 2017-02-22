@@ -36,6 +36,38 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             (currentUser as! Teacher).testAPIConnector()
         }
         
+        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+        splitViewController?.presentsWithGesture = true
+        
+        cellModeSegment = UISegmentedControl(items: ["Overview", "Students"])
+        
+        //        if cellMode == nil {
+        //            cellModeSegment.selectedSegmentIndex = 0
+        //            cellMode = false
+        //        } else
+        if cellMode == false {
+            cellModeSegment.selectedSegmentIndex = 0
+        }  else if cellMode == true {
+            cellModeSegment.selectedSegmentIndex = 1
+        }
+        cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
+        let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
+        segmentBarItem.target = self
+        //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
+        let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+        //        self.navigationItem.leftBarButtonItem = showTableButton
+        //self.navigationItem.leftBarButtonItem = showIDButton
+        //self.navigationItem.rightBarButtonItem = segmentBarItem
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        //let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
+        self.navigationItem.rightBarButtonItem = segmentBarItem
+        let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
+        logoutButton.tintColor = .red
+        
+        toolbarItems = [showIDButton, flexibleSpace, logoutButton]
+        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
+        self.navigationController?.setToolbarHidden(false, animated: false)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -130,12 +162,12 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         //self.navigationItem.leftBarButtonItem = showIDButton
         //self.navigationItem.rightBarButtonItem = segmentBarItem
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
-        self.navigationItem.rightBarButtonItems = rightButtonItems
+        //let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
+        self.navigationItem.rightBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         
-        toolbarItems = [flexibleSpace, logoutButton]
+        toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
 
