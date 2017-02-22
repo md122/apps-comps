@@ -127,11 +127,14 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         //let showIDButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
         let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
 //        self.navigationItem.leftBarButtonItem = showTableButton
-        self.navigationItem.leftBarButtonItem = showIDButton
-        self.navigationItem.rightBarButtonItem = segmentBarItem
+        //self.navigationItem.leftBarButtonItem = showIDButton
+        //self.navigationItem.rightBarButtonItem = segmentBarItem
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        let rightButtonItems = [segmentBarItem, flexibleSpace, showIDButton]
+        self.navigationItem.rightBarButtonItems = rightButtonItems
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        
         toolbarItems = [flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
@@ -363,6 +366,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func setTitle(className: String) {
+       // let showIDButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.helpClicked(_:)))
+        //let titleItems = [className, showIDButton] as [Any]
         self.navigationItem.title = className
         self.collectionView?.reloadData()
     }
