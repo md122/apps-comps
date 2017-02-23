@@ -28,19 +28,16 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         super.viewDidLoad()
         self.collectionView?.backgroundColor = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
         
-        
+        //self.automaticallyAdjustsScrollViewInsets = false
         //Setting the buttons on the navigation bar
+
+        
         self.navigationItem.title = "Home"
-//        let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-//        let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
-//        logoutButton.tintColor = .red
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-//        toolbarItems = [helpButton, flexibleSpace, logoutButton]
-//        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-//        self.navigationController?.setToolbarHidden(false, animated: false)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
@@ -366,12 +363,17 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     }
     
     func helpClicked(_ sender: UIBarButtonItem) {
+
         let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPopUpID") as! HelpViewController
         popOverVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
+        //Hide toolbar so user can't click Help multiple times
+        self.navigationController?.setToolbarHidden(true, animated: false)
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParentViewController: self)
+        
     }
 
 }

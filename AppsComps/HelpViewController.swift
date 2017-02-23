@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HelpViewController: UIViewController {
+class HelpViewController: UIViewController, UIToolbarDelegate {
 
     //Tutorial from https://www.youtube.com/watch?v=FgCIRMz_3dE
 
@@ -29,7 +29,8 @@ class HelpViewController: UIViewController {
 
     @IBAction func closePopUp(_ sender: AnyObject) {
         self.removeAnimate()
-        
+        //Show toolbar again
+        self.navigationController?.setToolbarHidden(false, animated: false)
     }
     
     func showAnimate() {
