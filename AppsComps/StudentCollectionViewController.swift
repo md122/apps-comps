@@ -17,7 +17,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     var students = [NSArray]()
     
-    @IBOutlet var showTableButton: UIBarButtonItem!
+   // @IBOutlet var showTableButton: UIBarButtonItem!
 
     var level1Students = [NSArray]()
     var level2Students = [NSArray]()
@@ -52,10 +52,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem = segmentBarItem
+        self.navigationItem.leftBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
-        
+        let shareWithStudentsButton: UIBarButtonItem = UIBarButtonItem(title: "Share With Students", style: .plain, target: self, action: #selector(self.shareClicked(_:)))
+        self.navigationItem.rightBarButtonItem = shareWithStudentsButton
         toolbarItems = [showIDButton, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         
@@ -158,6 +159,14 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         present(logOutAlert, animated: true, completion: nil)
     }
     
+    func shareClicked(_ sender: UIBarButtonItem) {
+        let shareAlert = UIAlertController(title: "", message: "Share this number with your students", preferredStyle: UIAlertControllerStyle.alert)
+        
+        shareAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        present(shareAlert, animated: true, completion: nil)
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "FromTeacherToProblemSelector") {
@@ -167,8 +176,26 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
         if segue.identifier == "showIDSegue"
         {
-            let idPopOver = segue.destination
+            let idPopOver = segue.destination as! ShareClassroomIDPopoverViewController
+//            idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
+//            idPopOver.classroomNameLabel.text = classroomName!
+//            idPopOver.classroomIDLabel.text = classroomID!
+//            print(classroomName)
+//            print(classroomID)
+            
+            //let idPopOver = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "classroomIDPopOver") as! ShareClassroomIDPopoverViewController
+//            idPopOver = segue.destination
+//            idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
+//            idPopOver.classroomNameLabel?.text = classroomName!
+//            idPopOver.classroomIDLabel?.text = classroomID!
             idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
+            idPopOver.setClassroomNameLabel(name: classroomName)
+            idPopOver.setClassroomIDLabel(id: classroomID)
+            //            segue.destination.classroomNameLabel?.text = classroomName!
+//            segue.destination.classroomIDLabel?.text = classroomID!
+            
+            print(classroomName)
+            print(classroomID)
         }
     }
  
@@ -315,25 +342,25 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         }
     }
     
-    @IBAction func showButtonClicked(_ sender: AnyObject) {
-         self.showTable()
-    }
+//    @IBAction func showButtonClicked(_ sender: AnyObject) {
+//         self.showTable()
+//    }
     
-    func hideTable() {
-        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
-        //splitViewController?.presentsWithGesture = true
-        self.navigationItem.leftBarButtonItem = showTableButton
-        showTableButton.title = "< My Classes"
-        self.collectionView?.reloadData()
-    }
+//    func hideTable() {
+//        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
+//        //splitViewController?.presentsWithGesture = true
+//        self.navigationItem.leftBarButtonItem = showTableButton
+//        showTableButton.title = "< My Classes"
+//        self.collectionView?.reloadData()
+//    }
     
-    func showTable() {
-        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
-        //splitViewController?.presentsWithGesture = true
-        self.navigationItem.leftBarButtonItem = showTableButton
-        showTableButton.title = ""
-        self.collectionView?.reloadData()
-    }
+//    func showTable() {
+//        splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
+//        //splitViewController?.presentsWithGesture = true
+//        self.navigationItem.leftBarButtonItem = showTableButton
+//        showTableButton.title = ""
+//        self.collectionView?.reloadData()
+//    }
     
     func setTitle(className: String) {
         self.navigationItem.title = className

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AD2D551E54C30200127AC3 /* UIColor.swift */; };
+		111B3E0D1E5E955C00A4AB1B /* ShareClassroomIDPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111B3E0C1E5E955C00A4AB1B /* ShareClassroomIDPopoverViewController.swift */; };
+		111B3E0F1E5F929F00A4AB1B /* AddClassroomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111B3E0E1E5F929F00A4AB1B /* AddClassroomTableViewCell.swift */; };
 		1135C0371E4ED375008671B6 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */; };
 		113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */; };
@@ -87,6 +89,8 @@
 		00AD2D551E54C30200127AC3 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		00CF8B3A1E3E96EA005B7653 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		00CF8B3C1E3E96EA005B7653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		111B3E0C1E5E955C00A4AB1B /* ShareClassroomIDPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareClassroomIDPopoverViewController.swift; sourceTree = "<group>"; };
+		111B3E0E1E5F929F00A4AB1B /* AddClassroomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddClassroomTableViewCell.swift; sourceTree = "<group>"; };
 		1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectorViewController.swift; sourceTree = "<group>"; };
 		113B052A1DDBB3AF00D001DD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 				1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */,
 				1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */,
 				1197B7A41E590A350068FC4A /* GraphCollectionViewCell.swift */,
+				111B3E0C1E5E955C00A4AB1B /* ShareClassroomIDPopoverViewController.swift */,
 			);
 			name = "Student Collection";
 			path = AppsComps;
@@ -192,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */,
+				111B3E0E1E5F929F00A4AB1B /* AddClassroomTableViewCell.swift */,
 				11BD262F1E41E6A60030DAA5 /* ClassroomTableViewCell.swift */,
 			);
 			name = ClassroomTable;
@@ -922,11 +928,13 @@
 				818EC65C1DDC13AD00F4F2E6 /* LoginViewController.swift in Sources */,
 				81BF3A3A1E30255100196750 /* LevelButtonViewController.swift in Sources */,
 				47EBC2CF1DC55F16002F4DC1 /* ProblemScreenViewController.swift in Sources */,
+				111B3E0D1E5E955C00A4AB1B /* ShareClassroomIDPopoverViewController.swift in Sources */,
 				1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */,
 				1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */,
 				4773C4541E4AE88600C07CB2 /* Vortex.swift in Sources */,
 				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
+				111B3E0F1E5F929F00A4AB1B /* AddClassroomTableViewCell.swift in Sources */,
 				1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */,
 				113B052B1DDBB3AF00D001DD /* Account.swift in Sources */,
 				113B052F1DDBB3BB00D001DD /* Student.swift in Sources */,
