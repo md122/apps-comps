@@ -22,15 +22,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     var highestLevel: Int = 3
     var incorrectAttempts: Int = 0
     var currentProblem: Int?
-    var levelProgress: Int = 2
+    var levelProgress: Int = 3
     var scene: GameScene?
 
     override func viewDidLoad() {
         
-        levelLabel.text = "Level: \(self.level)"
-        
         setProblemText()
-        setStars(correctAnswers: self.levelProgress)
+        
         super.viewDidLoad()
     }
     
@@ -38,8 +36,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         levelLabel.text = "Level: \(self.level)"
         //Hides the toolbar when transistioning from the problem selector to the problem screen
         self.navigationController?.setToolbarHidden(true, animated: false)
+        setStars(correctAnswers: self.levelProgress)
     }
-    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -111,11 +109,9 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         self.highestLevel = level
     }
     
-//    func setLevel(level: Int) {
-//        self.level = level
-//
-//        levelLabel.text = "Level: \(self.level)"
-//    }
+    func setLevelProgress(progress: Int) {
+        self.levelProgress = progress
+    }
     
     func setLevel(level: Int){
         self.level = level
