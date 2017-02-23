@@ -136,15 +136,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
     }
     
-    func helpClicked(_ sender: UIBarButtonItem) {
-        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPopUpID") as! HelpViewController
-        popOverVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        self.view.addSubview(popOverVC.view)
-        popOverVC.didMove(toParentViewController: self)
-    }
-    
     func logoutClicked(_ sender: UIBarButtonItem) {
         let logOutAlert = UIAlertController(title: "", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -308,9 +299,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             }
              return cell
         }
-
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionWidth = floor(collectionView.frame.size.width)
@@ -329,7 +318,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
         splitViewController?.presentsWithGesture = true
         self.navigationItem.leftBarButtonItem = showTableButton
-        showTableButton.title = "<My Classes"
+        showTableButton.title = "< My Classes"
         self.collectionView?.reloadData()
     }
     
@@ -345,8 +334,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         self.navigationItem.title = className
         self.collectionView?.reloadData()
     }
-    
-
 
     // MARK: UICollectionViewDelegate
 
@@ -355,16 +342,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
- 
 
-    
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
-
-    
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
