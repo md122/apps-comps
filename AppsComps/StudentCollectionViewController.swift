@@ -173,23 +173,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             splitViewController?.presentsWithGesture = true
         }
         
-        //stackoverflow.com/questions/37335147/how-to-change-the-size-of-a-popover
         if segue.identifier == "showIDSegue"
         {
-            let vc = segue.destination
-            
-            vc.preferredContentSize = CGSize(width: 350, height: 250)
-            
-            let controller = vc.popoverPresentationController
-            
-            //controller?.delegate = self
-            //you could set the following in your storyboard
-//            controller?.sourceView = self.view
-//            controller?.sourceRect = CGRect(x:self.view.bounds.midX, y: self.view.bounds.midY,width: 315,height: 230)
-//            controller?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-            
+            let idPopOver = segue.destination
+            idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
         }
-        
     }
  
 
