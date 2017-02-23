@@ -160,7 +160,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func shareClicked(_ sender: UIBarButtonItem) {
-        let shareAlert = UIAlertController(title: "", message: "Share this number with your students", preferredStyle: UIAlertControllerStyle.alert)
+        let shareAlert = UIAlertController(title: classroomID, message: "Share this number with your students", preferredStyle: UIAlertControllerStyle.alert)
         
         shareAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
@@ -177,23 +177,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         if segue.identifier == "showIDSegue"
         {
             let idPopOver = segue.destination as! ShareClassroomIDPopoverViewController
-//            idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
-//            idPopOver.classroomNameLabel.text = classroomName!
-//            idPopOver.classroomIDLabel.text = classroomID!
-//            print(classroomName)
-//            print(classroomID)
-            
-            //let idPopOver = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "classroomIDPopOver") as! ShareClassroomIDPopoverViewController
-//            idPopOver = segue.destination
-//            idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
-//            idPopOver.classroomNameLabel?.text = classroomName!
-//            idPopOver.classroomIDLabel?.text = classroomID!
             idPopOver.preferredContentSize = CGSize(width: 350, height: 250)
             idPopOver.setClassroomNameLabel(name: classroomName)
             idPopOver.setClassroomIDLabel(id: classroomID)
-            //            segue.destination.classroomNameLabel?.text = classroomName!
-//            segue.destination.classroomIDLabel?.text = classroomID!
-            
             print(classroomName)
             print(classroomID)
         }
