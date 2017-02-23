@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AD2D551E54C30200127AC3 /* UIColor.swift */; };
-		1135C0371E4ED375008671B6 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		1135C0371E4ED375008671B6 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1135C03B1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift */; };
 		113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05281DDBB3A700D001DD /* ProblemSelectorViewController.swift */; };
 		113B052B1DDBB3AF00D001DD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052A1DDBB3AF00D001DD /* Account.swift */; };
@@ -536,7 +536,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		0A804789D7B55384BD54B834 /* 📦 Copy Pods Resources */ = {
@@ -641,7 +641,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		4F1C22038530A38BCE2D699D /* [CP] Check Pods Manifest.lock */ = {
@@ -881,7 +881,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		EE17E314312E1F4A9F6105EA /* [CP] Embed Pods Frameworks */ = {
@@ -942,7 +942,7 @@
 				1197B7AB1E5BCBA40068FC4A /* DashboardNavigationViewController.swift in Sources */,
 				1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */,
 				8111C3451DBFBB6D002C8067 /* AppDelegate.swift in Sources */,
-				1135C0371E4ED375008671B6 /* BuildFile in Sources */,
+				1135C0371E4ED375008671B6 /* (null) in Sources */,
 				00AD2D561E54C30300127AC3 /* UIColor.swift in Sources */,
 				113B05291DDBB3A700D001DD /* ProblemSelectorViewController.swift in Sources */,
 				11BD26301E41E6A60030DAA5 /* ClassroomTableViewCell.swift in Sources */,
