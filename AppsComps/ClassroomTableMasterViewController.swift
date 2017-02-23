@@ -75,6 +75,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
                 let firstClassroomID = String(classrooms[0][1] as! Int)
                 APIConnector().requestClassroomData(callingDelegate: self, classroomID: firstClassroomID)
                 self.detailViewController?.setTitle(className: (classrooms[0][0] as! String))
+                self.detailViewController?.setClassroomIDAndName(id: classrooms[0][1] as! Int, name: classrooms[indexPath.row][0] as! String)
             }
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
@@ -150,6 +151,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             }
             let classroomName = createClassroomAlert.textFields![0].text!
             APIConnector().attemptAddClassroom(callingDelegate: self, teacherID: currentUser!.getIdToken(), classroomName: classroomName)
+            
         }))
         
         present(createClassroomAlert, animated: true, completion: nil)
@@ -174,6 +176,12 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         
         present(deleteClassroomsAlert, animated: true, completion: nil)
         
+    }
+    
+    func autoSelectFirst(){
+        let indexPath = IndexPath(row: 0, section: 0)
+        APIConnector().requestClassroomData(callingDelegate: self, classroomID: String(classrooms[indexPath.row][1] as! Int))
+        self.detailViewController?.setClassroomIDAndName(id: classrooms[indexPath.row][1] as! Int, name: classrooms[indexPath.row][0] as! String)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
