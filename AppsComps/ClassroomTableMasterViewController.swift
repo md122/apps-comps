@@ -118,7 +118,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     
     func handleClassroomDataRequest(data: NSDictionary) {
         if(data["error"] as! String == "none") {
-            detailViewController?.loadData(studentsData: data["data"] as! [NSArray])
+            detailViewController?.loadStudentList(studentsInClassroom: data["data"] as! [NSArray])
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
         }
@@ -155,7 +155,8 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if self.isEditing == false {
             APIConnector().requestClassroomData(callingDelegate: self, classroomID: String(classrooms[indexPath.row][1] as! Int))
-            self.detailViewController?.setTitle(className: classrooms[indexPath.row][0] as! String)
+            self.detailViewController?.setClassroomIDAndName(id: classrooms[indexPath.row][1] as! Int, name: classrooms[indexPath.row][0] as! String)
+            //self.detailViewController?.setTitle(className: classrooms[indexPath.row][0] as! String)
         }
     }
 

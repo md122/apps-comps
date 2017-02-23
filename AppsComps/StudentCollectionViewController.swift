@@ -12,6 +12,9 @@ import UIKit
 class StudentCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIToolbarDelegate {
     @IBOutlet var showIDButton: UIBarButtonItem!
 
+    var classroomName : String? = nil
+    var classroomID : String? = nil
+    
     var students = [NSArray]()
     
     @IBOutlet var showTableButton: UIBarButtonItem!
@@ -61,14 +64,9 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         
     }
     
-    func loadData(studentsData: [NSArray]) {
-        getRealStudentData(studentList: studentsData)
-        self.collectionView?.reloadData()
-    }
-    
-    func getRealStudentData(studentList: [NSArray]) {
-        ///This is where we will requestClassroomInfo
-        students = studentList
+    func loadStudentList(studentsInClassroom: [NSArray]) {
+        
+        students = studentsInClassroom
         
         level1Students.removeAll()
         level2Students.removeAll()
@@ -89,6 +87,13 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             }
         }
         studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
+        self.collectionView?.reloadData()
+    }
+    
+    func setClassroomIDAndName(id: Int, name: String) {
+        self.classroomName = name
+        self.classroomID = String(id)
+        self.navigationItem.title = classroomName
     }
     
     func modeSegmentChanged(_ sender: AnyObject) {
@@ -191,7 +196,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
     }
     
-//    www.raywenderlich.com/136161/uicollectionview-tutorial-reusable-views-selection-reordering
+//www.raywenderlich.com/136161/uicollectionview-tutorial-reusable-views-selection-reordering
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
@@ -316,7 +321,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     func hideTable() {
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
-        splitViewController?.presentsWithGesture = true
+        //splitViewController?.presentsWithGesture = true
         self.navigationItem.leftBarButtonItem = showTableButton
         showTableButton.title = "< My Classes"
         self.collectionView?.reloadData()
@@ -324,7 +329,7 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     func showTable() {
         splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.automatic
-        splitViewController?.presentsWithGesture = true
+        //splitViewController?.presentsWithGesture = true
         self.navigationItem.leftBarButtonItem = showTableButton
         showTableButton.title = ""
         self.collectionView?.reloadData()
