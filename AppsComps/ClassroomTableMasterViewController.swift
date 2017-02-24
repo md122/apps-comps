@@ -1,7 +1,7 @@
 
 //
-//  MasterViewController.swift
-//  MasterDetailTest
+//  ClassroomTableMasterViewController.swift
+//  AppsComps
 //
 //  Created by Brynna Mering on 1/18/17.
 //  Copyright © 2017 Brynna Mering. All rights reserved.
@@ -193,15 +193,12 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         if indexPath.row < classrooms.count {
             if self.isEditing == true {
                 tableView.cellForRow(at: indexPath)!.tintColor = UIColor.red
-                //tableView.cellForRow(at: indexPath)!.contentView.backgroundColor = UIColor(red:1.00, green:0.69, blue:0.69, alpha:1.0)
             }
             self.setUpSelectedClassroom(indexPath: indexPath)
         } else {
             self.insertNewObject()
         }
     }
-
-    // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -211,7 +208,6 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         return self.classrooms.count + 1
     }
 
-    // Called to get cell contents for each row
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row < classrooms.count){
             let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
@@ -220,19 +216,9 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             cell.textLabel?.textColor = UIColor.black
             cell.accessoryView = nil
             return cell
-        } else if (indexPath.row >= classrooms.count){
+        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "addClassroomCell", for: indexPath) as! AddClassroomTableViewCell
-            //cell.addLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
-            //cell.addLabel.textColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
-            //cell.addButton.tintColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
             cell.addButton.addTarget(self, action: #selector(insertNewObject), for: .touchUpInside)
-            return cell
-        }
-        else{
-            // otherwise get classroom name from classrooms array
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-            //let classroom = self.classrooms[indexPath.row][0]
-            cell.textLabel?.text = "ERROR"
             return cell
         }
     }

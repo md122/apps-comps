@@ -16,10 +16,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     
     var students = [NSArray]()
 
-//    var level1Students = [NSArray]()
-//    var level2Students = [NSArray]()
-//    var level3Students = [NSArray]()
-//    var level4Students = [NSArray]()
     var studentsByLevel : [[NSArray]]? = nil
     
     var cellMode = true
@@ -69,21 +65,14 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         for student in students {
             if student[1] as! Int == 1{
                 studentsByLevel?[0].append(student)
-                //level1Students.append(student)
             } else if student[1] as! Int == 2{
                 studentsByLevel?[1].append(student)
-                //level2Students.append(student)
             } else if student[1] as! Int == 3{
                 studentsByLevel?[2].append(student)
-                //level3Students.append(student)
             } else if student[1] as! Int == 4{
                 studentsByLevel?[3].append(student)
-                //level4Students.append(student)
-            } else {
-                //print("ALERT!! SAM!! A student is in a level not 1,2,3,or 4. This should not happen!")
             }
         }
-        //studentsByLevel = [level1Students, level2Students, level3Students, level4Students]
         self.collectionView?.reloadData()
     }
     
@@ -175,14 +164,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             if sectionStudents?.count == 0{
                 cell.backgroundColor = UIColor.lightGray
                 cell.studentNameLabel.text = "No Students"
-//                cell.frame.size.width = CGFloat(100.0)
-//                cell.frame.size.height = CGFloat(100.0)
             } else {
                 let student = sectionStudents?[indexPath.row]
                 cell.studentNameLabel.text = (student?[0] as! String)
                 cell.studentNameLabel.adjustsFontSizeToFitWidth = true
-//                cell.frame.size.width = CGFloat(100.0)
-//                cell.frame.size.height = CGFloat(100.0)
             }
              return cell
         } else {
@@ -208,33 +193,31 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func resizeGraphBar(cell: GraphCollectionViewCell, level: Int, cellWidth: CGFloat) {
-        
-        //let barWidth = collectionWidth - 20
-        // CHANGE THIS, a buggy fix so that it doesn't break with no students in classroom
         var totalStudentsDouble = 0.0
-        if !(studentsByLevel != nil) {
-            totalStudentsDouble = 1.0
-        } else {
+        var percent = 0.0
+        var barWidth = 5.0
+        if studentsByLevel != nil {
             let totalStudents = (studentsByLevel?[0].count)! + (studentsByLevel?[1].count)! + (studentsByLevel?[2].count)! + (studentsByLevel?[3].count)!
             totalStudentsDouble = Double(totalStudents)
-            if totalStudentsDouble == 0.0 {
-                totalStudentsDouble = 1.0
+        }
+        
+        if totalStudentsDouble > 0.0 {
+            if (studentsByLevel?[level].count)! > 0 {
+                percent = (Double((studentsByLevel?[level].count)!) / totalStudentsDouble)
+                barWidth = Double(cellWidth) * percent
+                percent = Double(round(1000*percent)/10)
             }
         }
-        var percent = (Double((studentsByLevel?[level].count)!) / totalStudentsDouble)
-        let barWidth = Double(cellWidth) * percent
-        percent = Double(round(1000*percent)/10)
         cell.percentLabel.text = String(percent) + "%"
+        
         if (studentsByLevel?[level].count)! == 1 {
             cell.studentsLabel.text = String((studentsByLevel?[level].count)!) + " Student"
         } else {
             cell.studentsLabel.text = String((studentsByLevel?[level].count)!) + " Students"
         }
-
-        if (studentsByLevel?[level].count)! > 0 {
-            cell.graphBar.frame.size.width = CGFloat(barWidth)
-        } else {
-            cell.graphBar.frame.size.width = CGFloat(5.0)
+    
+        cell.graphBar.frame.size.width = CGFloat(barWidth)
+        if percent == 0.0 {
             cell.graphBar.backgroundColor = UIColor.lightGray
         }
     }
