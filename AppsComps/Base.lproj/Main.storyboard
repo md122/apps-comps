@@ -497,7 +497,7 @@
             <objects>
                 <collectionViewController hidesBottomBarWhenPushed="YES" id="fSl-Vx-zgN" customClass="LevelButtonViewController" customModule="AppsComps" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" dataMode="prototypes" id="R5Y-4m-oal">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Su9-fR-Opt">
@@ -589,6 +589,7 @@
                             </connections>
                         </collectionReusableView>
                     </collectionView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="I8Q-8k-kth"/>
                     <nil key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
@@ -599,7 +600,7 @@
         <!--Help View Controller-->
         <scene sceneID="cJP-QS-MTc">
             <objects>
-                <viewController storyboardIdentifier="helpPopUpID" id="qWs-QL-Vkp" customClass="HelpViewController" customModule="AppsComps" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="helpPopUpID" automaticallyAdjustsScrollViewInsets="NO" id="qWs-QL-Vkp" customClass="HelpViewController" customModule="AppsComps" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZUs-b9-rpM"/>
                         <viewControllerLayoutGuide type="bottom" id="fwk-WM-g4m"/>
@@ -608,37 +609,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2M-JV-wMw">
+                            <view contentMode="top" translatesAutoresizingMaskIntoConstraints="NO" id="X2M-JV-wMw">
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yjg-NI-g5d">
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="132" id="84a-oO-eST"/>
-                                            <constraint firstAttribute="height" constant="30" id="OiG-MN-hMf"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Got it!">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="closePopUp:" destination="qWs-QL-Vkp" eventType="touchUpInside" id="3oj-h0-cIM"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cea-X3-gPj">
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kfL-2t-4Nb">
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yjg-NI-g5d">
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="qL1-iq-8dX"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <state key="normal" title="Got it!">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="closePopUp:" destination="qWs-QL-Vkp" eventType="touchUpInside" id="3oj-h0-cIM"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.67648607399892668" green="0.78337466313903303" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Yjg-NI-g5d" firstAttribute="centerX" secondItem="X2M-JV-wMw" secondAttribute="centerX" id="4wt-ft-w3M"/>
-                                    <constraint firstAttribute="bottom" secondItem="Yjg-NI-g5d" secondAttribute="bottom" constant="22" id="n7R-ts-fPb"/>
+                                    <constraint firstItem="cea-X3-gPj" firstAttribute="top" secondItem="X2M-JV-wMw" secondAttribute="top" constant="491" id="4EK-Qw-z7E" userLabel="Stack View.top = top + 500"/>
+                                    <constraint firstItem="cea-X3-gPj" firstAttribute="leading" secondItem="X2M-JV-wMw" secondAttribute="leading" constant="365" id="gOk-Zi-5Ee"/>
+                                    <constraint firstItem="cea-X3-gPj" firstAttribute="centerX" secondItem="X2M-JV-wMw" secondAttribute="centerX" id="oPE-Xn-SSg"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="X2M-JV-wMw" firstAttribute="top" secondItem="ZUs-b9-rpM" secondAttribute="bottom" constant="26" id="HD1-DY-eF4"/>
                             <constraint firstItem="X2M-JV-wMw" firstAttribute="centerX" secondItem="TKb-go-j8c" secondAttribute="centerX" id="LdL-zf-SKq"/>
-                            <constraint firstItem="X2M-JV-wMw" firstAttribute="top" secondItem="ZUs-b9-rpM" secondAttribute="bottom" constant="27" id="T1C-G6-wmJ"/>
-                            <constraint firstItem="X2M-JV-wMw" firstAttribute="centerY" secondItem="TKb-go-j8c" secondAttribute="centerY" id="chV-aZ-vA5"/>
+                            <constraint firstItem="fwk-WM-g4m" firstAttribute="top" secondItem="X2M-JV-wMw" secondAttribute="bottom" constant="100" id="Y8g-jq-4T1"/>
                             <constraint firstItem="X2M-JV-wMw" firstAttribute="trailing" secondItem="TKb-go-j8c" secondAttribute="trailingMargin" constant="-61" id="he8-BH-bER"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U7A-q3-kQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

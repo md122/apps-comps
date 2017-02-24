@@ -17,7 +17,7 @@ class HelpViewController: UIViewController, UIToolbarDelegate {
 
         // Do any additional setup after loading the view.
         
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         self.showAnimate()
     }
 
