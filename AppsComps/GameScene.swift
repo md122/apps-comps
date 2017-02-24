@@ -146,7 +146,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         clearButton.position = CLEARBUTTONPOSITION
         garbage.size = GARBAGESIZE
         vortex.size = CGSize(width: 1.5*WIDTHUNIT, height: 1.5*WIDTHUNIT)
-        clearButton.size = CGSize(width: 2*WIDTHUNIT, height: 1.5*HEIGHTUNIT)
+        clearButton.size = CGSize(width: 2*WIDTHUNIT, height: 0.9*WIDTHUNIT)
         self.addChild(garbage)
         self.addChild(vortex)
         self.addChild(clearButton)

@@ -1,6 +1,7 @@
+
 //
-//  MasterViewController.swift
-//  MasterDetailTest
+//  ClassroomTableMasterViewController.swift
+//  AppsComps
 //
 //  Created by Brynna Mering on 1/18/17.
 //  Copyright © 2017 Brynna Mering. All rights reserved.
@@ -9,15 +10,13 @@
 import UIKit
 
 class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate {
-
-    @IBOutlet var collapseButton: UIBarButtonItem!
-    @IBOutlet var rightBarButton: UIBarButtonItem!
-    @IBOutlet var leftBarButton: UIBarButtonItem!
+    
+    @IBOutlet var editButton: UIBarButtonItem!
+    
     var detailViewController: StudentCollectionViewController? = nil
     var classrooms = [NSArray]()
+    var lastIndexPath = IndexPath()
     
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         if let split = self.splitViewController {
@@ -25,66 +24,51 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StudentCollectionViewController
         }
         tableView.allowsMultipleSelectionDuringEditing = true
-        //classrooms = [["First Hour", "23"], ["Second Hour", "24"], ["Third Hour", "45"], ["Fourth Hour", "22"]]
-        //loadSampleClassrooms(classroomList: [["First Hour", "23"], ["Second Hour", "24"] ["Third Hour", "45"], ["Fourth Hour", "22"]])
         
-        APIConnector().requestTeacherDashInfo(callingDelegate: self, teacherID: currentUser!.getIdToken())
-
-        
+        APIConnector().requestGetClassroomsForTeacher(callingDelegate: self, teacherID: currentUser!.getIdToken())
     }
 
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
         if tableView.isEditing == false{
-            //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = true
             sender.title = "Done"
             let trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteClassroomList(_:)))
+            trashButton.tintColor = .red
             self.navigationItem.leftBarButtonItem = trashButton
-            let indexPath = IndexPath(row: self.classrooms.count, section: 0)
-            self.tableView.insertRows(at: [indexPath], with: .automatic)
         } else {
-            //tableView.setEditing(!tableView.isEditing, animated: true)
             self.isEditing = false
             sender.title = "Edit"
-            self.navigationItem.leftBarButtonItem = collapseButton
-            let indexPath = IndexPath(row: self.classrooms.count, section: 0)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            
+            self.navigationItem.leftBarButtonItem = nil
         }
-        
-        
-    }
-    
-    
-    @IBAction func collapseClicked(_ sender: AnyObject) {
-        //splitViewController?.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryHidden
-        detailViewController?.hideTable()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
         super.viewWillAppear(animated)
-//        self.detailViewController?.setTitle(className: classrooms[0][0] as! String)
-       // self.detailViewController?.title = "asdfasdfas"
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func handleTeacherDashInfoRequest(data: NSDictionary) {
+    func handleGetClassroomsForTeacherRequest(data: NSDictionary) {
         if data["error"] as! String == "none" {
             classrooms = data["data"] as! [NSArray]
             self.tableView.reloadData()
             if classrooms.count > 0 {
-                let firstClassroomID = String(classrooms[0][1] as! Int)
-                APIConnector().requestClassroomData(callingDelegate: self, classroomID: firstClassroomID)
-                self.detailViewController?.setTitle(className: (classrooms[0][0] as! String))
+                self.autoSelectClassroom(indexPath: IndexPath(row: 0, section: 0))
+                self.detailViewController?.hasClassrooms = true
+            } else {
+                self.detailViewController?.hasClassrooms = false
+                self.detailViewController?.title = "(No Classes)"
             }
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
         } else {
-            print("Database error, run and scream")
+            let errorAlert = UIAlertController(title: "Something went wrong...", message: "Sorry for the inconvenience, please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            present(errorAlert, animated: true, completion: nil)
         }
     }
     
@@ -95,15 +79,18 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             self.classrooms.insert([classroomData[0][0], classroomData[0][1]], at: 0)
             let indexPath = IndexPath(row: 0, section: 0)
             self.tableView.insertRows(at: [indexPath], with: .automatic)
+            self.autoSelectClassroom(indexPath: indexPath)
+            self.detailViewController?.hasClassrooms = true
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
         } else {
-            print("Database error, run and scream")
+            let errorAlert = UIAlertController(title: "Something went wrong...", message: "Sorry for the inconvenience, please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in}))
+            present(errorAlert, animated: true, completion: nil)
         }
     }
     
     // Called after attempting to remove a classroom
-    // If success removes the classroom
     func handleRemoveClassroomAttempt(data: NSDictionary, classID: Int) {
         if(data["error"] as! String == "none") {
             var removeIndex = -1
@@ -118,32 +105,57 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
                 let path = IndexPath(row: removeIndex, section: 0)
                 tableView.deleteRows(at: [path], with: .automatic)
             }
+            if self.isEditing == true {
+                self.isEditing = false
+                self.editButton.title = "Edit"
+                self.navigationItem.leftBarButtonItem = nil
+            }
+            if self.classrooms.count > 0 {
+                self.autoSelectClassroom(indexPath: IndexPath(row: 0, section: 0))
+            } else {
+                self.detailViewController?.hasClassrooms = false
+                self.detailViewController?.title = "(No Classes)"
+                let emptyArray = [NSArray]()
+                self.detailViewController?.loadStudentList(studentsInClassroom: emptyArray)
+            }
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
         } else {
-            print("Database error, need to handle this")
+            let errorAlert = UIAlertController(title: "Something went wrong...", message: "Sorry for the inconvenience, please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            present(errorAlert, animated: true, completion: nil)
         }
     }
     
     func handleClassroomDataRequest(data: NSDictionary) {
         if(data["error"] as! String == "none") {
-            detailViewController?.loadData(studentsData: data["data"] as! [NSArray])
+            detailViewController?.loadStudentList(studentsInClassroom: data["data"] as! [NSArray])
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
         }
     }
 
-    func insertNewObject(_ sender: Any) {
-        let createClassroomAlert = UIAlertController(title: "New Classroom", message: "Enter classroom name:", preferredStyle: UIAlertControllerStyle.alert)
+    func insertNewObject() {
+        let createClassroomAlert = UIAlertController(title: "New Class", message: "Enter class name:", preferredStyle: UIAlertControllerStyle.alert)
         
         // Text field to enter Classroom name
         createClassroomAlert.addTextField(configurationHandler: nil)
         
         // cancel option
-        createClassroomAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in}))
+        createClassroomAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in
+            if self.classrooms.count > 0{
+                self.autoSelectClassroom(indexPath: self.lastIndexPath)
+            }
+            self.tableView.deselectRow(at: IndexPath(row: self.classrooms.count, section: 0), animated: true)
+        }))
         // adds new classroom to table
         createClassroomAlert.addAction(UIAlertAction(title: "Enter", style: .cancel, handler: { (action: UIAlertAction!) in
-            
+            if self.isEditing == true {
+                self.isEditing = false
+                self.editButton.title = "Edit"
+                self.navigationItem.leftBarButtonItem = nil
+            }
             let classroomName = createClassroomAlert.textFields![0].text!
             APIConnector().attemptAddClassroom(callingDelegate: self, teacherID: currentUser!.getIdToken(), classroomName: classroomName)
         }))
@@ -152,48 +164,73 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     }
     
     func deleteClassroomList(_ sender: UIBarButtonItem) {
-        if let selection = tableView.indexPathsForSelectedRows
-        {
+        if let selection = self.tableView.indexPathsForSelectedRows {
+            let deleteClassroomsAlert = UIAlertController(title: "Delete Classes", message: "Are you sure you want to delete the selected classes?", preferredStyle: UIAlertControllerStyle.alert)
+            
+            deleteClassroomsAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in}))
+            
+            deleteClassroomsAlert.addAction(UIAlertAction(title: "Enter", style: .cancel, handler: { (action: UIAlertAction!) in
+
             for indexPath in selection {
-                let classroom = classrooms[indexPath.row]
+                let classroom = self.classrooms[indexPath.row]
                 APIConnector().attemptRemoveClassroom(callingDelegate: self, classroomID: classroom[1] as! Int)
             }
+        }))
+            present(deleteClassroomsAlert, animated: true, completion: nil)
+            
+        } else {
+            let noSelectedClassroomsAlert = UIAlertController(title: "No Classes Selected", message: "You must select classes to delete them", preferredStyle: UIAlertControllerStyle.alert)
+            
+            noSelectedClassroomsAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in}))
+            present(noSelectedClassroomsAlert, animated: true, completion: nil)
         }
     }
     
+    func autoSelectClassroom(indexPath: IndexPath){
+        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
+        self.setUpSelectedClassroom(indexPath: indexPath)
+    }
+    
+    func setUpSelectedClassroom(indexPath: IndexPath){
+        lastIndexPath = indexPath
+        APIConnector().requestClassroomData(callingDelegate: self, classroomID: String(classrooms[indexPath.row][1] as! Int))
+        self.detailViewController?.navigationItem.title = classrooms[indexPath.row][0] as! String
+        self.detailViewController?.setClassroomIDAndName(id: classrooms[indexPath.row][1] as! Int, name: classrooms[indexPath.row][0] as! String)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if self.isEditing == false {
-            APIConnector().requestClassroomData(callingDelegate: self, classroomID: String(classrooms[indexPath.row][1] as! Int))
-            self.detailViewController?.setTitle(className: classrooms[indexPath.row][0] as! String)
+        
+        if indexPath.row < classrooms.count {
+            if self.isEditing == true {
+                tableView.cellForRow(at: indexPath)!.tintColor = UIColor.red
+            }
+            self.setUpSelectedClassroom(indexPath: indexPath)
+        } else {
+            self.insertNewObject()
         }
     }
-
-    // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.classrooms.count + (self.isEditing ? 1 : 0)
+        return self.classrooms.count + 1
     }
 
-    // Called to get cell contents for each row
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-        // If editing, make the last cell an Add Classroom button
-        if(indexPath.row >= classrooms.count && self.isEditing){
-            cell.textLabel?.text = "Add Classroom";
-            let button = UIButton(type: UIButtonType.contactAdd)
-            button.addTarget(self, action: #selector(insertNewObject), for: .touchUpInside)
-            cell.accessoryView = button;
-        } else{
-            // otherwise get classroom name from classrooms array
+        if (indexPath.row < classrooms.count){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
             let classroom = self.classrooms[indexPath.row][0]
             cell.textLabel?.text = classroom as? String
+            cell.textLabel?.textColor = UIColor.black
+            cell.accessoryView = nil
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "addClassroomCell", for: indexPath) as! AddClassroomTableViewCell
+            cell.addButton.addTarget(self, action: #selector(insertNewObject), for: .touchUpInside)
+            return cell
         }
-        return cell
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -203,20 +240,5 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         return true
     }
 
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-//        //cell.editingAccessoryType = UITableViewCellAccessoryType.checkmark
-//        if editingStyle == .delete {
-//            classrooms.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        } else if editingStyle == .insert {
-//            
-//        }
-//    }
-    
-    func loadSampleClassrooms(classroomList: [NSArray]) {
-        
-        classrooms = classroomList
-    }
 }
 
