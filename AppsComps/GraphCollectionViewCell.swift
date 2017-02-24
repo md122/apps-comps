@@ -13,7 +13,11 @@ class GraphCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var graphBar: UIView!
     
-    @IBOutlet var barLabel: UILabel!
+    //@IBOutlet var barLabel: UILabel!
+    
+    @IBOutlet var studentsLabel: UILabel!
+    
+    @IBOutlet var percentLabel: UILabel!
     
     
    // @IBOutlet var backgroundLabel: UILabel!

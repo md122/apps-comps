@@ -9,8 +9,7 @@
 import UIKit
 
 class SectionHeaderCollectionReusableView: UICollectionReusableView {
-        
-    @IBOutlet var headerLabel1: UILabel!
+    @IBOutlet var headerLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

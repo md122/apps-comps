@@ -238,13 +238,20 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P9U-Np-Ovd">
-                                            <frame key="frameInset" minX="8" minY="0.0%" width="99" height="100.00%"/>
+                                            <frame key="frameInset" minY="0.0%" width="133" height="100.00%"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bar Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9f-CB-PnT">
-                                                    <frame key="frameInset" minX="8" minY="40" width="105" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Students" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="106" translatesAutoresizingMaskIntoConstraints="NO" id="qPA-gz-gkY">
+                                                    <frame key="frameInset" minX="8" minY="24" width="105" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Percent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9f-CB-PnT">
+                                                    <frame key="frameInset" minX="8" minY="53" width="105" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -255,30 +262,26 @@
                                 </view>
                                 <size key="customSize" width="300" height="100"/>
                                 <connections>
-                                    <outlet property="barLabel" destination="Z9f-CB-PnT" id="S8A-r8-DRd"/>
                                     <outlet property="graphBar" destination="P9U-Np-Ovd" id="oxw-f8-kak"/>
+                                    <outlet property="percentLabel" destination="Z9f-CB-PnT" id="I8b-h0-ifo"/>
+                                    <outlet property="studentsLabel" destination="qPA-gz-gkY" id="MnU-ee-HAs"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sectionHeader" id="olh-6x-Cbz" customClass="SectionHeaderCollectionReusableView" customModule="AppsComps" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="703" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="703.5" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDL-tO-NnW">
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="82" id="Cvs-Vb-ZhM"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Level" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06g-ev-eCh">
+                                    <frame key="frameInset" minX="8" minY="15" width="145" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="NDL-tO-NnW" firstAttribute="leading" secondItem="olh-6x-Cbz" secondAttribute="leadingMargin" constant="13" id="5sG-9d-qpm"/>
-                                <constraint firstItem="NDL-tO-NnW" firstAttribute="centerY" secondItem="olh-6x-Cbz" secondAttribute="centerY" id="Fag-bH-OAt"/>
-                            </constraints>
                             <connections>
-                                <outlet property="headerLabel1" destination="NDL-tO-NnW" id="Wr6-Ub-dEn"/>
+                                <outlet property="headerLabel" destination="06g-ev-eCh" id="mDb-mq-EnE"/>
                             </connections>
                         </collectionReusableView>
                         <connections>
