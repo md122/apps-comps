@@ -522,6 +522,8 @@ class GameScene: SKScene, UITextFieldDelegate {
             self.changeBlockValueAlert(block: block)
         }))
         invalidInputAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.blockTouched?.color = .black
+            self.blockTouched = nil
         }))
         
         let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, greater than 0 and less than 1000, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
@@ -530,7 +532,10 @@ class GameScene: SKScene, UITextFieldDelegate {
             textField.keyboardType = UIKeyboardType.numberPad
         })
         
-        changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
+        changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            self.blockTouched?.color = .black
+            self.blockTouched = nil
+        }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
             //Removed in merging conflict
             //let valueEntered = changeValueAlert.textFields![0].text
