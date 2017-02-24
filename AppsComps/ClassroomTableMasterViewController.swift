@@ -221,9 +221,9 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             return cell
         } else if (indexPath.row >= classrooms.count){
             let cell = tableView.dequeueReusableCell(withIdentifier: "addClassroomCell", for: indexPath) as! AddClassroomTableViewCell
-            cell.addLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
-            cell.addLabel.textColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
-            cell.addButton.tintColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
+            //cell.addLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+            //cell.addLabel.textColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
+            //cell.addButton.tintColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
             cell.addButton.addTarget(self, action: #selector(insertNewObject), for: .touchUpInside)
             return cell
         }
