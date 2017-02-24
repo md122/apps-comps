@@ -259,7 +259,11 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphCell", for: indexPath) as! GraphCollectionViewCell
             cell.backgroundColor = UIColor.white
+            
             let collectionWidth = floor(collectionView.frame.size.width)
+            let barWidth = collectionWidth - 20
+            //cell.frame.size.width = CGFloat(100.0)
+            //cell.frame.size.height = CGFloat(collectionWidth)
            // CHANGE THIS, a buggy fix so that it doesn't break with no students in classroom
             var totalStudentsDouble = 0.0
             if !(studentsByLevel != nil) {
@@ -274,28 +278,28 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
             
             if indexPath.section == 0 {
                 var percent = (Double(level1Students.count) / totalStudentsDouble)
-                let width1 = Double(collectionWidth) * percent
+                let width1 = Double(barWidth) * percent
                 percent = Double(round(1000*percent)/10)
                 cell.barLabel.text = String(percent) + "%"
                 cell.graphBar.backgroundColor = UIColor.red
                 cell.graphBar.frame.size.width = CGFloat(width1)
             } else if indexPath.section == 1 {
                 var percent = (Double(level2Students.count) / totalStudentsDouble)
-                let width2 = Double(collectionWidth) * percent
+                let width2 = Double(barWidth) * percent
                 percent = Double(round(1000*percent)/10)
                 cell.barLabel.text = String(percent) + "%"
                 cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.59, blue:0.85, alpha:1.0)
                 cell.graphBar.frame.size.width = CGFloat(width2)
             } else if indexPath.section == 2 {
                 var percent = (Double(level3Students.count) / totalStudentsDouble)
-                let width3 = Double(collectionWidth) * percent
+                let width3 = Double(barWidth) * percent
                 percent = Double(round(1000*percent)/10)
                 cell.barLabel.text = String(percent) + "%"
                 cell.graphBar.backgroundColor = UIColor(red:0.14, green:0.85, blue:0.16, alpha:1.0)
                 cell.graphBar.frame.size.width = CGFloat(width3)
             } else if indexPath.section == 3 {
                 var percent = (Double(level4Students.count) / totalStudentsDouble)
-                let width4 = Double(collectionWidth) * percent
+                let width4 = Double(barWidth) * percent
                 percent = Double(round(1000*percent)/10)
                 cell.barLabel.text = String(percent) + "%"
                 cell.graphBar.backgroundColor = UIColor.yellow

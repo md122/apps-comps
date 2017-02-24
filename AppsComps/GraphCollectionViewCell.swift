@@ -16,7 +16,7 @@ class GraphCollectionViewCell: UICollectionViewCell {
     @IBOutlet var barLabel: UILabel!
     
     
-    @IBOutlet var backgroundLabel: UILabel!
+   // @IBOutlet var backgroundLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
