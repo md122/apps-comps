@@ -150,14 +150,14 @@ class APIConnector: NSObject  {
     
     // TEACHER ACOUNT
     
-    func requestTeacherDashInfo(callingDelegate: APIDataDelegate, teacherID: String) {
+    func requestGetClassroomsForTeacher(callingDelegate: APIDataDelegate, teacherID: String) {
         let url = baseURL + "requestTeacherDashInfo/" + teacherID
         Alamofire.request(url).responseJSON { response in
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200...299:
                     if let responseData = response.result.value{
-                        callingDelegate.handleTeacherDashInfoRequest!(data: responseData as! NSDictionary)
+                        callingDelegate.handleGetClassroomsForTeacherRequest!(data: responseData as! NSDictionary)
                     }
                 default:
                     print("error with response status: \(status)")

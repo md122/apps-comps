@@ -152,7 +152,7 @@ class ProblemSelectorViewController: UIViewController, APIDataDelegate {
 //>>>>>>> 14272ba728fa8d0f9aafa1284e45a63cc3029efa
         
         //Toolbar Inclusion
-        self.navigationController?.setToolbarHidden(false, animated: false)
+        //self.navigationController?.setToolbarHidden(false, animated: false)
         
         
         

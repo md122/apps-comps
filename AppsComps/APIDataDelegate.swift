@@ -27,7 +27,7 @@ import Foundation
     @objc optional func handleCorrectIncorrectRatio(data: NSDictionary) ;
     
     // Methods for teacher class
-    @objc optional func handleTeacherDashInfoRequest(data: NSDictionary) ;
+    @objc optional func handleGetClassroomsForTeacherRequest(data: NSDictionary) ;
     @objc optional func handleClassroomDataRequest(data: NSDictionary) ;
     @objc optional func handleAddClassroomAttempt(data: NSDictionary) ;
     @objc optional func handleRemoveClassroomAttempt(data: NSDictionary, classID: Int) ;

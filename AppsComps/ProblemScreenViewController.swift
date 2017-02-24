@@ -34,9 +34,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         levelLabel.text = "Level: \(self.level)"
+        //Hides the toolbar when transistioning from the problem selector to the problem screen
+        self.navigationController?.setToolbarHidden(true, animated: false)
         setStars(correctAnswers: self.levelProgress)
     }
-    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
