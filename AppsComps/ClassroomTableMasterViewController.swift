@@ -85,8 +85,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             APIConnector().connectionDropped(callingDelegate: self)
         } else {
             let errorAlert = UIAlertController(title: "Something went wrong...", message: "Sorry for the inconvenience, please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-            errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
-            }))
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in}))
             present(errorAlert, animated: true, completion: nil)
         }
     }
