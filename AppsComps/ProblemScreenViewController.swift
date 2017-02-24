@@ -174,6 +174,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     func skipProblemAlert(errorMessage: String) {
+        
         let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         wrongAnswerAlert.addAction(UIAlertAction(title: "Go to Next Problem", style: .default, handler: { (action: UIAlertAction!) in
@@ -186,7 +187,12 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     func wrongAnswerAlert() {
-        let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect.", preferredStyle: UIAlertControllerStyle.alert)
+        let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect. Stars will reset to 0.", preferredStyle: UIAlertControllerStyle.alert)
+        if (self.levelProgress > 0 && self.levelProgress < 3) {
+            self.levelProgress = 0
+            self.setStars(correctAnswers: 0)
+        }
+        
         wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .default, handler: { (action: UIAlertAction!) in
         }))
         wrongAnswerAlert.addAction(UIAlertAction(title: "Start Over Problem", style: .cancel, handler: { (action: UIAlertAction!) in

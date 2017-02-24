@@ -32,10 +32,12 @@ class LevelButton: UIButton {
     func checkAccess(curLev: Int)->Bool{
         if (level <= curLev){
             locked = false
-            self.backgroundColor = UIColor(red:0.71, green:0.47, blue:0.47, alpha:1.0)
+            self.backgroundColor = UIColor(red:0.26, green:0.53, blue:0.96, alpha:1.0)
+            self.setTitleColor(UIColor(red:0.69, green:0.80, blue:0.90, alpha:1.0), for: .normal)
             self.isUserInteractionEnabled = true
         } else {
             locked = true
+            self.setTitleColor(UIColor(red:0.69, green:0.69, blue:0.76, alpha:1.0), for: .normal)
             self.backgroundColor = UIColor(red:0.42, green:0.41, blue:0.48, alpha:1.0)
             self.isUserInteractionEnabled = false
         }

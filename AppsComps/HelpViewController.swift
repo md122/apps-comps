@@ -9,6 +9,8 @@
 import UIKit
 
 class HelpViewController: UIViewController, UIToolbarDelegate {
+    @IBOutlet weak var buttonsLabel: UILabel!
+    @IBOutlet weak var vortexLabel: UILabel!
 
     //Tutorial from https://www.youtube.com/watch?v=FgCIRMz_3dE
 
@@ -16,8 +18,9 @@ class HelpViewController: UIViewController, UIToolbarDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        buttonsLabel.text = "The blue buttons are unlocked, and the grey buttons are locked. Answer 3 problems in a row to unlock the next level! If you get one wrong you'll need to start over on that level, so do your best in each question."
+        vortexLabel.text = "Drop the vortex onto a bar with a -1 or -x to do subtraction!"
         
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         self.showAnimate()
     }
 
