@@ -19,6 +19,8 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     var studentsByLevel : [[NSArray]]? = nil
     
     var cellMode = true
+    
+    var hasClassrooms = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +109,16 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     }
     
     func shareClicked(_ sender: UIBarButtonItem) {
-        let shareAlert = UIAlertController(title: classroomID, message: "Share this number with your students", preferredStyle: UIAlertControllerStyle.alert)
+        var shareMessage : String
+        var shareTitle : String
+        if hasClassrooms == true {
+            shareTitle = classroomID!
+            shareMessage = ("Students may use this code to add themselves to " + classroomName!)
+        } else {
+            shareTitle = "No Classrooms"
+            shareMessage = "You must create a classroom before students can add themselves"
+        }
+        let shareAlert = UIAlertController(title: shareTitle, message: shareMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         shareAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
         }))

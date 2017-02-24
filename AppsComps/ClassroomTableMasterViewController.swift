@@ -57,6 +57,10 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             self.tableView.reloadData()
             if classrooms.count > 0 {
                 self.autoSelectClassroom(indexPath: IndexPath(row: 0, section: 0))
+                self.detailViewController?.hasClassrooms = true
+            } else {
+                self.detailViewController?.hasClassrooms = false
+                self.detailViewController?.title = "(No Classes)"
             }
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
@@ -65,7 +69,6 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
             }))
             present(errorAlert, animated: true, completion: nil)
-
         }
     }
     
@@ -77,6 +80,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
             let indexPath = IndexPath(row: 0, section: 0)
             self.tableView.insertRows(at: [indexPath], with: .automatic)
             self.autoSelectClassroom(indexPath: indexPath)
+            self.detailViewController?.hasClassrooms = true
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
         } else {
@@ -88,7 +92,6 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     }
     
     // Called after attempting to remove a classroom
-    // If success removes the classroom
     func handleRemoveClassroomAttempt(data: NSDictionary, classID: Int) {
         if(data["error"] as! String == "none") {
             var removeIndex = -1
@@ -102,6 +105,19 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
                 classrooms.remove(at: removeIndex)
                 let path = IndexPath(row: removeIndex, section: 0)
                 tableView.deleteRows(at: [path], with: .automatic)
+            }
+            if self.isEditing == true {
+                self.isEditing = false
+                self.editButton.title = "Edit"
+                self.navigationItem.leftBarButtonItem = nil
+            }
+            if self.classrooms.count > 0 {
+                self.autoSelectClassroom(indexPath: IndexPath(row: 0, section: 0))
+            } else {
+                self.detailViewController?.hasClassrooms = false
+                self.detailViewController?.title = "(No Classes)"
+                let emptyArray = [NSArray]()
+                self.detailViewController?.loadStudentList(studentsInClassroom: emptyArray)
             }
         } else if data["error"] as! String == "HTTP" {
             APIConnector().connectionDropped(callingDelegate: self)
@@ -122,7 +138,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     }
 
     func insertNewObject() {
-        let createClassroomAlert = UIAlertController(title: "New Classroom", message: "Enter classroom name:", preferredStyle: UIAlertControllerStyle.alert)
+        let createClassroomAlert = UIAlertController(title: "New Class", message: "Enter class name:", preferredStyle: UIAlertControllerStyle.alert)
         
         // Text field to enter Classroom name
         createClassroomAlert.addTextField(configurationHandler: nil)
@@ -149,31 +165,26 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
     }
     
     func deleteClassroomList(_ sender: UIBarButtonItem) {
-        let deleteClassroomsAlert = UIAlertController(title: "Delete Classrooms", message: "Are you sure you want to delete these classrooms?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        deleteClassroomsAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in}))
-        
-        deleteClassroomsAlert.addAction(UIAlertAction(title: "Enter", style: .cancel, handler: { (action: UIAlertAction!) in
+        if let selection = self.tableView.indexPathsForSelectedRows {
+            let deleteClassroomsAlert = UIAlertController(title: "Delete Classes", message: "Are you sure you want to delete the selected classes?", preferredStyle: UIAlertControllerStyle.alert)
             
-            if let selection = self.tableView.indexPathsForSelectedRows
-            {
-                for indexPath in selection {
-                    let classroom = self.classrooms[indexPath.row]
-                    APIConnector().attemptRemoveClassroom(callingDelegate: self, classroomID: classroom[1] as! Int)
-                }
-            }
-            if self.isEditing == true {
-                self.isEditing = false
-                self.editButton.title = "Edit"
-                self.navigationItem.leftBarButtonItem = nil
-                if self.classrooms.count > 0 {
-                    self.autoSelectClassroom(indexPath: IndexPath(row: 0, section: 0))
-                }
+            deleteClassroomsAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in}))
+            
+            deleteClassroomsAlert.addAction(UIAlertAction(title: "Enter", style: .cancel, handler: { (action: UIAlertAction!) in
+
+            for indexPath in selection {
+                let classroom = self.classrooms[indexPath.row]
+                APIConnector().attemptRemoveClassroom(callingDelegate: self, classroomID: classroom[1] as! Int)
             }
         }))
-        
-        present(deleteClassroomsAlert, animated: true, completion: nil)
-        
+            present(deleteClassroomsAlert, animated: true, completion: nil)
+            
+        } else {
+            let noSelectedClassroomsAlert = UIAlertController(title: "No Classes Selected", message: "You must select classes to delete them", preferredStyle: UIAlertControllerStyle.alert)
+            
+            noSelectedClassroomsAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in}))
+            present(noSelectedClassroomsAlert, animated: true, completion: nil)
+        }
     }
     
     func autoSelectClassroom(indexPath: IndexPath){
