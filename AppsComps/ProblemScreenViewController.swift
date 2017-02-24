@@ -114,8 +114,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     func setLevel(level: Int){
+        
         self.level = level
-        print(self.level)
         
     }
     
@@ -153,6 +153,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         let rightAnswerAlert = UIAlertController(title: "Correct!", message: "Great job! Level " + String(self.highestLevel) + "  unlocked.", preferredStyle: UIAlertControllerStyle.alert)
         rightAnswerAlert.addAction(UIAlertAction(title: "Go to next level", style: .default, handler: { (action: UIAlertAction!) in
             self.setLevel(level: self.level+1)
+            self.levelLabel.text = "Level: \(self.level)"
             self.levelProgress = 0
             self.setStars(correctAnswers: 0)
             self.setProblemText()
@@ -167,8 +168,8 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     func endOfProblemsAlert() {
         let endOfProblems = UIAlertController(title: "Correct!", message: "Great job! You solved all the levels!", preferredStyle: UIAlertControllerStyle.alert)
         endOfProblems.addAction(UIAlertAction(title: "Keep doing problems", style: .default, handler: { (action: UIAlertAction!) in
-            self.scene?.clearProblemScreen()
             self.setProblemText()
+            self.scene?.clearProblemScreen()
             
         }))
         present(endOfProblems, animated: true, completion: nil)

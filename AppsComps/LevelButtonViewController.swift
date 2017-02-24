@@ -91,7 +91,12 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             headerView.levelLabel.textAlignment = NSTextAlignment.right
             headerView.classroomText.text = classroomName
             headerView.greetingLabel.text = "Hello " + currentUser!.getName()
-            headerView.levelLabel.text = "You are on level \(highestLevel)"
+            if (highestLevel == 5) {
+                headerView.levelLabel.text = "All levels unlocked"
+            }
+            else {
+                headerView.levelLabel.text = "You are on level \(highestLevel)"
+            }
             headerView.joinButton.setTitle("Join Classroom", for: .normal)
             headerView.leaveButton.setTitle("Leave Class", for: .normal)
             

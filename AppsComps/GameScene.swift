@@ -146,7 +146,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         clearButton.position = CLEARBUTTONPOSITION
         garbage.size = GARBAGESIZE
         vortex.size = CGSize(width: 1.5*WIDTHUNIT, height: 1.5*WIDTHUNIT)
-        clearButton.size = CGSize(width: 2*WIDTHUNIT, height: 1.5*HEIGHTUNIT)
+        clearButton.size = CGSize(width: 2*WIDTHUNIT, height: 0.9*WIDTHUNIT)
         self.addChild(garbage)
         self.addChild(vortex)
         self.addChild(clearButton)
@@ -516,6 +516,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
 
     func changeBlockValueAlert(block: Block) {
+        
         let invalidInputAlert = UIAlertController(title: "Invalid input", message: "Your submission was invalid :(. Make sure you're submitting only a number less than 1000, and if it's a positive block, make sure your number is positive!", preferredStyle: UIAlertControllerStyle.alert)
         invalidInputAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
             self.changeBlockValueAlert(block: block)
@@ -587,8 +588,9 @@ class GameScene: SKScene, UITextFieldDelegate {
                     }
                     //If the block is a child, add the new child to the parent
                     if (block.parent as? Block) != nil {
-                        print("adding child")
                         let parent = block.parent as! Block
+                        let blockScaleBeforeRemovingFromParent = block.xScale
+                        let positionBeforeRemovingFromParent = block.position
                         block.removeFromParent()
                         if block.getType() == "subVariable" {
                             newBlock?.xScale = self.VARBLOCKSCALE
@@ -596,6 +598,14 @@ class GameScene: SKScene, UITextFieldDelegate {
                         }
                         newBlock?.getLabel().xScale = 1 / (newBlock?.xScale)!
                         parent.setSubtractionBlock(block: newBlock)
+                        //If the block is a subNumber
+                        if block.getType() == "subNumber" {
+                            newBlock?.xScale = blockScaleBeforeRemovingFromParent
+                            newBlock?.position = positionBeforeRemovingFromParent
+                            self.scaleBorder(block: newBlock!)
+                            newBlock?.getLabel().xScale = (1 / (newBlock?.xScale)!) / parent.xScale
+                        }
+                        
                     }
                         //Else do the stuff to add it correctly to the game scene
                     else {
@@ -677,7 +687,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     func highlightBlocksUnderVortex() {
         for case let blockToSubtractFrom as Block in self.children {
             if (blockToSubtractFrom.getType() == "variable" || blockToSubtractFrom.getType() == "number") && blockToSubtractFrom.getSubtractionBlock() != nil && (abs(blockToSubtractFrom.getSubtractionBlock()!.getValue()) <= blockToSubtractFrom.getValue()) &&
-                (((blockToSubtractFrom.getSubtractionBlock()!.getWidth() * Double(blockToSubtractFrom.xScale)) <= blockToSubtractFrom.getWidth()) || (blockToSubtractFrom.getValue() == -1 * (blockToSubtractFrom.getSubtractionBlock()?.getValue())!)) && vortex.intersects(blockToSubtractFrom){
+                (((blockToSubtractFrom.getSubtractionBlock()!.getWidth() * Double(blockToSubtractFrom.xScale)) < blockToSubtractFrom.getWidth()) || (blockToSubtractFrom.getValue() == -1 * (blockToSubtractFrom.getSubtractionBlock()?.getValue())!)) && vortex.intersects(blockToSubtractFrom){
                 blockToSubtractFrom.yScale = 1.1
             }
             else {
@@ -1058,7 +1068,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 for case let blockToSubtractFrom as Block in self.children {
                     //We only want to deal with positive blocks, that have a child both smaller than them and with a value less than them(unless the values are the same then the width doesn't matter) that intersect the vortex.
                     if (blockToSubtractFrom.getType() == "variable" || blockToSubtractFrom.getType() == "number") && blockToSubtractFrom.getSubtractionBlock() != nil && (abs(blockToSubtractFrom.getSubtractionBlock()!.getValue()) <= blockToSubtractFrom.getValue()) &&
-                        (((blockToSubtractFrom.getSubtractionBlock()!.getWidth() * Double(blockToSubtractFrom.xScale)) <= blockToSubtractFrom.getWidth()) || (blockToSubtractFrom.getValue() == -1 * (blockToSubtractFrom.getSubtractionBlock()?.getValue())!)) && vortex.intersects(blockToSubtractFrom){
+                        (((blockToSubtractFrom.getSubtractionBlock()!.getWidth() * Double(blockToSubtractFrom.xScale)) < blockToSubtractFrom.getWidth()) || (blockToSubtractFrom.getValue() == -1 * (blockToSubtractFrom.getSubtractionBlock()?.getValue())!)) && vortex.intersects(blockToSubtractFrom){
                             blocksToSubtractOn.append(blockToSubtractFrom)
                     }
                 }
@@ -1125,6 +1135,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                         //block.removeFromParent()
                 }
                 vortex.position = VORTEXPOSITION
+                self.highlightBlocksUnderVortex()
                 
             }
             else {
