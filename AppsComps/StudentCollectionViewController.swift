@@ -45,12 +45,12 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        self.navigationItem.leftBarButtonItem = segmentBarItem
+        //self.navigationItem.leftBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
-        let shareWithStudentsButton: UIBarButtonItem = UIBarButtonItem(title: "Share With Students", style: .plain, target: self, action: #selector(self.shareClicked(_:)))
+        let shareWithStudentsButton: UIBarButtonItem = UIBarButtonItem(title: "Add Students", style: .plain, target: self, action: #selector(self.shareClicked(_:)))
         self.navigationItem.rightBarButtonItem = shareWithStudentsButton
-        toolbarItems = [flexibleSpace, logoutButton]
+        toolbarItems = [segmentBarItem, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         
         // Uncomment the following line to preserve selection between presentations
@@ -87,7 +87,6 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
     func setClassroomIDAndName(id: Int, name: String) {
         self.classroomName = name
         self.classroomID = String(id)
-        self.navigationItem.title = classroomName
     }
     
     func modeSegmentChanged(_ sender: AnyObject) {
@@ -114,20 +113,20 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 
         cellModeSegment = UISegmentedControl(items: ["Students", "Overview"])
 
-        if cellMode == false {
-            cellModeSegment.selectedSegmentIndex = 1
-        }  else if cellMode == true {
+        if cellMode == true {
             cellModeSegment.selectedSegmentIndex = 0
+        }  else if cellMode == false{
+            cellModeSegment.selectedSegmentIndex = 1
         }
         cellModeSegment.addTarget(self, action: #selector(modeSegmentChanged), for: .allEvents)
         let segmentBarItem = UIBarButtonItem(customView: cellModeSegment)
         segmentBarItem.target = self
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem = segmentBarItem
+        //self.navigationItem.rightBarButtonItem = segmentBarItem
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         
-        toolbarItems = [flexibleSpace, logoutButton]
+        toolbarItems = [segmentBarItem, flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
     }
     
@@ -337,10 +336,10 @@ class StudentCollectionViewController: UICollectionViewController, UICollectionV
 //        self.collectionView?.reloadData()
 //    }
     
-    func setTitle(className: String) {
-        self.navigationItem.title = className
-        self.collectionView?.reloadData()
-    }
+//    func setTitle(className: String) {
+//        self.navigationItem.title = className
+//        self.collectionView?.reloadData()
+//    }
 
     // MARK: UICollectionViewDelegate
 

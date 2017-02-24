@@ -185,6 +185,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         lastIndexPath = indexPath
         APIConnector().requestClassroomData(callingDelegate: self, classroomID: String(classrooms[indexPath.row][1] as! Int))
         self.detailViewController?.navigationItem.title = classrooms[indexPath.row][0] as! String
+        self.detailViewController?.setClassroomIDAndName(id: classrooms[indexPath.row][1] as! Int, name: classrooms[indexPath.row][0] as! String)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
