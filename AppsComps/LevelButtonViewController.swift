@@ -26,26 +26,20 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView?.backgroundColor = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
         
-        
-        //Setting the buttons on the navigation bar
+        self.automaticallyAdjustsScrollViewInsets = false
+
+        print(screen.size)
         self.navigationItem.title = "Home"
-//        let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
-//        let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
-//        logoutButton.tintColor = .red
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-//        toolbarItems = [helpButton, flexibleSpace, logoutButton]
-//        self.navigationController?.setToolbarItems(toolbarItems, animated: false)
-//        self.navigationController?.setToolbarHidden(false, animated: false)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let helpButton: UIBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(self.helpClicked(_:)))
+        
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        toolbarItems = [helpButton, flexibleSpace, logoutButton]
+        toolbarItems = [flexibleSpace, logoutButton]
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
         
@@ -101,8 +95,8 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             headerView.leaveButton.setTitle("Leave Class", for: .normal)
             
             //SET COLORS OF EVERYTHING
-            //let lightPink = UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0)
             let brightYellow = UIColor(red:0.94, green:0.80, blue:0.41, alpha:1.0)
+            
             let darkBlue = UIColor(red:0.05, green:0.11, blue:0.20, alpha:1.0)
             headerView.backgroundColor = darkBlue
             headerView.classroomText.textColor = brightYellow
@@ -197,14 +191,16 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
         
         cell.levelButton.setTitle(self.levelLabels[indexPath.row], for: .normal)
+        
         cell.levelButton.setLevel(lev: self.levels[indexPath.row])
         let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
         let width: CGFloat = screen.width
         
         let unit: CGFloat = width/100
         cell.levelButton.frame.size = CGSize(width: unit*20, height: unit*20)
+        
         cell.levelButton.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
-        cell.levelButton.setTitleColor(UIColor(red:0.95, green:0.88, blue:0.93, alpha:1.0), for: .normal)
+        
         cell.levelButton.addTarget(self, action: #selector(self.goToProblemScreen), for: .touchUpInside)
         var image : String = "emptystars"
         
@@ -370,13 +366,13 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         present(logOutAlert, animated: true, completion: nil)
     }
     
-    func helpClicked(_ sender: UIBarButtonItem) {
-        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpPopUpID") as! HelpViewController
-        popOverVC.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        self.view.addSubview(popOverVC.view)
-        popOverVC.didMove(toParentViewController: self)
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "seguePopup" {
+            let helpPopOver = segue.destination as! HelpViewController
+            helpPopOver.preferredContentSize = CGSize(width: screen.width * 0.8, height: screen.height * 0.8)
+        }
     }
 
 }
