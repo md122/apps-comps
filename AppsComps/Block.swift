@@ -22,7 +22,7 @@ class Block: SKSpriteNode {
     let BLOCKHEIGHT:CGFloat
     let BLOCKWIDTH:CGFloat
     
-    //Type is either number or variable
+    //Type is one of the enum values for BlockType
     var type: BlockType
     var value: String // Holds the value. I.e. in a 5x block, 5 is the value
     var label = SKLabelNode(fontNamed: "Arial")
@@ -156,15 +156,14 @@ class Block: SKSpriteNode {
     func getHeight() -> Double{
         return Double(BLOCKHEIGHT)
     }
-    
-    func getOriginalWidth() -> Double{
-        return Double(BLOCKWIDTH)
-    }
-    
     //Changing width by scale factor so width returns the width of the bar after it's scaled
     func getWidth() -> Double{
         return Double(BLOCKWIDTH) * Double(self.xScale)
-
+        
+    }
+    
+    func getOriginalWidth() -> Double{
+        return Double(BLOCKWIDTH)
     }
     
     func getTopRightX() -> Double{
@@ -196,6 +195,7 @@ class Block: SKSpriteNode {
         return String(describing: self.type)
     }
     
+    //Sets the subtraction block as the child of this current block. Also does the scaling to move the subtraction block into the world of this block and have it look the same to the user
     func setSubtractionBlock(block: Block?) {
         self.subtractionBlock = block
         block?.position = CGPoint(x:((self.getWidth() / 2) - (block?.getWidth())! / 2) / Double(self.xScale), y:0)

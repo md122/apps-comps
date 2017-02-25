@@ -13,8 +13,6 @@ import UIKit
 class GameScene: SKScene, UITextFieldDelegate {
     let parentViewController:UIViewController
     
-    // SKCamera
-    
     // Makes the blocks stack in the correct order
     // Based on the order they were last touched
     // Value incremented every time a block is touched
@@ -26,7 +24,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var clearButton:SKSpriteNode
     var vortex:SKSpriteNode
     
-    // The starting coordinates
+    // The starting coordinates and fixed widths
     let width:CGFloat
     let height:CGFloat
     let HEIGHTUNIT:CGFloat
@@ -117,19 +115,21 @@ class GameScene: SKScene, UITextFieldDelegate {
             if child != varBlockInBank && child != numBlockInBank && child != subNumBlockInBank && child != subVarBlockInBank && child != vortex {
                 child.removeFromParent()
             }
-            //We need to set the bars back to empty
+            //We need to set the bars back to empty because removing a block from its parent doesn't remove it from a bar
             topBar = [Block]()
             bottomBar = [Block]()
         }
         VARBLOCKSCALE = 1
     }
     
+    //Instead of calling addChild, call this function to add a block and set it to the correct z value
     func addBlockChild(_ node: SKNode) {
         node.zPosition = CGFloat(currentBlockZ)
         currentBlockZ += 6
         super.addChild(node)
     }
     
+    //takes in a block and scales the inner rectange so the border is length border width
     func scaleBorder(block: Block) {
             block.getBlockColorRectangle().xScale = (CGFloat(-1*BORDERWIDTH) + (CGFloat(block.getOriginalWidth()) * block.xScale)) / (block.xScale * CGFloat(block.getOriginalWidth()))
             block.getBlockColorRectangle().yScale = (CGFloat(-1*BORDERWIDTH) + (BLOCKHEIGHT * block.yScale)) / (block.yScale * BLOCKHEIGHT)
@@ -169,27 +169,24 @@ class GameScene: SKScene, UITextFieldDelegate {
         let barStarterColor1 = UIColor(hexString: "#323641")
         let topBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3.5, height : BLOCKHEIGHT))
         topBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(TOPBARY))
-        
         self.addChild(topBarStarter)
         
         let bottomBarStarter = SKSpriteNode(texture: nil, color: barStarterColor1, size: CGSize(width: WIDTHUNIT/3.5, height : BLOCKHEIGHT))
         bottomBarStarter.position = CGPoint(x:CGFloat(BARX), y:CGFloat(BOTTOMBARY))
-        
         self.addChild(bottomBarStarter)
         
-        //Pinchy stuff
+        //Create the pinch gesture recognizer for scaling and add it to the view
         //http://stackoverflow.com/questions/41278079/pinch-gesture-to-rescale-sprite
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         self.view?.addGestureRecognizer(pinchGesture)
         
-        let doubleTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleDoubleTap(_:)))
-        doubleTapGesture.numberOfTapsRequired = 1
-        doubleTapGesture.allowableMovement = 10
-        doubleTapGesture.minimumPressDuration = 0.01
+        //Create the doubleTap gesture recognizer for changing the value of a block and add it to the view
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
         self.view?.addGestureRecognizer(doubleTapGesture)
-
     }
     
+    //First snaps blocks into place and then calls changeBlockValueAlert
     func handleDoubleTap(_ sender: UILongPressGestureRecognizer) {
         if blockTouched != nil && blockTouched != varBlockInBank && blockTouched != numBlockInBank && blockTouched != subNumBlockInBank && blockTouched != subVarBlockInBank && blockTouched != vortex{
             if blockTouched?.getType() == "number" || blockTouched?.getType() == "variable" {
@@ -202,7 +199,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
     
-    //Got this from the stack overflow post...
+    //The framework for this method is from the stack overflow post linked earlier
     func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         if sender.state == .began {
             //We want to snap the block back into the correct bar(or put it back in it's position in the block bank or remove it from the bar before the stretching starts
@@ -349,6 +346,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         return "no"
     }
     
+    //Removes the negative block and also does the correct scaling to enter the negative block into the scaling of the game scene
     func removeNegativeBlockFromPositive(positiveBlock: Block) {
         blockTouched = positiveBlock.getSubtractionBlock()
         positiveBlock.removeSubtractionBlock()
@@ -365,6 +363,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         currentBlockZ += 6
     }
 
+    //Called by changeBlockValueAlert and creates a new block with the new value and makes it look just like the old block or bigger if it's a variable block. Also transfers over any child this block may have or keepts the block as a child if it was one before the stretch
     func changeBlockValue(value: String, block: Block) {
         //Start by snapping block into place, so if the block is negative attached to positive it will be a child for all of this.
         if block.getType() == "number" || block.getType() == "variable" {
@@ -382,12 +381,11 @@ class GameScene: SKScene, UITextFieldDelegate {
             newBlock = Block(type: .subVariable, size:self.VARBLOCKSIZE, value: value)
             scaleBorder(block: newBlock)
         }
-            //Number case
         else if block.getType() == "number" {
             newBlock = Block(type: .number, size:self.NUMBLOCKSIZE, value: value)
             scaleBorder(block: newBlock)
         }
-            //subNumber case, not specified so new block always initializes
+        //subNumber case, not specified so new block always initializes
         else {
             newBlock = Block(type: .subNumber, size:self.NUMBLOCKSIZE, value: value)
             scaleBorder(block: newBlock)
@@ -411,7 +409,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             newBlock.getLabel().xScale = 1 / newBlock.xScale
             parent.setSubtractionBlock(block: newBlock)
         }
-            //Else do the stuff to add it correctly to the game scene
+        //if the new block is not a child do the stuff to add it correctly to the game scene
         else {
             //But the scale should be the same
             newBlock.xScale = block.xScale
@@ -515,6 +513,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
 
+    //Pops up an allert to get the value the user wants to change the block value too, if the user enters an incorrect value another alert pops us to let them retry.
     func changeBlockValueAlert(block: Block) {
         
         let invalidInputAlert = UIAlertController(title: "Invalid input", message: "Your submission was invalid :(. Make sure you're submitting only a number less than 1000, and if it's a positive block, make sure your number is positive!", preferredStyle: UIAlertControllerStyle.alert)
@@ -522,6 +521,8 @@ class GameScene: SKScene, UITextFieldDelegate {
             self.changeBlockValueAlert(block: block)
         }))
         invalidInputAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.blockTouched?.color = .black
+            self.blockTouched = nil
         }))
         
         let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, greater than 0 and less than 1000, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
@@ -530,7 +531,10 @@ class GameScene: SKScene, UITextFieldDelegate {
             textField.keyboardType = UIKeyboardType.numberPad
         })
         
-        changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in }))
+        changeValueAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            self.blockTouched?.color = .black
+            self.blockTouched = nil
+        }))
         changeValueAlert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { (action: UIAlertAction!) in
             //Removed in merging conflict
             //let valueEntered = changeValueAlert.textFields![0].text
@@ -581,7 +585,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                 if newBlock != nil {
                     //If the block has a child, transfer it over
                     if block.getSubtractionBlock() != nil {
-                        print("adding subtractino block")
                         let subBlock = block.getSubtractionBlock()
                         subBlock?.removeFromParent()
                         newBlock?.setSubtractionBlock(block: subBlock)
@@ -651,7 +654,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         self.parentViewController.present(changeValueAlert, animated: true, completion: nil)
     }
     
-    // Called when you touch the screen
+    // Called when you touch the screen. Sets block touched to the correct block. If the block is a negative attached to a positive it makes that block now part of the game scene world not its parent. Also checks to see if clear button was touched.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
@@ -684,6 +687,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         return false
     }
     
+    //Uses the same logic as is used to remove blocks using the vortex and if the blocks would be removed by the vortex at that moment the yscale is increased, if not the yscale is set to 1. Called repeatedly by touchesmoved.
     func highlightBlocksUnderVortex() {
         for case let blockToSubtractFrom as Block in self.children {
             if (blockToSubtractFrom.getType() == "variable" || blockToSubtractFrom.getType() == "number") && blockToSubtractFrom.getSubtractionBlock() != nil && (abs(blockToSubtractFrom.getSubtractionBlock()!.getValue()) <= blockToSubtractFrom.getValue()) &&
@@ -696,7 +700,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
     
-    // Called when you are moving your finger
+    // Called over and over at small intervas when you are moving your finger.
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         highlightBlocksUnderVortex()
         //Check if a block is currently being touched
@@ -739,6 +743,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
     }
     
+    //Given a block and a bar, if that block is at a position where it should be inserted in the bar it does the insertion it returns the insertion index to that we can shift over all of the blocks after it. There were mutation issues with trying to do this final step in this function.
     func tryToInsertBlockInBar(bar: [Block], block: Block) -> Int {
         // We are going to align with the upper left corner
         let blockTopLeftX = block.getTopLeftX()
@@ -811,7 +816,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
     //This used to be called shiftBarsLeft
-    //Now if you put in a negative width it will shift the blocks after the index left, if you put in a positive width it will shift all blocks after the indexright
+    //Now if you put in a negative width it will shift the blocks after the index left, if you put in a positive width it will shift all blocks after the index right
     func shiftBlocks(bar: [Block], width: Double, index: Int) {
         //This if statement is a bit squishy. Not sure exactly what it does, but don't want to loop with bad inputs
         if (bar.count - 1 >= index + 1) {
@@ -820,7 +825,8 @@ class GameScene: SKScene, UITextFieldDelegate {
             }
         }
     }
-    //If the block is in the top bar or the bottom bar, this function removes it and scoots the blocks that come after it over
+    
+    //If the block is in the top bar or the bottom bar, this function removes it and scoots the blocks that come after it over.
     func removeBlockFromBarAndScootBlocksOver(block: Block) {
         let indexInTopBar = findIndexOfBlock(bar: topBar, block: block)
         let indexInBottomBar = findIndexOfBlock(bar: bottomBar, block:block)
@@ -839,7 +845,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         block.removeFromParent()
     }
     
-    //Returns the x coordinate for the end of the last block in the bar passed in
+    //Returns the x coordinate for the end of the last block in the bar passed in. Used to see if a block has been dragged out of a bar or not.
     func getEndOfBar(bar: [Block]) -> Double {
         var endOfBar = Double(BARX)
         for i in 0...(bar.count - 1) {
@@ -847,6 +853,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         }
         return endOfBar
     }
+    
     //At the end of a touch or when the pinch action starts put the block back into place and update stuff based on where it goes
     //Might make block touched nil, because it might snap the block into the garbage can
     func snapPositiveBlockIntoPlace(block: Block) {
@@ -889,7 +896,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 block.position = CGPoint(x:xPosition, y:CGFloat(TOPBARY))
             }
         }
-            //If it's not already in the top bar, are you dragging it to the top bar?
+        //If it's not already in the top bar, are you dragging it to the top bar?
         else if abs(Double(TOPBARY) - Double(block.position.y)) < SNAPDISTANCE {
             let insertionIndex = tryToInsertBlockInBar(bar: topBar, block: block)
             if insertionIndex > -1 {
@@ -931,7 +938,7 @@ class GameScene: SKScene, UITextFieldDelegate {
                 block.position = CGPoint(x:xPosition, y:CGFloat(BOTTOMBARY))
             }
         }
-            //If it's not already in the bottom bar, are you dragging it to the bottom bar?
+        //If it's not already in the bottom bar, are you dragging it to the bottom bar?
         else if abs(Double(BOTTOMBARY) - Double(block.position.y)) < SNAPDISTANCE {
             let insertionIndex = tryToInsertBlockInBar(bar: bottomBar, block: block)
             if insertionIndex > -1 {
@@ -982,6 +989,9 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
+    
+    //Similar to snapPositiveBlockIntoPlace, but instead of snapping into bars tries to snap the block into a positive block. Called at the end of a touch.
+    //Might make block touched nil, because it might snap the block into the garbage can
     func snapNegativeBlockIntoPlace(block: Block) {
         //If on top of a positive block, snap it on top of that block.
         for case let child as Block in self.children {
@@ -1043,15 +1053,9 @@ class GameScene: SKScene, UITextFieldDelegate {
             garbage.setScale(1.0)
         }
     }
-
-    //Currently not working :/
-    func blockVortex(block: Block) {
-        block.xScale = (block.xScale / 1.00001)
-        scaleBorder(block: block)
-        block.alpha = block.alpha / 1.00001
-        block.zRotation = block.zRotation + 1
-    }
     
+    //Built in function that is called when your finger is lifted after a touch.
+    //Snaps blocks into place, makes the blockTouched unhighlighed and unselected, does the vortexing if the vortex was being dragged.
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         highlightBlocksUnderVortex()
         if blockTouched != nil {
@@ -1114,25 +1118,6 @@ class GameScene: SKScene, UITextFieldDelegate {
                         blockToSubtractFrom.removeSubtractionBlock()
                         self.changeBlockValue(value: newBlockValue, block: blockToSubtractFrom)
                     }
-
-                        //VORTEX!!! WHY????!!!!
-                        //let fieldNode = SKFieldNode.radialGravityField()
-                        //fieldNode.categoryBitMask = 0x1 << 0
-                        //fieldNode.strength = 2.8
-                        
-                        
-                        //child.physicsBody?.fieldBitMask = 0x1 << 0
-                        
-                        //fieldNode.run(SKAction.sequence([SKAction.strength(to: 0, duration: 2.0), SKAction.removeFromParent()]))
-                        //print(fieldNode)
-                        //vortex.addChild(fieldNode)
-                        //Remove in a super cool black hole way!!!!
-                        //while child.xScale > 0.1 {
-                         //   child.xScale = (child.xScale / 1.0001)
-                         //   print("in loop", child.xScale)
-                        //}
-                        //removeBlockFromBarAndScootBlocksOver(block: block)
-                        //block.removeFromParent()
                 }
                 vortex.position = VORTEXPOSITION
                 self.highlightBlocksUnderVortex()
@@ -1146,6 +1131,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             blockTouched = nil
         }
     }
+    
     override func update(_ currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
