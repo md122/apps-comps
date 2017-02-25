@@ -144,7 +144,7 @@ class ClassroomTableMasterViewController: UITableViewController, APIDataDelegate
         
         // cancel option
         createClassroomAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (action: UIAlertAction!) in
-            if self.classrooms.count > 0{
+            if self.classrooms.count > 0 && self.isEditing == false {
                 self.autoSelectClassroom(indexPath: self.lastIndexPath)
             }
             self.tableView.deselectRow(at: IndexPath(row: self.classrooms.count, section: 0), animated: true)
