@@ -40,6 +40,7 @@ class LevelButton: UIButton {
             self.setTitleColor(UIColor(red:0.69, green:0.69, blue:0.76, alpha:1.0), for: .normal)
             self.backgroundColor = UIColor(red:0.42, green:0.41, blue:0.48, alpha:1.0)
             self.isUserInteractionEnabled = false
+            self.setTitle("Locked", for: .normal)
         }
         return locked
     }

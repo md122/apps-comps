@@ -29,7 +29,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
         self.automaticallyAdjustsScrollViewInsets = false
 
-        
+        print(screen.size)
         self.navigationItem.title = "Home"
 
     }
@@ -366,7 +366,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "seguePopup" {
             let helpPopOver = segue.destination as! HelpViewController
-            helpPopOver.preferredContentSize = CGSize(width: screen.width * 0.75, height: screen.height * 0.75)
+            helpPopOver.preferredContentSize = CGSize(width: screen.width * 0.8, height: screen.height * 0.8)
         }
     }
 
