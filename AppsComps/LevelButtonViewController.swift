@@ -3,7 +3,7 @@
 //  LevelButtonViewController.swift
 //  AppsComps
 //
-//  Created by appscomps on 1/18/17.
+//  Created by WANCHEN YAO on 2/25/17.
 //  Copyright © 2017 appscomps. All rights reserved.
 //
 import UIKit
@@ -36,6 +36,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     
     override func viewWillAppear(_ animated: Bool) {
         
+        //CREATE THE TOOLBAR FOR THE PROBLEM SELECTOR, WHICH INCLUDES A LOGOUT BUTTON
         let logoutButton: UIBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(self.logoutClicked(_:)))
         logoutButton.tintColor = .red
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
@@ -43,6 +44,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         self.navigationController?.setToolbarItems(toolbarItems, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
         
+        //GET STUDENT DASHBOARD INFO, WHICH IS ONLY USED IF THE USER IS A STUDENT. NO ERRORS IF THIS IS A TEACHER, THE DATA JUST ISN'T USED
         connector.requestStudentDashInfo(callingDelegate: self, studentID: currentUser!.getIdToken())
     }
     
@@ -85,6 +87,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             headerView.levelLabel.textAlignment = NSTextAlignment.right
             headerView.classroomText.text = classroomName
             headerView.greetingLabel.text = "Hello " + currentUser!.getName()
+            //TELLS THE USER WHAT LEVEL THEY CAN ACCESS
             if (highestLevel == 5) {
                 headerView.levelLabel.text = "All levels unlocked"
             }
@@ -103,15 +106,15 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             headerView.greetingLabel.textColor = brightYellow
             headerView.levelLabel.textColor = brightYellow
             
-            //Temporary logo
+            //LOGO
             //Check here for how to resize image: http://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
             headerView.logoView.image = UIImage(named: "logo placeholder")
             headerView.logoView.center = CGPoint(x: widthUnit*50, y: heightUnit*50)
             headerView.logoView.frame = CGRect(x: headerView.logoView.frame.origin.x, y: headerView.logoView.frame.origin.y, width: widthUnit*35, height: headerView.frame.height)
             
-            //JOIN/LEAVE CLASSROOM
+            //USER IS A STUDENT
             if (currentUser as? Student) != nil {
-                //INCLUDE IF STATEMENT TO SEE IF STUDENT IS IN CLASS -> IF YES, LEAVE CLASS. IF NO, JOIN CLASS
+                //IF STUDENT IS IN CLASSROOM, SHOW "LEAVE CLASS" BUTTON
                 if inClassRoom {
                     headerView.joinButton.isHidden = true
                     headerView.leaveButton.isHidden = false
@@ -123,6 +126,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
                     headerView.leaveButton.contentHorizontalAlignment = .left
                     headerView.leaveButton.frame = CGRect(x: widthUnit*5, y: heightUnit*25 + headerView.classroomText.frame.height + heightUnit*15, width: headerView.leaveButton.frame.size.width, height: headerView.leaveButton.frame.size.height)
                 }
+                //IF STUDENT IS NOT IN CLASSROOM, SHOW "JOIN CLASSROOM" BUTTON
                 else{
                     headerView.leaveButton.isHidden = true
                     headerView.joinButton.isHidden = false
@@ -138,12 +142,12 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
                 }
                 
             }
-                //TEACHER SIDE REMOVES JOIN/LEAVE CLASSROOM ABILITY
+            //USER IS A TEACHER
+            //REMOVES JOIN/LEAVE CLASS ABILITY
             else {
                 headerView.joinButton.isHidden = true
                 headerView.leaveButton.isHidden = true
                 headerView.classroomText.text = "Teacher Mode"
-                headerView.levelLabel.text = "All levels accessible"
             }
             
             
@@ -158,6 +162,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
     }
     
+    //SETS SIZE OF EACH COLLECTION VIEW CELL
     /*Referenced from http://stackoverflow.com/questions/40019875/set-collectionview-size-sizeforitematindexpath-function-is-not-working-swift
      This method should control the size and layout of the cells
      
@@ -182,28 +187,27 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         return UIEdgeInsets(top: hUnit*20, left: 5, bottom: hUnit*20, right: 5)
     }
     
-    
+    //SET UP VISUALS AND ACCESSIBILITY FOR EACH LEVEL BUTTON
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "levelCell", for: indexPath) as! LevelButtonCollectionCell
         
         
         //Got help for indexing at: http://stackoverflow.com/questions/36074827/swift-2-1-how-to-pass-index-path-row-of-collectionview-cell-to-segue
-        
-        cell.levelButton.setTitle(self.levelLabels[indexPath.row], for: .normal)
-        
+        //SET LEVEL BUTTON ACCORDING TO POSITION IN ROW
         cell.levelButton.setLevel(lev: self.levels[indexPath.row])
-        let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
-        let width: CGFloat = screen.width
         
+        //CHECKS IF LEVEL BUTTON IS ACCESSIBLE BY COMPARING TO USER'S HIGHEST LEVEL
+        let locked: Bool = (cell.levelButton?.checkAccess(curLev: highestLevel))!
+        
+        //SET BUTTON SIZE AND SHAPE
+        let width: CGFloat = screen.width
         let unit: CGFloat = width/100
         cell.levelButton.frame.size = CGSize(width: unit*20, height: unit*20)
-        
         cell.levelButton.layer.cornerRadius = CGFloat(roundf(Float(cell.frame.size.width/2.0)))
         
-        cell.levelButton.addTarget(self, action: #selector(self.goToProblemScreen), for: .touchUpInside)
+        //SET STAR PROGRESS FOR EACH LEVEL
         var image : String = "emptystars"
-        
         if (!locked) {
             if (cell.levelButton.getLevel() == highestLevel) {
                 switch levelProgress {
@@ -216,30 +220,33 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             else{
                 image = "threestars"
             }
-            
         }
         cell.levelView.image = UIImage(named: image)
         
+        //ADD TARGET TO BUTTON TO SEGUE TO THE APPROPRIATE LEVEL PROBLEMS
+        cell.levelButton.addTarget(self, action: #selector(self.goToProblemScreen), for: .touchUpInside)
+        
         return cell
     }
+    
+    //SEGUE TO THE PROBLEM SCREEN VIEW CONTROLLER
     @IBAction func goToProblemScreen(_ sender: AnyObject) {
+        //GET THE LEVEL OF THE BUTTON THAT THE STUDENT CLICKED ON
         let curLevel = sender.getLevel()
-        print(curLevel)
         let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "probScreenID") as! ProblemScreenViewController
         
+        //SET THE VIEW CONTROLLER'S LEVEL/HIGHEST LEVEL/PROGRESS SETTINGS
         vc.setLevel(level: curLevel)
         vc.setHighestLevel(level: highestLevel)
         vc.setLevelProgress(progress: levelProgress)
         self.navigationController?.pushViewController(vc, animated:true)
     }
     
-
-    
-    
+    //JOIN CLASSROOM ALERT THAT USES AN API CALL TO ADD STUDENT TO CLASSROOM IF ID IS VALID
     @IBAction func joinClassroom(_ sender: AnyObject) {
         let joinClassAlert = UIAlertController(title: "Enter Classroom ID", message: "", preferredStyle: .alert)
         
-        //joinClassAlert.addTextField(configurationHandler: nil)
+        //ONLY ALLOWS USER TO ENTER NUMBERS
         joinClassAlert.addTextField { (textField: UITextField!) in
             textField.keyboardType = UIKeyboardType.numberPad
         }
@@ -247,9 +254,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         // Join option
         let joinAction = UIAlertAction(title: "Join", style: .default, handler: {
             alert -> Void in
-            
             let idTextField = joinClassAlert.textFields![0].text
-            //CHECK IF IT'S AN INT > 0, IF NOT TELL THEM IT'S INVALID
             let connector = APIConnector()
             connector.attemptAddStudentToClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: idTextField!)
             
@@ -262,12 +267,13 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         present(joinClassAlert, animated: true, completion: nil)
     }
     
+    
+    //LEAVE CLASSROOM ALERT THAT USES AN API CALL TO REMOVE STUDENT FROM CLASSROOM
     @IBAction func leaveClassroom(_ sender: AnyObject) {
         let leaveClassAlert = UIAlertController(title: "Leave Classroom", message: "Are you sure you want to leave the classroom?", preferredStyle: UIAlertControllerStyle.alert)
         
         // Log out option
         leaveClassAlert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { (action: UIAlertAction!) in
-            //CHANGE CLASSROOMID TO ACTUAL ID LATER
             self.connector.attemptRemoveStudentFromClassroom(callingDelegate: self, studentID: (currentUser?.getIdToken())!, classroomID: String(describing: self.classroomID))
         }))
         
@@ -275,6 +281,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         leaveClassAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         present(leaveClassAlert, animated: true, completion: nil)    }
+    
     
     //RETURNS A BOOL THEN A LIST: 1) name of teacher 2) name of classroom
     func handleAddStudentToClassAttempt(data: NSDictionary) {
@@ -288,7 +295,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
             let classID = studentsClassroom[0][1] as! Int
             classroomName = className
             classroomID = classID
-        } else if data["error1"] as? String == "ERROR: classroom does not exist" {
+        }
+        
+        else if data["error1"] as? String == "ERROR: classroom does not exist" {
             let noSuchClassroomAlert = UIAlertController(title: "Hmmm...", message: "That classroom ID doesn't appear to exist. Ask your teacher for a valid classroom ID.", preferredStyle: UIAlertControllerStyle.alert)
             // cancel option
             noSuchClassroomAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action: UIAlertAction!) in
@@ -318,9 +327,9 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         self.collectionView?.reloadData()
     }
     
+    //UPDATES STUDENT INFORMATION INCLUDING LEVEL PROGRESS, HIGHEST LEVEL, CLASSROOM NAME, AND CLASSROOM ID
+    //SETS INCLASSROOM TO TRUE OR FALSE DEPENDING IF CLASSROOM IS NOT AN EMPTY ARRAY
     func handleStudentDashInfoRequest(data: [NSDictionary]) {
-        print("TESTING STUDENT DASH")
-        //print(data)
         let progressDictionary = data[0]
         let classroomDataDictionary = data[1]
         if progressDictionary["error"] as? String == "none" {
@@ -349,6 +358,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
         
     }
     
+    //LOGOUT BUTTON ACTION
     func logoutClicked(_ sender: UIBarButtonItem) {
         let logOutAlert = UIAlertController(title: "", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -367,7 +377,7 @@ class LevelButtonViewController: UICollectionViewController, UICollectionViewDel
     }
     
 
-    
+    //SEGUE METHOD TO SHOW HELP VIEW CONTROLLER
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "seguePopup" {
             let helpPopOver = segue.destination as! HelpViewController

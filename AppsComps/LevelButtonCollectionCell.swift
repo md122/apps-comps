@@ -2,7 +2,7 @@
 //  LevelButtonCollectionCell.swift
 //  AppsComps
 //
-//  Created by appscomps on 1/21/17.
+//  Created by WANCHEN YAO on 2/25/17.
 //  Copyright © 2017 appscomps. All rights reserved.
 //
 import UIKit
@@ -13,13 +13,10 @@ class LevelButtonCollectionCell: UICollectionViewCell {
     
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)
         
     }

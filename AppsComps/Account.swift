@@ -11,12 +11,9 @@ import UIKit
 
 class Account {
     
-
     var idToken: String
     var name: String
-    //var type: String?
-    
-
+   
     init?(idToken: String, name: String){
         self.idToken = idToken
         self.name = name
