@@ -14,7 +14,6 @@
 		113B052B1DDBB3AF00D001DD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052A1DDBB3AF00D001DD /* Account.swift */; };
 		113B052D1DDBB3B500D001DD /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052C1DDBB3B500D001DD /* Teacher.swift */; };
 		113B052F1DDBB3BB00D001DD /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B052E1DDBB3BB00D001DD /* Student.swift */; };
-		113B05351DDBB3D400D001DD /* Classroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113B05341DDBB3D400D001DD /* Classroom.swift */; };
 		1186F59F1E31EB41004AE62F /* StudentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */; };
 		1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */; };
 		1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */; };
@@ -91,7 +90,6 @@
 		113B052A1DDBB3AF00D001DD /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		113B052C1DDBB3B500D001DD /* Teacher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		113B052E1DDBB3BB00D001DD /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
-		113B05341DDBB3D400D001DD /* Classroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classroom.swift; sourceTree = "<group>"; };
 		1186F59E1E31EB41004AE62F /* StudentCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewController.swift; sourceTree = "<group>"; };
 		1186F5A01E31EB49004AE62F /* ClassroomTableMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassroomTableMasterViewController.swift; sourceTree = "<group>"; };
 		1186F5A21E31EB51004AE62F /* StudentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -201,7 +199,6 @@
 			children = (
 				113B052A1DDBB3AF00D001DD /* Account.swift */,
 				113B052C1DDBB3B500D001DD /* Teacher.swift */,
-				113B05341DDBB3D400D001DD /* Classroom.swift */,
 				113B052E1DDBB3BB00D001DD /* Student.swift */,
 			);
 			name = TypeClasses;
@@ -921,7 +918,6 @@
 				1186F5A11E31EB49004AE62F /* ClassroomTableMasterViewController.swift in Sources */,
 				1135C03C1E4ED7E3008671B6 /* SectionHeaderCollectionReusableView.swift in Sources */,
 				4773C4541E4AE88600C07CB2 /* Vortex.swift in Sources */,
-				113B05351DDBB3D400D001DD /* Classroom.swift in Sources */,
 				47EBC3091DD68E0B002F4DC1 /* Block.swift in Sources */,
 				111B3E0F1E5F929F00A4AB1B /* AddClassroomTableViewCell.swift in Sources */,
 				1186F5A31E31EB51004AE62F /* StudentCollectionViewCell.swift in Sources */,

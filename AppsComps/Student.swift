@@ -18,7 +18,6 @@ class Student: Account, APIDataDelegate {
         if idToken.isEmpty || name.isEmpty {
             return nil
         }
-        
     }
     
     override func getType()->String{
@@ -27,7 +26,6 @@ class Student: Account, APIDataDelegate {
  
 
     override func getClassRoomID()->Int{
-        //code that asks the database connector for the classroom id associated with the account id of this student
         return classroomID
     }
     
