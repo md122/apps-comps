@@ -238,6 +238,8 @@ def updateProgress(userID, currentLevel, num, answerCorrect, skipProblem):
                     query = cur.mogrify("UPDATE progress SET problem_num = %s, num_correct = num_correct+1 WHERE user_id = %s;",(num,userID))
             else:
                 query = cur.mogrify("UPDATE progress SET problem_num = %s WHERE user_id = %s;",(num,userID,))
+        else:
+            query = cur.mogrify("UPDATE progress SET num_correct = 0 WHERE user_id = %s;",(userID,))
 
     result = addDeleteData(query,conn)
     conn.close()
@@ -259,6 +261,7 @@ def checkAnswer(userID, answer, level, num):
         conn.close()
         return [{'isCorrect': "correct", 'nextLevelUnlocked': unlock}, result]
     else:
+        updateProgress(userID, level, num, False, False)[0]
         conn.close()
         return [{'isCorrect': "incorrect", 'nextLevelUnlocked': "false"}, result]
 
