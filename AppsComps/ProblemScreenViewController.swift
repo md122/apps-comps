@@ -72,7 +72,7 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
         invalidAnswerAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         
-        let submitAnswerAlert = UIAlertController(title: "Submit answer", message: "Enter your number answer!", preferredStyle: UIAlertControllerStyle.alert)
+        let submitAnswerAlert = UIAlertController(title: "Submit answer", message: "Enter your number answer", preferredStyle: UIAlertControllerStyle.alert)
         submitAnswerAlert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.keyboardType = UIKeyboardType.numberPad
         })

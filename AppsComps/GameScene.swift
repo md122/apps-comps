@@ -516,7 +516,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     //Pops up an allert to get the value the user wants to change the block value too, if the user enters an incorrect value another alert pops us to let them retry.
     func changeBlockValueAlert(block: Block) {
         
-        let invalidInputAlert = UIAlertController(title: "Invalid input", message: "Your submission was invalid :(. Make sure you're submitting only a number less than 1000, and if it's a positive block, make sure your number is positive!", preferredStyle: UIAlertControllerStyle.alert)
+        let invalidInputAlert = UIAlertController(title: "Invalid input", message: "Your submission was invalid :(", preferredStyle: UIAlertControllerStyle.alert)
         invalidInputAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
             self.changeBlockValueAlert(block: block)
         }))
@@ -525,7 +525,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             self.blockTouched = nil
         }))
         
-        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value, greater than 0 and less than 1000, you want your block to have.", preferredStyle: UIAlertControllerStyle.alert)
+        let changeValueAlert = UIAlertController(title: "Change Block Value", message: "Enter the value you want your block to have", preferredStyle: UIAlertControllerStyle.alert)
         
         changeValueAlert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.keyboardType = UIKeyboardType.numberPad
