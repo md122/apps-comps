@@ -1,4 +1,4 @@
-# apps-comps
+# AlgeBar
 
 AlgeBar is an iPad application for students and teachers. Students are able to visually model algebra problems using Bar Modeling, and teachers are able to see the students' progress.
 
