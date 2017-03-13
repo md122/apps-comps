@@ -1,5 +1,10 @@
 # apps-comps
 
+AlgeBar is an iPad application for students and teachers. Students are able to visually model algebra problems using Bar Modeling, and teachers are able to see the students' progress.
+
+### Tools
+
+We wrote AlgeBar using XCode 8.0 and Swift 3.0. You will need Cocoapods to run this application.
 
 ### Build Process
 
@@ -9,7 +14,6 @@
 * `pod install`
 * `open AppsComps.xcworkspace`
 * Try running the app!
-
 
 ### Instructions for merging back into master:
 - git status
