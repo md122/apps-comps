@@ -33,10 +33,10 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        levelLabel.text = "Level: \(self.level)"
+        levelLabel.text = "Level: 2"
         //Hides the toolbar when transistioning from the problem selector to the problem screen
         self.navigationController?.setToolbarHidden(true, animated: false)
-        setStars(correctAnswers: self.levelProgress)
+        setStars(correctAnswers: 2)
     }
     
     override func viewWillLayoutSubviews() {
@@ -95,12 +95,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     @IBAction func submitAnswer(_ sender: AnyObject) {
-        submitAnswerAlert()
+        //submitAnswerAlert()
     }
     
     func setProblemText() {
-        let connector = APIConnector()
-        connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: level)
+        problemLabel.text = "3x + 4 = 2x + 9"
+        //let connector = APIConnector()
+        //connector.requestNextProblem(callingDelegate: self, studentID: currentUser!.getIdToken(), level: level)
     }
     
 
