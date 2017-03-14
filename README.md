@@ -52,3 +52,10 @@ We wrote AlgeBar using XCode 8.0 and Swift 3.0. You will need Cocoapods to run t
     - Open xcode
     - right click Main.Storyboard
         - Choose Open As > Source Code
+
+### Resetting the api
+-Login to cmc307-05.mathcs.carleton.edu
+-Type "ps -e | grep "api.py"" into a terminal window and you will see a number for what process the api is running
+-Type "kill [the number you found"
+-Type "python api.py &"
+-After it starts type "disown"
