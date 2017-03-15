@@ -189,11 +189,13 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
     
 
     func wrongAnswerAlert() {
-        let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: "Your answer is incorrect. Stars will reset to 0.", preferredStyle: UIAlertControllerStyle.alert)
+        var alertMessage = "Your answer is incorrect."
         if (self.levelProgress > 0 && self.levelProgress < 3) {
             self.levelProgress = 0
             self.setStars(correctAnswers: 0)
+            alertMessage = "Your answer is incorrect. Your stars will reset to 0."
         }
+        let wrongAnswerAlert = UIAlertController(title: "Incorrect", message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         wrongAnswerAlert.addAction(UIAlertAction(title: "Keep Working on Problem", style: .default, handler: { (action: UIAlertAction!) in
         }))
@@ -263,15 +265,5 @@ class ProblemScreenViewController: UIViewController, APIDataDelegate {
             self.setProblemText()
         }
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

@@ -1,6 +1,6 @@
 //
 //  StudentCollectionViewController.swift
-//  MasterDetailTest
+//  AppsComps
 //
 //  Created by Brynna Mering on 1/18/17.
 //  Copyright © 2017 Brynna Mering. All rights reserved.
