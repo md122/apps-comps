@@ -17,7 +17,7 @@ We wrote AlgeBar using XCode 8.0 and Swift 3.0. You will need Cocoapods to run t
 * Try running the app!
 
 ### Resetting the api 
-######*As of the end of Winter Term 2017 our api is running in "developer mode" from our lab computer in the CMC at Carleton College. You mus be on campus to reset the api and use our app.*
+*As of the end of Winter Term 2017 our api is running in "developer mode" from our lab computer in the CMC at Carleton College. You mus be on campus to reset the api and use our app.*
 
 - Login to cmc307-05.mathcs.carleton.edu
     -  You may ssh in remotely or do this on our lab computer in the CMC. Ask a member of our group directly for log in credentials.
