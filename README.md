@@ -15,6 +15,7 @@ We wrote AlgeBar using XCode 8.0 and Swift 3.0. You will need Cocoapods to run t
 * `open AppsComps.xcworkspace`
 * Reset the api (instructions below)
 * Try running the app!
+  * If running in the xCode simulator we reccomend using iPad Air
 
 ### Resetting the api 
 *As of the end of Winter Term 2017 our api is running in "developer mode" from our lab computer in the CMC at Carleton College. You mus be on campus to reset the api and use our app.*
