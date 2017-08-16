@@ -17,7 +17,7 @@ We wrote AlgeBar using XCode 8.0 and Swift 3.0. You will need Cocoapods to run t
 * Try running the app!
   * If running in the XCode simulator we reccomend using iPad Air
 
-### Resetting the api 
+### Resetting the API 
 *As of the end of Winter Term 2017 our api is running in "developer mode" from our lab computer in the CMC at Carleton College. You mus be on campus to reset the api and use our app.*
 
 - Login to cmc307-05.mathcs.carleton.edu
@@ -26,3 +26,7 @@ We wrote AlgeBar using XCode 8.0 and Swift 3.0. You will need Cocoapods to run t
 - Type "kill [the number you found]"
 - Type "python api.py &"
 - After it starts type "disown"
+
+## Installing the API
+
+The API code lives in the server code file. It uses Flask in python to run the server and psycopg2 to connect to a PostgreSQL database.
